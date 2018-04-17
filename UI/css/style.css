@@ -16,6 +16,11 @@ ul {
   padding: 0;
 }
 
+button {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
 .btn-1 {
   border: 2px solid #fff;
   color: #fff;
@@ -81,9 +86,61 @@ header nav {
   float: right;
 }
 
-button {
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
+
+/* showcase */
+#showcase {
+  min-height: 70vh;
+  background: url('../images/cooking.jpeg') no-repeat ;
+  background-size: cover;
+  padding-top: 40px;
+  align-content: center
 }
 
+#showcase .min-container {
+  min-width: 200px;
+  color: #fff;
+  background:
+  linear-gradient(
+   to bottom,
+   rgba(66, 63, 63, 0.5),
+   rgba(65, 63, 63, 0.75)
+ ),
+  transparent;
+  margin-top: 40px;
+  padding: 10px 8px;
+  text-align: center;
+}
 
+#showcase .min-container h1 {
+  font-weight: 700;
+  font-size: 50px;
+  text-transform: uppercase;
+  line-height: 58px
+}
+#showcase .min-container p {
+  font-weight: 700;
+  font-size: 22px;
+  text-transform: uppercase;
+  line-height: 24px
+}
+
+#showcase1 {
+  min-height: 70vh;
+  background: #fff ;
+  background-size: cover;
+  color: #007bff;
+  text-align: center; 
+  font-size: 20px
+}
+
+#showcase1 p{
+  color: #000;
+  
+}
+
+/* footer */
+footer {
+  text-align: center;
+  background: #007bff;
+  color: #fff
+}
