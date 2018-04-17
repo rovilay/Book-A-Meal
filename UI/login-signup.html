@@ -10,8 +10,9 @@
 </head>
 
 <body>
+  <main>
   <!-- header -->
-  <header class="grid">
+  <header>
     <div class="container">
       <div id="branding">
         <h1>
@@ -27,91 +28,136 @@
       <div id="alert" role="alert"></div>
 
       <!-- Admin check box -->
-      <input type="checkbox" name="admin"> Are you an Admin/Caterer? check this box.
-
+      <p>
+      <input type="checkbox" name="admin"> Are you an Admin/Caterer? Check this box.
+      </p>
+      
+      <p class="signUp-link">
+          <a href="#">
+          Click Here to SignUp!
+          </a>
+        </p>
       <div class="card">
         <!-- Login form -->
         <div class="card-body">
           <div class="form-title" id="form-title">Customer LogIn </div>
           <hr>
           <form id="login" class="login">
-            <label for="email">Email:</label>
+            <p>
+            <label for="email">Email
+              <span class="asterik">*</span>
+            </label>
             <input type="text" placeholder="Enter Email" name="email" required>
+            </p>
 
-            <label for="psw">Password:</label>
+            <p>
+            <label for="psw">Password
+              <span class="asterik">*</span>
+            </label>
             <input type="password" placeholder="Enter password" name="psw" required>
+            </p>
 
-            <input type="checkbox" name="remember"> Remember me
+            <p>
+            <input type="checkbox" name="remember"> Remember me.
+            </p>
 
-            <button type="submit" class="loginbtn">Login</button>
+            <p>
+            <button type="submit" class="loginbtn btn-1">Login</button>
+            </p>
           </form>
+
         </div>
 
           <!-- SignUp form -->
         <div class="card-body">
           <div class="form-title" id="form-title"> SignUp Form  </div>
           <hr>
-          <form id="signup" class="signup">
+          <form id="signup" class="signupform">
+            <p class="">
             <label for="fname">First name
               <span class="asterik">*</span>
             </label>
             <input type="text" placeholder="Enter first name" name="fname" required>
+            </p>
 
+            <p>
             <label for="lname">Last name
               <span class="asterik">*</span>
             </label>
             <input type="text" placeholder="Enter last name" name="lname" required>
+            </p>
 
+            <p class="full">
             <label for="email">Email
               <span class="asterik">*</span>
             </label>
             <input type="text" placeholder="Enter email" name="email" required>
+            </p>
 
+            <p>
             <label for="phone">Phone
               <span class="asterik">*</span>
             </label>
             <input type="text" placeholder="Enter phone number" name="phonw" required>
+            </p>
 
+            <p>
             <label for="phone2">Phone 2</label>
             <input type="text" placeholder="Enter phone number" name="phone2">
+            </p>
 
+            <p>
             <label for="address">Address
               <span class="asterik">*</span>
             </label>
             <input type="text" placeholder="Enter permanent address" name="address" required>
+            </p>
 
+            <p>
             <label for="address2">Address 2</label>
             <input type="text" placeholder="Enter address" name="address2">
+            </p>
 
+            <p>
             <label for="city">City
               <span class="asterik">*</span>
             </label>
             <input type="text" placeholder="Enter City" name="city" required>
+            </p>
 
+            <p>
             <label for="state">State
               <span class="asterik">*</span>
             </label>
             <input type="text" placeholder="Enter State" name="state" required>
+            </p>
 
+            <p>
             <label for="psw">Password
               <span class="asterik">*</span>
             </label>
             <input type="text" placeholder="Enter Password" name="psw" required>
+            </p>
 
+            <p>
             <label for="cpsw">Confirm Password
               <span class="asterik">*</span>
             </label>
             <input type="text" placeholder="Confirm Password" name="cps" required>
+            </p>
 
-            <p>By creating an account you agree to our <a href="#">Terms & Policy</a> .</p>
+            <p class="full">By creating an account you agree to our <a href="#">Terms & Policy</a> .</p>
 
-            <button type="submit" name="signupbtn">Sign Up</button>
+            <p class="full">
+            <button type="submit" name="signupbtn" class="signupbtn btn-1">Sign Up</button>
+            </p>
           </form>
         </div>
       </div>
 
     </div>
   </section>
+  </main>
 
 
 
