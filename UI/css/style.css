@@ -1,7 +1,19 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-sarif;
+  font: 0.9em/1.5 'Segoe UI', Tahoma, Geneva, Verdana, sans-sarif;
+}
+
+/* Global */
+.container {
+  width: 80%;
+  margin:auto;
+  overflow: hidden
+}
+
+ul {
+  margin: 0;
+  padding: 0;
 }
 
 button {
@@ -9,28 +21,11 @@ button {
   transition-duration: 0.4s;
 }
 
-nav {
-  width: 100%;
-  background:#007bff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-}
-
-ul {
-  width: 80%;
-  margin: 0 auto;
-  padding: 0;
-}
-
-ul li {
-  list-style: none;
-  display: inline-block;
-}
-
 .btn-1 {
   border: 2px solid #fff;
   color: #fff;
-  padding: 12px 28px;
-  font-size: 1em;
+  padding: 10px 20px;
+  font-size: 0.9em;
   text-align: center;
   border-radius: 0.7em;
   background: transparent
@@ -40,4 +35,112 @@ ul li {
   background-color: #fff;
   color: #007bff;
   border: none
+}
+.btn-2 {
+  border: 2px solid #007bff;
+  color: #007bff;
+  padding: 10px 20px;
+  font-size: 0.9em;
+  text-align: center;
+  border-radius: 0.7em;
+  background: transparent
+}
+
+.btn-2:hover {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  font-weight: 400
+}
+
+/* Header */
+header {
+  background: #007bff;
+  color: #fff;
+  padding-top: 30px;
+  min-height: 70px;
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+header li {
+  float: left;
+  display: inline;
+  padding: 0 20px 0 20px
+}
+
+header #branding{
+  float: left;
+}
+
+header #branding h1{
+  margin: 0;
+  float: left;
+}
+
+header nav {
+  float: right;
+}
+
+
+/* showcase */
+#showcase {
+  min-height: 70vh;
+  background: url('../images/cooking.jpeg') no-repeat ;
+  background-size: cover;
+  padding-top: 40px;
+  align-content: center
+}
+
+#showcase .min-container {
+  min-width: 200px;
+  color: #fff;
+  background:
+  linear-gradient(
+   to bottom,
+   rgba(66, 63, 63, 0.5),
+   rgba(65, 63, 63, 0.75)
+ ),
+  transparent;
+  margin-top: 40px;
+  padding: 10px 8px;
+  text-align: center;
+}
+
+#showcase .min-container h1 {
+  font-weight: 700;
+  font-size: 50px;
+  text-transform: uppercase;
+  line-height: 58px
+}
+#showcase .min-container p {
+  font-weight: 700;
+  font-size: 22px;
+  text-transform: uppercase;
+  line-height: 24px
+}
+
+#showcase1 {
+  min-height: 70vh;
+  background: #fff ;
+  background-size: cover;
+  color: #007bff;
+  text-align: center; 
+  font-size: 20px
+}
+
+#showcase1 p{
+  color: #000;
+  
+}
+
+/* footer */
+footer {
+  text-align: center;
+  background: #007bff;
+  color: #fff
 }
