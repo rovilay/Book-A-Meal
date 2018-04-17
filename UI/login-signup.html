@@ -1,0 +1,120 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="../css/login-signup.css">
+  <title>Book-A-Meal | Login/signup </title>
+</head>
+
+<body>
+  <!-- header -->
+  <header class="grid">
+    <div class="container">
+      <div id="branding">
+        <h1>
+          <a href="#">Book-A-Meal</a>
+        </h1>
+      </div>
+    </div>
+  </header>
+
+  <section id="section-a" class="grid">
+    <div class="container">
+      <!-- Alert -->
+      <div id="alert" role="alert"></div>
+
+      <!-- Admin check box -->
+      <input type="checkbox" name="admin"> Are you an Admin/Caterer? check this box.
+
+      <div class="card">
+        <!-- Login form -->
+        <div class="card-body">
+          <div class="form-title" id="form-title">Customer LogIn </div>
+          <hr>
+          <form id="login" class="login">
+            <label for="email">Email:</label>
+            <input type="text" placeholder="Enter Email" name="email" required>
+
+            <label for="psw">Password:</label>
+            <input type="password" placeholder="Enter password" name="psw" required>
+
+            <input type="checkbox" name="remember"> Remember me
+
+            <button type="submit" class="loginbtn">Login</button>
+          </form>
+        </div>
+
+          <!-- SignUp form -->
+        <div class="card-body">
+          <div class="form-title" id="form-title"> SignUp Form  </div>
+          <hr>
+          <form id="signup" class="signup">
+            <label for="fname">First name
+              <span class="asterik">*</span>
+            </label>
+            <input type="text" placeholder="Enter first name" name="fname" required>
+
+            <label for="lname">Last name
+              <span class="asterik">*</span>
+            </label>
+            <input type="text" placeholder="Enter last name" name="lname" required>
+
+            <label for="email">Email
+              <span class="asterik">*</span>
+            </label>
+            <input type="text" placeholder="Enter email" name="email" required>
+
+            <label for="phone">Phone
+              <span class="asterik">*</span>
+            </label>
+            <input type="text" placeholder="Enter phone number" name="phonw" required>
+
+            <label for="phone2">Phone 2</label>
+            <input type="text" placeholder="Enter phone number" name="phone2">
+
+            <label for="address">Address
+              <span class="asterik">*</span>
+            </label>
+            <input type="text" placeholder="Enter permanent address" name="address" required>
+
+            <label for="address2">Address 2</label>
+            <input type="text" placeholder="Enter address" name="address2">
+
+            <label for="city">City
+              <span class="asterik">*</span>
+            </label>
+            <input type="text" placeholder="Enter City" name="city" required>
+
+            <label for="state">State
+              <span class="asterik">*</span>
+            </label>
+            <input type="text" placeholder="Enter State" name="state" required>
+
+            <label for="psw">Password
+              <span class="asterik">*</span>
+            </label>
+            <input type="text" placeholder="Enter Password" name="psw" required>
+
+            <label for="cpsw">Confirm Password
+              <span class="asterik">*</span>
+            </label>
+            <input type="text" placeholder="Confirm Password" name="cps" required>
+
+            <p>By creating an account you agree to our <a href="#">Terms & Policy</a> .</p>
+
+            <button type="submit" name="signupbtn">Sign Up</button>
+          </form>
+        </div>
+      </div>
+
+    </div>
+  </section>
+
+
+
+</body>
+
+</html>
