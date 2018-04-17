@@ -1,29 +1,19 @@
 body {
   margin: 0;
   padding: 0;
-  font-family: sans-sarif;
+  font: 0.9em/1.5 'Segoe UI', Tahoma, Geneva, Verdana, sans-sarif;
 }
 
-button {
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-}
-
-nav {
-  width: 100%;
-  background:#007bff;
-  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+/* Global */
+.container {
+  width: 80%;
+  margin:auto;
+  overflow: hidden
 }
 
 ul {
-  width: 80%;
-  margin: 0 auto;
+  margin: 0;
   padding: 0;
-}
-
-ul li {
-  list-style: none;
-  display: inline-block;
 }
 
 .btn-1 {
@@ -41,3 +31,59 @@ ul li {
   color: #007bff;
   border: none
 }
+.btn-2 {
+  border: 2px solid #007bff;
+  color: #007bff;
+  padding: 10px 20px;
+  font-size: 0.9em;
+  text-align: center;
+  border-radius: 0.7em;
+  background: transparent
+}
+
+.btn-2:hover {
+  background-color: #007bff;
+  color: #fff;
+  border: none;
+  font-weight: 400
+}
+
+/* Header */
+header {
+  background: #007bff;
+  color: #fff;
+  padding-top: 30px;
+  min-height: 70px;
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+header li {
+  float: left;
+  display: inline;
+  padding: 0 20px 0 20px
+}
+
+header #branding{
+  float: left;
+}
+
+header #branding h1{
+  margin: 0;
+  float: left;
+}
+
+header nav {
+  float: right;
+}
+
+button {
+  -webkit-transition-duration: 0.4s; /* Safari */
+  transition-duration: 0.4s;
+}
+
+
