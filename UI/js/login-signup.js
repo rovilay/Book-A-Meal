@@ -185,6 +185,12 @@ const UICtrl = (function () {
 
       if(signUpForm.firstname == "" || signUpForm.lastName === "" || signUpForm.email === "" || signUpForm.address === "" || signUpForm.phone === "" || signUpForm.state === "" || signUpForm.city === "" || signUpForm.password === "" || signUpForm.confirmPassword === "" ) {
         this.showAlert(UISelectors.alert, 'Please fill all astericked (*) fields', 'alert alert-danger');
+
+        
+        setTimeout(function () {
+          window.scrollTo(0, 0);
+        }, 1); // scroll to top;
+        
         return false;
 
       } 
@@ -192,7 +198,11 @@ const UICtrl = (function () {
       if(signUpForm.password !== signUpForm.confirmPassword) {
         this.showAlert(UISelectors.alert, 'Password not the same!', 'alert alert-danger');
         console.log(signUpForm.password, signUpForm.confirmPassword);
-        
+        // scroll to top
+        setTimeout(function () {
+          window.scrollTo(0, 0);
+        }, 1);
+
         e.preventDefault();
         return false;
       }
