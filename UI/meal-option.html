@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="style.css">
-  <link rel="stylesheet" href="meal-option.css">
+  <!-- <link rel="stylesheet" href="style.css"> -->
+  <link rel="stylesheet" href="./css/meal-option.css">
   <title>Book-A-Meal | Manage Meal options</title>
 </head>
 
@@ -23,7 +23,7 @@
         <nav>
           <ul>
             <li>
-              <button class="btn-1" href="#">Clear All</button>
+              <button class="" href="#">Clear All</button>
             </li>
           </ul>
         </nav>
@@ -49,7 +49,7 @@
 
             <form id="meal-option-form" class="meal-option-form">
               <p>
-                <label for="date">Email
+                <label for="date">Date
                   <span class="asterik">*</span>
                 </label>
                 <input type="date" id="date" placeholder="dd /mm/yyyy" name="date" required>
@@ -63,18 +63,20 @@
               </p>
 
               <p>
-                <button type="submit" id="mealbtn" class="mealbtn btn-1">Add Meal</button>
+                <input type="submit" id="add-btn" class="add-btn btn-1 primary">
+                  Add Meal
+                </input>
 
-                <button type="submit" id="update-btn" class="update-btn btn btn-lg btn-outline-warning block">
-                  <i class="fa fa-arrow-circle-up"></i> Update Meal
+                <input type="submit" id="update-btn" class="update-btn btn-1 warning">
+                  Update Meal
+                </input>
+
+                <button type="submit" id="delete-btn" class="delete-btn btn-1 danger">
+                  Delete Meal
                 </button>
 
-                <button type="submit" id="delete-btn" class="delete-btn btn btn-lg btn-outline-danger block ">
-                  <i class="fa fa-times"></i> Delete Meal
-                </button>
-
-                <button type="submit" id="back-btn" class="back-btn btn btn-lg btn-outline-secondary pull-right block">
-                  <i class="fa fa-arrow-circle-left"></i> BACK
+                <button type="submit" id="back-btn" class="back-btn btn-1 secondary">
+                  Back
                 </button>
               </p>
             </form>
@@ -86,7 +88,7 @@
     <!-- Display section -->
     <section id="display-section" class="display-section">
       <div class="container" id="meal-display">
-        <div class="display-title" id="form-title">Add Meal Option
+        <div class="display-title" id="display-title">Meal Options
           <hr>
         </div>
       </div>
