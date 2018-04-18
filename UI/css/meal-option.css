@@ -1,0 +1,120 @@
+/* Global */
+
+body {
+    margin: 0;
+    padding: 0;
+    font: 1em/1.5 'Segoe UI', Tahoma, Geneva, Verdana, sans-sarif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.warning {
+  color: #ffc107;
+}
+
+.danger {
+  color: #dc3543;
+}
+
+.secondary {
+  color: #6c757d
+}
+
+.primary {
+  color: #007bff
+}
+
+.container {
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 1em;
+    overflow: hidden;
+}
+
+section .container {
+    padding-top: 0;
+}
+
+.form-section {
+  background: #00b09b;
+  /* fallback for old browsers */
+  background: -webkit-linear-gradient(to right, #96c93d, #00b09b);
+  /* Chrome 10-25, Safari 5.1-6 */
+  background: linear-gradient(to right, #96c93d, #00b09b);
+  /* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+}
+
+.card {
+    width: inherit;
+    border: 1px solid #ccc;
+    padding: 1.4em;
+    margin-left: auto;
+    margin-right: auto;
+    background: transparent
+}
+
+/* form */
+
+.card .form-title,
+.container .display-title {
+    color: #000;
+    text-transform: capitalize;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center
+}
+
+.card .meal-option-form {
+    display: block;
+    grid-template-columns: 1fr 1fr;
+    grid-gap: 1.3em
+}
+
+
+.card form input[type=text],
+.card form input[type=date] {
+    width: 100%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    background: transparent
+}
+
+.btn-1 {
+  background: transparent;
+  border-radius: 4px;
+  display: inline-block;
+}
+
+.btn-1:hover, .btn-1:focus {
+    transition: background-color 2s ease-out
+}
+
+.add-btn {
+  border: 1px  #007bff;
+
+}
+
+.delete-btn {
+  border: 1px solid #dc3543;
+ 
+}
+.update-btn {
+  border-color: #ffc107;
+ 
+}
+.back-btn {
+  border-color: #6c757d;
+ 
+}
+
+label {
+    display: block;
+    color: #fff;
+    text-transform: capitalize;
+    font-size: 1.5em;
+    font-weight: 500;
+    line-height: 1.8em
+}
