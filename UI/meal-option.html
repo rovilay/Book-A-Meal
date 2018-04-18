@@ -1,0 +1,98 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="meal-option.css">
+  <title>Book-A-Meal | Manage Meal options</title>
+</head>
+
+<body>
+  <main>
+    <!-- Header -->
+    <header>
+      <div class="container">
+        <div id="branding">
+          <h1>
+            <a href="#">Book-A-Meal</a>
+          </h1>
+        </div>
+        <nav>
+          <ul>
+            <li>
+              <button class="btn-1" href="#">Clear All</button>
+            </li>
+          </ul>
+        </nav>
+      </div>
+    </header>
+
+    <section id="form-section" class="form-section">
+      <div class="container">
+        <!-- Alert -->
+        <div id="alert" role="alert"></div>
+
+        <!-- Admin check box -->
+        <p id="admin">
+          Hey! chef, What's Cooking?
+        </p>
+
+        <div class="card">
+          <!-- Meal option form -->
+          <div id="form-card" class="card-body">
+            <div class="form-title" id="form-title">Add Meal Option
+              <hr>
+            </div>
+
+            <form id="meal-option-form" class="meal-option-form">
+              <p>
+                <label for="date">Email
+                  <span class="asterik">*</span>
+                </label>
+                <input type="date" id="date" placeholder="dd /mm/yyyy" name="date" required>
+              </p>
+
+              <p>
+                <label for="meal">Meal
+                  <span class="asterik">*</span>
+                </label>
+                <input type="text" id="meal-option" placeholder="Enter Meal" name="meal" required>
+              </p>
+
+              <p>
+                <button type="submit" id="mealbtn" class="mealbtn btn-1">Add Meal</button>
+
+                <button type="submit" id="update-btn" class="update-btn btn btn-lg btn-outline-warning block">
+                  <i class="fa fa-arrow-circle-up"></i> Update Meal
+                </button>
+
+                <button type="submit" id="delete-btn" class="delete-btn btn btn-lg btn-outline-danger block ">
+                  <i class="fa fa-times"></i> Delete Meal
+                </button>
+
+                <button type="submit" id="back-btn" class="back-btn btn btn-lg btn-outline-secondary pull-right block">
+                  <i class="fa fa-arrow-circle-left"></i> BACK
+                </button>
+              </p>
+            </form>
+          </div>
+        </div>
+      </div>
+    </section>
+
+    <!-- Display section -->
+    <section id="display-section" class="display-section">
+      <div class="container" id="meal-display">
+        <div class="display-title" id="form-title">Add Meal Option
+          <hr>
+        </div>
+      </div>
+    </section>
+  </main>
+
+</body>
+
+</html>
