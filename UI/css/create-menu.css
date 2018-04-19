@@ -1,0 +1,124 @@
+/* Global */
+
+/* Global */
+
+body {
+    margin: 0;
+    padding: 0;
+    font: 1em/1.5 'Segoe UI', Tahoma, Geneva, Verdana, sans-sarif;
+}
+
+* {
+    box-sizing: border-box;
+}
+
+.container {
+    max-width: 1170px;
+    margin: 0 auto;
+    padding: 1em;
+    overflow: hidden
+}
+
+.container .form-title, .display-title
+{
+  color: #000;
+  text-transform: capitalize;
+  font-size: 40px;
+  font-weight: 600;
+  text-align: center
+}
+
+.card {
+    border: 1px solid #ccc;
+    padding: 1.4em;
+    border-radius: 10px;
+    margin-left: 5%;
+    margin-right: 5%
+}
+
+/* Form */
+
+.checkbox-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr 1fr;
+    grid-gap: 1em
+}
+
+.card form p {
+    margin: 0
+}
+
+.card form .full {
+    grid-column: 1 / 3;
+}
+
+.card label {
+    display: block;
+    width: 15em;
+    min-width: 15em;
+}
+
+.card form input[type=number] {
+    width: 30%;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+}
+
+.card form button {
+    width: 100%;
+    margin-top: 10px;
+    padding: 10px;
+    border: 1px solid #007bff;
+    border-radius: 4px;
+    background: #007bff;
+    color: snow;
+    font-size: 20px;
+    cursor: pointer;
+}
+
+.card form button:hover {
+    background: blue;
+    transition: background-color 1s ease-out
+}
+
+/* header */
+
+header {
+    background: #007bff;
+    color: #fff;
+    min-height: 70px;
+    text-align: center
+}
+
+header a {
+    color: #fff;
+    text-decoration: none;
+    text-transform: uppercase;
+
+}
+
+header .container {
+    width: 80%;
+    border-radius: 10px;
+    padding: 0;
+    margin-left: auto;
+    margin-right: auto;
+    background: transparent;
+    text-align: center
+}
+
+
+
+/* Small screens */
+
+@media(max-width:650px) {
+    .checkbox-card {
+        display: inline-block;
+    }
+    .card form button,
+    .card form input[type=number] {
+        width: 100%;
+        padding: 12px;
+    }
+}
