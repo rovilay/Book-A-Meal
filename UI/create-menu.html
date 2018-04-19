@@ -14,13 +14,29 @@
     <main>
       <!-- header -->
       <header>
-        <div class="container">
-          <h1>
-            <a href="#">Book-A-Meal</a>
-          </h1>
+        <div class="header">
+          <a href="#default" class="logo">Book-A-Meal</a>
+          <div class="header-right">
+            <a class="active" href="#menu">Menu</a>
+            <a href="#summary">Summary</a>
+            <a href="#signout">signout</a>
+          </div>
         </div>
       </header>
 
+      <section class="welcome container">
+        <h3>Welcome, Ogooluwa</h3>
+        <div class="welcome-container">
+          <img src="./images/chef.svg" alt="menu01">
+          <div class="menu-info">
+            <h3>
+              <b>Akinola Ogooluwa</b>
+            </h3>
+            <p>Head Chef</p>
+          </div>
+        </div>
+
+      </section>
       <section>
         <div class="container">
           <!-- Alert -->
@@ -29,30 +45,51 @@
 
           <div class="card">
             <!-- form -->
-            <div class="form-title" id="menu-form-title"> Create Menu </div>
+            <div class="form-title" id="menu-form-title"> Set Menu </div>
             <hr>
+
             <form id="menu-form" class="menu-form">
+              <!-- Date -->
+              <p class="date full">
+                <label for="date">Date:
+                </label>
+                <input type="date" placeholder="DD / MM / YYYY" name="menu-date" id="date" required>
+              </p>
+              <hr>
+
+              <!-- Meal option -->
               <div class="checkbox-card">
                 <p>
-                  <input type="checkbox" name="remember" id="remember"> Remember me.
+                  <input type="checkbox" name="meal-check" class="meal-check" id="meal" value="Y"> Yam Pottage
                 </p>
+
                 <p>
-                  <input type="checkbox" name="remember" id="remember"> Remember me.
+                  <input type="checkbox" name="meal-check" class="meal-check" id="meal" value="Y"> Pancakes
                 </p>
+
                 <p>
-                  <input type="checkbox" name="remember" id="remember"> Remember me.
+                  <input type="checkbox" name="meal-check" class="meal-check" id="meal" value="Y"> Buggers
                 </p>
+
                 <p>
-                  <input type="checkbox" name="remember" id="remember"> Remember me.
+                  <input type="checkbox" name="meal-check" class="meal-check" id="meal" value="Y"> Fish Salad
                 </p>
-              </div <p class="price full">
-              <br>
-              <br>
-              <label for="price">
-                Menu Price (&#8358;)
-              </label>
-              <input type="number" id="menu-price" class="menu-price" min="0" step="50" placeholder="Menu Price" name="price" required>
+
+                <p>
+                  <input type="checkbox" name="meal-check" class="meal-check" id="meal" value="Y"> Sharwama
+                </p>
+              </div>
+              <hr>
+
+              <!-- Price -->
+              <p class="price full">
+                <label for="price">
+                  Price (&#8358;):
+                </label>
+                <input type="number" id="menu-price" class="menu-price" min="0" step="50" placeholder="Menu Price" name="price" required>
               </p>
+
+
               <p class="submit full">
                 <button type="submit" name="addbtn" id="addbtn" class="addbtn btn-1">Add Menu</button>
               </p>
@@ -62,20 +99,65 @@
         </div>
       </section>
 
-      <!-- Display section -->
-      <section id="display-section" class="display-section">
-        <div class="display-title" id="display-title" style="display: block;"> Menu (
-          <span id="menu-count"></span>)
+      <!-- Menu Display section -->
+      <section id="display-section" class="display-section container">
+        <div class="display-title" id="display-title" style="display: block;"> Menus
+
           <hr>
 
         </div>
-        <div class="container" id="menu-display">
+        <div class="boxes" id="menu-display">
+          <!-- menu boxes -->
+          <div class="menu-box">
+            <img src="./images/menu01.jpeg" alt="menu01">
+            <div class="menu-info">
+              <h3>
+                <b>Pancakes</b>
+              </h3>
+              <p>Price (&#8358;):&nbsp
+                <span>400</span>
+              </p>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+          </div>
+          <div class="menu-box">
+            <img src="./images/menu02.jpeg" alt="menu02">
+            <div class="menu-info">
+              <h3>
+                <b>Sharwama</b>
+              </h3>
+              <p>Price (&#8358;):&nbsp
+                <span>400</span>
+              </p>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+          </div>
+          <div class="menu-box">
+            <img src="./images/menu03.jpeg" alt="menu03">
+            <div class="menu-info">
+              <h3>
+                <b>Fish Salad</b>
+              </h3>
+              <p>Price (&#8358;):&nbsp
+                <span>400</span>
+              </p>
+              <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+            </div>
+          </div>
         </div>
+
+      </section>
+
+
+      <footer>
+        <div class="container">
+          <p>Book-A-Meal, copyright &copy; 2018</p>
         </div>
-      </section>
-      </section>
+      </footer>
     </main>
 
+
+    <script src="./create-menu.js"></script>
 </body>
 
 </html>
