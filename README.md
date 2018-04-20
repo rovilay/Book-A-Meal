@@ -1,5 +1,12 @@
 # Book-A-Meal
-Book-A-Meal is an app designed to let you order meals from your favourite resturant at your convience. To use you can check menu for a day and place orders.
+Book-A-Meal is an app designed to let you order meals from your favourite resturant at your convience. To use you can check a day's menu and place orders.
+
+# Usage
+1. Customer is able to check menu and place orders
+2. Caterer is able to set menu for a specific day
+3. Caterer is able to manage meal
+4. Caterer is able to see order for a day
+5. Caterer is able to see total amount made for a day
 
 # Languages & tools
 ## HTML
@@ -16,11 +23,13 @@ Book-A-Meal is an app designed to let you order meals from your favourite restur
 ## Tracker
 * [Pivotal Tracker](https://pivotaltracker.com) for tracking project tasks
 
-# Version
+# Release
 * Version 1.0.0
+  * Still in developement
 
 # Authors
 * **Akinola Ogooluwa**
 
 # Acknowledgments
 * [Andela](https://andela.com/)
+
