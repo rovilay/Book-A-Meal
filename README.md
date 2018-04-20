@@ -1,5 +1,5 @@
 # Book-A-Meal
-Book-A-Meal is an app designed to let you order meals from your favourite resturant at your convience. To use you can check menu for a day and place orders.
+Book-A-Meal is an app designed to let you order meals from your favourite resturant at your convience. To use you can check a day's menu and place orders.
 
 # Languages & tools
 ## HTML
