@@ -174,24 +174,32 @@ margin-top: 7px;
 .add-btn {
 width: 100%;
 border: 1px solid #007bff;
+color: #fff;
+font-weight: bold;
 }
 
 .update-btn {
 border: 1px solid #ffc107;
 display: inline-block;
-width: 33%
+width: 33%;
+color: #fff;
+font-weight: bold;
 }
 
 .delete-btn {
 border: 1px solid #dc3543;
 display: inline-block;
-width: 33%
+width: 33%;
+color: #fff;
+font-weight: bold;
 }
 
 .back-btn {
 border: 1px solid #6c757d;
 display: inline-block; 
-width: 25%
+width: 25%;
+color: #fff;
+font-weight: bold;
 }
 
 .add-btn:hover, .add-btn:focus {
