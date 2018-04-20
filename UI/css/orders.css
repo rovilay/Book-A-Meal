@@ -71,7 +71,7 @@ p {
 .container {
   max-width: 1170px;
   border:none;
-  padding-left: 3.4rem
+  padding: 2.4rem
 }
 
 .title {
@@ -121,9 +121,10 @@ tr:hover {
   background: rgb(196, 248, 250)
 }
 
-@media screen and (max-width:600px) {
+
+@media screen and (max-width:930px) {
   .container {
-    padding-left:0;
+    padding:0;
     
   }
 
