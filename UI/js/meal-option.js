@@ -1,195 +1,10 @@
-// storage control
-const StorageCtrl = (function () {
-  // Public methods
-  return {
-    storeMeal: function (meal) {
-      let mealOptions;
-      // Check if any mealOption in Ls
-      if (localStorage.getItem('mealOptions') === null) {
-        mealOptions = [];
-        //Push new meal
-        mealOptions.push(meal);
-        // Set Ls
-        localStorage.setItem('mealOptions', JSON.stringify(mealOptions));
-      } else {
-        // Get meals from Ls
-        mealOptions = JSON.parse(localStorage.getItem('mealOptions'));
-
-        // Push new contact
-        mealOptions.push(meal);
-
-        // Arrange by Last Name
-        mealOptions = mealOptions.sort(StorageCtrl.sortMealOptions)
-
-        // Reset Ls
-        localStorage.setItem('mealOptions', JSON.stringify(mealOptions));
-      }
-    },
-
-    sortMealOptions: function (a, b) {
-      // Use toUpperCase() to ignore character casing
-      const mealA = a;
-      const mealB = b;
-
-      let comparison = 0;
-      if (mealA > mealB) {
-        comparison = 1;
-      } else if (mealA < mealB) {
-        comparison = -1;
-      }
-      return comparison;
-    },
-
-    getMealOptionsFromLs: function () {
-      let mealOptions;
-      if (localStorage.getItem('mealOptions') === null) {
-        mealOptions = [];
-      } else {
-        mealOptions = JSON.parse(localStorage.getItem('mealOptions'));
-      }
-
-      return mealOptions;
-    },
-
-    updateMealLs: function (updatedMeal) {
-      // let mealOptions= JSON.parse(localStorage.getItem('mealOptions'));
-      let mealOptions = this.getMealOptionsFromLs();
-
-      mealOptions.forEach(function (meal, index) {
-        if (updatedMeal.id === meal.id) {
-          mealOptions.splice(index, 1, updatedMeal);
-        }
-      });
-
-      localStorage.setItem('mealOptions', JSON.stringify(mealOptions));
-    },
-
-    deleteMealFromLs: function (id) {
-      // let mealOptions = JSON.parse(localStorage.getItem(''));
-      let mealOptions = this.getMealOptionsFromLs();
-
-      mealOptions.forEach(function (meal, index) {
-        if (id === meal.id) {
-          mealOptions.splice(index, 1);
-        }
-      });
-
-      localStorage.setItem('mealOptions', JSON.stringify(mealOptions));
-    },
-
-    clearAllMealsFromLs: function () {
-      localStorage.removeItem('mealOptions');
-    }
-  };
-})();
-
-// Meal control
-const MealCtrl = (function () {
-
-  // Meal Contructor
-  const Meal = function (mealInfo) {
-    this.id = mealInfo.id;
-    this.date = mealInfo.date;
-    this.mealName = mealInfo.meal;
-  };
-
-  // Data Structure and state
-  const data = {
-    mealOptions: StorageCtrl.getMealOptionsFromLs(),
-    currentMeal: null,
-  };
-
-  return {
-    getData: function () {
-      return data.mealOptions;
-    },
-
-    addMeal: function (meal) {
-
-      // create meal id
-      if (data.mealOptions.length > 0) {
-        meal.id = data.mealOptions[data.mealOptions.length - 1].id + 1;
-      } else {
-        meal.id = 0;
-      }
-
-      // create new meal
-      newMeal = new Meal(meal);
-
-      // Add new meal to data structure array
-      data.mealOptions.push(newMeal);
-
-      return newMeal;
-    },
-
-    getMealById: function (id) {
-      let found = null;
-
-      // Loop through the meal options list
-      data.mealOptions.forEach(function (meal) {
-        if (meal.id === id) {
-          found = meal;
-        }
-      });
-
-      return found;
-    },
-
-    updateMeal: function (update) {
-      let found = null;
-
-      // Loop through the meal list
-      data.mealOptions.forEach(function (meal) {
-        if (meal.id === data.currentMeal.id) {
-          meal.date = update.date;
-          meal.mealName = update.mealName;
-
-          found = meal;
-        }
-      });
-
-      return data.mealOptions;
-    },
-
-    deleteMeal: function (id) {
-      // Get all id in meal option
-      ids = data.mealOptions.map(function (meal) {
-        return meal.id;
-      });
-
-      // Get index
-      const index = ids.indexOf(id);
-
-      // Remove item
-      data.mealOptions.splice(index, 1);
-    },
-
-    clearAllMealOptions: function () {
-      data.mealOptions = [];
-      data.currentMeal = null;
-    },
-
-    setCurrentMeal: function (meal) {
-      data.currentMeal = meal;
-    },
-
-    getCurrentMeal: function () {
-      return data.currentMeal;
-    },
-
-    logData: function () {
-      return data;
-    }
-  };
-
-})();
-
 
 // Ui control
 const UICtrl = (function () {
   const UISelectors = {
     alert: '#alert',
     greet: '#greetings',
+    icons: '.icons',
     card: '.card',
     cardBody: '.form-card',
     formTitle: '#form-title',
@@ -383,6 +198,9 @@ const AppCtrl = (function (StorageCtrl, MealCtrl, UICtrl) {
         return false;
       }
     });
+
+
+    document.querySelector(UISelectors.icons).addEventListener()
 
 
     // Edit meal  events
@@ -593,15 +411,6 @@ const AppCtrl = (function (StorageCtrl, MealCtrl, UICtrl) {
 
       let today = new Date().toISOString().substr(0, 10);
       document.querySelector(UISelectors.date).setAttribute('min', today);
-
-      // Fetch meal options from data structure
-      const mealOptions = MealCtrl.getData();
-
-      // Populate UI with contacts
-      UICtrl.populateMealDisplay(mealOptions);
-
-      // // Enable clear-all button
-      // document.querySelector(UISelectors.clearBtn).disabled = false;
 
 
       // Load EventListners
