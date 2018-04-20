@@ -83,6 +83,12 @@ p {
   margin-top: 1rem
 }
 
+.total {
+  text-transform: capitalize;
+  font-size: 1.8rem;
+  padding: 0.6rem;
+}
+
 /* Table */
 table {
   width: 100%;
@@ -165,5 +171,9 @@ footer {
   background: #007bff;
   color: snow;
   text-align: center;
+<<<<<<< HEAD
+=======
+  padding: 1.4rem;
+>>>>>>> order_summary
   margin-top: 1em;
 }
