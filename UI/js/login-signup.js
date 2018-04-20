@@ -267,6 +267,15 @@ const AppCtrl = (function (UICtrl) {
         UiCtrl.showAlert(UISelectors.alert, 'Login Successful', 'alert alert-success');
         UiCtrl.clearLoginFormInputs();
 
+        // check if admin
+        let admin =document.querySelector(UISelectors.adminCheckbox).checked;
+        if(admin === true) {
+          window.location.assign('create-menu.html')
+        } else {
+          window.location.assign('menu.html');
+        }
+        
+
         e.preventDefault();
       }
 
@@ -278,7 +287,7 @@ const AppCtrl = (function (UICtrl) {
         UiCtrl.showAlert(UISelectors.alert, 'Sign Up Successful', 'alert alert-success');
         UiCtrl.clearSignUpFormInputs();
         
-
+        window.location.assign('menu.html');
         e.preventDefault();
       }
 

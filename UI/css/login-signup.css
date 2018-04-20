@@ -20,6 +20,10 @@ section .container {
   padding-top: 0;
 }
 
+header .container {
+  padding: 0
+}
+
 .card {
   width: inherit;
   border: 1px solid #ccc;
