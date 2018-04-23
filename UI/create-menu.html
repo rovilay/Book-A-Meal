@@ -1,0 +1,162 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="stylesheet" href="./css/create-menu.css">
+  <title>Book-A-Meal | Create Menu</title>
+</head>
+
+<body>
+  <main>
+
+  <!-- header -->
+  <header>
+      <div class="header">
+        <a href="index.html" class="logo">Book-A-Meal</a>
+        <div class="header-right">
+          <a href="meal-option.html">Add Meal</a>
+          <a href="orders.html">Orders</a>
+          <a href="index.html">Signout</a>
+        </div>
+      </div>
+    </header>
+
+    <section class="welcome">
+      <div class="welcome-container">
+        <img src="./images/chef.svg" alt="menu01">
+        <div class="admin-info">
+          <h3>
+            <b>Akinola Ogooluwa</b>
+          </h3>
+          <p>Head Chef</p>
+        </div>
+      </div>
+
+    </section>
+    <section>
+      <div class="container">
+        <!-- Alert -->
+        <div id="alert" role="alert"></div>
+
+
+        <div class="card">
+          <!-- form -->
+          <div class="form-title" id="menu-form-title"> Set Menu </div>
+          <hr>
+
+          <form id="menu-form" class="menu-form">
+            <!-- Date -->
+            <p class="date full">
+              <label for="date">Date:
+              </label>
+              <input type="date" placeholder="DD / MM / YYYY" name="menu-date" id="date" required>
+            </p>
+            <hr>
+
+            <!-- Meal option -->
+            <div class="checkbox-card">
+              <p>
+                <input type="checkbox" name="meal-check" class="meal-check" id="meal" value="Y"> Yam Pottage
+              </p>
+
+              <p>
+                <input type="checkbox" name="meal-check" class="meal-check" id="meal" value="Y"> Pancakes
+              </p>
+
+              <p>
+                <input type="checkbox" name="meal-check" class="meal-check" id="meal" value="Y"> Buggers
+              </p>
+
+              <p>
+                <input type="checkbox" name="meal-check" class="meal-check" id="meal" value="Y"> Fish Salad
+              </p>
+
+              <p>
+                <input type="checkbox" name="meal-check" class="meal-check" id="meal" value="Y"> Sharwama
+              </p>
+            </div>
+            <hr>
+
+            <!-- Price -->
+            <p class="price full">
+              <label for="price">
+                Price (&#8358;):
+              </label>
+              <input type="number" id="menu-price" class="menu-price" min="0" step="50" placeholder="Menu Price" name="price" required>
+            </p>
+
+
+            <p class="submit full">
+              <button type="submit" name="addbtn" id="addbtn" class="addbtn btn-1">Add Menu</button>
+            </p>
+          </form>
+        </div>
+      </div>
+      </div>
+    </section>
+
+    <!-- Menu Display section -->
+    <section id="display-section" class="display-section container">
+      <div class="display-title" id="display-title" style="display: block;"> Today's Menu
+
+        <hr>
+
+      </div>
+      <div class="boxes" id="menu-display">
+        <!-- menu boxes -->
+        <div class="menu-box">
+          <img src="./images/menu01.jpeg" alt="menu01">
+          <div class="menu-info">
+            <h3>
+              <b>Pancakes</b>
+            </h3>
+            <p>Price (&#8358;):&nbsp
+              <span>400</span>
+            </p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          </div>
+        </div>
+        <div class="menu-box">
+          <img src="./images/menu02.jpeg" alt="menu02">
+          <div class="menu-info">
+            <h3>
+              <b>Sharwama</b>
+            </h3>
+            <p>Price (&#8358;):&nbsp
+              <span>400</span>
+            </p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          </div>
+        </div>
+        <div class="menu-box">
+          <img src="./images/menu03.jpeg" alt="menu03">
+          <div class="menu-info">
+            <h3>
+              <b>Fish Salad</b>
+            </h3>
+            <p>Price (&#8358;):&nbsp
+              <span>400</span>
+            </p>
+            <p>Lorem ipsum dolor sit amet consectetur adipisicing elit.</p>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+
+    <footer>
+      <div class="container">
+        <p>Book-A-Meal, copyright &copy; 2018</p>
+      </div>
+    </footer>
+  </main>
+
+
+  <script src="./create-menu.js"></script>
+</body>
+
+</html>

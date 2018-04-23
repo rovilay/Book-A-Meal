@@ -1,0 +1,177 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <!-- fontawesome -->
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.0.10/css/all.css" integrity="sha384-+d0P83n9kaQMCwj8F4RJB66tzIwOKmrdb46+porD/OvrJ+37WqIM7UoBtwHO6Nlg"
+    crossorigin="anonymous">
+
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <link rel="stylesheet" href="./css/meal-option.css">
+  <title>Book-A-Meal | Manage Meal options</title>
+</head>
+
+<body>
+  <!-- Header -->
+  <header>
+    <div class="header">
+      <a href="index.html" class="logo">Book-A-Meal</a>
+      <div class="header-right">
+        <a href="create-menu.html">Set Menu</a>
+        <a href="orders.html">Orders</a>
+        <a href="index.html">Signout</a>
+      </div>
+    </div>
+  </header>
+
+  <section id="form-section" class="form-section">
+    <div class="container">
+      <!-- Alert -->
+      <div id="alert" role="alert"></div>
+
+
+      <div class="card">
+        <!-- Meal option form -->
+        <div id="form-card" class="card-body">
+          <div class="form-title" id="form-title">Add Meal
+            <hr>
+          </div>
+
+          <form id="meal-form" class="meal-form">
+
+            <p>
+              <label for="date">Date
+              </label>
+              <input type="date" placeholder="DD / MM / YYYY" name="date" id="date" required>
+            </p>
+
+            <p class="">
+              <label for="meal">Meal
+              </label>
+              <input type="text" placeholder="Enter meal" name="meal" id="meal" required>
+            </p>
+
+            <p class="full">
+              <button type="submit" name="addbtn" id="add-btn" class="add-btn btn-1">Add Meal</button>
+            </p>
+
+            <p>
+              <button type="submit" name="updatebtn" id="update-btn" class="update-btn btn-1">Update Meal</button>
+
+              <button type="submit" name="deletebtn" id="delete-btn" class="delete-btn btn-1">Delete Meal</button>
+
+              <button type="submit" name="backbtn" id="back-btn" class="back-btn btn-1">Back</button>
+            </p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- Display section -->
+  <section id="display-section" class="display-section">
+    <div class="container" id="meal-display">
+      <div class="display-title" id="display-title">Meal Options (<span id="meal-count">6</span>)
+        <hr>
+      </div>
+
+      <!-- Meal List -->
+      <div class="meal-card" id="meal-list">
+        <div class="card">
+          <span class="meal-name">
+            <b>Sharwama</b> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+            <span class="meal-date">16/04/2018</span>
+          </span> &nbsp; &nbsp; &nbsp;
+          <span class="icons" id="meal-id">
+            <a href="#" class="edit">
+              <i class="fa fa-edit"></i>
+            </a> &nbsp;
+            <a href="#" class="trash">
+              <i class="fa fa-trash"></i>
+            </a>
+          </span>
+        </div>
+        <div class="card">
+            <span class="meal-name">
+                <b>Pancakes</b> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <span class="meal-date">16/04/2018</span>
+              </span> &nbsp; &nbsp; &nbsp;
+              <span class="icons" id="meal-id">
+                <a href="#" class="edit">
+                  <i class="fa fa-edit"></i>
+                </a> &nbsp;
+                <a href="#" class="trash">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </span>
+        </div>
+        <div class="card">
+            <span class="meal-name">
+                <b>Fish Salad</b> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <span class="meal-date">16/04/2018</span>
+              </span> &nbsp; &nbsp; &nbsp;
+              <span class="icons" id="meal-id">
+                <a href="#" class="edit">
+                  <i class="fa fa-edit"></i>
+                </a> &nbsp;
+                <a href="#" class="trash">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </span>
+        </div>
+        <div class="card">
+            <span class="meal-name">
+                <b>Pancakes</b> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <span class="meal-date">15/04/2018</span>
+              </span> &nbsp; &nbsp; &nbsp;
+              <span class="icons" id="meal-id">
+                <a href="#" class="edit">
+                  <i class="fa fa-edit"></i>
+                </a> &nbsp;
+                <a href="#" class="trash">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </span>
+        </div>
+        <div class="card">
+            <span class="meal-name">
+                <b>Ice cream</b> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <span class="meal-date">15/04/2018</span>
+              </span> &nbsp; &nbsp;
+              <span class="icons" id="meal-id">
+                <a href="#" class="edit">
+                  <i class="fa fa-edit"></i>
+                </a> &nbsp;
+                <a href="#" class="trash">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </span>
+        </div>
+        <div class="card">
+            <span class="meal-name">
+                <b>Yam</b> &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp;
+                <span class="meal-date">14/04/2018</span>
+              </span> &nbsp; &nbsp; &nbsp; &nbsp;
+              <span class="icons" id="meal-id">
+                <a href="#" class="edit">
+                  <i class="fa fa-edit"></i>
+                </a> &nbsp;
+                <a href="#" class="trash">
+                  <i class="fa fa-trash"></i>
+                </a>
+              </span>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+
+  <script src="./js/meal-option.js"></script>
+</body>
+
+</html>
