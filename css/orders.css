@@ -71,7 +71,8 @@ p {
 .container {
   max-width: 1170px;
   border:none;
-  padding: 2.4rem
+  padding-left: 15%;
+  padding-right: 15%
 }
 
 .title {
@@ -167,6 +168,13 @@ tr:hover {
 
 }
 
+/* Order details */
+
+.order-details {
+  font-size: 1.3em;
+  margin-bottom: 20px
+}
+
 /* Footer */
 footer {
   background: #007bff;
@@ -174,4 +182,8 @@ footer {
   text-align: center;
   padding: 1.4rem;
   margin-top: 1em;
+}
+
+footer .container {
+  padding: 0
 }
