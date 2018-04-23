@@ -17,8 +17,10 @@
     <div class="header">
       <a href="index.html" class="logo">Book-A-Meal</a>
       <div class="header-right">
-        <a href="create-menu.html">Set Menu</a>
+        <a href="menu.html">Menu</a>
         <a class="active" href="orders.html">Orders</a>
+        <a href="cart.html">
+            <i class="fa fa-shopping-cart"></i>(4)</a>
         <a href="index.html">Signout</a>
       </div>
     </div>
@@ -26,24 +28,16 @@
 
   <!-- Order Summary -->
   <section id="table-section">
-    <div class="title" id="menu-title"> Today's Order Summary
+    <div class="title" id="menu-title"> Your Order History
     </div>
     <hr>
     <div class="container">
-      <div class="total" id="total-sales"> 
-        Date: 21/04/2018
-      </div>
-      <div class="total" id="history"> 
-          <span><a href="order-history.html">View order history</a></span>
-      </div>
-      <div class="total" id="total-sales"> 
-        Total Sales: &#8358;11,100
-      </div>
       <table>
         <thead>
           <tr>
             <th>No</th>
             <th>OrderID</th>
+            <th>Date</th>
             <th>Price (&#8358;)</th>
             <th>Details</th>
           </tr>
@@ -52,30 +46,35 @@
           <tr>
             <td data-title="No">1</td>
             <td data-title="Order ID">96FRG77</td>
+            <td data-title="Date">21/04/2018</td>
             <td data-title="Price (&#8358;)">800</td>
-            <td data-title="Details"><a href="order-details.html">view details</a></td>
+            <td data-title="Details"><a href="customer-order-details.html">view details</a></td>
           </tr>
           <tr>
             <td data-title="No">2</td>
             <td data-title="Order ID">96FRG77</td>
+            <td data-title="Date">21/04/2018</td>
             <td data-title="Price (&#8358;)">800</td>
-            <td data-title="Details"><a href="order-details.html">view details</a></td>
+            <td data-title="Details"><a href="customer-order-details.html">view details</a></td>
           </tr>
           <tr>
             <td data-title="No">3</td>
             <td data-title="Order ID">96FRG77</td>
+            <td data-title="Date">21/04/2018</td>
             <td data-title="Price (&#8358;)">800</td>
-            <td data-title="Details"><a href="order-details.html">view details</a></td>          </tr>
+            <td data-title="Details"><a href="customer-order-details.html">view details</a></td>          </tr>
           <tr>
             <td data-title="No">4</td>
             <td data-title="Order ID">96FRG77</td>
+            <td data-title="Date">21/04/2018</td>
             <td data-title="Price (&#8358;)">800</td>
-            <td data-title="Details"><a href="order-details.html">view details</a></td>          </tr>
+            <td data-title="Details"><a href="customer-order-details.html">view details</a></td>          </tr>
           <tr>
             <td data-title="No">5</td>
             <td data-title="Order ID">96FRG77</td>
+            <td data-title="Date">21/04/2018</td>
             <td data-title="Price (&#8358;)">800</td>
-            <td data-title="Details"><a href="order-details.html">view details</a></td>          </tr>
+            <td data-title="Details"><a href="customer-order-details.html">view details</a></td>          </tr>
         </tbody>
       </table>
     </div>

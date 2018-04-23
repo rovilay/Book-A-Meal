@@ -126,3 +126,16 @@ header a {
     display: inline;
   }  
 }
+
+/* Footer */
+footer {
+  background: #007bff;
+  color: snow;
+  text-align: center;
+  padding: 1.0rem;
+  margin-top: 1em;
+}
+
+footer .container {
+  padding: 0
+}

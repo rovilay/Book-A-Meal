@@ -11,163 +11,170 @@
 
 <body>
   <main>
-  <!-- header -->
-  <header>
-    <div class="container">
- 
+    <!-- header -->
+    <header>
+      <div class="container">
+
         <h1>
           <a href="index.html">Book-A-Meal</a>
         </h1>
       </div>
 
-  </header>
+    </header>
 
-  <section id="section-a" class="grid">
-    <div class="container">
-      <!-- Alert -->
-      <div id="alert" role="alert"></div>
+    <section id="section-a" class="grid">
+      <div class="container">
+        <!-- Alert -->
+        <div id="alert" role="alert"></div>
 
-      <!-- Admin check box -->
-      <p id="admin">
-      <input type="checkbox" id="admin-checkbox" name="admin"> Are you an Admin/Caterer? Check this box.
-      </p>
-      
-      <p class="signUp-link">
-        <a href="#">
-          Click Here to SignUp!
-        </a>
-      </p>
+        <!-- Admin check box -->
+        <p id="admin">
+          <input type="checkbox" id="admin-checkbox" name="admin"> Are you an Admin/Caterer? Check this box.
+        </p>
 
-      <p class="login-link">
+        <p class="signUp-link">
           <a href="#">
-            <-- Back to Login!
+            Click Here to SignUp!
           </a>
-      </p>
+        </p>
 
-      <div class="card">
-        <!-- Login form -->
-        <div id="form-card" class="card-body">
-          <div class="form-title" id="login-form-title">Customer Login 
-            <hr>
+        <p class="login-link">
+          <a href="#">
+            <-- Back to Login! </a>
+        </p>
+
+        <div class="card">
+          <!-- Login form -->
+          <div id="form-card" class="card-body">
+            <div class="form-title" id="login-form-title">Customer Login
+              <hr>
+            </div>
+
+            <form id="login" class="login-form">
+              <p>
+                <label for="email">Email
+                  <span class="asterik">*</span>
+                </label>
+                <input type="email" id="login-email" placeholder="Enter Email" name="email" required>
+              </p>
+
+              <p>
+                <label for="psw">Password
+                  <span class="asterik">*</span>
+                </label>
+                <input type="password" id="login-password" placeholder="Enter password" name="psw" required>
+              </p>
+
+              <p>
+                <input type="checkbox" name="remember" id="remember"> Remember me.
+              </p>
+
+              <p>
+                <button type="submit" id="loginbtn" class="loginbtn btn-1">Login</button>
+              </p>
+            </form>
+
           </div>
-       
-          <form id="login" class="login-form">
-            <p>
-            <label for="email">Email
-              <span class="asterik">*</span>
-            </label>
-            <input type="email" id="login-email" placeholder="Enter Email" name="email" required>
-            </p>
-
-            <p>
-            <label for="psw">Password
-              <span class="asterik">*</span>
-            </label>
-            <input type="password" id="login-password" placeholder="Enter password" name="psw" required>
-            </p>
-
-            <p>
-            <input type="checkbox" name="remember" id="remember"> Remember me.
-            </p>
-
-            <p>
-            <button type="submit" id="loginbtn" class="loginbtn btn-1">Login</button>
-            </p>
-          </form>
-
-        </div>
 
           <!-- SignUp form -->
-          <div class="form-title" id="signup-form-title"> SignUp Form  
-          <hr>
-        </div>
+          <div class="form-title" id="signup-form-title"> SignUp Form
+            <hr>
+          </div>
           <form id="signup" class="signup-form">
             <p class="">
-            <label for="fname">First name
-              <span class="asterik">*</span>
-            </label>
-            <input type="text" placeholder="Enter first name" name="fname" id="signup-fname" required>
+              <label for="fname">First name
+                <span class="asterik">*</span>
+              </label>
+              <input type="text" placeholder="Enter first name" name="fname" id="signup-fname" required>
             </p>
 
             <p>
-            <label for="lname">Last name
-              <span class="asterik">*</span>
-            </label>
-            <input type="text" placeholder="Enter last name" name="lname" id="signup-lname" required>
+              <label for="lname">Last name
+                <span class="asterik">*</span>
+              </label>
+              <input type="text" placeholder="Enter last name" name="lname" id="signup-lname" required>
             </p>
 
             <p class="full">
-            <label for="email">Email
-              <span class="asterik">*</span>
-            </label>
-            <input type="email" placeholder="Enter email" id="signup-email" name="email" required>
+              <label for="email">Email
+                <span class="asterik">*</span>
+              </label>
+              <input type="email" placeholder="Enter email" id="signup-email" name="email" required>
             </p>
 
             <p>
-            <label for="phone">Phone
-              <span class="asterik">*</span>
-            </label>
-            <input type="text" placeholder="Enter phone number" name="phone2" id="signup-phone" required>
+              <label for="phone">Phone
+                <span class="asterik">*</span>
+              </label>
+              <input type="text" placeholder="Enter phone number" name="phone2" id="signup-phone" required>
             </p>
 
             <p>
-            <label for="phone2">Phone 2</label>
-            <input type="text" id="signup-phone2" placeholder="Enter phone number" name="phone2">
+              <label for="phone2">Phone 2</label>
+              <input type="text" id="signup-phone2" placeholder="Enter phone number" name="phone2">
             </p>
 
             <p>
-            <label for="address">Address
-              <span class="asterik">*</span>
-            </label>
-            <input type="text" id="signup-address" placeholder="Enter permanent address" name="address" required>
+              <label for="address">Address
+                <span class="asterik">*</span>
+              </label>
+              <input type="text" id="signup-address" placeholder="Enter permanent address" name="address" required>
             </p>
 
             <p>
-            <label for="address2">Address 2</label>
-            <input type="text" id="signup-address2"placeholder="Enter address" name="address2">
+              <label for="address2">Address 2</label>
+              <input type="text" id="signup-address2" placeholder="Enter address" name="address2">
             </p>
 
             <p>
-            <label for="city">City
-              <span class="asterik">*</span>
-            </label>
-            <input type="text" id="signup-city" placeholder="Enter City" name="city" required>
+              <label for="city">City
+                <span class="asterik">*</span>
+              </label>
+              <input type="text" id="signup-city" placeholder="Enter City" name="city" required>
             </p>
 
             <p>
-            <label for="state">State
-              <span class="asterik">*</span>
-            </label>
-            <input type="text" id="signup-state" placeholder="Enter State" name="state" required>
+              <label for="state">State
+                <span class="asterik">*</span>
+              </label>
+              <input type="text" id="signup-state" placeholder="Enter State" name="state" required>
             </p>
 
             <p>
-            <label for="psw">Password
-              <span class="asterik">*</span>
-            </label>
-            <input type="password" id="signup-psw" placeholder="Enter Password" name="psw" required>
+              <label for="psw">Password
+                <span class="asterik">*</span>
+              </label>
+              <input type="password" id="signup-psw" placeholder="Enter Password" name="psw" required>
             </p>
 
             <p>
-            <label for="cpsw">Confirm Password
-              <span class="asterik">*</span>
-            </label>
-            <input type="password"  id="signup-cpsw" placeholder="Confirm Password" name="cps" required>
+              <label for="cpsw">Confirm Password
+                <span class="asterik">*</span>
+              </label>
+              <input type="password" id="signup-cpsw" placeholder="Confirm Password" name="cps" required>
             </p>
 
-            <p class="full">By creating an account you agree to our <a href="#">Terms & Policy</a> .</p>
+            <p class="full">By creating an account you agree to our
+              <a href="#">Terms & Policy</a> .</p>
 
             <p class="full">
-            <button type="submit" name="signupbtn" id="signupbtn" class="signupbtn btn-1">Sign Up</button>
+              <button type="submit" name="signupbtn" id="signupbtn" class="signupbtn btn-1">Sign Up</button>
             </p>
           </form>
-      </div>
+        </div>
 
-    </div>
-  </section>
+      </div>
+    </section>
   </main>
 
-<script src="./js/login-signup.js"></script>
+  <!-- Footer -->
+  <footer>
+    <div class="container">
+      <p>Book-A-Meal, copyright &copy; 2018</p>
+    </div>
+  </footer>
+
+  <script src="./js/login-signup.js"></script>
 </body>
 
 </html>
