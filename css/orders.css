@@ -14,6 +14,14 @@ p {
     margin: 0;
 }
 
+a {
+  color: #007bff;
+}
+
+a:active {
+  color: purple
+}
+
 /* header */
 
 .header {
@@ -118,6 +126,8 @@ td {
   padding: 1.4rem
 }
 
+
+
 tr:hover {
   background: rgb(196, 248, 250)
 }
@@ -175,6 +185,10 @@ tr:hover {
   margin-bottom: 20px
 }
 
+#history {
+  font-size: 1.4em
+}
+
 /* Footer */
 footer {
   background: #007bff;
@@ -186,4 +200,16 @@ footer {
 
 footer .container {
   padding: 0
+}
+
+/* order history */
+#filter {
+  margin: 1.2em
+}
+input[type=date] {
+  width: 60%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: transparent
 }
