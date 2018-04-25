@@ -1,0 +1,40 @@
+{
+  "name": "book-a-meal",
+  "version": "1.0.0",
+  "description": "Book-A-Meal is an app designed to let you order meals from your favourite resturant at your convience. To use you can check a day's menu and place orders.",
+  "main": "app.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1",
+    "start": "node_modules/.bin/nodemon ./server/app.js --exec babel-node --"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rovilay/Book-A-Meal.git"
+  },
+  "author": "Akinola Ogooluwa",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/rovilay/Book-A-Meal/issues"
+  },
+  "homepage": "https://github.com/rovilay/Book-A-Meal#readme",
+  "dependencies": {
+    "express": "^4.16.3",
+    "nodemon": "^1.17.3"
+  },
+  "devDependencies": {
+    "babel-cli": "^6.26.0",
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
+    "body-parser": "^1.18.2",
+    "chai": "^4.1.2",
+    "chai-http": "^4.0.0",
+    "eslint": "^4.19.1",
+    "eslint-config-airbnb": "^16.1.0",
+    "eslint-config-prettier": "^2.9.0",
+    "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-prettier": "^2.6.0",
+    "mocha": "^5.1.1",
+    "prettier": "^1.12.1"
+  }
+}
