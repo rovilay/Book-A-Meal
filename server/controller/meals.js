@@ -54,7 +54,7 @@ class MealsController {
     return res.status(201).send({
       success: 'true',
       message: 'Meal added successfully',
-      meals
+      meals: meals
     });
   }
 
