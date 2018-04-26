@@ -58,6 +58,61 @@ class MealsController {
     });
   }
 
+  updateMeal(req, res) {
+    const id = parseInt(req.params.id, 10);
+    let foundMeal;
+    let itemIndex;
+
+    meals.map((meal, index) => {
+      if (meal.id === id) {
+        foundMeal = meal;
+        itemIndex = index;
+      }
+    });
+    if (!foundMeal) {
+      return res.status(404).send({
+        success: 'false',
+        message: 'meal not found'
+      });
+    }
+    if (!req.body.title) {
+      return res.status(404).send({
+        success: 'false',
+        message: 'title is required!'
+      });
+    } else if (!req.body.description) {
+      return res.status(404).send({
+        success: 'false',
+        message: 'description is required!'
+      });
+    } else if (!req.body.price) {
+      return res.status(404).send({
+        success: 'false',
+        message: 'price is required!'
+      });
+    } else if (!req.body.image) {
+      return res.status(404).send({
+        success: 'false',
+        message: 'image is required!'
+      });
+    }
+
+    const updatedMeal = {
+      id: foundMeal.id,
+      title: req.body.title || foundMeal.title,
+      description: req.body.description || foundMeal.description,
+      price: req.body.price || foundMeal.price,
+      image: req.body.image || foundMeal.image
+    };
+
+    meals.splice(itemIndex, 1, updatedMeal);
+
+    return res.status(201).send({
+      success: 'true',
+      message: 'Meal updated successfully!',
+      meals
+    });
+  }
 }
 
 const mealsController = new MealsController();
