@@ -61,6 +61,35 @@ class MenusController {
       menu: reqMenu
     });
   }
+
+  postMenu(req, res) {
+    if (!req.body.date) {
+      return res.status(400).send({
+        success: 'false',
+        message: 'date is empty'
+      });
+    } else if (!req.body.meals || req.body.meals.length === 0) {
+      return res.status(400).send({
+        success: 'false',
+        message: 'meals are empty'
+      });
+    }
+    // obj to input to the db
+    const menu = {
+      id: parseInt(menus[menus.length - 1].id) + 1,
+      date: req.body.date,
+      meals: req.body.meals
+    };
+
+    // push menu to db
+    menus.push(menu);
+
+    return res.status(201).send({
+      success: 'true',
+      message: 'Menu added successfully',
+      menus
+    });
+  }
 }
 
 const menusController = new MenusController();
