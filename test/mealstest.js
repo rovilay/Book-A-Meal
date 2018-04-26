@@ -48,57 +48,58 @@ describe('GET /api/v1/meals', () => {
         done();
       });
   });
+
+  describe('GET /api/v1/meals/:id', () => {
+
+    it('should return status code 200', (done) => {
+  
+      chai.request(app.listen())
+        .get('/api/v1/meals/1')
+        .end((err, res) => {
+          // console.log(res);
+          res.status.should.equal(200);
+          expect('content-type', /json/);
+          res.body.should.have.property('success');
+          res.body.should.have.property('message');
+          res.body.should.have.property('meal');
+          res.body.meal.should.be.an('object');
+          res.body.meal.should.not.be.an('array');
+          done();
+        });
+    });
+    it('Meal returned should have right properties if id exist', (done) => {
+      chai.request(app.listen())
+        .get('/api/v1/meals/1')
+        .end((err, res) => {
+          console.log(res.meal);
+            res.body.meal.should.be.an('object');
+            res.body.meal.should.have.property('id');
+            res.body.meal.should.have.property('title');
+            res.body.meal.should.have.property('description');
+            res.body.meal.should.have.property('price');
+            res.body.meal.should.have.property('img');
+            res.body.meal.id.should.be.a('number');
+            res.body.meal.title.should.be.a('string');
+            res.body.meal.description.should.be.a('string');
+            parseInt(res.body.meal.price).should.be.a('number');
+            if(res.body.meal.img !== null) {
+              res.body.meal.img.should.be.a('string');
+            }
+          
+          done();
+        });
+    });
+    it('should return 404 if id do not exist', (done) => {
+      chai.request(app.listen())
+        .get('/api/v1/meals/15')
+        .end((err, res) => {
+          res.status.should.equal(404);
+          
+          done();
+        });
+    });
+    
+  });
   
 });
 
-describe('GET /api/v1/meals/:id', () => {
-
-  it('should return status code 200', (done) => {
-
-    chai.request(app.listen())
-      .get('/api/v1/meals/1')
-      .end((err, res) => {
-        // console.log(res);
-        res.status.should.equal(200);
-        expect('content-type', /json/);
-        res.body.should.have.property('success');
-        res.body.should.have.property('message');
-        res.body.should.have.property('meal');
-        res.body.meal.should.be.an('object');
-        res.body.meal.should.not.be.an('array');
-        done();
-      });
-  });
-  it('Meal returned should have right properties if id exist', (done) => {
-
-    chai.request(app.listen())
-      .get('/api/v1/meals/1')
-      .end((err, res) => {
-          res.meal.should.be.an('object');
-          res.meal.should.have.property('id');
-          res.meal.should.have.property('title');
-          res.meal.should.have.property('description');
-          res.meal.should.have.property('price');
-          res.meal.should.have.property('img');
-          res.meal.id.should.be.a('number');
-          res.meal.title.should.be.a('string');
-          res.meal.description.should.be.a('string');
-          parseInt(meal.price).should.be.a('number');
-          if(res.meal.img !== null) {
-            res.meal.img.should.be.a('string');
-          }
-        
-        done();
-      });
-  });
-  it('should return 404 for wrong id', (done) => {
-    chai.request(app.listen())
-      .get('/api/v1/meals/15')
-      .end((err, res) => {
-        res.status.should.equal(404);
-        
-        done();
-      });
-  });
-  
-});
