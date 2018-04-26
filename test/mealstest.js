@@ -152,6 +152,59 @@ it('should return a list of all meals with new meal', (done) => {
 });
 });
 
+describe('PUT /api/v1/meals/:id', () => {
+  it('should return status code 404', (done) => {
+    chai.request(app.listen())
+      .put('/api/v1/meals')
+      .send({
+        title: 'Rice and Chicken',
+        description: 'Very Good',
+        price: 700,
+        image: 'hp.image.com'
+      })
+      .end((err, res) => {
+        res.status.should.equal(404);
+      });
+    done();
+  });
+
+  it('should return status code 404', (done) => {
+    chai.request(app.listen())
+      .put('/api/v1/meals/2')
+      .send({
+        title: 'Rice and Chicken',
+        price: 700,
+        image: 'hp.image.com'
+      })
+      .end((err, res) => {
+        res.status.should.equal(404);
+        expect('content/type', /json/);
+        res.body.message.should.equal('description is required!');
+      });
+    done();
+  });
+
+  it('should update specified id meal', (done) => {
+    chai.request(app.listen())
+      .put('/api/v1/meals/2')
+      .send({
+        title: 'Rice and Chicken',
+        description: 'So delicious',
+        price: 700,
+        image: 'hp.image.com'
+      })
+      .end((err, res) => {
+        res.status.should.equal(201);
+        expect('content/type', /json/);
+        res.body.should.be.an('object');
+        res.body.message.should.equal('Meal updated successfully!');
+        res.body.meals.should.be.an('array');
+        res.body.meals[2].title.should.equal('Rice and Chicken');
+      });
+    done();
+  });
+});
+
 // describe('GET /api/v1/meals/:id', () => {
 
 //   it('should return status code 200', (done) => {
