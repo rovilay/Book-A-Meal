@@ -65,7 +65,7 @@ describe('GET /api/v1/menus', () => {
           done();
         });
     });
-    
+
     it('Menu returned should have right properties if menu date exist', (done) => {
       chai.request(app.listen())
         .get('/api/v1/menus/26/04/2018')
@@ -92,6 +92,50 @@ describe('GET /api/v1/menus', () => {
     });
 
   });
+});
 
+describe('POST /api/v1/menus', () => {
+
+  it('should return status code 400', (done) => {
+
+    chai.request(app.listen())
+      .post('/api/v1/menus')
+      .send({
+        date: "27/04/2018",
+        meals: []
+      })
+      .end((err, res) => {
+        // console.log(res);
+        res.status.should.equal(400);
+       
+      });
+    done();
+  });
+
+  it('should return a list of all menu with new menu', (done) => {
+
+  chai.request(app.listen())
+    .post('/api/v1/menus')
+    .send({
+      date: '27/04/2018',
+      meals: [1, 2, 5]
+    })
+    .end((err, res) => {
+      res.status.should.equal(201);
+      expect('content/type', /JSON/);
+      res.body.should.be.an('object');
+      res.body.menus.should.be.an('array');
+      res.body.menus[res.body.menus.length - 1].should.have.property('id');
+      res.body.menus[res.body.menus.length - 1].should.have.property('date');
+      res.body.menus[res.body.menus.length - 1].should.have.property('meals');
+      res.body.menus[res.body.menus.length - 1].id.should.be.a('number');
+      res.body.menus[res.body.menus.length - 1].date.should.be.a('string');
+      res.body.menus[res.body.menus.length - 1].meals.should.be.a('array');
+
+
+    });
+
+  done();
+  });
 });
 

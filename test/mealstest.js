@@ -121,7 +121,7 @@ describe('POST /api/v1/meals', () => {
       });
   });
 
-it('should return a list of all meals with new meal', (done) => {
+  it('should return a list of all meals with new meal', (done) => {
 
   chai.request(app.listen())
     .post('/api/v1/meals')
@@ -149,7 +149,7 @@ it('should return a list of all meals with new meal', (done) => {
     });
 
   done();
-});
+  });
 });
 
 describe('PUT /api/v1/meals/:id', () => {
