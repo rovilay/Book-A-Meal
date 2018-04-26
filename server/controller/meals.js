@@ -113,6 +113,24 @@ class MealsController {
       meals
     });
   }
+
+  deleteMeal(req, res) {
+    const id = parseInt(req.params.id, 10);
+    meals.map((meal, index) => {
+      if (meal.id === id) {
+        meals.splice(index, 1);
+        return res.status(200).send({
+          success: 'true',
+          message: 'Meal deleted successfully!'
+        });
+      }
+    });
+
+    return res.status(404).send({
+      success: 'false',
+      message: `meal with id ${id} does not exist!`
+    });
+  }
 }
 
 const mealsController = new MealsController();
