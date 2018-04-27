@@ -152,56 +152,88 @@ it('should return a list of all meals with new meal', (done) => {
 });
 });
 
-// describe('GET /api/v1/meals/:id', () => {
+describe('PUT /api/v1/meals/:id', () => {
+  it('should return status code 404', (done) => {
+    chai.request(app.listen())
+      .put('/api/v1/meals')
+      .send({
+        title: 'Rice and Chicken',
+        description: 'Very Good',
+        price: 700,
+        image: 'hp.image.com'
+      })
+      .end((err, res) => {
+        res.status.should.equal(404);
+      });
+    done();
+  });
 
-//   it('should return status code 200', (done) => {
+  it('should return status code 404', (done) => {
+    chai.request(app.listen())
+      .put('/api/v1/meals/2')
+      .send({
+        title: 'Rice and Chicken',
+        price: 700,
+        image: 'hp.image.com'
+      })
+      .end((err, res) => {
+        res.status.should.equal(404);
+        expect('content/type', /json/);
+        res.body.message.should.equal('description is required!');
+      });
+    done();
+  });
 
-//     chai.request(app.listen())
-//       .get('/api/v1/meals/1')
-//       .end((err, res) => {
-//         // console.log(res);
-//         res.status.should.equal(200);
-//         expect('content-type', /json/);
-//         res.body.should.have.property('success');
-//         res.body.should.have.property('message');
-//         res.body.should.have.property('meal');
-//         res.body.meal.should.be.an('object');
-//         res.body.meal.should.not.be.an('array');
-//         done();
-//       });
-//   });
-//   it('Meal returned should have right properties if id exist', (done) => {
-//     chai.request(app.listen())
-//       .get('/api/v1/meals/1')
-//       .end((err, res) => {
-//         console.log(res.meal);
-//           res.body.meal.should.be.an('object');
-//           res.body.meal.should.have.property('id');
-//           res.body.meal.should.have.property('title');
-//           res.body.meal.should.have.property('description');
-//           res.body.meal.should.have.property('price');
-//           res.body.meal.should.have.property('img');
-//           res.body.meal.id.should.be.a('number');
-//           res.body.meal.title.should.be.a('string');
-//           res.body.meal.description.should.be.a('string');
-//           parseInt(res.body.meal.price).should.be.a('number');
-//           if(res.body.meal.img !== null) {
-//             res.body.meal.img.should.be.a('string');
-//           }
+  it('should update specified id meal', (done) => {
+    chai.request(app.listen())
+      .put('/api/v1/meals/2')
+      .send({
+        title: 'Rice and Chicken',
+        description: 'So delicious',
+        price: 700,
+        image: 'hp.image.com'
+      })
+      .end((err, res) => {
+        res.status.should.equal(201);
+        expect('content/type', /json/);
+        res.body.should.be.an('object');
+        res.body.message.should.equal('Meal updated successfully!');
+        res.body.meals.should.be.an('array');
+        res.body.meals[2].title.should.equal('Rice and Chicken');
+      });
+    done();
+  });
+});
 
-//         done();
-//       });
-//   });
-//   it('should return 404 if id do not exist', (done) => {
-//     chai.request(app.listen())
-//       .get('/api/v1/meals/15')
-//       .end((err, res) => {
-//         res.status.should.equal(404);
+describe('DELETE /api/v1/meals/:id', () => {
+  it('should return error 404', (done) => {
+    chai.request(app.listen())
+    .delete('/api/v1/meals')
+    .end((err, res) => {
+      res.status.should.equal(404);
+    });
+    done();
+  });
 
-//         done();
-//       });
-//   });
+  it('should delete specified id', (done) => {
+    chai.request(app.listen())
+    .delete('/api/v1/meals/2')
+    .end((err, res) => {
+      res.status.should.equal(200);
+      expect('content/json', /json/);
+      res.body.message.should.equal('Meal deleted successfully!');
+    });
+    done();
+  });
 
-// });
-
-// });
+  it('should return 404 if id not found', (done) => {
+    chai.request(app.listen())
+    .delete('/api/v1/meals/12')
+    .end((err, res) => {
+      res.status.should.equal(404);
+      expect('content/json', /json/);
+      res.body.message.should.equal(`meal with id 12 does not exist!`);
+    });
+    done();
+  });
+});
