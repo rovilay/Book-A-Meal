@@ -11,42 +11,6 @@ class OrdersController {
     });
   }
 
-  getMenu(req, res) {
-    // let today = new Date().toISOString().substr(0, 10).split('-').reverse().join('/');
-    // console.log(today);
-    let day = req.params.DD;
-    let month = req.params.MM;
-    let year = req.params.YYYY;
-    let date = `${day}/${month}/${year}`;
-    let reqMenu;
-    console.log(date);
-    menus.forEach(menu => {
-      if (menu.date === date) {
-        for (let i = 0; i < menu.meals.length; i++) {
-          meals.map(meal => {
-            if (meal.id === menu.meals[i]) {
-              menu.meals[i] = meal;
-            }
-
-            if (parseInt(menu.meals[i])) {
-              let id = menu.meals[i];
-              menu.meals[i] =
-                `meal id ${id} not in database`;
-            }
-          });
-        }
-
-        reqMenu = menu;
-      }
-    });
-
-    return res.status(200).send({
-      success: 'true',
-      message: 'Menu retrieved successfully',
-      menu: reqMenu
-    });
-  }
-
   postOrder(req, res) {
     if (!req.body.meals) {
       return res.status(400).send({
@@ -77,6 +41,49 @@ class OrdersController {
     return res.status(201).send({
       success: 'true',
       message: 'Menu added successfully',
+      orders: orders
+    });
+  }
+
+  updateOrder(req, res) {
+    const id = parseInt(req.params.id, 10);
+    let foundOrder;
+    let orderIndex;
+
+    orders.map((order, index) => {
+      if (order.id === id) {
+        foundOrder = order;
+        orderIndex = index;
+      }
+    });
+    if (!foundOrder) {
+      return res.status(404).send({
+        success: 'false',
+        message: 'order not found'
+      });
+    }
+    if (!req.body.meals || req.body.meals === "" || req.body.meals === "[]") {
+      return res.status(404).send({
+        success: 'false',
+        message: 'meals is required!'
+      });
+    } 
+
+    const today = new Date().toISOString().substr(0, 10).split('-').reverse().join('/');
+
+    const updatedOrder = {
+      id: foundOrder.id,
+      date: foundOrder.date,
+      modifiedDate: today,
+      customerName: foundOrder.customerName,
+      meals: req.body.meals
+    };
+
+    orders.splice(orderIndex, 1, updatedOrder);
+
+    return res.status(201).send({
+      success: 'true',
+      message: 'Meal updated successfully!',
       orders: orders
     });
   }
