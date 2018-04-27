@@ -1,3 +1,6 @@
+[![Coverage Status](https://coveralls.io/repos/github/rovilay/Book-A-Meal/badge.svg?branch=master)](https://coveralls.io/github/rovilay/Book-A-Meal?branch=master)
+[![Build Status](https://travis-ci.org/rovilay/Book-A-Meal.svg?branch=develop)](https://travis-ci.org/rovilay/Book-A-Meal)
+
 # Book-A-Meal
 Book-A-Meal is an app designed to let you order meals from your favourite resturant at your convience. To use you can check a day's menu and place orders.
 
