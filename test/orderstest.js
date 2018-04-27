@@ -8,7 +8,7 @@ const expect = chai.expect;
 
 chai.use(chaiHttp);
 
-describe('GET /api/v1/meals', () => {
+describe('GET /api/v1/orders', () => {
 
   it('should return status code 200', (done) => {
 
@@ -29,54 +29,32 @@ describe('GET /api/v1/meals', () => {
 
 });
 
-describe('PUT /api/v1/meals/:id', () => {
+describe('PUT /api/v1/orders/:id', () => {
   it('should return status code 404', (done) => {
     chai.request(app.listen())
-      .put('/api/v1/meals')
+      .put('/api/v1/orders/2')
       .send({
-        title: 'Rice and Chicken',
-        description: 'Very Good',
-        price: 700,
-        image: 'hp.image.com'
-      })
-      .end((err, res) => {
-        res.status.should.equal(404);
-      });
-    done();
-  });
-
-  it('should return status code 404', (done) => {
-    chai.request(app.listen())
-      .put('/api/v1/meals/2')
-      .send({
-        title: 'Rice and Chicken',
-        price: 700,
-        image: 'hp.image.com'
+        meals: ""
       })
       .end((err, res) => {
         res.status.should.equal(404);
         expect('content/type', /json/);
-        res.body.message.should.equal('description is required!');
+        res.body.message.should.equal('meals is required!');
       });
     done();
   });
 
   it('should update specified id order', (done) => {
     chai.request(app.listen())
-      .put('/api/v1/meals/2')
+      .put('/api/v1/orders/2')
       .send({
-        title: 'Rice and Chicken',
-        description: 'So delicious',
-        price: 700,
-        image: 'hp.image.com'
+        meals: [{id: 1, portion: 3, totalPrice: 2100}]
       })
       .end((err, res) => {
         res.status.should.equal(201);
         expect('content/type', /json/);
         res.body.should.be.an('object');
         res.body.message.should.equal('Meal updated successfully!');
-        res.body.meals.should.be.an('array');
-        res.body.meals[2].title.should.equal('Rice and Chicken');
       });
     done();
   });
