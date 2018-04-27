@@ -1,4 +1,4 @@
-[![Coverage Status](https://coveralls.io/repos/github/rovilay/Book-A-Meal/badge.svg?branch=master)](https://coveralls.io/github/rovilay/Book-A-Meal?branch=master)
+[![Coverage Status](https://coveralls.io/repos/github/rovilay/Book-A-Meal/badge.svg?branch=develop)](https://coveralls.io/github/rovilay/Book-A-Meal?branch=develop)
 [![Build Status](https://travis-ci.org/rovilay/Book-A-Meal.svg?branch=develop)](https://travis-ci.org/rovilay/Book-A-Meal)
 
 # Book-A-Meal
