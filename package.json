@@ -4,7 +4,7 @@
   "description": "Book-A-Meal is an app designed to let you order meals from your favourite resturant at your convience. To use you can check a day's menu and place orders.",
   "main": "app.js",
   "scripts": {
-    "test": "mocha --compilers js:babel-core/register ./test/mealstest.js --exit --timeout 5000ms",
+    "test": "mocha --compilers js:babel-core/register ./test --exit --timeout 5000ms",
     "start": "node_modules/.bin/nodemon ./server/app.js --exec babel-node --"
   },
   "repository": {
@@ -34,6 +34,7 @@
     "eslint-config-airbnb": "^16.1.0",
     "eslint-config-prettier": "^2.9.0",
     "eslint-plugin-import": "^2.11.0",
+    "eslint-plugin-jsx-a11y": "^6.0.3",
     "eslint-plugin-prettier": "^2.6.0",
     "mocha": "^5.1.1",
     "prettier": "^1.12.1"
