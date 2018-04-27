@@ -9,3 +9,5 @@ cache:
     - "node_modules"
 dist: trusty
 sudo: required
+after_success:
+  -npm run coverage
