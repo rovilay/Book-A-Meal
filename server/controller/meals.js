@@ -8,6 +8,24 @@ class MealsController {
       meals: meals
     });
   }
+
+  getMeal(req, res) {
+    const id = parseInt(req.params.id, 10);
+    meals.map((meal) => {
+      if (meal.id === id) {
+        return res.status(200).send({
+          success: 'true',
+          message: 'Meal retrieved successfully',
+          meal: meal
+        });
+      }
+    });
+
+    return res.status(404).send({
+      success: 'false',
+      message: `meal with id ${id} does not exist!`
+    });
+  }
 }
 
 const mealsController = new MealsController();
