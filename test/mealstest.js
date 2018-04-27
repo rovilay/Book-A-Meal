@@ -72,7 +72,7 @@ describe('GET /api/v1/meals', () => {
       chai.request(app.listen())
         .get('/api/v1/meals/1')
         .end((err, res) => {
-          console.log(res.meal);
+          console.log(res.body.meal);
           res.body.meal.should.be.an('object');
           res.body.meal.should.have.property('id');
           res.body.meal.should.have.property('title');
