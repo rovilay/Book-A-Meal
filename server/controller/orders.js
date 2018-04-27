@@ -62,7 +62,7 @@ class OrdersController {
         message: 'order not found'
       });
     }
-    if (!req.body.meals) {
+    if (!req.body.meals || req.body.meals === "" || req.body.meals === "[]") {
       return res.status(404).send({
         success: 'false',
         message: 'meals is required!'
