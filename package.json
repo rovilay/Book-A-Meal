@@ -6,7 +6,8 @@
   "scripts": {
     "test": "set NODE_ENV=test&& nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register ./test --exit --timeout 5000ms",
     "start": "node_modules/.bin/nodemon ./server/app.js --exec babel-node --",
-    "coverage": "nyc report --reporter=text-lcov --repor=lcov | coveralls"
+    "coverage": "nyc report --reporter=text-lcov --repor=lcov | coveralls",
+    "lint": "eslint \"server/**/*.js\" --fix"
   },
   "repository": {
     "type": "git",
@@ -19,6 +20,7 @@
   },
   "homepage": "https://github.com/rovilay/Book-A-Meal#readme",
   "dependencies": {
+    "body-parser": "^1.18.2",
     "express": "^4.16.3",
     "nodemon": "^1.17.3"
   },
@@ -28,7 +30,6 @@
     "babel-eslint": "^8.2.3",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.6.1",
-    "body-parser": "^1.18.2",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "coveralls": "^3.0.0",

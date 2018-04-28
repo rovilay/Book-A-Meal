@@ -1,4 +1,4 @@
-import meals from '../model/mealsdb';
+/* eslint class-methods-use-this: ["error", { "exceptMethods": ["getAllOrders", "updateOrder", "postOrder"] }] */
 import orders from '../model/ordersdb';
 
 class OrdersController {
@@ -7,7 +7,7 @@ class OrdersController {
     return res.status(200).send({
       success: 'true',
       message: 'Menus retrieved successfully',
-      orders: orders
+      orders
     });
   }
 
@@ -29,7 +29,7 @@ class OrdersController {
     const today = new Date().toISOString().substr(0, 10).split('-').reverse().join('/');
     
     const order = {
-      id: parseInt(orders[orders.length - 1].id) + 1,
+      id: parseInt(orders[orders.length - 1].id, 10) + 1,
       customerName: req.body.name,
       date: today,
       meals: req.body.meals
@@ -41,7 +41,7 @@ class OrdersController {
     return res.status(201).send({
       success: 'true',
       message: 'Menu added successfully',
-      orders: orders
+      orders
     });
   }
 
@@ -84,7 +84,7 @@ class OrdersController {
     return res.status(201).send({
       success: 'true',
       message: 'Meal updated successfully!',
-      orders: orders
+      orders
     });
   }
 }
