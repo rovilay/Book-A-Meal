@@ -10,6 +10,7 @@
   "scripts": {
     "test": "set NODE_ENV=test&& nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register ./test --exit --timeout 5000ms",
     "start": "babel-node ./server/app.js",
+    "heroku-postbuild": "npm install",
     "start:dev": "node_modules/.bin/nodemon ./server/app.js --exec babel-node --",
     "coverage": "nyc report --reporter=text-lcov --repor=lcov | coveralls",
     "lint": "eslint \"server/**/*.js\" --fix"
