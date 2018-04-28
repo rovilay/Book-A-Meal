@@ -1,3 +1,5 @@
+
+/* eslint class-methods-use-this: ["error", { "exceptMethods": ["getAllMeals", "getMeal", "addMeal", "updateMeal", "deleteMeal"] }] */
 import meals from '../model/mealsdb';
 
 class MealsController {
@@ -5,7 +7,7 @@ class MealsController {
     return res.status(200).send({
       success: 'true',
       message: 'Meals retrieved successfully',
-      meals: meals
+      meals,
     });
   }
 
@@ -16,9 +18,11 @@ class MealsController {
         return res.status(200).send({
           success: 'true',
           message: 'Meal retrieved successfully',
-          meal: meal
+          meal
         });
       }
+
+      return undefined;
     });
 
     return res.status(404).send({
@@ -41,7 +45,7 @@ class MealsController {
     }
     // obj to input to the db
     const meal = {
-      id: parseInt(meals[meals.length - 1].id) + 1,
+      id: parseInt(meals[meals.length - 1].id, 10) + 1,
       title: req.body.title,
       description: req.body.description,
       price: req.body.price,
@@ -54,7 +58,7 @@ class MealsController {
     return res.status(201).send({
       success: 'true',
       message: 'Meal added successfully',
-      meals: meals
+      meals
     });
   }
 
@@ -68,6 +72,8 @@ class MealsController {
         foundMeal = meal;
         itemIndex = index;
       }
+
+      return undefined;
     });
     if (!foundMeal) {
       return res.status(404).send({
@@ -124,8 +130,9 @@ class MealsController {
           message: 'Meal deleted successfully!'
         });
       }
-    });
 
+      return undefined;
+    });
     return res.status(404).send({
       success: 'false',
       message: `meal with id ${id} does not exist!`

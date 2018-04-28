@@ -1,7 +1,7 @@
 
 import express from 'express';
-import mealRouter from './routes/mealRoutes';
 import bodyParser from 'body-parser';
+import mealRouter from './routes/mealRoutes';
 import menuRouter from './routes/menuRoutes';
 import ordersRouter from './routes/ordersRoutes';
 

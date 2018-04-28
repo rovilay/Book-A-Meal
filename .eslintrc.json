@@ -16,6 +16,13 @@
     "no-underscore-dangle": [1, {
       "allow": ["_id"]
     }],
-    "linebreak-style": 0
+    "linebreak-style": 0,
+    "semi": 2,
+    "import/no-unresolved": "off",
+    "import/extensions": "off",
+    "class-methods-use-this": "error",
+    "no-param-reassign":"off",
+    "consistent-return":"off",
+    "array-callback-return":"off"
   }
 }
