@@ -6,7 +6,7 @@ import menuRouter from './routes/menuRoutes';
 import ordersRouter from './routes/ordersRoutes';
 
 const app = express();
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Parse incoming requests data
 app.use(bodyParser.json());
