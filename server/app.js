@@ -6,7 +6,7 @@ import menuRouter from './routes/menuRoutes';
 import ordersRouter from './routes/ordersRoutes';
 
 const app = express();
-const PORT = process.env.PORT || 3000;
+const port = process.env.PORT || 3000;
 
 // Parse incoming requests data
 app.use(bodyParser.json());
@@ -16,8 +16,8 @@ app.use(menuRouter);
 app.use(ordersRouter);
 
 
-app.listen(PORT, () => {
-  console.log(`Sever is running at port ${PORT}`);
+app.listen(port, () => {
+  console.log(`Sever is running at port ${port}`);
 });
 
 export default app;
