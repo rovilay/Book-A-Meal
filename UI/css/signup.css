@@ -1,0 +1,145 @@
+/* Global */
+body {
+  margin: 0;
+  padding: 0;
+  font: 1em/1.5 'Segoe UI', Tahoma, Geneva, Verdana, sans-sarif;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: blue;
+}
+
+.container {
+  max-width:600px;
+  margin: 0 auto;
+  padding: 1em;
+  overflow: hidden
+}
+
+section .container {
+  padding-top: 0;
+}
+
+header .container {
+  padding: 0
+}
+
+.card {
+  width: inherit;
+  border: 1px solid #ccc;
+  padding: 1.4em
+}
+
+.card .form-title {
+  color: #000;
+  text-transform: capitalize;
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center
+}
+
+.card .signup-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  grid-gap: 1.3em
+}
+
+.card .signup-form p {
+  margin: 0;
+}
+
+.card form .full {
+  grid-column: 1 / 3;
+}
+
+.card form button, .card form input[type=text], .card form input[type=email], .card form input[type=password] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.card .asterik {
+  color: red;
+}
+
+.btn-1 {
+  border: none;
+  background: #007bff;
+  color: #fff;
+  padding: 1em 2em;
+  font-size: 1em;
+  text-align: center;
+  border-radius: 0.5em;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+}
+
+.btn-1:hover, .btn-1:focus {
+  background: blue;
+  transition: background-color 2s ease-out
+}
+
+
+label {
+  display: block;
+  text-transform: capitalize;
+  font-size: 1em;
+  font-weight: 700
+}
+
+hr {
+  color: #cccccc
+}
+
+/* Header */
+header {
+  background: #007bff;
+  color: #fff;
+  text-align: center
+}
+
+header a {
+  color: #fff;
+  text-decoration: none;
+  text-transform: uppercase;
+}
+
+/* alert */
+.alert-danger {
+  color: rgb(240, 98, 98);
+}
+ 
+.alert-success {
+  color: #48e048;
+}
+/* Section */
+
+#section-a {
+  margin-top: 30px;
+}
+
+/* Small screens */
+@media(max-width:500px) {
+  .card .signup-form {
+    display: inline;
+  }  
+}
+
+/* Footer */
+footer {
+  background: #007bff;
+  color: snow;
+  text-align: center;
+  padding: 1.0rem;
+  margin-top: 1em;
+}
+
+footer .container {
+  padding: 0
+}
