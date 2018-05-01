@@ -179,7 +179,7 @@ describe('PUT /api/v1/meals/:id', () => {
       .end((err, res) => {
         res.status.should.equal(404);
         expect('content/type', /json/);
-        res.body.message.should.equal('description is required!');
+        res.body.message.should.equal('All fields are required!');
       });
     done();
   });
