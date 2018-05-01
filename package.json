@@ -9,7 +9,9 @@
   "main": "./server/app.js",
   "scripts": {
     "test": "set NODE_ENV=test&& nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register ./test --exit --timeout 5000ms",
-    "start": "node ./server/app.js",
+    "start": "node_modules/.bin/nodemon ./server/app.js --exec babel-node",
+    "build": "babel server -d dist",
+    "serve": "node dist/app.js",
     "start:dev": "node_modules/.bin/nodemon ./server/app.js --exec babel-node --",
     "heroku-postbuild": "npm install",
     "coverage": "nyc report --reporter=text-lcov --repor=lcov | coveralls",
