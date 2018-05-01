@@ -1,3 +1,7 @@
+[![Coverage Status](https://coveralls.io/repos/github/rovilay/Book-A-Meal/badge.svg?branch=develop)](https://coveralls.io/github/rovilay/Book-A-Meal?branch=develop)
+[![Build Status](https://travis-ci.org/rovilay/Book-A-Meal.svg?branch=develop)](https://travis-ci.org/rovilay/Book-A-Meal)
+[![Maintainability](https://api.codeclimate.com/v1/badges/636939475b3c8d1d52c7/maintainability)](https://codeclimate.com/github/rovilay/Book-A-Meal/maintainability)
+
 # Book-A-Meal
 Book-A-Meal is an app designed to let you order meals from your favourite resturant at your convience. To use you can check a day's menu and place orders.
 
@@ -9,7 +13,7 @@ Book-A-Meal is an app designed to let you order meals from your favourite restur
 5. Caterer is able to see total amount made for a day
 
 # App Link
-View app at [Book-A-Meal](rovilay.github.io/Book-A-Meal)
+View app at [Book-A-Meal](https://rovilay.github.io/Book-A-Meal/UI/)
 
 # Languages & tools
 ## HTML

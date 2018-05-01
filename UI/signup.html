@@ -5,8 +5,8 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="./css/login-signup.css">
-  <title>Book-A-Meal | Login/signup </title>
+  <link rel="stylesheet" href="./css/signup.css">
+  <title>Book-A-Meal | Signup </title>
 </head>
 
 <body>
@@ -27,55 +27,7 @@
         <!-- Alert -->
         <div id="alert" role="alert"></div>
 
-        <!-- Admin check box -->
-        <p id="admin">
-          <input type="checkbox" id="admin-checkbox" name="admin"> Are you an Admin/Caterer? Check this box.
-        </p>
-
-        <p class="signUp-link">
-          <a href="#">
-            Click Here to SignUp!
-          </a>
-        </p>
-
-        <p class="login-link">
-          <a href="#">
-            <-- Back to Login! </a>
-        </p>
-
         <div class="card">
-          <!-- Login form -->
-          <div id="form-card" class="card-body">
-            <div class="form-title" id="login-form-title">Customer Login
-              <hr>
-            </div>
-
-            <form id="login" class="login-form">
-              <p>
-                <label for="email">Email
-                  <span class="asterik">*</span>
-                </label>
-                <input type="email" id="login-email" placeholder="Enter Email" name="email" required>
-              </p>
-
-              <p>
-                <label for="psw">Password
-                  <span class="asterik">*</span>
-                </label>
-                <input type="password" id="login-password" placeholder="Enter password" name="psw" required>
-              </p>
-
-              <p>
-                <input type="checkbox" name="remember" id="remember"> Remember me.
-              </p>
-
-              <p>
-                <button type="submit" id="loginbtn" class="loginbtn btn-1">Login</button>
-              </p>
-            </form>
-
-          </div>
-
           <!-- SignUp form -->
           <div class="form-title" id="signup-form-title"> SignUp Form
             <hr>
@@ -99,7 +51,7 @@
               <label for="email">Email
                 <span class="asterik">*</span>
               </label>
-              <input type="email" placeholder="Enter email" id="signup-email" name="email" required>
+              <input type="email" placeholder="Enter email" id="signup-email" name="email" minlength="10" required>
             </p>
 
             <p>
@@ -163,6 +115,10 @@
           </form>
         </div>
 
+        <p>
+          <a href="login.html">
+            Click Here! to Log in </a>
+        </p>
       </div>
     </section>
   </main>
@@ -174,7 +130,7 @@
     </div>
   </footer>
 
-  <script src="./js/login-signup.js"></script>
+  <script src="./js/signup.js"></script>
 </body>
 
 </html>
