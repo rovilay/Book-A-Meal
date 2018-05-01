@@ -8,7 +8,6 @@
   "require": ["babel-register"],
   "exclude": [
     "*/node_modules/*",
-    "server/config",
     "coverage/**",
     "test/**",
     "UI"
