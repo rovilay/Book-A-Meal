@@ -13,7 +13,7 @@ Book-A-Meal is an app designed to let you order meals from your favourite restur
 5. Caterer is able to see total amount made for a day
 
 # App Link
-View app at [Book-A-Meal](rovilay.github.io/Book-A-Meal/UI)
+View app at [Book-A-Meal](https://rovilay.github.io/Book-A-Meal/UI/)
 
 # Languages & tools
 ## HTML
