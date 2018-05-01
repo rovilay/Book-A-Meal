@@ -38,16 +38,28 @@ ul {
  
 }
 
-.header a.logo {
+.header a.logo  {
   font-size: 25px;
   font-weight: bold;
-  text-transform: uppercase
+  text-transform: uppercase;
+  text-decoration: none;
+}
+.header a.logo  {
+  font-size: 35px;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.header a.logo:hover  {
+
+  text-decoration: none;
 }
 
 
-.header a.active {
-  background-color: dodgerblue;
-  color: white;
+.header a:hover, .header .active {
+  text-decoration: underline;
+  font-weight: bold
 }
 
 .header-right {
@@ -59,12 +71,15 @@ ul {
   border-radius: 4px;
 }
 
+
 @media screen and (max-width: 590px) {
   .header a {
       float: none;
       display: block;
       text-align: center;
+  
   }
+
   .header-right {
       float: none;
   }
