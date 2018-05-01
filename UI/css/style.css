@@ -6,7 +6,7 @@ body {
 
 /* Global */
 .container {
-  width: 80%;
+  width: 95%;
   margin:auto;
   overflow: hidden
 }
@@ -16,42 +16,7 @@ ul {
   padding: 0;
 }
 
-button {
-  -webkit-transition-duration: 0.4s; /* Safari */
-  transition-duration: 0.4s;
-}
 
-.btn-1 {
-  border: 2px solid #fff;
-  color: #fff;
-  padding: 10px 20px;
-  font-size: 0.9em;
-  text-align: center;
-  border-radius: 0.7em;
-  background: transparent
-}
-
-.btn-1:hover {
-  background-color: #fff;
-  color: #007bff;
-  border: none
-}
-.btn-2 {
-  border: 2px solid #007bff;
-  color: #007bff;
-  padding: 10px 20px;
-  font-size: 0.9em;
-  text-align: center;
-  border-radius: 0.7em;
-  background: transparent
-}
-
-.btn-2:hover {
-  background-color: #007bff;
-  color: #fff;
-  border: none;
-  font-weight: 400
-}
 
 /* header */
 
@@ -79,10 +44,6 @@ button {
   text-transform: uppercase
 }
 
-.header a:hover {
-  background-color: #ddd;
-  color: black;
-}
 
 .header a.active {
   background-color: dodgerblue;
@@ -91,11 +52,10 @@ button {
 
 .header-right {
   float: right;
-  border: 2px solid white;
-  border-radius: 4px;
 }
 .header-right:hover {
   border: none;
+  color: black;
   border-radius: 4px;
 }
 
@@ -157,15 +117,25 @@ button {
   font-size: 20px
 }
 
-#showcase1 .container{
+#showcase1 .container {
   padding-top: 1em;
   vertical-align: middle
 }
 
-#showcase1 p{
+#showcase1 p {
   color: #000;
   margin-top: -15px
   
+}
+
+#showcase1 a {
+  color: #007bff;
+  text-decoration: none;
+}
+
+#showcase1 a:hover {
+  
+  text-decoration: underline;
 }
 
 /* Menu section */
