@@ -2,7 +2,7 @@
 import orders from '../model/ordersdb';
 
 class OrdersController {
-  getAllOrders(req, res) {
+  static getAllOrders(req, res) {
 
     return res.status(200).send({
       success: 'true',
@@ -11,7 +11,8 @@ class OrdersController {
     });
   }
 
-  postOrder(req, res) {
+  static postOrder(req, res) {
+    // Check if req has body
     if (!req.body.meals) {
       return res.status(400).send({
         success: 'false',
@@ -32,7 +33,7 @@ class OrdersController {
       id: parseInt(orders[orders.length - 1].id, 10) + 1,
       customerName: req.body.name,
       date: today,
-      meals: req.body.meals
+      meals:  req.body.meals
     };
 
     // push menu to db
@@ -45,23 +46,9 @@ class OrdersController {
     });
   }
 
-  updateOrder(req, res) {
+  static updateOrder(req, res) {
     const id = parseInt(req.params.id, 10);
-    let foundOrder;
-    let orderIndex;
 
-    orders.map((order, index) => {
-      if (order.id === id) {
-        foundOrder = order;
-        orderIndex = index;
-      }
-    });
-    if (!foundOrder) {
-      return res.status(404).send({
-        success: 'false',
-        message: 'order not found'
-      });
-    }
     if (!req.body.meals || req.body.meals === "" || req.body.meals === "[]") {
       return res.status(404).send({
         success: 'false',
@@ -69,6 +56,21 @@ class OrdersController {
       });
     } 
 
+    function findOrder(order) {
+      return order.id === id;
+    }
+
+    
+    const foundOrder = orders.find(findOrder);
+    const foundOrderIndex = orders.findIndex(findOrder);
+
+    if (foundOrderIndex === -1) {
+      return res.status(404).send({
+        success: false,
+        message: 'order not found'
+      });
+    }
+    
     const today = new Date().toISOString().substr(0, 10).split('-').reverse().join('/');
 
     const updatedOrder = {
@@ -79,7 +81,7 @@ class OrdersController {
       meals: req.body.meals
     };
 
-    orders.splice(orderIndex, 1, updatedOrder);
+    orders.splice(foundOrderIndex, 1, updatedOrder);
 
     return res.status(201).send({
       success: 'true',
@@ -89,5 +91,4 @@ class OrdersController {
   }
 }
 
-const ordersController = new OrdersController();
-export default ordersController;
+export default OrdersController;

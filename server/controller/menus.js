@@ -4,32 +4,26 @@ import meals from '../model/mealsdb';
 import menus from '../model/menudb';
 
 class MenusController {
-  getAllMenus(req, res) {
+  static getAllMenus(req, res) {
     menus.forEach(menu => {
-        for (let i = 0; i < menu.meals.length; i += 1) {
-          meals.map(meal => {
-            if (meal.id === menu.meals[i]) {
-              menu.meals[i] = meal;
-            }
-            return undefined;
-          });
-
-          if(parseInt(menu.meals[i], 10)) {
-            menu.meals[i] = 
-            `meal id ${menu.meals[i]} not in database`;
+      for (let i = 0; i < menu.meals.length; i += 1) {
+        meals.forEach(meal => {
+          if (meal.id === menu.meals[i]) {
+            menu.meals[i] = meal;
           }
-        }
-      
-    });
+        });
+      }
+    
+  });
 
     return res.status(200).send({
-      success: 'true',
+      success: true,
       message: 'Menus retrieved successfully',
       menus
     });
   }
 
-  getMenu(req, res) {
+  static getMenu(req, res) {
   
     const day = req.params.DD;
     const month = req.params.MM;
@@ -38,24 +32,18 @@ class MenusController {
     let reqMenu;
     menus.forEach(menu => {
       if (menu.date === date) {
-        for (let i = 0; i < menu.meals.length; i += 1) {
+        for (let i = 0; i < menu.meals.length; i+=1) {
           meals.forEach(meal => {
             if (meal.id === menu.meals[i]) {
               menu.meals[i] = meal;
             } 
-
-            if(parseInt(menu.meals[i], 10)) {
-              const id = menu.meals[i];
-              menu.meals[i] = 
-              `meal id ${id} not in database`;
-            }
           });
         }
 
         reqMenu = menu;
       }
     });
-
+    
     return res.status(200).send({
       success: 'true',
       message: 'Menu retrieved successfully',
@@ -63,7 +51,7 @@ class MenusController {
     });
   }
 
-  postMenu(req, res) {
+  static postMenu(req, res) {
     if (!req.body.date) {
       return res.status(400).send({
         success: 'false',
@@ -93,5 +81,4 @@ class MenusController {
   }
 }
 
-const menusController = new MenusController();
-export default menusController;
+export default MenusController;

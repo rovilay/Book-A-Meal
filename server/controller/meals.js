@@ -3,20 +3,20 @@
 import meals from '../model/mealsdb';
 
 class MealsController {
-  getAllMeals(req, res) {
+  static getAllMeals(req, res) {
     return res.status(200).send({
-      success: 'true',
+      success: true,
       message: 'Meals retrieved successfully',
       meals,
     });
   }
 
-  getMeal(req, res) {
+  static getMeal(req, res) {
     const id = parseInt(req.params.id, 10);
     meals.map((meal) => {
       if (meal.id === id) {
         return res.status(200).send({
-          success: 'true',
+          success: true,
           message: 'Meal retrieved successfully',
           meal
         });
@@ -26,20 +26,15 @@ class MealsController {
     });
 
     return res.status(404).send({
-      success: 'false',
+      success: false,
       message: `meal with id ${id} does not exist!`
     });
   }
 
-  addMeal(req, res) {
-    if (!req.body.title) {
+  static addMeal(req, res) {
+    if (!req.body.title || !req.body.description || !req.body.price) {
       return res.status(400).send({
-        success: 'false',
-        message: 'title is empty'
-      });
-    } else if (!req.body.description || !req.body.price) {
-      return res.status(400).send({
-        success: 'false',
+        success: false,
         message: 'some fields are empty'
       });
     }
@@ -56,53 +51,38 @@ class MealsController {
     meals.push(meal);
 
     return res.status(201).send({
-      success: 'true',
+      success: true,
       message: 'Meal added successfully',
       meals
     });
   }
 
-  updateMeal(req, res) {
-    const id = parseInt(req.params.id, 10);
-    let foundMeal;
-    let itemIndex;
+  static updateMeal(req, res) {
 
-    meals.map((meal, index) => {
-      if (meal.id === id) {
-        foundMeal = meal;
-        itemIndex = index;
-      }
-
-      return undefined;
-    });
-    if (!foundMeal) {
+    if (!req.body.title || !req.body.description || !req.body.price || !req.body.image ) {
       return res.status(404).send({
-        success: 'false',
+        success: false,
+        message: 'All fields are required!'
+      });
+    } 
+
+    const id = parseInt(req.params.id, 10);
+
+    function findMeal(meal) {
+      return meal.id === id;
+    }
+
+    
+    const foundMeal = meals.find(findMeal);
+    const foundMealIndex = meals.findIndex(findMeal);
+
+    if (foundMealIndex === -1) {
+      return res.status(404).send({
+        success: false,
         message: 'meal not found'
       });
     }
-    if (!req.body.title) {
-      return res.status(404).send({
-        success: 'false',
-        message: 'title is required!'
-      });
-    } else if (!req.body.description) {
-      return res.status(404).send({
-        success: 'false',
-        message: 'description is required!'
-      });
-    } else if (!req.body.price) {
-      return res.status(404).send({
-        success: 'false',
-        message: 'price is required!'
-      });
-    } else if (!req.body.image) {
-      return res.status(404).send({
-        success: 'false',
-        message: 'image is required!'
-      });
-    }
-
+    
     const updatedMeal = {
       id: foundMeal.id,
       title: req.body.title || foundMeal.title,
@@ -111,34 +91,39 @@ class MealsController {
       image: req.body.image || foundMeal.image
     };
 
-    meals.splice(itemIndex, 1, updatedMeal);
+    meals.splice(foundMealIndex, 1, updatedMeal);
 
     return res.status(201).send({
-      success: 'true',
+      success: true,
       message: 'Meal updated successfully!',
       meals
     });
   }
 
-  deleteMeal(req, res) {
+  static deleteMeal(req, res) {
     const id = parseInt(req.params.id, 10);
-    meals.map((meal, index) => {
-      if (meal.id === id) {
-        meals.splice(index, 1);
-        return res.status(200).send({
-          success: 'true',
-          message: 'Meal deleted successfully!'
-        });
-      }
 
-      return undefined;
-    });
-    return res.status(404).send({
-      success: 'false',
-      message: `meal with id ${id} does not exist!`
-    });
+    function findMeal(meal) {
+      return meal.id === id;
+    }
+
+    const foundMealIndex = meals.findIndex(findMeal);
+
+    if(foundMealIndex > -1) {
+      meals.splice(foundMealIndex, 1);
+      return res.status(200).send({
+        success: true,
+        message: 'Meal deleted successfully!'
+      });
+    } 
+
+      return res.status(404).send({
+        success: false,
+        message: `meal with id ${id} does not exist!`
+      });
+    }
   }
-}
 
-const mealsController = new MealsController();
-export default mealsController;
+
+
+export default MealsController;
