@@ -5,8 +5,8 @@ class OrdersController {
   static getAllOrders(req, res) {
 
     return res.status(200).send({
-      success: 'true',
-      message: 'Menus retrieved successfully',
+      success: true,
+      message: 'Orders retrieved successfully',
       orders
     });
   }
@@ -15,12 +15,12 @@ class OrdersController {
     // Check if req has body
     if (!req.body.meals) {
       return res.status(400).send({
-        success: 'false',
+        success: false,
         message: 'Meal tray cannot be empty!'
       });
     } else if(!req.body.name) {
       return res.status(400).send({
-        success: 'false',
+        success: false,
         message: 'Customer name is empty!'
       });
     }
@@ -40,8 +40,8 @@ class OrdersController {
     orders.push(order);
 
     return res.status(201).send({
-      success: 'true',
-      message: 'Menu added successfully',
+      success: true,
+      message: 'Order added successfully',
       orders
     });
   }
@@ -51,7 +51,7 @@ class OrdersController {
 
     if (!req.body.meals || req.body.meals === "" || req.body.meals === "[]") {
       return res.status(404).send({
-        success: 'false',
+        success: false,
         message: 'meals is required!'
       });
     } 
@@ -84,8 +84,8 @@ class OrdersController {
     orders.splice(foundOrderIndex, 1, updatedOrder);
 
     return res.status(201).send({
-      success: 'true',
-      message: 'Meal updated successfully!',
+      success: true,
+      message: 'Order updated successfully!',
       orders
     });
   }

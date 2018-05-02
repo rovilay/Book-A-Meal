@@ -45,7 +45,7 @@ class MenusController {
     });
     
     return res.status(200).send({
-      success: 'true',
+      success: true,
       message: 'Menu retrieved successfully',
       menu: reqMenu
     });
@@ -54,12 +54,12 @@ class MenusController {
   static postMenu(req, res) {
     if (!req.body.date) {
       return res.status(400).send({
-        success: 'false',
+        success: false,
         message: 'date is empty'
       });
     } else if (!req.body.meals || req.body.meals.length === 0) {
       return res.status(400).send({
-        success: 'false',
+        success: false,
         message: 'meals are empty'
       });
     }
@@ -74,7 +74,7 @@ class MenusController {
     menus.push(menu);
 
     return res.status(201).send({
-      success: 'true',
+      success: true,
       message: 'Menu added successfully',
       menus
     });
