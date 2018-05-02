@@ -59,7 +59,6 @@ class OrdersController {
     function findOrder(order) {
       return order.id === id;
     }
-
     
     const foundOrder = orders.find(findOrder);
     const foundOrderIndex = orders.findIndex(findOrder);
