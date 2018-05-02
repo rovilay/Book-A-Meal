@@ -5,22 +5,21 @@ import menus from '../model/menudb';
 
 class MenusController {
   static getAllMenus(req, res) {
-    let i = 1;
-    console.log(menus);
-    const menuss = [...menus];
-    console.log(i+=1);
-    console.log(menus);
-    menuss.forEach(menu => {
-      const menuMeals = [...menu.meals];
-        
-      const foundMeals = meals.filter(meal => menuMeals.includes(meal.id));
-      menu.meals = foundMeals;  
-    });
+    menus.forEach(menu => {
+      for (let i = 0; i < menu.meals.length; i += 1) {
+        meals.forEach(meal => {
+          if (meal.id === menu.meals[i]) {
+            menu.meals[i] = meal;
+          }
+        });
+      }
+    
+  });
 
     return res.status(200).send({
       success: true,
       message: 'Menus retrieved successfully',
-      menus: menuss
+      menus
     });
   }
 
@@ -30,15 +29,20 @@ class MenusController {
     const month = req.params.MM;
     const year = req.params.YYYY;
     const date = `${day}/${month}/${year}`;
-    
-    const reqMenu = menus.find(menu => menu.date === date);
-    console.log(reqMenu);
-    const menuMeals = [...reqMenu.meals];
-    console.log(menuMeals);
-    const foundMeals = meals.filter(meal => menuMeals.includes(meal.id));
-    console.log(foundMeals)
-    reqMenu.meals = [...foundMeals];  
-    console.log(reqMenu.meals);
+    let reqMenu;
+    menus.forEach(menu => {
+      if (menu.date === date) {
+        for (let i = 0; i < menu.meals.length; i+=1) {
+          meals.forEach(meal => {
+            if (meal.id === menu.meals[i]) {
+              menu.meals[i] = meal;
+            } 
+          });
+        }
+
+        reqMenu = menu;
+      }
+    });
     
     return res.status(200).send({
       success: 'true',
