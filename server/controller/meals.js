@@ -66,11 +66,13 @@ class MealsController {
       });
     } 
 
-    const findMeal = function(meal) {
-      return meal.id === id;
-    };
-
     const id = parseInt(req.params.id, 10);
+
+    function findMeal(meal) {
+      return meal.id === id;
+    }
+
+    
     const foundMeal = meals.find(findMeal);
     const foundMealIndex = meals.findIndex(findMeal);
 
@@ -101,9 +103,10 @@ class MealsController {
   static deleteMeal(req, res) {
     const id = parseInt(req.params.id, 10);
 
-    const findMeal = function(meal) {
+    function findMeal(meal) {
       return meal.id === id;
-    };
+    }
+
     const foundMealIndex = meals.findIndex(findMeal);
 
     if(foundMealIndex > -1) {
@@ -112,14 +115,15 @@ class MealsController {
         success: true,
         message: 'Meal deleted successfully!'
       });
-    } else {
+    } 
+
       return res.status(404).send({
         success: false,
         message: `meal with id ${id} does not exist!`
       });
     }
   }
-}
+
 
 
 export default MealsController;
