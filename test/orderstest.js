@@ -93,7 +93,7 @@ describe('PUT /api/v1/orders/:id', () => {
         res.status.should.equal(201);
         expect('content/type', /json/);
         res.body.should.be.an('object');
-        res.body.message.should.equal('Meal updated successfully!');
+        res.body.message.should.equal('Order updated successfully!');
       });
     done();
   });
