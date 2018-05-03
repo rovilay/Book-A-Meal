@@ -50,6 +50,11 @@ module.exports = (sequelize, DataTypes) => {
     state: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    admin: {
+      type: DataTypes.BOOLEAN,
+      allowNull: false,
+      defaultValue: false
     }
   });
   User.associate = (models) => {

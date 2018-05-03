@@ -87,7 +87,7 @@ class MealsController {
           }
         })
         .catch(err =>
-          res.status(200).send(err)
+          res.status(400).send(err)
         );
       }
 
