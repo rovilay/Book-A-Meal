@@ -1,6 +1,6 @@
 
 module.exports = (sequelize, DataTypes) => {
-  const Meals = sequelize.define('Meals', {
+  const Meal = sequelize.define('Meal', {
     id: {
       type: DataTypes.UUID,
       primaryKey: true,
@@ -29,11 +29,11 @@ module.exports = (sequelize, DataTypes) => {
 
   });
 
-  Meals.associate = (models) => {
-    // Meals.belongsTo(models.menu, {
-    //   foreignKey: 'menuId',
-    //   onDelete: 'CASCADE'
-    // });
+  Meal.associate = (models) => {
+    Meal.hasMany(models.Order, {
+      through: models.OrderedMeals,
+      onDelete: 'CASCADE'
+    });
   };
-  return Meals;
+  return Meal;
 };

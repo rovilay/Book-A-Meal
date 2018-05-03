@@ -4,7 +4,6 @@ module.exports = {
     queryInterface.createTable('Users', {
       id: {
         allowNull: false,
-        autoIncrement: true,
         primaryKey: true,
         type: Sequelize.UUID,
         defaultValue: Sequelize.UUIDV4
@@ -19,7 +18,11 @@ module.exports = {
       },
       email: {
         type: Sequelize.STRING,
-        unique: true
+        unique: true,
+        allowNull: false,
+        validate: {
+          isEmail: true
+        }
       },
       password: {
         type: Sequelize.STRING,
@@ -29,25 +32,33 @@ module.exports = {
         type: Sequelize.TEXT,
         allowNull: false
       },
+      address2: {
+        type: Sequelize.TEXT,
+        allowNull: true
+      },
       Phone: {
         type: Sequelize.STRING,
         allowNull: false
       },
-      // DateJoined: {
-      //   type: Sequelize.DATEONLY,
-      //   allowNull: false,
-      //   defaultValue: Sequelize.NOW
-      // },
-      createdAt: {
-        allowNull: false,
-        type: Sequelize.DATE
+      Phone2: {
+        type: Sequelize.STRING,
+        allowNull: true
       },
-      updatedAt: {
+      city: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      state: {
+        type: Sequelize.STRING,
+        allowNull: false
+      },
+      admin: {
+        type: Sequelize.BOOLEAN,
         allowNull: false,
-        type: Sequelize.DATE
+        defaultValue: false
       }
     }),
   
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('Users')
+  down: (queryInterface /* , Sequelize */) => queryInterface.dropTable('Users')
   
 };

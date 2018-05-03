@@ -2,10 +2,10 @@
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
     id: {
-      type: DataTypes.UUID,
       allowNull: false,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true
+      primaryKey: true,
+      type: DataTypes.UUID,
+      defaultValue: DataTypes.UUIDV4
     },
     firstName: {
       type: DataTypes.STRING,
@@ -17,7 +17,11 @@ module.exports = (sequelize, DataTypes) => {
     },
     email: {
       type: DataTypes.STRING,
-      unique: true
+      unique: true,
+      allowNull: false,
+      validate: {
+        isEmail: true
+      }
     },
     password: {
       type: DataTypes.STRING,
@@ -27,18 +31,29 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.TEXT,
       allowNull: false
     },
+    address2: {
+      type: DataTypes.TEXT,
+      allowNull: true
+    },
     Phone: {
       type: DataTypes.STRING,
       allowNull: false
+    },
+    Phone2: {
+      type: DataTypes.STRING,
+      allowNull: true
+    },
+    city: {
+      type: DataTypes.STRING,
+      allowNull: false
+    },
+    state: {
+      type: DataTypes.STRING,
+      allowNull: false
     }
-    // DateJoined: {
-    //   type: DataTypes.DATEONLY,
-    //   allowNull: false,
-    //   defaultValue: DataTypes.NOW
-    // }
   });
-  User.associate = function(models) {
-    // associations can be defined here
+  User.associate = (models) => {
+    User.hasMany(models.Order);
   };
   return User;
 };

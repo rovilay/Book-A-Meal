@@ -1,129 +1,111 @@
+import db from '../../models/index';
 
-/* eslint class-methods-use-this: ["error", { "exceptMethods": ["getAllMeals", "getMeal", "addMeal", "updateMeal", "deleteMeal"] }] */
-import meals from '../model/mealsdb';
 
 class MealsController {
   static getAllMeals(req, res) {
-    return res.status(200).send({
-      success: true,
-      message: 'Meals retrieved successfully',
-      meals,
-    });
+    db.Meal.findAll({
+        attributes: ["id", "title", "description", "price", "image", "createdAt", "updatedAt"]
+      })
+      .then(meal => res.status(200).send({
+        success: true,
+        message: 'Meals retrieved successfully',
+        meal,
+      }))
+      .catch(err => res.status(400).send(err));
   }
 
   static getMeal(req, res) {
-    const id = parseInt(req.params.id, 10);
-    meals.map((meal) => {
-      if (meal.id === id) {
-        return res.status(200).send({
-          success: true,
-          message: 'Meal retrieved successfully',
-          meal
-        });
-      }
+    db.Meal.findById(req.params.id, {
+        attributes: ["id", "title", "description", "price", "image", "createdAt", "updatedAt"]
+      })
+      .then(meal => res.status(200).send({
+        success: true,
+        message: 'Meal retrieved successfully',
+        meal
+      }))
+      .catch(err => res.status(400).send({
+        success: false,
+        err
+      }));
 
-      return undefined;
-    });
-
-    return res.status(404).send({
-      success: false,
-      message: `meal with id ${id} does not exist!`
-    });
   }
 
   static addMeal(req, res) {
-    if (!req.body.title || !req.body.description || !req.body.price) {
+    if (req.body.title === undefined || req.body.description === undefined || req.body.price === undefined) {
       return res.status(400).send({
         success: false,
         message: 'some fields are empty'
       });
     }
-    // obj to input to the db
-    const meal = {
-      id: parseInt(meals[meals.length - 1].id, 10) + 1,
-      title: req.body.title,
-      description: req.body.description,
-      price: req.body.price,
-      image: req.body.image
-    };
 
-    // push meal to db
-    meals.push(meal);
+    const createdAt = new Date();
+    const newMeal = req.body;
 
-    return res.status(201).send({
-      success: true,
-      message: 'Meal added successfully',
-      meals
-    });
+    db.Meal.create({
+        title: newMeal.title,
+        description: newMeal.description,
+        price: newMeal.price,
+        image: newMeal.image,
+        createdAt
+      })
+      .then(meal => {
+        res.status(201).send(meal);
+      })
+      .catch(err => {
+        res.status(400).send(err);
+      });
   }
 
   static updateMeal(req, res) {
 
-    if (!req.body.title || !req.body.description || !req.body.price || !req.body.image ) {
-      return res.status(404).send({
+    if (req.body.title === undefined || req.body.description === undefined || req.body.price === undefined) {
+      return res.status(400).send({
         success: false,
         message: 'All fields are required!'
       });
-    } 
-
-    const id = parseInt(req.params.id, 10);
-
-    function findMeal(meal) {
-      return meal.id === id;
     }
 
-    
-    const foundMeal = meals.find(findMeal);
-    const foundMealIndex = meals.findIndex(findMeal);
+    const updatedMeal = req.body;
 
-    if (foundMealIndex === -1) {
-      return res.status(404).send({
-        success: false,
-        message: 'meal not found'
-      });
-    }
-    
-    const updatedMeal = {
-      id: foundMeal.id,
-      title: req.body.title || foundMeal.title,
-      description: req.body.description || foundMeal.description,
-      price: req.body.price || foundMeal.price,
-      image: req.body.image || foundMeal.image
-    };
+    db.Meal.update({
+        title: updatedMeal.title,
+        description: updatedMeal.description,
+        price: updatedMeal.price,
+        image: updatedMeal.image,
+      }, {
+        where: {
+          id: req.params.id
+        }
+      })
+      .then(update => {
+          if (update) {
+            res.status(200).send({
+              success: true,
+              message: 'Update successful',
+              updatedMeal,
+            });
+          }
+        })
+        .catch(err =>
+          res.status(200).send(err)
+        );
+      }
 
-    meals.splice(foundMealIndex, 1, updatedMeal);
-
-    return res.status(201).send({
-      success: true,
-      message: 'Meal updated successfully!',
-      meals
-    });
-  }
-
-  static deleteMeal(req, res) {
-    const id = parseInt(req.params.id, 10);
-
-    function findMeal(meal) {
-      return meal.id === id;
-    }
-
-    const foundMealIndex = meals.findIndex(findMeal);
-
-    if(foundMealIndex > -1) {
-      meals.splice(foundMealIndex, 1);
-      return res.status(200).send({
-        success: true,
-        message: 'Meal deleted successfully!'
-      });
-    } 
-
-      return res.status(404).send({
-        success: false,
-        message: `meal with id ${id} does not exist!`
-      });
+    static deleteMeal(req, res) {
+      db.Meal.destroy({
+          where: {
+            id: req.params.id
+          }
+        })
+        .then((rep) =>
+          res.status(200).send(`${rep}, delete succesfull`)
+        )
+        .catch(err =>
+          res.status(404).send(err)
+        );
     }
   }
 
 
 
-export default MealsController;
+  export default MealsController;

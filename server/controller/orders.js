@@ -1,5 +1,6 @@
-/* eslint class-methods-use-this: ["error", { "exceptMethods": ["getAllOrders", "updateOrder", "postOrder"] }] */
 import orders from '../model/ordersdb';
+
+import db from '../../models/index';
 
 class OrdersController {
   static getAllOrders(req, res) {
@@ -13,7 +14,7 @@ class OrdersController {
 
   static postOrder(req, res) {
     // Check if req has body
-    if (!req.body.meals) {
+    if (req.body.order) {
       return res.status(400).send({
         success: false,
         message: 'Meal tray cannot be empty!'

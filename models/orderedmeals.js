@@ -1,6 +1,6 @@
 
 module.exports = (sequelize, DataTypes) => {
-  const OrderedMeals = sequelize.define('OrderedMeals', {
+  const OrderedMeal = sequelize.define('OrderedMeal', {
     id: {
       type: DataTypes.INTEGER,
       allowNull: false,
@@ -12,7 +12,7 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     },
     mealID: {
-      types: DataTypes.UUID,
+      type: DataTypes.UUID,
       allowNull: false
     },
     portion: {
@@ -20,8 +20,9 @@ module.exports = (sequelize, DataTypes) => {
       allowNull: false
     }
   });
-  OrderedMeals.associate = function(models) {
-    // associations can be defined here
+  OrderedMeal.associate = (models) => {
+    OrderedMeal.hasOne(models.Meal);
+    OrderedMeal.hasOne(models.Order);
   };
-  return OrderedMeals;
+  return OrderedMeal;
 };

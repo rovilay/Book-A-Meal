@@ -13,11 +13,7 @@ module.exports = {
         allowNull: false
       },
       totalPrice: {
-        types: Sequelize.INTEGER,
-        allowNull: false
-      },
-      date: {
-        type: Sequelize.DATE,
+        type: Sequelize.INTEGER,
         allowNull: false
       },
       createdAt: {

@@ -1,13 +1,14 @@
 
 module.exports = (sequelize, DataTypes) => {
-  const Menus = sequelize.define('Menus', {
-    id: DataTypes.INT
+  const Menu = sequelize.define('Menu', {
+    id: DataTypes.INTEGER,
     date: {
       type: DataTypes.DATEONLY,
-
+      primaryKey: true
+  }
   });
-  Menus.associate = function(models) {
+  Menu.associate = function(models) {
     // associations can be defined here
   };
-  return Menus;
+  return Menu;
 };

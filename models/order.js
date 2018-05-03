@@ -8,21 +8,21 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true
     },
     customerId: {
-      types: DataTypes.UUID,
+      type: DataTypes.UUID,
       allowNull: false
     },
     totalPrice: {
-      types: DataTypes.INTEGER,
+      type: DataTypes.INTEGER,
       allowNull: false
     },
-    date: {
-      type: DataTypes.DATE,
-      allowNull: false,
-      defaultValue: DataTypes.Now
-    }
   });
-  Order.associate = function(models) {
-    // associations can be defined here
+  Order.associate = (models) => {
+    Order.belongsToMany(models.Meal, {
+      through: models.OrderedMeal
+    });
+    Order.belongsTo(models.User, {
+      as: 'customer'
+    });
   };
   return Order;
 };
