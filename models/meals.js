@@ -30,8 +30,9 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Meal.associate = (models) => {
-    Meal.hasMany(models.Order, {
-      through: models.OrderedMeals,
+    Meal.belongsToMany(models.Order, {
+      through: models.OrderMeal,
+      as: 'mealId',
       onDelete: 'CASCADE'
     });
   };

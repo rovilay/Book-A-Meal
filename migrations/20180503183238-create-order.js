@@ -1,16 +1,15 @@
-
 module.exports = {
-  up: (queryInterface, Sequelize) => 
-    queryInterface.createTable('Orders', {
+  up: (queryInterface, Sequelize) => queryInterface.createTable('Orders', {
       id: {
         type: Sequelize.UUID,
         allowNull: false,
         defaultValue: Sequelize.UUIDV4,
         primaryKey: true
       },
-      customerId: {
+      userId: {
         type: Sequelize.UUID,
-        allowNull: false
+        allowNull: false,
+        foreignKey: true
       },
       totalPrice: {
         type: Sequelize.INTEGER,
@@ -25,8 +24,6 @@ module.exports = {
         type: Sequelize.DATE
       }
     }),
+  down: (queryInterface /* , Sequelize */) => queryInterface.dropTable('Orders')
   
-  down: (queryInterface, Sequelize) => {
-    return queryInterface.dropTable('Orders');
-  }
 };

@@ -6,12 +6,28 @@ import menus from '../model/menudb';
 class MenusController {
   static getAllMenus(req, res) {
     menus.forEach(menu => {
-      for (let i = 0; i < menu.meals.length; i += 1) {
+      for(let i = 0; i < menu.meals.length; i += 1) {
         meals.forEach(meal => {
           if (meal.id === menu.meals[i]) {
             menu.meals[i] = meal;
           }
+
+          // check if meal is still a number
+         if(typeof(menu.meals[i]) === 'number') {
+          menu.meals[i] = `Meal id ${menu.meals[i]} is not available`;
+         }
         });
+
+ 
+
+        // const foundMeal = meals.find(meal => meal.id === menu.meals[i]);
+
+        // if(foundMeal == null) {
+        //   menu.meals[i] = `Meal id ${menu.meals[i]} is not available`;
+        // } else {
+        //   menu.meals[i] = foundMeal;
+        // }
+        
       }
     
   });
@@ -52,17 +68,7 @@ class MenusController {
   }
 
   static postMenu(req, res) {
-    if (!req.body.date) {
-      return res.status(400).send({
-        success: false,
-        message: 'date is empty'
-      });
-    } else if (!req.body.meals || req.body.meals.length === 0) {
-      return res.status(400).send({
-        success: false,
-        message: 'meals are empty'
-      });
-    }
+
     // obj to input to the db
     const menu = {
       id: parseInt(menus[menus.length - 1].id, 10) + 1,

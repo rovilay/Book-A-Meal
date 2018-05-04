@@ -31,12 +31,6 @@ class MealsController {
   }
 
   static addMeal(req, res) {
-    if (req.body.title === undefined || req.body.description === undefined || req.body.price === undefined) {
-      return res.status(400).send({
-        success: false,
-        message: 'some fields are empty'
-      });
-    }
 
     const createdAt = new Date();
     const newMeal = req.body;
@@ -57,14 +51,6 @@ class MealsController {
   }
 
   static updateMeal(req, res) {
-
-    if (req.body.title === undefined || req.body.description === undefined || req.body.price === undefined) {
-      return res.status(400).send({
-        success: false,
-        message: 'All fields are required!'
-      });
-    }
-
     const updatedMeal = req.body;
 
     db.Meal.update({
