@@ -1,17 +1,11 @@
+import jwt from 'jsonwebtoken';
 import db from '../../models/index';
+// import config from '../../config/config';
 
 
 class UsersController {
   static signup(req, res) {
     const newUser = req.body;
-    if (newUser.firstName === undefined || newUser.lastName === undefined || newUser.email === undefined || newUser.password === undefined || newUser.address === undefined || newUser.Phone === undefined || newUser.city === undefined || newUser.state === undefined) {
-      return res.status(400).send({
-        success: false,
-        message: 'some fields are empty'
-      });
-    }
-
-    const createdAt = new Date();
 
     db.User.create({
         firstName: newUser.firstName,
@@ -25,7 +19,6 @@ class UsersController {
         city: newUser.city,
         state: newUser.state,
         admin: newUser.admin,
-        createdAt
       })
       .then(() => {
         res.status(201).send({
@@ -41,24 +34,38 @@ class UsersController {
 
   static login(req, res) {
     const loginUser = req.body;
-
-    if (loginUser.email === undefined) {
-      return res.status(400).send({
-        success: false,
-        message: 'some fields are empty'
-      });
-    }
-
     db.User.findOne({
         where: {
           email: loginUser.email,
           password: loginUser.password
-        }
+        },
+        attributes: ['id', 'admin']
+
       })
-      .then(() => res.status(200).send({
-        success: true,
-        message: 'You are logged in!'
-      }))
+      .then((user) => {
+        if (user === null) {
+          return res.send({
+            success: false,
+            message: 'User not found!',
+          });
+        }
+        // generate token
+        jwt.sign({ user }, 'homealone', { expiresIn: '1h'}, (err, token) => {
+          res.status(200).send({
+            success: true,
+            message: 'You are logged in!',
+            user,
+            token
+          });
+        });
+
+        // return res.status(200).send({
+        //   success: true,
+        //   message: 'You are logged in!',
+        //   user
+        //   // token
+        // });
+      })
       .catch(err =>
         res.status(400).send(err)
       );
