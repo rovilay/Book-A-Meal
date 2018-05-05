@@ -22,8 +22,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
   OrderMeal.associate = (models) => {
-    OrderMeal.hasOne(models.Meal);
-    OrderMeal.hasOne(models.Order);
+    // OrderMeal.hasOne(models.Meal);
+    // OrderMeal.hasOne(models.Order);
   };
   return OrderMeal;
 };

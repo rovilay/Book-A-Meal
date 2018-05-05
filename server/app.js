@@ -13,10 +13,18 @@ const port = process.env.PORT || 3000;
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true}));
 app.use(bodyParser.json());
+
+app.get('/', (req, res) => {
+  res.json({message:'Welcome to Book A Meal!'});
+});
+app.use(usersRouter);
+
 app.use(mealRouter);
 app.use(menuRouter);
 app.use(ordersRouter);
-app.use(usersRouter);
+
+
+
 
 
 app.listen(port, () => {

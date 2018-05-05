@@ -28,7 +28,8 @@ class OrdersController {
       })
       .then((order) => {
         const orderedMeals = [];
-
+        order.setMeal(newOrder.meals);
+        order.save();
         newOrder.meals.forEach(
           (meal) => {
             db.Meal.findById(meal.id, {
@@ -57,7 +58,6 @@ class OrdersController {
       })
       .catch(err => res.status(400).send(err));
   }
-
 
   //   // present date
   //   const today = new Date().toISOString().substr(0, 10).split('-').reverse().join('/');

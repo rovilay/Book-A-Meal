@@ -25,16 +25,22 @@ module.exports = (sequelize, DataTypes) => {
       type: DataTypes.STRING,
       allowNull:false,
       defaultValue: 'https://img.com'
+    },
+    UserId: {
+      type: DataTypes.UUID,
+      allowNull: false
     }
 
   });
 
   Meal.associate = (models) => {
-    Meal.belongsToMany(models.Order, {
-      through: models.OrderMeal,
-      as: 'mealId',
-      onDelete: 'CASCADE'
-    });
+    Meal.belongsTo(models.User);
+
+    // Meal.belongsToMany(models.Order, {
+    //   through: models.OrderMeal,
+    //   as: 'mealId',
+    //   onDelete: 'CASCADE'
+    // });
   };
   return Meal;
 };

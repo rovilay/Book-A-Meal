@@ -3,9 +3,8 @@ import db from '../../models/index';
 
 class MealsController {
   static getAllMeals(req, res) {
-    db.Meal.findAll({
-        attributes: ["id", "title", "description", "price", "image", "createdAt", "updatedAt"]
-      })
+    
+    db.Meal.findAll({})
       .then(meal => res.status(200).send({
         success: true,
         message: 'Meals retrieved successfully',
@@ -31,8 +30,6 @@ class MealsController {
   }
 
   static addMeal(req, res) {
-
-    const createdAt = new Date();
     const newMeal = req.body;
 
     db.Meal.create({
@@ -40,7 +37,7 @@ class MealsController {
         description: newMeal.description,
         price: newMeal.price,
         image: newMeal.image,
-        createdAt
+        UserId: newMeal.UserId
       })
       .then(meal => {
         res.status(201).send(meal);
@@ -58,6 +55,7 @@ class MealsController {
         description: updatedMeal.description,
         price: updatedMeal.price,
         image: updatedMeal.image,
+        UserId: updatedMeal.UserId
       }, {
         where: {
           id: req.params.id
@@ -73,7 +71,7 @@ class MealsController {
           }
         })
         .catch(err =>
-          res.status(400).send(err)
+          res.status(200).send(err)
         );
       }
 
@@ -83,8 +81,8 @@ class MealsController {
             id: req.params.id
           }
         })
-        .then((rep) =>
-          res.status(200).send(`${rep}, delete succesfull`)
+        .then(() =>
+          res.status(200).send(`Delete successfull`)
         )
         .catch(err =>
           res.status(404).send(err)
