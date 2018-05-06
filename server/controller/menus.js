@@ -34,7 +34,7 @@ class MenusController {
     const year = req.params.YYYY;
     const date = `${year}-${month}-${day}`;
    
-    db.Menu.findAll({
+    db.Menu.findAll( {
       include: [{
         model: db.User,
         attributes: ['firstName', 'lastName']
@@ -44,11 +44,10 @@ class MenusController {
         through: {
           attributes: ['id']
         }
-      }]
-    }, {
+      }],
       where: {
-        postOn: date
-      }
+          postOn: date
+        }
     })
     .then(menu => res.status(200).send({
         success: true,
