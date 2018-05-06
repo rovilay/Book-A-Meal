@@ -34,13 +34,13 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Meal.associate = (models) => {
-    Meal.belongsTo(models.User);
-
-    // Meal.belongsToMany(models.Order, {
-    //   through: models.OrderMeal,
-    //   as: 'mealId',
-    //   onDelete: 'CASCADE'
-    // });
+    Meal.belongsTo(models.User, {foreignKey: 'UserId', targetKey: 'id'});
+    Meal.belongsToMany(models.Menu, {
+      through: 'MenuMeal', 
+      foreignKey: 'MealId',
+      otherKey: 'MenuId',
+      onDelete: 'CASCADE',
+      onUpdate: 'CASCADE'});
   };
   return Meal;
 };

@@ -1,5 +1,5 @@
 function adminOnly(req, res, next) {
-  console.log(req.userData.user.admin);
+  
   if(req.userData.user.admin) {
     return next();
   }

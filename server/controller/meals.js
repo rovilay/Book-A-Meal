@@ -82,7 +82,7 @@ class MealsController {
           }
         })
         .then(() =>
-          res.status(200).send(`Delete successfull`)
+          res.status(200).send(`Delete successful`)
         )
         .catch(err =>
           res.status(404).send(err)

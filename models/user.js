@@ -60,6 +60,7 @@ module.exports = (sequelize, DataTypes) => {
   User.associate = (models) => {
    // User.hasMany(models.Order);
    User.hasMany(models.Meal);
+   User.hasMany(models.Menu);
   };
   return User;
 };
