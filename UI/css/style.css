@@ -51,14 +51,14 @@ ul {
   text-decoration: none;
 }
 
-.header a.logo:hover  {
+.header a.logo  {
 
   text-decoration: none;
 }
 
 
 .header a:hover, .header .active {
-  text-decoration: underline;
+  text-decoration: none;
   font-weight: bold
 }
 
@@ -150,13 +150,15 @@ ul {
 
 #showcase1 a:hover {
   
-  text-decoration: underline;
+  text-decoration: none;
+  font-weight: bold
 }
 
 /* Menu section */
 #showcase2 .container {
   max-width: 1170px;
-  margin: 0 auto;
+  margin-left: 8rem;
+  margin-right: 2rem;
   padding: 1em;
   overflow: hidden;
   margin-top: -16px
@@ -245,6 +247,13 @@ input[type=submit]:focus {
     font-size: 1.8rem;
     font-weight: 700;
     margin-top: 1em
+  }
+
+  #showcase2 .container {
+
+    margin-left: 2rem;
+    margin-right: 2rem
+    
   }
 }
 
