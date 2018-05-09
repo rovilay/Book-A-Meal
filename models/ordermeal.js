@@ -17,7 +17,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     portion: {
       type: DataTypes.INTEGER,
-      allowNull:false
+      allowNull: false
     }
   });
   OrderMeal.associate = (/* models */) => {
