@@ -39,12 +39,9 @@ section .container {
 }
 
 .form-section {
-background: #00b09b;
-/* fallback for old browsers */
-background: -webkit-linear-gradient(to right, #96c93d, #00b09b);
-/* Chrome 10-25, Safari 5.1-6 */
-background: linear-gradient(to right, #96c93d, #00b09b);
-/* W3C, IE 10+/ Edge, Firefox 16+, Chrome 26+, Opera 12+, Safari 7+ */
+ 
+  background: url('../images/mealsbg.jpeg') no-repeat;
+  
 }
 
 .card {
@@ -55,7 +52,7 @@ background: linear-gradient(to right, #96c93d, #00b09b);
   margin-left: auto;
   margin-right: auto;
   margin-top: 20px;
-  background: transparent
+  background: white
 }
 
 /* header */
@@ -98,7 +95,7 @@ background: linear-gradient(to right, #96c93d, #00b09b);
 
 
 .header a:hover, .header .active {
-  text-decoration: underline;
+  text-decoration: none;
   font-weight: bold
 }
 
@@ -128,7 +125,7 @@ background: linear-gradient(to right, #96c93d, #00b09b);
 
 .card .form-title
 {
-  color: #fff;
+  color: #007bff;
   text-transform: capitalize;
   font-size: 50px;
   font-weight: 800;
@@ -199,7 +196,7 @@ font-weight: bold;
 border: 1px solid #ffc107;
 display: inline-block;
 width: 33%;
-color: #fff;
+color: #ffc107;
 font-weight: bold;
 }
 
@@ -207,7 +204,7 @@ font-weight: bold;
 border: 1px solid #dc3543;
 display: inline-block;
 width: 33%;
-color: #fff;
+color: #dc3543;
 font-weight: bold;
 }
 
@@ -215,7 +212,7 @@ font-weight: bold;
 border: 1px solid #6c757d;
 display: inline-block; 
 width: 25%;
-color: #fff;
+color: #6c757d;
 font-weight: bold;
 }
 
@@ -249,7 +246,6 @@ label {
   font-weight: 500;
   line-height: 1.8em
 }
-
 
 /* Meal List */
 
@@ -297,6 +293,16 @@ float: left;
 .meal-card .icons .trash {
   color: #dc3543
 }
+
+
+/* footer */
+footer {
+  text-align: center;
+  background: #007bff;
+  color: #fff;
+  margin-top: 1em
+}
+
 
 @media(max-width:780px) {
 .update-btn {

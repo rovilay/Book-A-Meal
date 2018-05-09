@@ -51,14 +51,14 @@ ul {
   text-decoration: none;
 }
 
-.header a.logo:hover  {
+.header a.logo  {
 
   text-decoration: none;
 }
 
 
 .header a:hover, .header .active {
-  text-decoration: underline;
+  text-decoration: none;
   font-weight: bold
 }
 
@@ -150,7 +150,8 @@ ul {
 
 #showcase1 a:hover {
   
-  text-decoration: underline;
+  text-decoration: none;
+  font-weight: bold
 }
 
 /* Menu section */
