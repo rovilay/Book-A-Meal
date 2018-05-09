@@ -1,83 +1,82 @@
-/* eslint class-methods-use-this: ["error", { "exceptMethods": ["getAllMenus", "getMenu", "postMenu"] }] */
-
-import meals from '../model/mealsdb';
-import menus from '../model/menudb';
+import db from '../../models/index';
 
 class MenusController {
   static getAllMenus(req, res) {
-    menus.forEach(menu => {
-      for (let i = 0; i < menu.meals.length; i += 1) {
-        meals.forEach(meal => {
-          if (meal.id === menu.meals[i]) {
-            menu.meals[i] = meal;
-          }
-        });
-      }
-    
-  });
-
-    return res.status(200).send({
-      success: true,
-      message: 'Menus retrieved successfully',
-      menus
-    });
+    db.Menu.findAll({
+      include: [{
+        model: db.User,
+        attributes: ['firstName', 'lastName'],
+      }, {
+        model: db.Meal,
+        attributes: ['id', 'title', 'price'],
+        through: {
+          attributes: ['id'],
+        },
+      }],
+    })
+      .then(menu => res.status(200).send({
+        success: true,
+        message: 'Menus retrieved successfully',
+        menus: menu,
+      }))
+      .catch(() => res.status(400).send({
+        success: false,
+        message: 'Error occured while getting all menus',
+      }));
   }
 
   static getMenu(req, res) {
-  
     const day = req.params.DD;
     const month = req.params.MM;
     const year = req.params.YYYY;
-    const date = `${day}/${month}/${year}`;
-    let reqMenu;
-    menus.forEach(menu => {
-      if (menu.date === date) {
-        for (let i = 0; i < menu.meals.length; i+=1) {
-          meals.forEach(meal => {
-            if (meal.id === menu.meals[i]) {
-              menu.meals[i] = meal;
-            } 
-          });
-        }
+    const date = `${year}-${month}-${day}`;
 
-        reqMenu = menu;
-      }
-    });
-    
-    return res.status(200).send({
-      success: true,
-      message: 'Menu retrieved successfully',
-      menu: reqMenu
-    });
+    db.Menu.findAll({
+      include: [{
+        model: db.User,
+        attributes: ['firstName', 'lastName'],
+      }, {
+        model: db.Meal,
+        attributes: ['id', 'title', 'price'],
+        through: {
+          attributes: ['id'],
+        },
+      }],
+      where: {
+        postOn: date,
+      },
+    })
+      .then(menu => res.status(200).send({
+        success: true,
+        message: 'Menu retrieved successfully',
+        menu,
+      }))
+      .catch(() => res.status(400).send({
+        success: false,
+        message: 'Error occured while getting menu',
+      }));
   }
 
   static postMenu(req, res) {
-    if (!req.body.date) {
-      return res.status(400).send({
-        success: false,
-        message: 'date is empty'
-      });
-    } else if (!req.body.meals || req.body.meals.length === 0) {
-      return res.status(400).send({
-        success: false,
-        message: 'meals are empty'
-      });
-    }
-    // obj to input to the db
-    const menu = {
-      id: parseInt(menus[menus.length - 1].id, 10) + 1,
-      date: req.body.date,
-      meals: req.body.meals
-    };
+    const newMenu = req.body;
 
-    // push menu to db
-    menus.push(menu);
-
-    return res.status(201).send({
-      success: true,
-      message: 'Menu added successfully',
-      menus
-    });
+    db.Menu.create({
+      UserId: req.user.id,
+      postOn: newMenu.postOn,
+    })
+      .then((menu) => {
+        menu.addMeals(newMenu.meals);
+        res.status(200).send({
+          success: true,
+          message: 'Menu posted successfully!',
+        });
+      })
+      .catch(() => {
+        res.status.send({
+          success: false,
+          message: 'Error occured while posting menu',
+        });
+      });
   }
 }
 

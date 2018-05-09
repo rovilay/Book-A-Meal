@@ -54,7 +54,7 @@ p {
 
 
 .header a:hover, .header .active {
-  text-decoration: underline;
+  text-decoration: none;
   font-weight: bold
 }
 

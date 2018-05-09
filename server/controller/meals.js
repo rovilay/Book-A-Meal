@@ -3,109 +3,99 @@ import db from '../../models/index';
 
 class MealsController {
   static getAllMeals(req, res) {
-    db.Meal.findAll({
-        attributes: ["id", "title", "description", "price", "image", "createdAt", "updatedAt"]
-      })
+    db.Meal.findAll()
       .then(meal => res.status(200).send({
         success: true,
         message: 'Meals retrieved successfully',
         meal,
       }))
-      .catch(err => res.status(400).send(err));
+      .catch(() => res.status(400).send({
+        success: false,
+        message: 'Error occured while getting all meals',
+      }));
   }
 
   static getMeal(req, res) {
-    db.Meal.findById(req.params.id, {
-        attributes: ["id", "title", "description", "price", "image", "createdAt", "updatedAt"]
-      })
-      .then(meal => res.status(200).send({
-        success: true,
-        message: 'Meal retrieved successfully',
-        meal
-      }))
-      .catch(err => res.status(400).send({
-        success: false,
-        err
-      }));
+    db.Meal.findById(req.params.id)
+      .then((meal) => {
+        if (meal === null) {
+          return res.status(404).send({
+            success: false,
+            message: 'Meal not found!',
+          });
+        }
 
+        return res.status(200).send({
+          success: true,
+          message: 'Meal retrieved successfully',
+          meal,
+        });
+      })
+      .catch(() => res.status(400).send({
+        success: false,
+        message: 'Error occured while getting meal',
+      }));
   }
 
   static addMeal(req, res) {
-    if (req.body.title === undefined || req.body.description === undefined || req.body.price === undefined) {
-      return res.status(400).send({
-        success: false,
-        message: 'some fields are empty'
-      });
-    }
-
-    const createdAt = new Date();
     const newMeal = req.body;
+    newMeal.title = newMeal.title.toUpperCase();
+    newMeal.UserId = req.user.id;
 
-    db.Meal.create({
-        title: newMeal.title,
-        description: newMeal.description,
-        price: newMeal.price,
-        image: newMeal.image,
-        createdAt
+    db.Meal.create(newMeal)
+      .then((meal) => {
+        res.status(201).send({
+          success: true,
+          message: 'Meal added successfully',
+          meal,
+        });
       })
-      .then(meal => {
-        res.status(201).send(meal);
-      })
-      .catch(err => {
-        res.status(400).send(err);
+      .catch(() => {
+        res.status(400).send({
+          success: false,
+          message: 'Error occured  while creating meal',
+        });
       });
   }
 
   static updateMeal(req, res) {
-
-    if (req.body.title === undefined || req.body.description === undefined || req.body.price === undefined) {
-      return res.status(400).send({
-        success: false,
-        message: 'All fields are required!'
-      });
-    }
-
     const updatedMeal = req.body;
+    updatedMeal.title.toUpperCase();
+    updatedMeal.UserId = req.user.id;
 
-    db.Meal.update({
-        title: updatedMeal.title,
-        description: updatedMeal.description,
-        price: updatedMeal.price,
-        image: updatedMeal.image,
-      }, {
-        where: {
-          id: req.params.id
+    db.Meal.update(updatedMeal, {
+      where: {
+        id: req.params.id,
+      },
+    })
+      .then((update) => {
+        if (update) {
+          res.status(200).send({
+            success: true,
+            message: 'Update successful',
+            updatedMeal,
+          });
         }
       })
-      .then(update => {
-          if (update) {
-            res.status(200).send({
-              success: true,
-              message: 'Update successful',
-              updatedMeal,
-            });
-          }
-        })
-        .catch(err =>
-          res.status(200).send(err)
-        );
-      }
-
-    static deleteMeal(req, res) {
-      db.Meal.destroy({
-          where: {
-            id: req.params.id
-          }
-        })
-        .then((rep) =>
-          res.status(200).send(`${rep}, delete succesfull`)
-        )
-        .catch(err =>
-          res.status(404).send(err)
-        );
-    }
+      .catch(() =>
+        res.status(400).send({
+          success: false,
+          message: 'Error occured  while updating meal',
+        }));
   }
 
+  static deleteMeal(req, res) {
+    db.Meal.destroy({
+      where: {
+        id: req.params.id,
+      },
+    })
+      .then(() =>
+        res.status(204).send('Delete successful'))
+      .catch(() =>
+        res.status(400).send('error occured while deleting'));
+  }
+}
 
 
-  export default MealsController;
+export default MealsController;

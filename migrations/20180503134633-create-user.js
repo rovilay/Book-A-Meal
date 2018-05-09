@@ -1,6 +1,6 @@
 
 module.exports = {
-  up: (queryInterface, Sequelize) => 
+  up: (queryInterface, Sequelize) => {
     queryInterface.createTable('Users', {
       id: {
         allowNull: false,
@@ -56,9 +56,17 @@ module.exports = {
         type: Sequelize.BOOLEAN,
         allowNull: false,
         defaultValue: false
+      },
+      createdAt: {
+        allowNull: false,
+        type: Sequelize.DATE
+      },
+      updatedAt: {
+        allowNull: false,
+        type: Sequelize.DATE
       }
-    }),
-  
+    });
+  },
   down: (queryInterface /* , Sequelize */) => queryInterface.dropTable('Users')
   
 };

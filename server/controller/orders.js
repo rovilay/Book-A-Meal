@@ -1,94 +1,138 @@
-import orders from '../model/ordersdb';
-
+import UUID from 'uuid/v4';
 import db from '../../models/index';
+
 
 class OrdersController {
   static getAllOrders(req, res) {
-
-    return res.status(200).send({
-      success: true,
-      message: 'Orders retrieved successfully',
-      orders
-    });
+    db.Order.findAll({
+      include: [{
+        model: db.User,
+        attributes: ['firstName', 'lastName'],
+      }, {
+        model: db.Meal,
+        attributes: ['id', 'title', 'price'],
+        through: {
+          attributes: ['portion'],
+        },
+      }],
+    })
+      .then((orders) => {
+        if (orders.length < 1) {
+          return res.status(204).send({
+            message: 'No orders found',
+          });
+        }
+        return res.status(200).send({
+          success: true,
+          message: 'Menus retrieved successfully',
+          orders,
+        });
+      })
+      .catch(() => res.status(400).send({
+        success: false,
+        message: 'Error occured while finding order',
+      }));
   }
 
   static postOrder(req, res) {
-    // Check if req has body
-    if (req.body.order) {
-      return res.status(400).send({
+    const newOrder = req.body;
+    const orderMeals = newOrder.meals.map(meal => meal.id); // Get all meal id
+    const orderPortion = newOrder.meals.map(meal => meal.portion); // Get all meal portion
+
+    db.Order.create({
+      id: UUID.v4(),
+      UserId: req.user.id,
+      deliveryAddress: newOrder.deliveryAddress,
+      totalPrice: newOrder.totalPrice,
+    })
+      .then((order) => {
+        orderMeals.forEach((meal, index) => {
+          order.addMeal(meal, {
+            through: {
+              portion: orderPortion[index],
+            },
+          });
+        });
+        res.status(200).send({
+          success: true,
+          message: 'Order placed successfully!',
+        });
+      })
+      .catch(err => res.status(400).send({
         success: false,
-        message: 'Meal tray cannot be empty!'
-      });
-    } else if(!req.body.name) {
-      return res.status(400).send({
-        success: false,
-        message: 'Customer name is empty!'
-      });
-    }
-  
-
-    // present date
-    const today = new Date().toISOString().substr(0, 10).split('-').reverse().join('/');
-    
-    const order = {
-      id: parseInt(orders[orders.length - 1].id, 10) + 1,
-      customerName: req.body.name,
-      date: today,
-      meals:  req.body.meals
-    };
-
-    // push menu to db
-    orders.push(order);
-
-    return res.status(201).send({
-      success: true,
-      message: 'Order added successfully',
-      orders
-    });
+        message: 'Error occured while placing order!',
+        err,
+      }));
   }
 
   static updateOrder(req, res) {
-    const id = parseInt(req.params.id, 10);
+    const updatedOrder = req.body;
+    const updatedMeals = updatedOrder.meals.map(meal => meal.id); // Get all meal id
 
-    if (!req.body.meals || req.body.meals === "" || req.body.meals === "[]") {
-      return res.status(404).send({
+    const updatedPortion = updatedOrder.meals.map(meal => meal.portion); // Get all meal portion
+
+    db.Order.update({
+      deliveryAddress: updatedOrder.deliveryAddress,
+      totalPrice: updatedOrder.totalPrice,
+    }, {
+      where: {
+        id: req.params.id,
+      },
+    })
+      .then((update) => {
+        db.OrderMeal.destroy({
+          where: {
+            OrderId: req.params.id,
+          },
+        });
+
+        return update;
+      })
+      .then((update) => {
+        if (update) {
+          updatedMeals.forEach((meal, index) => {
+            db.OrderMeal.create({
+              OrderId: req.params.id,
+              MealId: meal,
+              portion: updatedPortion[index],
+            });
+          });
+        }
+        res.status(200).send({
+          success: true,
+          message: 'Update successful',
+        });
+      })
+      .catch(() => res.status(400).send({
         success: false,
-        message: 'meals is required!'
-      });
-    } 
+        message: 'Error occured while updating',
+      }));
+  }
 
-    function findOrder(order) {
-      return order.id === id;
-    }
-    
-    const foundOrder = orders.find(findOrder);
-    const foundOrderIndex = orders.findIndex(findOrder);
+  static deleteOrder(req, res) {
+    db.Order.destroy({
+      where: {
+        id: req.params.id,
+      },
+    })
+      .then(() => {
+        db.OrderMeal.destroy({
+          where: {
+            OrderId: req.params.id,
+          },
+        });
+        res.status(204).send({
+          success: true,
+          message: 'delete successful',
 
-    if (foundOrderIndex === -1) {
-      return res.status(404).send({
+        });
+      })
+      .catch(() => res.status(400).send({
         success: false,
-        message: 'order not found'
-      });
-    }
-    
-    const today = new Date().toISOString().substr(0, 10).split('-').reverse().join('/');
-
-    const updatedOrder = {
-      id: foundOrder.id,
-      date: foundOrder.date,
-      modifiedDate: today,
-      customerName: foundOrder.customerName,
-      meals: req.body.meals
-    };
-
-    orders.splice(foundOrderIndex, 1, updatedOrder);
-
-    return res.status(201).send({
-      success: true,
-      message: 'Order updated successfully!',
-      orders
-    });
+        message: 'Error occured while trying to delete',
+      }));
   }
 }
+
 
 export default OrdersController;

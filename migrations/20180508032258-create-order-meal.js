@@ -1,24 +1,24 @@
 
 module.exports = {
-  up: (queryInterface, Sequelize) => 
-    queryInterface.createTable('OrderedMeals', {
+  up: (queryInterface, Sequelize) =>
+    queryInterface.createTable('OrderMeals', {
       id: {
         allowNull: false,
         autoIncrement: true,
         primaryKey: true,
         type: Sequelize.INTEGER
       },
-      orderId: {
-        type: Sequelize.UUID,
-        allowNull: false
+      OrderId: {
+        allowNull: false,
+        type: Sequelize.UUID
       },
-      mealID: {
-        type: Sequelize.UUID,
-        allowNull: false
+      MealId: {
+        allowNull: false,
+        type: Sequelize.UUID
       },
       portion: {
-        type: Sequelize.INTEGER,
-        allowNull: false
+        allowNull: false,
+        type: Sequelize.INTEGER
       },
       createdAt: {
         allowNull: false,
@@ -29,7 +29,7 @@ module.exports = {
         type: Sequelize.DATE
       }
     }),
-  
-  down: (queryInterface, Sequelize) => queryInterface.dropTable('OrderedMeals')
+  down: (queryInterface /* , Sequelize */) =>
+    queryInterface.dropTable('OrderMeals')
   
 };

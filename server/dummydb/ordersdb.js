@@ -7,14 +7,14 @@ const orders = [
       {
         id: 2,
         portion: 2,
-        totalPrice: 800
+        totalPrice: 800,
       },
       {
         id: 1,
         portion: 1,
-        totalPrice: 1400
+        totalPrice: 1400,
       },
-    ]
+    ],
   },
   {
     id: 2,
@@ -24,44 +24,44 @@ const orders = [
       {
         id: 2,
         portion: 2,
-        totalPrice: 800
+        totalPrice: 800,
       },
       {
         id: 1,
         portion: 1,
-        totalPrice: 1400
+        totalPrice: 1400,
       },
-    ]
+    ],
   },
   {
     id: 3,
-    customerName:'tobi' ,
+    customerName: 'tobi',
     date: '22/05/2018',
     meals: [
       {
         id: 2,
         portion: 1,
-        totalPrice: 800
+        totalPrice: 800,
       },
-    ]
+    ],
   },
   {
     id: 4,
-    customerName:'shola' ,
+    customerName: 'shola',
     date: '24/05/2018',
     meals: [
       {
         id: 1,
         portion: 1,
-        totalPrice: 700
+        totalPrice: 700,
       },
       {
         id: 2,
         portion: 2,
-        totalPrice: 800
+        totalPrice: 800,
       },
-    ]
-  }
+    ],
+  },
 ];
 
 
