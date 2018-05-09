@@ -1,11 +1,10 @@
 function adminOnly(req, res, next) {
-  
-  if(req.userData.user.admin) {
+  if (req.user.admin) {
     return next();
   }
-  
+
   return res.status(403).send({
-    message: 'User not allowed!'
+    message: 'User not allowed!',
   });
 }
 
