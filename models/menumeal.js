@@ -1,5 +1,5 @@
 
-export default function (sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
   const MenuMeal = sequelize.define('MenuMeal', {
     id: {
       type: DataTypes.INTEGER,
@@ -16,9 +16,9 @@ export default function (sequelize, DataTypes) {
       allowNull: false
     }
   });
-  MenuMeal.associate = (models) => {
+  MenuMeal.associate = (/* models */) => {
     // MenuMeal.hasMany(models.Menu);
     // MenuMeal.hasMany(models.Meal);
   };
   return MenuMeal;
-}
+};

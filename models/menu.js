@@ -1,5 +1,5 @@
 
-export default function (sequelize, DataTypes) {
+module.exports = (sequelize, DataTypes) => {
   const Menu = sequelize.define('Menu', {
     id: {
       type: DataTypes.UUID,
@@ -21,4 +21,4 @@ export default function (sequelize, DataTypes) {
     Menu.belongsToMany(models.Meal, {through: 'MenuMeal', foreignKey: 'MenuId', otherKey: 'MealId'});
   };
   return Menu;
-}
+};

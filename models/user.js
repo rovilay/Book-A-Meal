@@ -1,3 +1,7 @@
+import bcrypt from 'bcryptjs';
+
+const hashPassword = user => bcrypt.hash(user.password, 10).then(hash =>
+  user.setDataValue('password', hash));
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {
@@ -57,6 +61,9 @@ module.exports = (sequelize, DataTypes) => {
       defaultValue: false
     }
   });
+
+  User.beforeCreate(hashPassword);
+
   User.associate = (models) => {
    // User.hasMany(models.Order);
    User.hasMany(models.Meal);

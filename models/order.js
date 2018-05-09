@@ -1,28 +1,31 @@
-module.exports = (sequelize, DataTypes) => {
+
+module.exports = (sequelize, DataTypes) => {  
   const Order = sequelize.define('Order', {
     id: {
       type: DataTypes.UUID,
+      primaryKey: true,
       allowNull: false,
-      defaultValue: DataTypes.UUIDV4,
-      primaryKey: true
+      dafaultValue: DataTypes.UUIDV4
     },
-    userId: {
+    UserId: {
       type: DataTypes.UUID,
-      allowNull: false,
-      foreignKey: true
+      allowNull: false
+    },
+    deliveryAddress: {
+      type: DataTypes.TEXT,
+      allowNull: false
     },
     totalPrice: {
       type: DataTypes.INTEGER,
       allowNull: false
-    },
+    }
   });
   Order.associate = (models) => {
-    Order.belongsToMany(models.Meal, {
-      through: models.OrderMeal,
-      as: 'orderId'
-    });
     Order.belongsTo(models.User, {
-      as: 'user',
+      foreignKey: 'UserId', targetKey: 'id'
+    });
+    Order.belongsToMany(models.Meal, {
+      through: 'OrderMeal', foreignKey: 'OrderId', otherKey: 'MealId'
     });
   };
   return Order;
