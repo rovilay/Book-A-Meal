@@ -5,26 +5,25 @@ import mealRouter from './routes/mealRoutes';
 import menuRouter from './routes/menuRoutes';
 import ordersRouter from './routes/ordersRoutes';
 import usersRouter from './routes/usersRoutes';
+import authorize from './middlewares/authenticate';
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 // Parse incoming requests data
 app.use(bodyParser.json());
-app.use(bodyParser.urlencoded({ extended: true}));
-app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extended: true }));
+
 
 app.get('/', (req, res) => {
-  res.json({message:'Welcome to Book A Meal!'});
+  res.json({ message: 'Welcome to Book A Meal!' });
 });
 app.use(usersRouter);
 
+app.use(authorize);
 app.use(mealRouter);
 app.use(menuRouter);
 app.use(ordersRouter);
-
-
-
 
 
 app.listen(port, () => {
@@ -32,6 +31,4 @@ app.listen(port, () => {
 });
 
 export default app;
-
-
 
