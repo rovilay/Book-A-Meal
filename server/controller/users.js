@@ -11,32 +11,31 @@ class UsersController {
       .then(() => {
         res.status(201).send({
           success: true,
-          message: "user created successfully!"
+          message: 'user created successfully!',
         });
       })
       .catch(() => {
         res.status(400).send({
           success: true,
-          message: 'An error occurred, user not created'
-        }); 
+          message: 'An error occurred, user not created',
+        });
       });
-
   }
 
   static login(req, res) {
     const loginUser = req.body;
     const [secret] = [config.secret];
     db.User.findOne({
-        where: {
-          email: loginUser.email.toLowerCase(),
-        },
-        attributes: ['id', 'admin', 'password']
+      where: {
+        email: loginUser.email.toLowerCase(),
+      },
+      attributes: ['id', 'admin', 'password'],
 
-      })
-      .then(found => {
+    })
+      .then((found) => {
         // Compare password
         bcrypt.compare(loginUser.password, found.password)
-          .then(response => {
+          .then((response) => {
             if (response === false) {
               return res.status(400).send('Password do not Match');
             }
@@ -45,13 +44,13 @@ class UsersController {
               admin: found.admin,
             };
           })
-          .then(user => {
+          .then((user) => {
             // generate token
             jwt.sign({ user }, secret, { expiresIn: '24h' }, (err, token) => {
               res.status(200).send({
                 success: true,
                 message: 'You are logged in!',
-                token
+                token,
               });
             });
           });
@@ -59,9 +58,8 @@ class UsersController {
       .catch(() =>
         res.status(400).send({
           success: false,
-          message: `Error occured while trying to log in.`
-        })
-      );
+          message: 'Error occured while trying to log in.',
+        }));
   }
 }
 

@@ -3,7 +3,6 @@ import db from '../../models/index';
 
 class MealsController {
   static getAllMeals(req, res) {
-    
     db.Meal.findAll()
       .then(meal => res.status(200).send({
         success: true,
@@ -12,14 +11,14 @@ class MealsController {
       }))
       .catch(() => res.status(400).send({
         success: false,
-        message: 'Error occured while getting all meals'
+        message: 'Error occured while getting all meals',
       }));
   }
 
   static getMeal(req, res) {
     db.Meal.findById(req.params.id)
-      .then(meal => {
-        if(meal === null) {
+      .then((meal) => {
+        if (meal === null) {
           return res.status(404).send({
             success: false,
             message: 'Meal not found!',
@@ -29,14 +28,13 @@ class MealsController {
         return res.status(200).send({
           success: true,
           message: 'Meal retrieved successfully',
-          meal
+          meal,
         });
       })
       .catch(() => res.status(400).send({
         success: false,
-        message: 'Error occured while getting meal'
+        message: 'Error occured while getting meal',
       }));
-
   }
 
   static addMeal(req, res) {
@@ -45,17 +43,17 @@ class MealsController {
     newMeal.UserId = req.user.id;
 
     db.Meal.create(newMeal)
-      .then(meal => {
+      .then((meal) => {
         res.status(201).send({
           success: true,
           message: 'Meal added successfully',
-          meal
+          meal,
         });
       })
       .catch(() => {
         res.status(400).send({
           success: false,
-          message: 'Error occured  while creating meal'
+          message: 'Error occured  while creating meal',
         });
       });
   }
@@ -66,42 +64,38 @@ class MealsController {
     updatedMeal.UserId = req.user.id;
 
     db.Meal.update(updatedMeal, {
-        where: {
-          id: req.params.id
+      where: {
+        id: req.params.id,
+      },
+    })
+      .then((update) => {
+        if (update) {
+          res.status(200).send({
+            success: true,
+            message: 'Update successful',
+            updatedMeal,
+          });
         }
       })
-      .then(update => {
-          if (update) {
-            res.status(200).send({
-              success: true,
-              message: 'Update successful',
-              updatedMeal,
-            });
-          }
-        })
-        .catch(() =>
-          res.status(400).send({
-            success: false,
-            message: 'Error occured  while updating meal'
-          })
-        );
-      }
-
-    static deleteMeal(req, res) {
-      db.Meal.destroy({
-          where: {
-            id: req.params.id
-          }
-        })
-        .then(() =>
-          res.status(204).send(`Delete successful`)
-        )
-        .catch(() =>
-          res.status(400).send('error occured while deleting')
-        );
-    }
+      .catch(() =>
+        res.status(400).send({
+          success: false,
+          message: 'Error occured  while updating meal',
+        }));
   }
 
+  static deleteMeal(req, res) {
+    db.Meal.destroy({
+      where: {
+        id: req.params.id,
+      },
+    })
+      .then(() =>
+        res.status(204).send('Delete successful'))
+      .catch(() =>
+        res.status(400).send('error occured while deleting'));
+  }
+}
 
 
-  export default MealsController;
+export default MealsController;
