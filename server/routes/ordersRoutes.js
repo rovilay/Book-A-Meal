@@ -9,7 +9,7 @@ ordersRouter.get('/api/v1/orders', ordersController.getAllOrders);
 
 ordersRouter.post('/api/v1/orders', checkTime.canOrder, validateOrder, ordersController.postOrder);
 
-ordersRouter.put('/api/v1/orders/:id',checkTime.canUpdate, validateOrder,  ordersController.updateOrder);
+ordersRouter.put('/api/v1/orders/:id', checkTime.canUpdate, validateOrder, ordersController.updateOrder);
 
 ordersRouter.delete('/api/v1/orders/:id', checkTime.canUpdate, ordersController.deleteOrder);
 
