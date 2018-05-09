@@ -4,59 +4,68 @@ import db from '../../models/index';
 class MealsController {
   static getAllMeals(req, res) {
     
-    db.Meal.findAll({})
+    db.Meal.findAll()
       .then(meal => res.status(200).send({
         success: true,
         message: 'Meals retrieved successfully',
         meal,
       }))
-      .catch(err => res.status(400).send(err));
+      .catch(() => res.status(400).send({
+        success: false,
+        message: 'Error occured while getting all meals'
+      }));
   }
 
   static getMeal(req, res) {
-    db.Meal.findById(req.params.id, {
-        attributes: ["id", "title", "description", "price", "image", "createdAt", "updatedAt"]
+    db.Meal.findById(req.params.id)
+      .then(meal => {
+        if(meal === null) {
+          return res.status(404).send({
+            success: false,
+            message: 'Meal not found!',
+          });
+        }
+
+        return res.status(200).send({
+          success: true,
+          message: 'Meal retrieved successfully',
+          meal
+        });
       })
-      .then(meal => res.status(200).send({
-        success: true,
-        message: 'Meal retrieved successfully',
-        meal
-      }))
-      .catch(err => res.status(400).send({
+      .catch(() => res.status(400).send({
         success: false,
-        err
+        message: 'Error occured while getting meal'
       }));
 
   }
 
   static addMeal(req, res) {
     const newMeal = req.body;
+    newMeal.title = newMeal.title.toUpperCase();
+    newMeal.UserId = req.user.id;
 
-    db.Meal.create({
-        title: newMeal.title,
-        description: newMeal.description,
-        price: newMeal.price,
-        image: newMeal.image,
-        UserId: newMeal.UserId
-      })
+    db.Meal.create(newMeal)
       .then(meal => {
-        res.status(201).send(meal);
+        res.status(201).send({
+          success: true,
+          message: 'Meal added successfully',
+          meal
+        });
       })
-      .catch(err => {
-        res.status(400).send(err);
+      .catch(() => {
+        res.status(400).send({
+          success: false,
+          message: 'Error occured  while creating meal'
+        });
       });
   }
 
   static updateMeal(req, res) {
     const updatedMeal = req.body;
+    updatedMeal.title.toUpperCase();
+    updatedMeal.UserId = req.user.id;
 
-    db.Meal.update({
-        title: updatedMeal.title,
-        description: updatedMeal.description,
-        price: updatedMeal.price,
-        image: updatedMeal.image,
-        UserId: updatedMeal.UserId
-      }, {
+    db.Meal.update(updatedMeal, {
         where: {
           id: req.params.id
         }
@@ -70,8 +79,11 @@ class MealsController {
             });
           }
         })
-        .catch(err =>
-          res.status(200).send(err)
+        .catch(() =>
+          res.status(400).send({
+            success: false,
+            message: 'Error occured  while updating meal'
+          })
         );
       }
 
@@ -82,10 +94,10 @@ class MealsController {
           }
         })
         .then(() =>
-          res.status(200).send(`Delete successful`)
+          res.status(204).send(`Delete successful`)
         )
-        .catch(err =>
-          res.status(404).send(err)
+        .catch(() =>
+          res.status(400).send('error occured while deleting')
         );
     }
   }

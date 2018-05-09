@@ -1,5 +1,3 @@
-/* eslint class-methods-use-this: ["error", { "exceptMethods": ["getAllMenus", "getMenu", "postMenu"] }] */
-
 import db from '../../models/index';
 
 class MenusController {
@@ -22,7 +20,10 @@ class MenusController {
         menus: menu
       })
     )
-    .catch(err => res.status(400).send(err)
+    .catch(() => res.status(400).send({
+      success: false,
+      message: 'Error occured while getting all menus'
+    })
     );
 
   }
@@ -55,15 +56,18 @@ class MenusController {
         menu
       })
     )
-    .catch(err => res.status(400).send(err)
+    .catch(() => res.status(400).send({
+      success: false,
+      message: 'Error occured while getting menu'
+    })
     );
   }
 
   static postMenu(req, res) {
     const newMenu = req.body;
-    newMenu.meals = JSON.parse(newMenu.meals);
+    
     db.Menu.create({
-        UserId: req.userData.user.id,
+        UserId: req.user.id,
         postOn: newMenu.postOn
       })
       .then(menu => {
@@ -73,8 +77,11 @@ class MenusController {
           message: 'Menu posted successfully!'
         });
       })
-      .catch(err => {
-        res.send(err);
+      .catch(() => {
+        res.status.send({
+          success: false,
+          message: 'Error occured while posting menu'
+        });
       });
   }
 }
