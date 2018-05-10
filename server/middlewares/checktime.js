@@ -12,7 +12,6 @@ class checkTime {
       .then((found) => {
         const [createdAt] = [found.dataValues.createdAt]; // Get the time created
         const timeCheck = moment(createdAt).add(2, 'hours') > moment(); // compare expiry time with present time
-
         if (timeCheck) {
           return next();
         }
