@@ -27,7 +27,11 @@
   },
   "homepage": "https://github.com/rovilay/Book-A-Meal#readme",
   "dependencies": {
-    "babel": "^6.23.0",
+    "babel-cli": "^6.26.0",
+    "babel-core": "^6.26.3",
+    "babel-eslint": "^8.2.3",
+    "babel-plugin-transform-object-rest-spread": "^6.26.0",
+    "babel-preset-env": "^1.6.1",
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
     "dotenv": "^5.0.1",
@@ -41,11 +45,6 @@
     "uuid": "^3.2.1"
   },
   "devDependencies": {
-    "babel-cli": "^6.26.0",
-    "babel-core": "^6.26.0",
-    "babel-eslint": "^8.2.3",
-    "babel-plugin-transform-object-rest-spread": "^6.26.0",
-    "babel-preset-env": "^1.6.1",
     "chai": "^4.1.2",
     "chai-http": "^4.0.0",
     "coveralls": "^3.0.0",
