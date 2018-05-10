@@ -11,7 +11,7 @@ import authorize from './middlewares/authenticate';
 require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT;
 
 // Parse incoming requests data
 app.use(bodyParser.json());
