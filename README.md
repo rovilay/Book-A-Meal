@@ -39,7 +39,7 @@ This app is open to suggestions and contribution. To contirbute follow the steps
 * Fork this project and clone locally
 * Work on the project and create a branch for each separate work
 * Ensure to write good commit messages 
-* When don push to your origin repo
+* When done push to your origin repo
 * Create a Pull request
 
 # Authors
