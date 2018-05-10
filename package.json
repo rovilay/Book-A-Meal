@@ -12,7 +12,7 @@
     "start": "node_modules/.bin/nodemon ./server/app.js --exec babel-node",
     "build": "babel server -d dist",
     "serve": "node dist/app.js",
-    "start-dev": "node_modules/.bin/nodemon ./server/app.js --exec babel-node",
+    "start-dev": "node_modules/.bin/nodemon ./server/app.js --exec babel-node NODE_ENV=production",
     "coverage": "nyc report --reporter=text-lcov --reporter=lcov | coveralls",
     "heroku-postbuild": "npm install && babel-node ./server/app.js",
     "lint": "eslint \"server/**/*.js\" --fix"
