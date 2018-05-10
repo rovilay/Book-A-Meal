@@ -1,14 +1,14 @@
 
 import express from 'express';
 import bodyParser from 'body-parser';
-import config from 'dotenv';
 import mealRouter from './routes/mealRoutes';
 import menuRouter from './routes/menuRoutes';
 import ordersRouter from './routes/ordersRoutes';
 import usersRouter from './routes/usersRoutes';
 import authorize from './middlewares/authenticate';
 
-config.config();
+
+require('dotenv').config();
 
 const app = express();
 const port = process.env.PORT || 4000;
