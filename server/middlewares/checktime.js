@@ -1,5 +1,5 @@
 import moment from 'moment';
-import db from '../../models/index';
+import db from '../models/index';
 
 class checkTime {
   static canUpdate(req, res, next) {

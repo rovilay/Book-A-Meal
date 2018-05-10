@@ -1,5 +1,5 @@
 import UUID from 'uuid/v4';
-import db from '../../models/index';
+import db from '../models/index';
 
 
 class OrdersController {

@@ -10,7 +10,7 @@ var _v = require('uuid/v4');
 
 var _v2 = _interopRequireDefault(_v);
 
-var _index = require('../../models/index');
+var _index = require('../models/index');
 
 var _index2 = _interopRequireDefault(_index);
 
