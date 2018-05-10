@@ -45,7 +45,7 @@ var OrdersController = function () {
         }
         return res.status(200).send({
           success: true,
-          message: 'Menus retrieved successfully',
+          message: 'Orders retrieved successfully',
           orders: orders
         });
       }).catch(function () {

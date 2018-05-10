@@ -20,16 +20,20 @@ var _checktime = require('../middlewares/checktime');
 
 var _checktime2 = _interopRequireDefault(_checktime);
 
+var _customerOnly = require('../middlewares/customerOnly');
+
+var _customerOnly2 = _interopRequireDefault(_customerOnly);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 var ordersRouter = _express2.default.Router();
 
 ordersRouter.get('/api/v1/orders', _orders2.default.getAllOrders);
 
-ordersRouter.post('/api/v1/orders', _checktime2.default.canOrder, _orders4.default, _orders2.default.postOrder);
+ordersRouter.post('/api/v1/orders', _customerOnly2.default, _checktime2.default.canOrder, _orders4.default, _orders2.default.postOrder);
 
-ordersRouter.put('/api/v1/orders/:id', _checktime2.default.canUpdate, _orders4.default, _orders2.default.updateOrder);
+ordersRouter.put('/api/v1/orders/:id', _customerOnly2.default, _checktime2.default.canUpdate, _orders4.default, _orders2.default.updateOrder);
 
-ordersRouter.delete('/api/v1/orders/:id', _checktime2.default.canUpdate, _orders2.default.deleteOrder);
+ordersRouter.delete('/api/v1/orders/:id', _customerOnly2.default, _checktime2.default.canUpdate, _orders2.default.deleteOrder);
 
 exports.default = ordersRouter;

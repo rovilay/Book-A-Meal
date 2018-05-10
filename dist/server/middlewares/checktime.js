@@ -36,7 +36,6 @@ var checkTime = function () {
             createdAt = _ref[0]; // Get the time created
 
         var timeCheck = (0, _moment2.default)(createdAt).add(2, 'hours') > (0, _moment2.default)(); // compare expiry time with present time
-
         if (timeCheck) {
           return next();
         }
