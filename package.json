@@ -12,7 +12,7 @@
     "start": " node ./dist/app.js",
     "build": "babel server -d dist",
     "serve": "node dist/app.js",
-    "start-dev": "node_modules/.bin/nodemon ./server/app.js --exec babel-node NODE_ENV=production",
+    "start-dev": "node_modules/.bin/nodemon ./server/app.js --exec babel-node",
     "coverage": "nyc report --reporter=text-lcov --reporter=lcov | coveralls",
     "lint": "eslint \"server/**/*.js\" --fix"
   },
