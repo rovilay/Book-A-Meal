@@ -14,7 +14,7 @@ var _bcryptjs = require('bcryptjs');
 
 var _bcryptjs2 = _interopRequireDefault(_bcryptjs);
 
-var _index = require('../models/index');
+var _index = require('../../models/index');
 
 var _index2 = _interopRequireDefault(_index);
 

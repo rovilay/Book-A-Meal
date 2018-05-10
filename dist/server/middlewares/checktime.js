@@ -10,7 +10,7 @@ var _moment = require('moment');
 
 var _moment2 = _interopRequireDefault(_moment);
 
-var _index = require('../models/index');
+var _index = require('../../models/index');
 
 var _index2 = _interopRequireDefault(_index);
 
