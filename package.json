@@ -9,7 +9,7 @@
   "main": "./server/app.js",
   "scripts": {
     "test": " nyc --reporter=html --reporter=text mocha --compilers js:babel-core/register ./test --exit --timeout 5000ms",
-    "start": "node_modules/.bin/nodemon ./server/app.js --exec babel-node",
+    "start": "node_modules/.bin/nodemon ./server/app.js --exec babel-node NODE_ENV=production",
     "build": "babel server -d dist",
     "serve": "node dist/app.js",
     "start-dev": "node_modules/.bin/nodemon ./server/app.js --exec babel-node",
