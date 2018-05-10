@@ -14,7 +14,7 @@
     "serve": "node dist/app.js",
     "start-dev": "node_modules/.bin/nodemon ./server/app.js --exec babel-node",
     "coverage": "nyc report --reporter=text-lcov --reporter=lcov | coveralls",
-    "heroku-postbuild": "npm install && babel-node ./server/app.js",
+    "heroku-postbuild": "npm install && babel-node ./server/app.js NODE_ENV=production",
     "lint": "eslint \"server/**/*.js\" --fix"
   },
   "repository": {
