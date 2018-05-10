@@ -12,9 +12,9 @@
     "start": "node_modules/.bin/nodemon ./server/app.js --exec babel-node",
     "build": "babel server -d dist",
     "serve": "node dist/app.js",
-    "start:dev": "node_modules/.bin/nodemon ./server/app.js --exec babel-node --",
+    "start-dev": "node_modules/.bin/nodemon ./server/app.js --exec babel-node",
     "coverage": "nyc report --reporter=text-lcov --reporter=lcov | coveralls",
-    "heroku-postbuild": "npm install",
+    "heroku-postbuild": "npm install babel-node ./server/app.js",
     "lint": "eslint \"server/**/*.js\" --fix"
   },
   "repository": {
@@ -30,6 +30,7 @@
   "dependencies": {
     "bcryptjs": "^2.4.3",
     "body-parser": "^1.18.2",
+    "dotenv": "^5.0.1",
     "express": "^4.16.3",
     "jsonwebtoken": "^8.2.1",
     "moment": "^2.22.1",

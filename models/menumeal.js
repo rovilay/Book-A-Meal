@@ -17,8 +17,6 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
   MenuMeal.associate = (/* models */) => {
-    // MenuMeal.hasMany(models.Menu);
-    // MenuMeal.hasMany(models.Meal);
   };
   return MenuMeal;
 };

@@ -1,7 +1,8 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import db from '../../models/index';
-import config from '../../config';
+
+require('dotenv').config();
 
 class UsersController {
   static signup(req, res) {
@@ -24,7 +25,6 @@ class UsersController {
 
   static login(req, res) {
     const loginUser = req.body;
-    const [secret] = [config.secret];
     db.User.findOne({
       where: {
         email: loginUser.email.toLowerCase(),
@@ -46,7 +46,7 @@ class UsersController {
           })
           .then((user) => {
             // generate token
-            jwt.sign({ user }, secret, { expiresIn: '24h' }, (err, token) => {
+            jwt.sign({ user }, process.env.SECRET, { expiresIn: '24h' }, (err, token) => {
               res.status(200).send({
                 success: true,
                 message: 'You are logged in!',
