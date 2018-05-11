@@ -15,10 +15,11 @@ class UsersController {
           message: 'user created successfully!',
         });
       })
-      .catch(() => {
+      .catch((err) => {
         res.status(400).send({
-          success: true,
+          success: false,
           message: 'An error occurred, user not created',
+          err
         });
       });
   }
