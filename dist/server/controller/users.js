@@ -39,10 +39,11 @@ var UsersController = function () {
           success: true,
           message: 'user created successfully!'
         });
-      }).catch(function () {
+      }).catch(function (err) {
         res.status(400).send({
-          success: true,
-          message: 'An error occurred, user not created'
+          success: false,
+          message: 'An error occurred, user not created',
+          err: err
         });
       });
     }
