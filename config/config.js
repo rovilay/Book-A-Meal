@@ -10,8 +10,9 @@ module.exports = {
   },
   test: {
     username: process.env.TEST_USERNAME || 'postgres',
-    password: process.env.TEST_USERNAME || 'postgres',
-    database: process.env.DEV_DB || 'postgres',
+    password: process.env.TEST_PASSWORD,
+    port: 5432,
+    database: process.env.TEST_DB || 'bookAMeal-test',
     host: '127.0.0.1',
     dialect: 'postgres'
   },
