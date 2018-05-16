@@ -15,11 +15,10 @@ class UsersController {
           message: 'user created successfully!',
         });
       })
-      .catch((err) => {
+      .catch(() => {
         res.status(400).send({
           success: false,
-          message: 'An error occurred, user not created',
-          err
+          message: 'An error occurred, user not created'
         });
       });
   }
@@ -38,7 +37,10 @@ class UsersController {
         bcrypt.compare(loginUser.password, found.password)
           .then((response) => {
             if (response === false) {
-              return res.status(400).send('Password do not Match');
+              return res.status(400).send({
+                success: false,
+                message: 'Password do not Match'
+              });
             }
             return {
               id: found.id,
@@ -54,12 +56,19 @@ class UsersController {
                 token,
               });
             });
+          })
+          .catch((err) => {
+            res.status(400).send({
+              success: false,
+              message: 'err while logging in!',
+              err
+            });
           });
       })
       .catch(() =>
         res.status(400).send({
           success: false,
-          message: 'Error occured while trying to log in.',
+          message: 'User not found!',
         }));
   }
 }

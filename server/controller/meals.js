@@ -4,10 +4,10 @@ import db from '../../models/index';
 class MealsController {
   static getAllMeals(req, res) {
     db.Meal.findAll()
-      .then(meal => res.status(200).send({
+      .then(meals => res.status(200).send({
         success: true,
         message: 'Meals retrieved successfully',
-        meal,
+        meals,
       }))
       .catch(() => res.status(400).send({
         success: false,
@@ -60,7 +60,7 @@ class MealsController {
 
   static updateMeal(req, res) {
     const updatedMeal = req.body;
-    updatedMeal.title.toUpperCase();
+    updatedMeal.title = updatedMeal.title.toUpperCase();
     updatedMeal.UserId = req.user.id;
 
     db.Meal.update(updatedMeal, {
@@ -72,7 +72,7 @@ class MealsController {
         if (update) {
           res.status(200).send({
             success: true,
-            message: 'Update successful',
+            message: 'Update successful!',
             updatedMeal,
           });
         }
@@ -80,7 +80,7 @@ class MealsController {
       .catch(() =>
         res.status(400).send({
           success: false,
-          message: 'Error occured  while updating meal',
+          message: 'Error occured while updating meal',
         }));
   }
 

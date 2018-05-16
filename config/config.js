@@ -14,7 +14,8 @@ module.exports = {
     port: 5432,
     database: process.env.TEST_DB || 'bookAMeal-test',
     host: '127.0.0.1',
-    dialect: 'postgres'
+    dialect: 'postgres',
+    logging: false
   },
   production: {
     use_env_variable: 'DATABASE_URL',
