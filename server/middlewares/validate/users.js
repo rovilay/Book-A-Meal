@@ -4,10 +4,7 @@ class User {
     keys.forEach((key) => {
       // check if undefined or empty
       if (req.body[`${key}`] === undefined || req.body[`${key}`] === '') {
-        return res.status(400).send({
-          success: false,
-          message: `${key} field is empty`,
-        });
+        return res.status(400).end(`${key} field is empty`);
       }
     });
     next();
@@ -19,10 +16,7 @@ class User {
     keys.forEach((key) => {
       // check if undefined or empty
       if (req.body[`${key}`] === undefined || req.body[`${key}`] === '') {
-        return res.status(400).send({
-          success: false,
-          message: `${key} field is empty`,
-        });
+        return res.status(400).end(`${key} field is empty`);
       }
     });
 

@@ -6,7 +6,8 @@ module.exports = {
     password: process.env.DEV_PASSWORD,
     database: process.env.DEV_DB || 'bookAMeal-dev',
     host: '127.0.0.1',
-    dialect: 'postgres'
+    dialect: 'postgres',
+    logging: false
   },
   test: {
     username: process.env.TEST_USERNAME || 'postgres',

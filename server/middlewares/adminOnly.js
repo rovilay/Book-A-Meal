@@ -1,11 +1,9 @@
 function adminOnly(req, res, next) {
   if (req.user.admin === false) {
-    return res.status(403).send({
-      message: 'User not allowed!',
-    });
+    return res.status(403).end('User not allowed!');
   }
 
-  next();
+  return next();
 }
 
 export default adminOnly;

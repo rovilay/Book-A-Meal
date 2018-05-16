@@ -46,14 +46,22 @@ class MenusController {
         postOn: date,
       },
     })
-      .then(menu => res.status(200).send({
-        success: true,
-        message: 'Menu retrieved successfully',
-        menu,
-      }))
+      .then((menu) => {
+        if (menu.length === 0) {
+          return res.status(400).send({
+            success: false,
+            message: `Could not get menu on date: ${date}`,
+          });
+        }
+        res.status(200).send({
+          success: true,
+          message: 'Menu retrieved successfully',
+          menu,
+        });
+      })
       .catch(() => res.status(400).send({
         success: false,
-        message: 'Error occured while getting menu',
+        message: 'Error occured while trying to get menu',
       }));
   }
 
@@ -72,7 +80,7 @@ class MenusController {
         });
       })
       .catch(() => {
-        res.status.send({
+        res.status(400).send({
           success: false,
           message: 'Error occured while posting menu',
         });
