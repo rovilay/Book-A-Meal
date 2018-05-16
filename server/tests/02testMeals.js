@@ -250,7 +250,7 @@ describe('Meals API routes', (done) => {
 
     it('should not allow customer delete', (done) => {
       chai.request(app.listen())
-      .delete('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff')
+      .del('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff')
       .set('Authorization', customerToken)
       .end((err, res) => {
         if(err) return done(err);

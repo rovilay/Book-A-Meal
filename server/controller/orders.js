@@ -100,7 +100,7 @@ class OrdersController {
         }
         res.status(200).send({
           success: true,
-          message: 'Update successful',
+          message: 'Update successfull',
         });
       })
       .catch(() => res.status(400).send({

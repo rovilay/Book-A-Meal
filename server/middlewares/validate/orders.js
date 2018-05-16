@@ -12,7 +12,7 @@ function validateOrder(req, res, next) {
     if (meals !== '' || meals !== undefined) { // if meals isn't empty check its content
       meals.forEach((meal) => {
         if (meal.id === '' || meal.id === undefined || meal.portion === '' || meal.portion === undefined) {
-          return res.status(400).end(`${meal.id} entry is not correct`);
+          return res.status(400).end('meals entry is not correct');
         }
       });
     }

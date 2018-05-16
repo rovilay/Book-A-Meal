@@ -2,11 +2,12 @@ import express from 'express';
 import ordersController from '../controller/orders';
 import validateOrder from '../middlewares/validate/orders';
 import checkTime from '../middlewares/checktime';
+import adminOnly from '../middlewares/adminOnly';
 import customerOnly from '../middlewares/customerOnly';
 
 const ordersRouter = express.Router();
 
-ordersRouter.get('/api/v1/orders', ordersController.getAllOrders);
+ordersRouter.get('/api/v1/orders', adminOnly, ordersController.getAllOrders);
 
 ordersRouter.post('/api/v1/orders', customerOnly, checkTime.canOrder, validateOrder, ordersController.postOrder);
 
