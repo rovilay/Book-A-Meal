@@ -58,14 +58,14 @@ describe('Menus API routes', (done) => {
       });
     });
 
-    it('should not allow customer', (done) => {
+    it('should not allow customer get all menus', (done) => {
       chai.request(app.listen())
       .get('/api/v1/menus')
       .set('Authorization', customerToken)
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(403);
-        // expect(res.body.message).to.equal('User not allowed!');
+        expect(res.body.message).to.equal('User not allowed!');
         done();
       });
     });
@@ -115,7 +115,7 @@ describe('Menus API routes', (done) => {
       .set('Authorization', customerToken)
       .end((err, res) => {
         if(err) return done(err);
-        expect(res.status).to.equal(400);
+        expect(res.status).to.equal(404);
         expect(res.body.success).to.equal(false);
         expect(res.body.message).to.equal('Could not get menu on date: 2018-05-30');
         done();
@@ -142,11 +142,11 @@ describe('Menus API routes', (done) => {
       chai.request(app.listen())
       .post('/api/v1/menus')
       .set('Authorization', customerToken)
-      .send()
+      .send(menuData[1])
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(403);
-        // expect(res.body.message).to.equal('User not allowed!');
+        expect(res.body.message).to.equal('User not allowed!');
         done();
       });
     });
@@ -165,8 +165,8 @@ describe('Menus API routes', (done) => {
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(400);
-        // expect(res.body.success).to.equal(false);
-        // expect(res.body.message).to.equal('postOn field is empty');
+        expect(res.body.success).to.equal(false);
+        expect(res.body.message).to.equal('postOn field is empty');
         done();
       });
     });

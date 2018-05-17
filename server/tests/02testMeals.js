@@ -49,7 +49,7 @@ describe('Meals API routes', (done) => {
         .end((err, res) => {
           if (err) return done(err);
           expect(res.status).to.equal(403);
-          // expect(res.body.message).to.equal('User not allowed!');
+          expect(res.body.message).to.equal('User not allowed!');
           done();
         });
     });
@@ -66,8 +66,8 @@ describe('Meals API routes', (done) => {
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(400);
-        // expect(res.body.success).to.equal(false);
-        // expect(res.body.message).to.equal('price field is empty');
+        expect(res.body.success).to.equal(false);
+        expect(res.body.message).to.equal('price field is empty');
 
         done();
       });
@@ -111,7 +111,7 @@ describe('Meals API routes', (done) => {
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(403);
-        // expect(res.body.message).to.equal('User not allowed!');
+        expect(res.body.message).to.equal('User not allowed!');
         done();
       });
     });
@@ -163,7 +163,7 @@ describe('Meals API routes', (done) => {
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(403);
-        // expect(res.body.message).to.equal('User not allowed!');
+        expect(res.body.message).to.equal('User not allowed!');
         done();
       });
     });
@@ -198,7 +198,7 @@ describe('Meals API routes', (done) => {
       .end((err, res) => {
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
-        expect(res.body.message).to.equal('Error occured while updating meal');
+        expect(res.body.message).to.equal('Error occurred while updating meal!');
 
         done();
       });
@@ -211,7 +211,7 @@ describe('Meals API routes', (done) => {
       .send(mealData[0])
       .end((err, res) => {
         expect(res.status).to.equal(403);
-        // expect(res.body.message).to.equal('User not allowed!');
+        expect(res.body.message).to.equal('User not allowed!');
 
         done();
       });

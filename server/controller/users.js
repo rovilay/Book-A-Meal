@@ -3,9 +3,23 @@ import bcrypt from 'bcryptjs';
 import db from '../../models/index';
 
 require('dotenv').config();
-
+/**
+ * Handles user signup and log in operations
+ * @exports
+ * @class UsersController
+ */
 class UsersController {
-  static signup(req, res) {
+  /**
+   * Adds user
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof UsersController
+   */
+  static signup(req, res, next) {
     req.body.email = req.body.email.toLowerCase();
 
     db.User.create(req.body)
@@ -16,14 +30,23 @@ class UsersController {
         });
       })
       .catch(() => {
-        res.status(400).send({
-          success: false,
-          message: 'An error occurred, user not created'
-        });
+        const err = new Error('An error occurred, user not created!');
+        err.status = 400;
+        return next(err);
       });
   }
 
-  static login(req, res) {
+  /**
+   * Logs in users
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof UsersController
+   */
+  static login(req, res, next) {
     const loginUser = req.body;
     db.User.findOne({
       where: {
@@ -36,16 +59,16 @@ class UsersController {
         // Compare password
         bcrypt.compare(loginUser.password, found.password)
           .then((response) => {
-            if (response === false) {
-              return res.status(400).send({
-                success: false,
-                message: 'Password do not Match'
-              });
+            if (response) {
+              return {
+                id: found.id,
+                admin: found.admin,
+              };
             }
-            return {
-              id: found.id,
-              admin: found.admin,
-            };
+
+            const err = new Error('Password do not match!');
+            err.status = 400;
+            throw err;
           })
           .then((user) => {
             // generate token
@@ -57,19 +80,13 @@ class UsersController {
               });
             });
           })
-          .catch((err) => {
-            res.status(400).send({
-              success: false,
-              message: 'err while logging in!',
-              err
-            });
-          });
+          .catch(err => next(err));
       })
-      .catch(() =>
-        res.status(400).send({
-          success: false,
-          message: 'User not found!',
-        }));
+      .catch(() => {
+        const err = new Error('User not found!');
+        err.status = 404;
+        return next(err);
+      });
   }
 }
 

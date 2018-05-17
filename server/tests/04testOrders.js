@@ -35,7 +35,7 @@ describe('Orders API routes', (done) => {
         if(err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.success).to.equal(true);
-        expect(res.body.message).to.equal('Orders retrieved successfully');
+        expect(res.body.message).to.equal('Orders retrieved successfully!');
         res.body.should.have.property('orders');
         expect(res.body.orders).to.be.an('array');
         res.body.orders.forEach(order => {
@@ -80,7 +80,7 @@ describe('Orders API routes', (done) => {
         if(moment().hour() >= 7 && moment().hour() <= 18) {
           expect(res.status).to.equal(200);
           expect(res.body.success).to.equal(true);
-          expect(res.body.message).to.equal('Orders placed successfully!');
+          expect(res.body.message).to.equal('Order placed successfully!');
         } else {
           expect(res.status).to.equal(403);
           expect(res.body.success).to.equal(false);
@@ -124,7 +124,7 @@ describe('Orders API routes', (done) => {
 
         if(moment().hour() >= 7 && moment().hour() <= 18) {
           expect(res.status).to.equal(400);
-          // expect(res.body.message).to.equal('meal entry is not correct'); 
+          expect(res.body.message).to.equal('meal entry is not correct'); 
           
         } else {
           expect(res.status).to.equal(403);
@@ -154,7 +154,7 @@ describe('Orders API routes', (done) => {
       });
     });
 
-    it('should not allow admin update   orders', (done) => {
+    it('should not allow admin update orders', (done) => {
       chai.request(app.listen())
       .put('/api/v1/orders/702a5034-8ea5-4251-a14c-9c59c01244a4')
       .set('Authorization', adminToken)
@@ -185,7 +185,7 @@ describe('Orders API routes', (done) => {
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(400);
-        // expect(res.body.message).to.equal('meal entry is not correct'); 
+        expect(res.body.message).to.equal('meal entry is not correct'); 
 
         done();
       });

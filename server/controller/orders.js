@@ -1,9 +1,24 @@
 import UUID from 'uuid/v4';
 import db from '../../models/index';
 
-
+/**
+ * Handles operations on Orders routes
+ *
+ * @exports
+ * @class OrdersController
+ */
 class OrdersController {
-  static getAllOrders(req, res) {
+  /**
+   * Gets all orders
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof OrdersController
+   */
+  static getAllOrders(req, res, next) {
     db.Order.findAll({
       include: [{
         model: db.User,
@@ -18,23 +33,34 @@ class OrdersController {
     })
       .then((orders) => {
         if (orders.length < 1) {
-          return res.status(204).send({
-            message: 'No orders found',
-          });
+          const err = new Error('No order found!');
+          err.status = 400;
+          return next(err);
         }
         return res.status(200).send({
           success: true,
-          message: 'Orders retrieved successfully',
+          message: 'Orders retrieved successfully!',
           orders,
         });
       })
-      .catch(() => res.status(400).send({
-        success: false,
-        message: 'Error occured while finding order',
-      }));
+      .catch(() => {
+        const err = new Error('Error occurred while getting orders!');
+        err.status = 400;
+        return next(err);
+      });
   }
 
-  static postOrder(req, res) {
+  /**
+   * Post orders
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof OrdersController
+   */
+  static postOrder(req, res, next) {
     const newOrder = req.body;
     const orderMeals = newOrder.meals.map(meal => meal.id); // Get all meal id
     const orderPortion = newOrder.meals.map(meal => meal.portion); // Get all meal portion
@@ -58,14 +84,24 @@ class OrdersController {
           message: 'Order placed successfully!',
         });
       })
-      .catch(err => res.status(400).send({
-        success: false,
-        message: 'Error occured while placing order!',
-        err,
-      }));
+      .catch(() => {
+        const err = new Error('Error occurred while placing order!');
+        err.status = 400;
+        return next(err);
+      });
   }
 
-  static updateOrder(req, res) {
+  /**
+   * Updates order based on id
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof OrdersController
+   */
+  static updateOrder(req, res, next) {
     const updatedOrder = req.body;
     const updatedMeals = updatedOrder.meals.map(meal => meal.id); // Get all meal id
 
@@ -103,13 +139,24 @@ class OrdersController {
           message: 'Update successfull',
         });
       })
-      .catch(() => res.status(400).send({
-        success: false,
-        message: 'Error occured while updating',
-      }));
+      .catch(() => {
+        const err = new Error('Error occurred while updating order!');
+        err.status = 400;
+        return next(err);
+      });
   }
 
-  static deleteOrder(req, res) {
+  /**
+   * Deletes order based on id
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof OrdersController
+   */
+  static deleteOrder(req, res, next) {
     db.Order.destroy({
       where: {
         id: req.params.id,
@@ -127,10 +174,11 @@ class OrdersController {
 
         });
       })
-      .catch(() => res.status(400).send({
-        success: false,
-        message: 'Error occured while trying to delete',
-      }));
+      .catch(() => {
+        const err = new Error('Error occurred while deleting order');
+        err.status = 400;
+        return next(err);
+      });
   }
 }
 

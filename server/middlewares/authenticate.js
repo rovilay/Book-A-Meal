@@ -1,8 +1,17 @@
 import jwt from 'jsonwebtoken';
 
 require('dotenv').config();
-
-function getToken(req, res, next) {
+/**
+ * Verifies token
+ *
+ * @exports verifyToken
+ * @param  {object} req - Request object
+ * @param  {object} res - Response object
+ * @param  {object} next - next object (handles error or continues to next
+ * middleware)
+ * @return {object} next
+ */
+function verifyToken(req, res, next) {
   // Get auth header from req header
   const token = req.headers.authorization;
 
@@ -11,16 +20,15 @@ function getToken(req, res, next) {
     jwt.verify(token, process.env.SECRET, (err, userData) => {
       req.user = userData.user;
       if (err) {
-        res.status(400).send({
-          success: false,
-          message: 'Error verifying token',
-        });
+        err.status = 401;
+        return next(err);
       }
-      next();
+
+      return next();
     });
   } else {
     return res.sendStatus(403);
   }
 }
 
-export default getToken;
+export default verifyToken;

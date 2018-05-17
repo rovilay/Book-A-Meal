@@ -22,7 +22,7 @@ describe('Users API routes', () => {
         res.body.should.have.property('success');
         res.body.should.have.property('message');
         expect(res.body.success).to.equal(false);
-        expect(res.body.message).to.equal('An error occurred, user not created');
+        expect(res.body.message).to.equal('An error occurred, user not created!');
         if(err) return done(err);
         done();
       });
@@ -50,10 +50,10 @@ describe('Users API routes', () => {
       .send(newUser)
       .end((err, res) => {
         expect(res.status).to.equal(400);
-        // res.body.should.have.property('success');
-        // res.body.should.have.property('message');
-        // expect(res.body.success).to.equal(false);
-        // expect(res.body.message).to.equal('firstName field is empty');
+        res.body.should.have.property('success');
+        res.body.should.have.property('message');
+        expect(res.body.success).to.equal(false);
+        expect(res.body.message).to.equal('firstName field is empty');
         if(err) return done(err);
         done();
       });
@@ -66,7 +66,7 @@ describe('Users API routes', () => {
       .post('/api/v1/auth/login')
       .send({ email: 'ro@gmail.com', password: '1234567'})
       .end((err, res) => {
-        expect(res.status).to.equal(400);
+        expect(res.status).to.equal(404);
         res.body.should.have.property('success');
         res.body.should.have.property('message');
         expect(res.body.success).to.equal(false);
