@@ -9,9 +9,9 @@
   "exclude": [
     "*/node_modules/*",
     "coverage/**",
-    "test/**",
     "UI"
   ],
+  "include": [ "**/server/**"],
   "reporter": ["lcov", "json", "text"],
   "sourceMap": false,
   "instrument": false,

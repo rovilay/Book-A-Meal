@@ -3,13 +3,14 @@
     ["env"]
   ],
   "plugins": [
-    "transform-object-rest-spread",
-    ["transform-runtime", {
+    "transform-object-rest-spread", ["transform-runtime", {
       "polyfill": false,
       "regenerator": true
     }]
   ],
   "env": {
-    "plugins": ["istanbul"]
+    "test": {
+      "plugins": ["istanbul"]
+    }
   }
 }
