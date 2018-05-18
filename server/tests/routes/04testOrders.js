@@ -2,10 +2,10 @@ import chai from 'chai';
 import chaiHttp from 'chai-http';
 import moment from 'moment';
 
-import app from '../app';
-import db from '../../models/index';
-import getToken from '../helpers/gettokens';
-import orderData from '../helpers/test-data/orders';
+import app from '../../app';
+import db from '../../../models/index';
+import getToken from '../../helpers/gettokens';
+import orderData from '../../helpers/test-data/orders';
 
 const should = chai.should();
 const expect = chai.expect;

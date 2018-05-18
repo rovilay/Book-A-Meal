@@ -56,8 +56,8 @@ class MealsController {
           meal,
         });
       })
-      .catch(() => {
-        const err = new Error('Error occurred while getting meal!');
+      .catch((err) => {
+        err = new Error('Error occurred while getting meal!');
         err.status = 400;
         return next(err);
       });
@@ -86,8 +86,8 @@ class MealsController {
           meal,
         });
       })
-      .catch(() => {
-        const err = new Error('Error occurred while posting meal!');
+      .catch((err) => {
+        err = new Error('Error occurred while posting meal!');
         err.status = 400;
         return next(err);
       });
@@ -122,8 +122,8 @@ class MealsController {
           });
         }
       })
-      .catch(() => {
-        const err = new Error('Error occurred while updating meal!');
+      .catch((err) => {
+        err = new Error('Error occurred while updating meal!');
         err.status = 400;
         return next(err);
       });
@@ -147,8 +147,8 @@ class MealsController {
     })
       .then(() =>
         res.status(204).send('Delete successful'))
-      .catch(() => {
-        const err = new Error('Error occurred while deleting meal!');
+      .catch((err) => {
+        err = new Error('Error occurred while deleting meal!');
         err.status = 400;
         return next(err);
       });

@@ -1,10 +1,10 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 
-import app from '../app';
-import db from '../../models/index';
-import mealData from '../helpers/test-data/meals';
-import getToken from '../helpers/gettokens';
+import app from '../../app';
+import db from '../../../models/index';
+import mealData from '../../helpers/test-data/meals';
+import getToken from '../../helpers/gettokens';
 
 
 const should = chai.should();
@@ -255,7 +255,20 @@ describe('Meals API routes', (done) => {
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(403);
-        // expect(res.body.message).to.equal('User not allowed!');
+        expect(res.body.message).to.equal('User not allowed!');
+
+        done();
+      });
+    });
+
+    it('should return error for wrong id', (done) => {
+      chai.request(app.listen())
+      .del('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136')
+      .set('Authorization', adminToken)
+      .end((err, res) => {
+        if(err) return done(err);
+        expect(res.status).to.equal(400);
+        expect(res.body.message).to.equal('Error occurred while deleting meal!');
 
         done();
       });

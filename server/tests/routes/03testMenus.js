@@ -1,11 +1,11 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 
-import app from '../app';
-import db from '../../models/index';
-import mealData from '../helpers/test-data/meals';
-import menuData from '../helpers/test-data/menus';
-import getToken from '../helpers/gettokens';
+import app from '../../app';
+import db from '../../../models/index';
+import mealData from '../../helpers/test-data/meals';
+import menuData from '../../helpers/test-data/menus';
+import getToken from '../../helpers/gettokens';
 
 const should = chai.should();
 const expect = chai.expect;

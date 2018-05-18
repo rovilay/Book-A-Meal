@@ -20,7 +20,7 @@ class UsersController {
    * @memberof UsersController
    */
   static signup(req, res, next) {
-    req.body.email = req.body.email.toLowerCase();
+    // req.body.email = req.body.email.toLowerCase();
 
     db.User.create(req.body)
       .then(() => {
@@ -29,8 +29,8 @@ class UsersController {
           message: 'user created successfully!',
         });
       })
-      .catch(() => {
-        const err = new Error('An error occurred, user not created!');
+      .catch((err) => {
+        err = new Error('An error occurred, user not created!');
         err.status = 400;
         return next(err);
       });
@@ -82,8 +82,8 @@ class UsersController {
           })
           .catch(err => next(err));
       })
-      .catch(() => {
-        const err = new Error('User not found!');
+      .catch((err) => {
+        err = new Error('User not found!');
         err.status = 404;
         return next(err);
       });

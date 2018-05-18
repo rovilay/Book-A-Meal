@@ -142,8 +142,6 @@ class OrdersController {
             success: true,
             message: 'Update successfull',
           });
-
-          // .catch(err => next(err));
         }
       })
       .catch((err) => {

@@ -1,9 +1,9 @@
 import chai from 'chai';
 import chaiHttp from 'chai-http';
 
-import db from '../../models/index';
-import app from '../app';
-import userData from '../helpers/test-data/users';
+import db from '../../../models/index';
+import app from '../../app';
+import userData from '../../helpers/test-data/users';
 
 const should = chai.should();
 const expect = chai.expect;

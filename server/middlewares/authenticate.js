@@ -18,16 +18,19 @@ function verifyToken(req, res, next) {
   if (token !== undefined) {
     // verify token
     jwt.verify(token, process.env.SECRET, (err, userData) => {
-      req.user = userData.user;
-      if (err) {
+      if (err || userData === undefined) {
         err.status = 401;
         return next(err);
       }
 
+      req.user = userData.user;
       return next();
     });
   } else {
-    return res.sendStatus(403);
+    return res.status(403).json({
+      success: false,
+      message: 'Token is undefined!'
+    });
   }
 }
 

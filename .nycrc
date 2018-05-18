@@ -1,17 +1,27 @@
 {
   "check-coverage": true,
   "per-file": true,
-  "lines": 80,
-  "statements": 80,
-  "functions": 80,
+  "lines": 70,
+  "statements": 70,
+  "functions":70,
   "branches": 50,
   "require": ["babel-register"],
   "exclude": [
     "*/node_modules/*",
     "coverage/**",
     "server/middlewares/errorHandler.js",
+    "server/middlewares/checktime.js",
+    "**/tests/**",
+    "server/app.js",
+    "config/**",
     "UI"
   ],
+  "watermarks": {
+    "lines": [40, 70],
+    "functions": [40, 70],
+    "branches": [40, 70],
+    "statements": [40, 70]
+  },
   "include": [ "**/server/**"],
   "reporter": ["lcov", "json", "text"],
   "sourceMap": false,

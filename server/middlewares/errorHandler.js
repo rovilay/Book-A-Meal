@@ -33,7 +33,6 @@ const myErrorHandler = (err, req, res, next, env = process.env.NODE_ENV) => {
     });
   }
 
-  console.log(err.message);
   res.status(err.status || 500).json({
     success: false,
     message: err.message,

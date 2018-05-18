@@ -12,8 +12,6 @@ before_install:
 cache:
   directories:
     - "node_modules"
-dist: trusty
-sudo: required
 install:
   - npm install
 before_script:
