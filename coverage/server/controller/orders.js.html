@@ -20,9 +20,9 @@
     </h1>
     <div class='clearfix'>
       <div class='fl pad1y space-right2'>
-        <span class="strong">42.86% </span>
+        <span class="strong">64.29% </span>
         <span class="quiet">Statements</span>
-        <span class='fraction'>18/42</span>
+        <span class='fraction'>27/42</span>
       </div>
       <div class='fl pad1y space-right2'>
         <span class="strong">50% </span>
@@ -30,21 +30,21 @@
         <span class='fraction'>2/4</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">52.63% </span>
+        <span class="strong">78.95% </span>
         <span class="quiet">Functions</span>
-        <span class='fraction'>10/19</span>
+        <span class='fraction'>15/19</span>
       </div>
       <div class='fl pad1y space-right2'>
-        <span class="strong">42.11% </span>
+        <span class="strong">60.53% </span>
         <span class="quiet">Lines</span>
-        <span class='fraction'>16/38</span>
+        <span class='fraction'>23/38</span>
       </div>
     </div>
     <p class="quiet">
       Press <em>n</em> or <em>j</em> to go to the next uncovered block, <em>b</em>, <em>p</em> or <em>k</em> for the previous block.
     </p>
   </div>
-  <div class='status-line low'></div>
+  <div class='status-line medium'></div>
 <pre><table class="coverage">
 <tr><td class="line-count quiet"><a name='L1'></a><a href='#L1'>1</a>
 <a name='L2'></a><a href='#L2'>2</a>
@@ -295,25 +295,25 @@
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-yes">2x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
-<span class="cline-any cline-no">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
+<span class="cline-any cline-yes">2x</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-neutral">&nbsp;</span>
+<span class="cline-any cline-yes">1x</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
 <span class="cline-any cline-neutral">&nbsp;</span>
@@ -480,26 +480,26 @@ class OrdersController {
    * @return {json} res.send
    * @memberof OrdersController
    */
-<span class="fstat-no" title="function not covered" >  st</span>atic postOrder(req, res, next) {
-    const newOrder = <span class="cstat-no" title="statement not covered" >req.body;</span>
-    const orderMeals = <span class="cstat-no" title="statement not covered" >newOrder.meals.map(<span class="fstat-no" title="function not covered" >me</span>al =&gt; <span class="cstat-no" title="statement not covered" >meal.id)</span>;</span> // Get all meal id
-    const orderPortion = <span class="cstat-no" title="statement not covered" >newOrder.meals.map(<span class="fstat-no" title="function not covered" >me</span>al =&gt; <span class="cstat-no" title="statement not covered" >meal.portion)</span>;</span> // Get all meal portion
+  static postOrder(req, res, next) {
+    const newOrder = req.body;
+    const orderMeals = newOrder.meals.map(meal =&gt; meal.id); // Get all meal id
+    const orderPortion = newOrder.meals.map(meal =&gt; meal.portion); // Get all meal portion
 &nbsp;
-<span class="cstat-no" title="statement not covered" >    db.Order.create({</span>
+    db.Order.create({
       id: UUID.v4(),
       UserId: req.user.id,
       deliveryAddress: newOrder.deliveryAddress,
       totalPrice: newOrder.totalPrice,
     })
-      .then(<span class="fstat-no" title="function not covered" >(o</span>rder) =&gt; {
-<span class="cstat-no" title="statement not covered" >        orderMeals.forEach(<span class="fstat-no" title="function not covered" >(m</span>eal, index) =&gt; {</span>
-<span class="cstat-no" title="statement not covered" >          order.addMeal(meal, {</span>
+      .then((order) =&gt; {
+        orderMeals.forEach((meal, index) =&gt; {
+          order.addMeal(meal, {
             through: {
               portion: orderPortion[index],
             },
           });
         });
-<span class="cstat-no" title="statement not covered" >        res.status(200).send({</span>
+        res.status(200).send({
           success: true,
           message: 'Order placed successfully!',
         });
@@ -610,7 +610,7 @@ export default OrdersController;
 </div><!-- /wrapper -->
 <div class='footer quiet pad2 space-top1 center small'>
   Code coverage
-  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri May 18 2018 00:22:30 GMT+0100 (W. Central Africa Standard Time)
+  generated by <a href="https://istanbul.js.org/" target="_blank">istanbul</a> at Fri May 18 2018 09:35:23 GMT+0100 (W. Central Africa Standard Time)
 </div>
 </div>
 <script src="..\..\prettify.js"></script>
