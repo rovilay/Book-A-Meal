@@ -35,8 +35,8 @@ class MenusController {
         message: 'Menus retrieved successfully',
         menus: menu,
       }))
-      .catch(() => {
-        const err = new Error('Error occurred while getting all menus!');
+      .catch((err) => {
+        err = new Error('Error occurred while getting all menus!');
         err.status = 400;
         return next(err);
       });
@@ -85,8 +85,8 @@ class MenusController {
           menu,
         });
       })
-      .catch(() => {
-        const err = new Error('Error occurred while getting menu!');
+      .catch((err) => {
+        err = new Error('Error occurred while getting menu!');
         err.status = 400;
         return next(err);
       });
@@ -110,14 +110,17 @@ class MenusController {
       postOn: newMenu.postOn,
     })
       .then((menu) => {
-        menu.addMeals(newMenu.meals);
-        res.status(200).send({
-          success: true,
-          message: 'Menu posted successfully!',
-        });
+        menu.addMeals(newMenu.meals)
+          .then(() => {
+            res.status(200).send({
+              success: true,
+              message: 'Menu posted successfully!',
+            });
+          })
+          .catch(err => next(err));
       })
-      .catch(() => {
-        const err = new Error('Error occurred while posting menu!');
+      .catch((err) => {
+        err = new Error('Error occurred while posting menu!');
         err.status = 400;
         return next(err);
       });

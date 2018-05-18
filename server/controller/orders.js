@@ -76,16 +76,17 @@ class OrdersController {
           order.addMeal(meal, {
             through: {
               portion: orderPortion[index],
-            },
-          });
+            }
+          })
+            .catch(err => next(err));
         });
         res.status(200).send({
           success: true,
           message: 'Order placed successfully!',
         });
       })
-      .catch(() => {
-        const err = new Error('Error occurred while placing order!');
+      .catch((err) => {
+        // err = new Error('Error occurred while placing order!');
         err.status = 400;
         return next(err);
       });
@@ -131,16 +132,22 @@ class OrdersController {
               OrderId: req.params.id,
               MealId: meal,
               portion: updatedPortion[index],
-            });
+            })
+              .catch((err) => {
+                err.status = 409;
+                return next(err);
+              });
           });
+          res.status(200).send({
+            success: true,
+            message: 'Update successfull',
+          });
+
+          // .catch(err => next(err));
         }
-        res.status(200).send({
-          success: true,
-          message: 'Update successfull',
-        });
       })
-      .catch(() => {
-        const err = new Error('Error occurred while updating order!');
+      .catch((err) => {
+        // err = new Error('Error occurred while updating order!');
         err.status = 400;
         return next(err);
       });
@@ -174,8 +181,8 @@ class OrdersController {
 
         });
       })
-      .catch(() => {
-        const err = new Error('Error occurred while deleting order');
+      .catch((err) => {
+        err = new Error('Error occurred while deleting order');
         err.status = 400;
         return next(err);
       });

@@ -8,7 +8,7 @@
   "description": "Book-A-Meal is an app designed to let you order meals from your favourite resturant at your convience. To use you can check a day's menu and place orders.",
   "main": "./server/app.js",
   "scripts": {
-    "test": " cross-env NODE_ENV=test nyc --reporter=html --reporter=text mocha server/tests --exit --timeout 5000ms",
+    "test": " cross-env NODE_ENV=test nyc mocha server/tests --exit --timeout 5000ms",
     "pretest": "npm-run-all migration:test seed:test",
     "migration:test": "sequelize db:migrate:undo:all --env test && sequelize db:migrate --env test",
     "seed:test": "sequelize db:seed:all --env test",
