@@ -1,5 +1,5 @@
 import chai from 'chai';
-import chaiHttp from 'chai-Http';
+import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import { mockReq, mockRes } from 'sinon-express-mock';
 import sinonChai from 'sinon-chai';
