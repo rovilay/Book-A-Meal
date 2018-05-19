@@ -1,11 +1,26 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
 import db from '../../models/index';
-import config from '../../config';
 
+require('dotenv').config();
+/**
+ * Handles user signup and log in operations
+ * @exports
+ * @class UsersController
+ */
 class UsersController {
-  static signup(req, res) {
-    req.body.email = req.body.email.toLowerCase();
+  /**
+   * Adds user
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof UsersController
+   */
+  static signup(req, res, next) {
+    // req.body.email = req.body.email.toLowerCase();
 
     db.User.create(req.body)
       .then(() => {
@@ -14,17 +29,25 @@ class UsersController {
           message: 'user created successfully!',
         });
       })
-      .catch(() => {
-        res.status(400).send({
-          success: true,
-          message: 'An error occurred, user not created',
-        });
+      .catch((err) => {
+        err = new Error('An error occurred, user not created!');
+        err.status = 400;
+        return next(err);
       });
   }
 
-  static login(req, res) {
+  /**
+   * Logs in users
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof UsersController
+   */
+  static login(req, res, next) {
     const loginUser = req.body;
-    const [secret] = [config.secret];
     db.User.findOne({
       where: {
         email: loginUser.email.toLowerCase(),
@@ -36,30 +59,34 @@ class UsersController {
         // Compare password
         bcrypt.compare(loginUser.password, found.password)
           .then((response) => {
-            if (response === false) {
-              return res.status(400).send('Password do not Match');
+            if (response) {
+              return {
+                id: found.id,
+                admin: found.admin,
+              };
             }
-            return {
-              id: found.id,
-              admin: found.admin,
-            };
+
+            const err = new Error('Password do not match!');
+            err.status = 400;
+            throw err;
           })
           .then((user) => {
             // generate token
-            jwt.sign({ user }, secret, { expiresIn: '24h' }, (err, token) => {
+            jwt.sign({ user }, process.env.SECRET, { expiresIn: '24h' }, (err, token) => {
               res.status(200).send({
                 success: true,
                 message: 'You are logged in!',
                 token,
               });
             });
-          });
+          })
+          .catch(err => next(err));
       })
-      .catch(() =>
-        res.status(400).send({
-          success: false,
-          message: 'Error occured while trying to log in.',
-        }));
+      .catch((err) => {
+        err = new Error('User not found!');
+        err.status = 404;
+        return next(err);
+      });
   }
 }
 

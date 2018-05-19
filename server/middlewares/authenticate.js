@@ -1,26 +1,37 @@
 import jwt from 'jsonwebtoken';
-import config from '../../config';
 
-function getToken(req, res, next) {
+require('dotenv').config();
+/**
+ * Verifies token
+ *
+ * @exports verifyToken
+ * @param  {object} req - Request object
+ * @param  {object} res - Response object
+ * @param  {object} next - next object (handles error or continues to next
+ * middleware)
+ * @return {object} next
+ */
+function verifyToken(req, res, next) {
   // Get auth header from req header
   const token = req.headers.authorization;
 
   if (token !== undefined) {
-    const [secret] = [config.secret];
     // verify token
-    jwt.verify(token, secret, (err, userData) => {
-      req.user = userData.user;
-      if (err) {
-        res.status(400).send({
-          success: false,
-          message: 'Error verifying token',
-        });
+    jwt.verify(token, process.env.SECRET, (err, userData) => {
+      if (err || userData === undefined) {
+        err.status = 401;
+        return next(err);
       }
-      next();
+
+      req.user = userData.user;
+      return next();
     });
   } else {
-    return res.sendStatus(403);
+    return res.status(403).json({
+      success: false,
+      message: 'Token is undefined!'
+    });
   }
 }
 
-export default getToken;
+export default verifyToken;

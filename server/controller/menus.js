@@ -1,7 +1,23 @@
 import db from '../../models/index';
 
+/**
+ * Handles operations on menu routes
+ *
+ * @exports
+ * @class MenusController
+ */
 class MenusController {
-  static getAllMenus(req, res) {
+  /**
+   * Gets all menus
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof MenusController
+   */
+  static getAllMenus(req, res, next) {
     db.Menu.findAll({
       include: [{
         model: db.User,
@@ -19,13 +35,24 @@ class MenusController {
         message: 'Menus retrieved successfully',
         menus: menu,
       }))
-      .catch(() => res.status(400).send({
-        success: false,
-        message: 'Error occured while getting all menus',
-      }));
+      .catch((err) => {
+        err = new Error('Error occurred while getting all menus!');
+        err.status = 400;
+        return next(err);
+      });
   }
 
-  static getMenu(req, res) {
+  /**
+   * Gets a menu based on "post On" date
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof MenusController
+   */
+  static getMenu(req, res, next) {
     const day = req.params.DD;
     const month = req.params.MM;
     const year = req.params.YYYY;
@@ -46,18 +73,36 @@ class MenusController {
         postOn: date,
       },
     })
-      .then(menu => res.status(200).send({
-        success: true,
-        message: 'Menu retrieved successfully',
-        menu,
-      }))
-      .catch(() => res.status(400).send({
-        success: false,
-        message: 'Error occured while getting menu',
-      }));
+      .then((menu) => {
+        if (menu.length === 0) {
+          const err = new Error(`Could not get menu on date: ${date}`);
+          err.status = 404;
+          return next(err);
+        }
+        res.status(200).send({
+          success: true,
+          message: 'Menu retrieved successfully',
+          menu,
+        });
+      })
+      .catch((err) => {
+        err = new Error('Error occurred while getting menu!');
+        err.status = 400;
+        return next(err);
+      });
   }
 
-  static postMenu(req, res) {
+  /**
+   * Posts menu for a specified date
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof MenusController
+   */
+  static postMenu(req, res, next) {
     const newMenu = req.body;
 
     db.Menu.create({
@@ -65,17 +110,19 @@ class MenusController {
       postOn: newMenu.postOn,
     })
       .then((menu) => {
-        menu.addMeals(newMenu.meals);
-        res.status(200).send({
-          success: true,
-          message: 'Menu posted successfully!',
-        });
+        menu.addMeals(newMenu.meals)
+          .then(() => {
+            res.status(200).send({
+              success: true,
+              message: 'Menu posted successfully!',
+            });
+          })
+          .catch(err => next(err));
       })
-      .catch(() => {
-        res.status.send({
-          success: false,
-          message: 'Error occured while posting menu',
-        });
+      .catch((err) => {
+        err = new Error('Error occurred while posting menu!');
+        err.status = 400;
+        return next(err);
       });
   }
 }

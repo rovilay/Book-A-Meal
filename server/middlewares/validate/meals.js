@@ -1,3 +1,13 @@
+/**
+ * Validates sent Meal inputs
+ *
+ * @exports validatemeal
+ * @param  {object} req - Request object
+ * @param  {object} res - Response object
+ * @param  {object} next - next object (handles error or continues to next
+ * middleware)
+ * @return {object} next
+ */
 
 function validatemeal(req, res, next) {
   const keys = ['title', 'description', 'price'];
@@ -5,10 +15,9 @@ function validatemeal(req, res, next) {
   keys.forEach((key) => {
     // check if undefined or empty
     if (req.body[`${key}`] === undefined || req.body[`${key}`] === '') {
-      return res.status(400).json({
-        success: false,
-        message: `${key} field is empty`,
-      });
+      const err = new Error(`${key} field is empty`);
+      err.status = 400;
+      return next(err);
     }
   });
   return next();

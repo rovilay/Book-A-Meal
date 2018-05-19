@@ -13,12 +13,10 @@ module.exports = (sequelize, DataTypes) => {
     },
     MealId: {
       type: DataTypes.UUID,
-      allowNull: false
+      allowNull: false,
     }
   });
   MenuMeal.associate = (/* models */) => {
-    // MenuMeal.hasMany(models.Menu);
-    // MenuMeal.hasMany(models.Meal);
   };
   return MenuMeal;
 };

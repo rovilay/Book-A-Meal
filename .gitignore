@@ -1,7 +1,5 @@
 node_modules
 .vscode
 .nyc_output
-dist
-coverage/**
-config/**
-config
+coverage
+.env

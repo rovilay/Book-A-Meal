@@ -6,6 +6,10 @@ import menuRouter from './routes/menuRoutes';
 import ordersRouter from './routes/ordersRoutes';
 import usersRouter from './routes/usersRoutes';
 import authorize from './middlewares/authenticate';
+import myErrorHandler from './middlewares/errorHandler';
+
+
+require('dotenv').config(); //
 
 const app = express();
 const port = process.env.PORT || 4000;
@@ -24,6 +28,7 @@ app.use(authorize);
 app.use(mealRouter);
 app.use(menuRouter);
 app.use(ordersRouter);
+app.use(myErrorHandler);
 
 
 app.listen(port, () => {

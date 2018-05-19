@@ -17,8 +17,8 @@ module.exports = (sequelize, DataTypes) => {
     }
   });
   Menu.associate = (models) => {
-    Menu.belongsTo(models.User, {foreignKey: 'UserId', targetkey: 'id'});
-    Menu.belongsToMany(models.Meal, {through: 'MenuMeal', foreignKey: 'MenuId', otherKey: 'MealId'});
+    Menu.belongsTo(models.User, { foreignKey: 'UserId', targetkey: 'id' });
+    Menu.belongsToMany(models.Meal, { through: 'MenuMeal', foreignKey: 'MenuId', otherKey: 'MealId' });
   };
   return Menu;
 };

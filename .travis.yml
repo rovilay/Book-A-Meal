@@ -1,20 +1,21 @@
 language: node_js
 node_js:
-  - "node"
-  - "stable"
+  - "9.11.1"
 env:
   global:
     - CC_TEST_REPORTER_ID=84934c5c0aef9e3da392258cef499f51c595a79f0d35ca8e6baf6a02ece4a450
+    - NODE_ENV=test
+services:
+  - postgresql
 before_install:
-  - npm i -g npm@5.6.0
+  - npm i -g node-gyp node-pre-gyp
 cache:
   directories:
     - "node_modules"
-dist: trusty
-sudo: required
 install:
   - npm install
 before_script:
+  - psql -c 'create database book_a_meal_test;' -U postgres
   - curl -L https://codeclimate.com/downloads/test-reporter/test-reporter-latest-linux-amd64 > ./cc-test-reporter
   - chmod +x ./cc-test-reporter
   - ./cc-test-reporter before-build

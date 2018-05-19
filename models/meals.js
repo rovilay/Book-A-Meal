@@ -6,7 +6,6 @@ module.exports = (sequelize, DataTypes) => {
       primaryKey: true,
       allowNull: false,
       defaultValue: DataTypes.UUIDV4,
-      
     },
     title: {
       type: DataTypes.STRING,
@@ -23,7 +22,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     image: {
       type: DataTypes.STRING,
-      allowNull:false,
+      allowNull: false,
       defaultValue: 'https://img.com'
     },
     UserId: {
@@ -34,13 +33,14 @@ module.exports = (sequelize, DataTypes) => {
   });
 
   Meal.associate = (models) => {
-    Meal.belongsTo(models.User, {foreignKey: 'UserId', targetKey: 'id'});
+    Meal.belongsTo(models.User, { foreignKey: 'UserId', targetKey: 'id' });
     Meal.belongsToMany(models.Menu, {
-      through: 'MenuMeal', 
+      through: 'MenuMeal',
       foreignKey: 'MealId',
       otherKey: 'MenuId',
       onDelete: 'CASCADE',
-      onUpdate: 'CASCADE'});
+      onUpdate: 'CASCADE'
+    });
     Meal.belongsToMany(models.Order, {
       through: 'OrderMeal',
       foreignKey: 'MealId',
