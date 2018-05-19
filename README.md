@@ -33,6 +33,14 @@ View app at [Book-A-Meal](https://rovilay.github.io/Book-A-Meal/UI/)
 # Release
 * Version 1.0.0
   * Still in developement
+  
+# Contributing
+This app is open to suggestions and contribution. To contirbute follow the steps below:
+* Fork this project and clone locally
+* Work on the project and create a branch for each separate work
+* Ensure to write good commit messages 
+* When done push to your origin repo
+* Create a Pull request
 
 # Authors
 * **Akinola Ogooluwa**
@@ -40,3 +48,5 @@ View app at [Book-A-Meal](https://rovilay.github.io/Book-A-Meal/UI/)
 # Acknowledgments
 * [Andela](https://andela.com/)
 
+# License
+  [MIT License](https://opensource.org/licenses/MIT)
