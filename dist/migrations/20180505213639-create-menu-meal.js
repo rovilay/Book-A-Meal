@@ -15,7 +15,13 @@ module.exports = {
       },
       MealId: {
         type: Sequelize.UUID,
-        allowNull: false
+        allowNull: false,
+        onDelete: 'CASCADE',
+        onUpdate: 'CASCADE',
+        references: {
+          model: 'Meals',
+          key: 'id'
+        }
       },
       createdAt: {
         allowNull: false,

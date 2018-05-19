@@ -4,7 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _index = require('../../models/index');
 
@@ -12,16 +18,31 @@ var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
+/**
+ * Handles operations on menu routes
+ *
+ * @exports
+ * @class MenusController
+ */
 var MenusController = function () {
   function MenusController() {
-    _classCallCheck(this, MenusController);
+    (0, _classCallCheck3.default)(this, MenusController);
   }
 
-  _createClass(MenusController, null, [{
+  (0, _createClass3.default)(MenusController, null, [{
     key: 'getAllMenus',
-    value: function getAllMenus(req, res) {
+
+    /**
+     * Gets all menus
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param {function} next - next object (for error handling)
+     * @return {json} res.send
+     * @memberof MenusController
+     */
+    value: function getAllMenus(req, res, next) {
       _index2.default.Menu.findAll({
         include: [{
           model: _index2.default.User,
@@ -39,16 +60,27 @@ var MenusController = function () {
           message: 'Menus retrieved successfully',
           menus: menu
         });
-      }).catch(function () {
-        return res.status(400).send({
-          success: false,
-          message: 'Error occured while getting all menus'
-        });
+      }).catch(function (err) {
+        err = new Error('Error occurred while getting all menus!');
+        err.status = 400;
+        return next(err);
       });
     }
+
+    /**
+     * Gets a menu based on "post On" date
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param {function} next - next object (for error handling)
+     * @return {json} res.send
+     * @memberof MenusController
+     */
+
   }, {
     key: 'getMenu',
-    value: function getMenu(req, res) {
+    value: function getMenu(req, res, next) {
       var day = req.params.DD;
       var month = req.params.MM;
       var year = req.params.YYYY;
@@ -69,41 +101,58 @@ var MenusController = function () {
           postOn: date
         }
       }).then(function (menu) {
-        return res.status(200).send({
+        if (menu.length === 0) {
+          var err = new Error('Could not get menu on date: ' + date);
+          err.status = 404;
+          return next(err);
+        }
+        res.status(200).send({
           success: true,
           message: 'Menu retrieved successfully',
           menu: menu
         });
-      }).catch(function () {
-        return res.status(400).send({
-          success: false,
-          message: 'Error occured while getting menu'
-        });
+      }).catch(function (err) {
+        err = new Error('Error occurred while getting menu!');
+        err.status = 400;
+        return next(err);
       });
     }
+
+    /**
+     * Posts menu for a specified date
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param {function} next - next object (for error handling)
+     * @return {json} res.send
+     * @memberof MenusController
+     */
+
   }, {
     key: 'postMenu',
-    value: function postMenu(req, res) {
+    value: function postMenu(req, res, next) {
       var newMenu = req.body;
 
       _index2.default.Menu.create({
         UserId: req.user.id,
         postOn: newMenu.postOn
       }).then(function (menu) {
-        menu.addMeals(newMenu.meals);
-        res.status(200).send({
-          success: true,
-          message: 'Menu posted successfully!'
+        menu.addMeals(newMenu.meals).then(function () {
+          res.status(200).send({
+            success: true,
+            message: 'Menu posted successfully!'
+          });
+        }).catch(function (err) {
+          return next(err);
         });
-      }).catch(function () {
-        res.status.send({
-          success: false,
-          message: 'Error occured while posting menu'
-        });
+      }).catch(function (err) {
+        err = new Error('Error occurred while posting menu!');
+        err.status = 400;
+        return next(err);
       });
     }
   }]);
-
   return MenusController;
 }();
 

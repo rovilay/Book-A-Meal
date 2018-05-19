@@ -32,6 +32,10 @@ var _authenticate = require('./middlewares/authenticate');
 
 var _authenticate2 = _interopRequireDefault(_authenticate);
 
+var _errorHandler = require('./middlewares/errorHandler');
+
+var _errorHandler2 = _interopRequireDefault(_errorHandler);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 require('dotenv').config(); //
@@ -52,6 +56,7 @@ app.use(_authenticate2.default);
 app.use(_mealRoutes2.default);
 app.use(_menuRoutes2.default);
 app.use(_ordersRoutes2.default);
+app.use(_errorHandler2.default);
 
 app.listen(port, function () {
   console.log('Sever is running at port ' + port);
