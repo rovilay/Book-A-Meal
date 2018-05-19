@@ -4,7 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _v = require('uuid/v4');
 
@@ -16,16 +22,31 @@ var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
+/**
+ * Handles operations on Orders routes
+ *
+ * @exports
+ * @class OrdersController
+ */
 var OrdersController = function () {
   function OrdersController() {
-    _classCallCheck(this, OrdersController);
+    (0, _classCallCheck3.default)(this, OrdersController);
   }
 
-  _createClass(OrdersController, null, [{
+  (0, _createClass3.default)(OrdersController, null, [{
     key: 'getAllOrders',
-    value: function getAllOrders(req, res) {
+
+    /**
+     * Gets all orders
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param {function} next - next object (for error handling)
+     * @return {json} res.send
+     * @memberof OrdersController
+     */
+    value: function getAllOrders(req, res, next) {
       _index2.default.Order.findAll({
         include: [{
           model: _index2.default.User,
@@ -39,25 +60,36 @@ var OrdersController = function () {
         }]
       }).then(function (orders) {
         if (orders.length < 1) {
-          return res.status(204).send({
-            message: 'No orders found'
-          });
+          var err = new Error('No order found!');
+          err.status = 400;
+          return next(err);
         }
         return res.status(200).send({
           success: true,
-          message: 'Orders retrieved successfully',
+          message: 'Orders retrieved successfully!',
           orders: orders
         });
       }).catch(function () {
-        return res.status(400).send({
-          success: false,
-          message: 'Error occured while finding order'
-        });
+        var err = new Error('Error occurred while getting orders!');
+        err.status = 400;
+        return next(err);
       });
     }
+
+    /**
+     * Post orders
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param {function} next - next object (for error handling)
+     * @return {json} res.send
+     * @memberof OrdersController
+     */
+
   }, {
     key: 'postOrder',
-    value: function postOrder(req, res) {
+    value: function postOrder(req, res, next) {
       var newOrder = req.body;
       var orderMeals = newOrder.meals.map(function (meal) {
         return meal.id;
@@ -77,6 +109,8 @@ var OrdersController = function () {
             through: {
               portion: orderPortion[index]
             }
+          }).catch(function (err) {
+            return next(err);
           });
         });
         res.status(200).send({
@@ -84,16 +118,26 @@ var OrdersController = function () {
           message: 'Order placed successfully!'
         });
       }).catch(function (err) {
-        return res.status(400).send({
-          success: false,
-          message: 'Error occured while placing order!',
-          err: err
-        });
+        // err = new Error('Error occurred while placing order!');
+        err.status = 400;
+        return next(err);
       });
     }
+
+    /**
+     * Updates order based on id
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param {function} next - next object (for error handling)
+     * @return {json} res.send
+     * @memberof OrdersController
+     */
+
   }, {
     key: 'updateOrder',
-    value: function updateOrder(req, res) {
+    value: function updateOrder(req, res, next) {
       var updatedOrder = req.body;
       var updatedMeals = updatedOrder.meals.map(function (meal) {
         return meal.id;
@@ -125,23 +169,37 @@ var OrdersController = function () {
               OrderId: req.params.id,
               MealId: meal,
               portion: updatedPortion[index]
+            }).catch(function (err) {
+              err.status = 409;
+              return next(err);
             });
           });
+          res.status(200).send({
+            success: true,
+            message: 'Update successfull'
+          });
         }
-        res.status(200).send({
-          success: true,
-          message: 'Update successful'
-        });
-      }).catch(function () {
-        return res.status(400).send({
-          success: false,
-          message: 'Error occured while updating'
-        });
+      }).catch(function (err) {
+        // err = new Error('Error occurred while updating order!');
+        err.status = 400;
+        return next(err);
       });
     }
+
+    /**
+     * Deletes order based on id
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param {function} next - next object (for error handling)
+     * @return {json} res.send
+     * @memberof OrdersController
+     */
+
   }, {
     key: 'deleteOrder',
-    value: function deleteOrder(req, res) {
+    value: function deleteOrder(req, res, next) {
       _index2.default.Order.destroy({
         where: {
           id: req.params.id
@@ -157,15 +215,13 @@ var OrdersController = function () {
           message: 'delete successful'
 
         });
-      }).catch(function () {
-        return res.status(400).send({
-          success: false,
-          message: 'Error occured while trying to delete'
-        });
+      }).catch(function (err) {
+        err = new Error('Error occurred while deleting order');
+        err.status = 400;
+        return next(err);
       });
     }
   }]);
-
   return OrdersController;
 }();
 

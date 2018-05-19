@@ -4,7 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _moment = require('moment');
 
@@ -16,15 +22,30 @@ var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
+/**
+ * Restricts user based on time
+ *
+ * @exports checkTime
+ * @class checkTime
+ */
 var checkTime = function () {
   function checkTime() {
-    _classCallCheck(this, checkTime);
+    (0, _classCallCheck3.default)(this, checkTime);
   }
 
-  _createClass(checkTime, null, [{
+  (0, _createClass3.default)(checkTime, null, [{
     key: 'canUpdate',
+
+    /**
+     * Checks time if update is allowed
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param  {object} next - nex object (for handling errors or moving to next
+     * middleware)
+     * @return {object} next
+     * @memberof checkTime
+     */
     value: function canUpdate(req, res, next) {
       _index2.default.Order.findOne({
         where: {
@@ -32,6 +53,8 @@ var checkTime = function () {
         },
         attributes: ['id', 'createdAt']
       }).then(function (found) {
+        var err = new Error("You can't modify order anymore");
+        err.status = 403;
         var _ref = [found.dataValues.createdAt],
             createdAt = _ref[0]; // Get the time created
 
@@ -39,29 +62,36 @@ var checkTime = function () {
         if (timeCheck) {
           return next();
         }
-        return res.status(403).send({
-          success: false,
-          message: "You can't modify order anymore"
-        });
+        throw err;
       }).catch(function (err) {
-        return res.send(err);
+        return next(err);
       });
     }
+
+    /**
+     * Checks time if order is allowed
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param  {object} next - nex object (for handling errors or moving to next
+     * middleware)
+     * @return {object} next
+     * @memberof checkTime
+     */
+
   }, {
     key: 'canOrder',
     value: function canOrder(req, res, next) {
+      var err = new Error('it\'s ' + (0, _moment2.default)().format('HH:mm') + ', we are closed for the day, try again tomorrow!');
+      err.status = 403;
       // Can only place order between 7 a.m. to 6 p.m.
       if ((0, _moment2.default)().hour() >= 7 && (0, _moment2.default)().hour() <= 18) {
         return next();
       }
 
-      return res.status(403).send({
-        success: false,
-        message: 'it\'s ' + (0, _moment2.default)().format('HH:mm') + ', we are closed for the day, try again tomorrow!'
-      });
+      return next(err);
     }
   }]);
-
   return checkTime;
 }();
 
