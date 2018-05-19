@@ -13,7 +13,7 @@ module.exports = (sequelize, DataTypes) => {
     },
     MealId: {
       type: DataTypes.UUID,
-      allowNull: false
+      allowNull: false,
     }
   });
   MenuMeal.associate = (/* models */) => {

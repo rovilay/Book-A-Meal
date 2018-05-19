@@ -1,24 +1,31 @@
+/**
+ * Validates sent order inputs
+ *
+ * @exports validateOrder
+ * @param  {object} req - Request object
+ * @param  {object} res - Response object
+ * @param  {object} next - next object (handles error or continues to next
+ *  middleware)
+ * @return {object} next
+ */
 function validateOrder(req, res, next) {
   const keys = ['deliveryAddress', 'totalPrice', 'meals'];
-
+  const newOrder = req.body;
   keys.forEach((key) => {
-    if (req.body[`${key}`] === undefined || req.body[`${key}`] === '') {
-      return res.status(400).json({
-        success: false,
-        message: `${key} field is empty`,
-      });
+    if (newOrder[`${key}`] === undefined || newOrder[`${key}`] === '') {
+      const err = new Error(`${key} field is empty`);
+      err.status = 400;
+      return next(err);
     }
 
     // check meals content
-    const newOrder = req.body;
     const meals = [...newOrder.meals];
     if (meals !== '' || meals !== undefined) { // if meals isn't empty check its content
       meals.forEach((meal) => {
         if (meal.id === '' || meal.id === undefined || meal.portion === '' || meal.portion === undefined) {
-          return res.status(400).json({
-            success: false,
-            message: `${meal.id} entry is not correct!`,
-          });
+          const err = new Error('meal entry is not correct');
+          err.status = 400;
+          return next(err);
         }
       });
     }

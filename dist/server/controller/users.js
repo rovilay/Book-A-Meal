@@ -4,7 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _jsonwebtoken = require('jsonwebtoken');
 
@@ -20,35 +26,60 @@ var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
 require('dotenv').config();
+/**
+ * Handles user signup and log in operations
+ * @exports
+ * @class UsersController
+ */
 
 var UsersController = function () {
   function UsersController() {
-    _classCallCheck(this, UsersController);
+    (0, _classCallCheck3.default)(this, UsersController);
   }
 
-  _createClass(UsersController, null, [{
+  (0, _createClass3.default)(UsersController, null, [{
     key: 'signup',
-    value: function signup(req, res) {
-      req.body.email = req.body.email.toLowerCase();
+
+    /**
+     * Adds user
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param {function} next - next object (for error handling)
+     * @return {json} res.send
+     * @memberof UsersController
+     */
+    value: function signup(req, res, next) {
+      // req.body.email = req.body.email.toLowerCase();
 
       _index2.default.User.create(req.body).then(function () {
         res.status(201).send({
           success: true,
           message: 'user created successfully!'
         });
-      }).catch(function () {
-        res.status(400).send({
-          success: true,
-          message: 'An error occurred, user not created'
-        });
+      }).catch(function (err) {
+        err = new Error('An error occurred, user not created!');
+        err.status = 400;
+        return next(err);
       });
     }
+
+    /**
+     * Logs in users
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param {function} next - next object (for error handling)
+     * @return {json} res.send
+     * @memberof UsersController
+     */
+
   }, {
     key: 'login',
-    value: function login(req, res) {
+    value: function login(req, res, next) {
       var loginUser = req.body;
       _index2.default.User.findOne({
         where: {
@@ -59,13 +90,16 @@ var UsersController = function () {
       }).then(function (found) {
         // Compare password
         _bcryptjs2.default.compare(loginUser.password, found.password).then(function (response) {
-          if (response === false) {
-            return res.status(400).send('Password do not Match');
+          if (response) {
+            return {
+              id: found.id,
+              admin: found.admin
+            };
           }
-          return {
-            id: found.id,
-            admin: found.admin
-          };
+
+          var err = new Error('Password do not match!');
+          err.status = 400;
+          throw err;
         }).then(function (user) {
           // generate token
           _jsonwebtoken2.default.sign({ user: user }, process.env.SECRET, { expiresIn: '24h' }, function (err, token) {
@@ -75,16 +109,16 @@ var UsersController = function () {
               token: token
             });
           });
+        }).catch(function (err) {
+          return next(err);
         });
-      }).catch(function () {
-        return res.status(400).send({
-          success: false,
-          message: 'Error occured while trying to log in.'
-        });
+      }).catch(function (err) {
+        err = new Error('User not found!');
+        err.status = 404;
+        return next(err);
       });
     }
   }]);
-
   return UsersController;
 }();
 

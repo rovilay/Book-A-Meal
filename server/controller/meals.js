@@ -1,28 +1,53 @@
 import db from '../../models/index';
 
-
+/**
+ * Handles operations on Meal routes
+ *
+ * @exports
+ * @class MealsController
+ */
 class MealsController {
-  static getAllMeals(req, res) {
+  /**
+   * Gets all meals
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof MealsController
+   */
+  static getAllMeals(req, res, next) {
     db.Meal.findAll()
-      .then(meal => res.status(200).send({
+      .then(meals => res.status(200).send({
         success: true,
         message: 'Meals retrieved successfully',
-        meal,
+        meals,
       }))
-      .catch(() => res.status(400).send({
-        success: false,
-        message: 'Error occured while getting all meals',
-      }));
+      .catch(() => {
+        const err = new Error('Error occurred while getting all meals!');
+        err.status = 400;
+        return next(err);
+      });
   }
 
-  static getMeal(req, res) {
+  /**
+   * Gets a single meal based on id
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof MealsController
+   */
+  static getMeal(req, res, next) {
     db.Meal.findById(req.params.id)
       .then((meal) => {
         if (meal === null) {
-          return res.status(404).send({
-            success: false,
-            message: 'Meal not found!',
-          });
+          const err = new Error('Meal not found!');
+          err.status = 404;
+          return next(err);
         }
 
         return res.status(200).send({
@@ -31,13 +56,24 @@ class MealsController {
           meal,
         });
       })
-      .catch(() => res.status(400).send({
-        success: false,
-        message: 'Error occured while getting meal',
-      }));
+      .catch((err) => {
+        err = new Error('Error occurred while getting meal!');
+        err.status = 400;
+        return next(err);
+      });
   }
 
-  static addMeal(req, res) {
+  /**
+   * Creates a meal
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof MealsController
+   */
+  static addMeal(req, res, next) {
     const newMeal = req.body;
     newMeal.title = newMeal.title.toUpperCase();
     newMeal.UserId = req.user.id;
@@ -50,17 +86,26 @@ class MealsController {
           meal,
         });
       })
-      .catch(() => {
-        res.status(400).send({
-          success: false,
-          message: 'Error occured  while creating meal',
-        });
+      .catch((err) => {
+        err = new Error('Error occurred while posting meal!');
+        err.status = 400;
+        return next(err);
       });
   }
 
-  static updateMeal(req, res) {
+  /**
+   * Updates meal based on specified id
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof MealsController
+   */
+  static updateMeal(req, res, next) {
     const updatedMeal = req.body;
-    updatedMeal.title.toUpperCase();
+    updatedMeal.title = updatedMeal.title.toUpperCase();
     updatedMeal.UserId = req.user.id;
 
     db.Meal.update(updatedMeal, {
@@ -72,19 +117,29 @@ class MealsController {
         if (update) {
           res.status(200).send({
             success: true,
-            message: 'Update successful',
+            message: 'Update successful!',
             updatedMeal,
           });
         }
       })
-      .catch(() =>
-        res.status(400).send({
-          success: false,
-          message: 'Error occured  while updating meal',
-        }));
+      .catch((err) => {
+        err = new Error('Error occurred while updating meal!');
+        err.status = 400;
+        return next(err);
+      });
   }
 
-  static deleteMeal(req, res) {
+  /**
+   * Deletes meal based on specified meal id
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param  {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof MealsController
+   */
+  static deleteMeal(req, res, next) {
     db.Meal.destroy({
       where: {
         id: req.params.id,
@@ -92,8 +147,11 @@ class MealsController {
     })
       .then(() =>
         res.status(204).send('Delete successful'))
-      .catch(() =>
-        res.status(400).send('error occured while deleting'));
+      .catch((err) => {
+        err = new Error('Error occurred while deleting meal!');
+        err.status = 400;
+        return next(err);
+      });
   }
 }
 

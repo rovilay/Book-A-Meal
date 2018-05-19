@@ -4,30 +4,66 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
 
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
+
+function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
+
+/**
+ * Validates login and signup inputs
+ *
+ * @exports User
+ * @class User
+ */
 var User = function () {
   function User() {
-    _classCallCheck(this, User);
+    (0, _classCallCheck3.default)(this, User);
   }
 
-  _createClass(User, null, [{
+  (0, _createClass3.default)(User, null, [{
     key: 'login',
+
+    /**
+     * Validates sent login inputs
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param  {object} next - nex object (for handling errors or moving to next
+     * middleware)
+     * @return {object} next
+     * @memberof User
+     */
     value: function login(req, res, next) {
       var keys = ['email', 'password'];
       keys.forEach(function (key) {
         // check if undefined or empty
         if (req.body['' + key] === undefined || req.body['' + key] === '') {
-          return res.status(400).send({
-            success: false,
-            message: key + ' field is empty'
-          });
+          var err = new Error(key + ' field is empty');
+          err.status = 400;
+          return next(err);
         }
       });
-      next();
+      return next();
     }
+
+    /**
+     * Validates sent signup inputs
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param  {object} next - nex object (for handling errors or moving to next
+     * middleware)
+     * @return {object} next
+     * @memberof User
+     */
+
   }, {
     key: 'signup',
     value: function signup(req, res, next) {
@@ -36,17 +72,15 @@ var User = function () {
       keys.forEach(function (key) {
         // check if undefined or empty
         if (req.body['' + key] === undefined || req.body['' + key] === '') {
-          return res.status(400).send({
-            success: false,
-            message: key + ' field is empty'
-          });
+          var err = new Error(key + ' field is empty');
+          err.status = 400;
+          return next(err);
         }
       });
 
       return next();
     }
   }]);
-
   return User;
 }();
 

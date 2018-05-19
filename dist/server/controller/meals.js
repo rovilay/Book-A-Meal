@@ -4,7 +4,13 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
-var _createClass = function () { function defineProperties(target, props) { for (var i = 0; i < props.length; i++) { var descriptor = props[i]; descriptor.enumerable = descriptor.enumerable || false; descriptor.configurable = true; if ("value" in descriptor) descriptor.writable = true; Object.defineProperty(target, descriptor.key, descriptor); } } return function (Constructor, protoProps, staticProps) { if (protoProps) defineProperties(Constructor.prototype, protoProps); if (staticProps) defineProperties(Constructor, staticProps); return Constructor; }; }();
+var _classCallCheck2 = require('babel-runtime/helpers/classCallCheck');
+
+var _classCallCheck3 = _interopRequireDefault(_classCallCheck2);
+
+var _createClass2 = require('babel-runtime/helpers/createClass');
+
+var _createClass3 = _interopRequireDefault(_createClass2);
 
 var _index = require('../../models/index');
 
@@ -12,38 +18,63 @@ var _index2 = _interopRequireDefault(_index);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
-function _classCallCheck(instance, Constructor) { if (!(instance instanceof Constructor)) { throw new TypeError("Cannot call a class as a function"); } }
-
+/**
+ * Handles operations on Meal routes
+ *
+ * @exports
+ * @class MealsController
+ */
 var MealsController = function () {
   function MealsController() {
-    _classCallCheck(this, MealsController);
+    (0, _classCallCheck3.default)(this, MealsController);
   }
 
-  _createClass(MealsController, null, [{
+  (0, _createClass3.default)(MealsController, null, [{
     key: 'getAllMeals',
-    value: function getAllMeals(req, res) {
-      _index2.default.Meal.findAll().then(function (meal) {
+
+    /**
+     * Gets all meals
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param {function} next - next object (for error handling)
+     * @return {json} res.send
+     * @memberof MealsController
+     */
+    value: function getAllMeals(req, res, next) {
+      _index2.default.Meal.findAll().then(function (meals) {
         return res.status(200).send({
           success: true,
           message: 'Meals retrieved successfully',
-          meal: meal
+          meals: meals
         });
       }).catch(function () {
-        return res.status(400).send({
-          success: false,
-          message: 'Error occured while getting all meals'
-        });
+        var err = new Error('Error occurred while getting all meals!');
+        err.status = 400;
+        return next(err);
       });
     }
+
+    /**
+     * Gets a single meal based on id
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param {function} next - next object (for error handling)
+     * @return {json} res.send
+     * @memberof MealsController
+     */
+
   }, {
     key: 'getMeal',
-    value: function getMeal(req, res) {
+    value: function getMeal(req, res, next) {
       _index2.default.Meal.findById(req.params.id).then(function (meal) {
         if (meal === null) {
-          return res.status(404).send({
-            success: false,
-            message: 'Meal not found!'
-          });
+          var err = new Error('Meal not found!');
+          err.status = 404;
+          return next(err);
         }
 
         return res.status(200).send({
@@ -51,16 +82,27 @@ var MealsController = function () {
           message: 'Meal retrieved successfully',
           meal: meal
         });
-      }).catch(function () {
-        return res.status(400).send({
-          success: false,
-          message: 'Error occured while getting meal'
-        });
+      }).catch(function (err) {
+        err = new Error('Error occurred while getting meal!');
+        err.status = 400;
+        return next(err);
       });
     }
+
+    /**
+     * Creates a meal
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param {function} next - next object (for error handling)
+     * @return {json} res.send
+     * @memberof MealsController
+     */
+
   }, {
     key: 'addMeal',
-    value: function addMeal(req, res) {
+    value: function addMeal(req, res, next) {
       var newMeal = req.body;
       newMeal.title = newMeal.title.toUpperCase();
       newMeal.UserId = req.user.id;
@@ -71,18 +113,29 @@ var MealsController = function () {
           message: 'Meal added successfully',
           meal: meal
         });
-      }).catch(function () {
-        res.status(400).send({
-          success: false,
-          message: 'Error occured  while creating meal'
-        });
+      }).catch(function (err) {
+        err = new Error('Error occurred while posting meal!');
+        err.status = 400;
+        return next(err);
       });
     }
+
+    /**
+     * Updates meal based on specified id
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param {function} next - next object (for error handling)
+     * @return {json} res.send
+     * @memberof MealsController
+     */
+
   }, {
     key: 'updateMeal',
-    value: function updateMeal(req, res) {
+    value: function updateMeal(req, res, next) {
       var updatedMeal = req.body;
-      updatedMeal.title.toUpperCase();
+      updatedMeal.title = updatedMeal.title.toUpperCase();
       updatedMeal.UserId = req.user.id;
 
       _index2.default.Meal.update(updatedMeal, {
@@ -93,32 +146,44 @@ var MealsController = function () {
         if (update) {
           res.status(200).send({
             success: true,
-            message: 'Update successful',
+            message: 'Update successful!',
             updatedMeal: updatedMeal
           });
         }
-      }).catch(function () {
-        return res.status(400).send({
-          success: false,
-          message: 'Error occured  while updating meal'
-        });
+      }).catch(function (err) {
+        err = new Error('Error occurred while updating meal!');
+        err.status = 400;
+        return next(err);
       });
     }
+
+    /**
+     * Deletes meal based on specified meal id
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param  {function} next - next object (for error handling)
+     * @return {json} res.send
+     * @memberof MealsController
+     */
+
   }, {
     key: 'deleteMeal',
-    value: function deleteMeal(req, res) {
+    value: function deleteMeal(req, res, next) {
       _index2.default.Meal.destroy({
         where: {
           id: req.params.id
         }
       }).then(function () {
         return res.status(204).send('Delete successful');
-      }).catch(function () {
-        return res.status(400).send('error occured while deleting');
+      }).catch(function (err) {
+        err = new Error('Error occurred while deleting meal!');
+        err.status = 400;
+        return next(err);
       });
     }
   }]);
-
   return MealsController;
 }();
 
