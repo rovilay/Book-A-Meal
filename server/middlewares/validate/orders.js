@@ -5,7 +5,7 @@
  * @param  {object} req - Request object
  * @param  {object} res - Response object
  * @param  {object} next - next object (handles error or continues to next
- * middleware)
+ *  middleware)
  * @return {object} next
  */
 function validateOrder(req, res, next) {
