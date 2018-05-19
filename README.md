@@ -1,8 +1,8 @@
 
 [![Build Status](https://travis-ci.org/rovilay/Book-A-Meal.svg?branch=develop)](https://travis-ci.org/rovilay/Book-A-Meal)
-
 [![Coverage Status](https://coveralls.io/repos/github/rovilay/Book-A-Meal/badge.svg?branch=develop)](https://coveralls.io/github/rovilay/Book-A-Meal?branch=develop)
-
+[![Maintainability](https://api.codeclimate.com/v1/badges/636939475b3c8d1d52c7/maintainability)](https://codeclimate.com/github/rovilay/Book-A-Meal/maintainability)
+[![Test Coverage](https://api.codeclimate.com/v1/badges/636939475b3c8d1d52c7/test_coverage)](https://codeclimate.com/github/rovilay/Book-A-Meal/test_coverage)
 
 # Book-A-Meal
 Book-A-Meal is an app designed to let you order meals from your favourite resturant at your convience. To use you can check a day's menu and place orders.

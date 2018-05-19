@@ -4,12 +4,22 @@ plugins:
     enabled: true
     config:
       config: .eslintrc
-exclude_patterns:
+exclude_paths:
   - "UI"
+  - "node_modules/"
+  - ".nyc_output/"
+  - "coverage/"
+  - "dist/"
 checks:
   method-complexity:
     enabled: false
   similar-code:
     enabled: false
   method-lines:
+    enabled: false
+  identical-code:
+    enabled: false
+  return-statements:
+    enabled: false
+  file-lines:
     enabled: false
