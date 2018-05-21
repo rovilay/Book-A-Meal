@@ -13,7 +13,7 @@ import myErrorHandler from './middlewares/errorHandler';
 require('dotenv').config(); //
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 // Parse incoming requests data
 app.use(bodyParser.json());
@@ -26,15 +26,18 @@ app.get('/', (req, res) => {
 
 app.use(usersRouter);
 
+// app.get('*', (req, res, next) => {
+//   // res.redirect('/');
+//   const err = new Error('404 page not found!');
+//   err.status = 404;
+//   return next(err);
+// });
+
 app.use(authorize);
 app.use(mealRouter);
 app.use(menuRouter);
 app.use(ordersRouter);
 app.use(myErrorHandler);
-
-app.get('*', (req, res) => {
-  res.redirect('/');
-});
 
 
 app.listen(port, () => {
