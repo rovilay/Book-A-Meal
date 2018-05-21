@@ -180,46 +180,63 @@ class OrdersController {
 
     const updatedPortion = updatedOrder.meals.map(meal => meal.portion); // Get all meal portion
 
-    db.Order.update({
-      deliveryAddress: updatedOrder.deliveryAddress,
-      totalPrice: updatedOrder.totalPrice,
-    }, {
-      where: {
-        id: req.params.id,
-      },
-    })
-      .then((update) => {
-        db.OrderMeal.destroy({
-          where: {
-            OrderId: req.params.id,
-          },
-        });
-
-        return update;
-      })
-      .then((update) => {
-        if (update) {
-          updatedMeals.forEach((meal, index) => {
-            db.OrderMeal.create({
-              OrderId: req.params.id,
-              MealId: meal,
-              portion: updatedPortion[index],
-            })
-              .catch((err) => {
-                err.status = 409;
-                return next(err);
+    checkMeal(updatedMeals, next)
+      .then((check) => {
+        if (check === true) {
+          db.Meal.findAll({ // find meal and get their price
+            where: { id: updatedMeals },
+            attributes: ['price']
+          })
+            .then((meals) => { // calculate order's total price
+              let totPrice = 0;
+              meals.forEach((meal, index) => {
+                totPrice += meal.price * updatedPortion[index];
               });
-          });
-          res.status(200).send({
-            success: true,
-            message: 'Update successfull',
-          });
+              return totPrice;
+            })
+            .then((totPrice) => {
+              db.Order.update({
+                deliveryAddress: updatedOrder.deliveryAddress,
+                totalPrice: totPrice,
+              }, {
+                where: {
+                  id: req.params.id,
+                },
+              })
+                .then((update) => {
+                  db.OrderMeal.destroy({
+                    where: {
+                      OrderId: req.params.id,
+                    },
+                  });
+                  return update;
+                })
+                .then((update) => {
+                  if (update) {
+                    updatedMeals.forEach((meal, index) => {
+                      db.OrderMeal.create({
+                        OrderId: req.params.id,
+                        MealId: meal,
+                        portion: updatedPortion[index],
+                      })
+                        .catch((err) => {
+                          err.status = 409;
+                          return next(err);
+                        });
+                    });
+                    res.status(200).send({
+                      success: true,
+                      message: 'Update successfull',
+                    });
+                  }
+                })
+                .catch((err) => {
+                  // err = new Error('Error occurred while updating order!');
+                  err.status = 400;
+                  return next(err);
+                });
+            });
         }
-      })
-      .catch((err) => {
-        // err = new Error('Error occurred while updating order!');
-        err.status = 400;
-        return next(err);
       });
   }
 
