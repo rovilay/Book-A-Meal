@@ -19,16 +19,19 @@ class MealsController {
    */
   static getAllMeals(req, res, next) {
     db.Meal.findAll()
-      .then(meals => res.status(200).send({
-        success: true,
-        message: 'Meals retrieved successfully',
-        meals,
-      }))
-      .catch(() => {
-        const err = new Error('Error occurred while getting all meals!');
-        err.status = 400;
-        return next(err);
-      });
+      .then((meals) => {
+        if (meals === null || meals.length === 0) {
+          const err = new Error('No Meal found!');
+          err.status = 404;
+          throw err;
+        }
+        res.status(200).send({
+          success: true,
+          message: 'Meals retrieved successfully',
+          meals,
+        });
+      })
+      .catch(err => next(err));
   }
 
   /**
@@ -146,7 +149,7 @@ class MealsController {
       },
     })
       .then(() =>
-        res.status(204).send('Delete successful'))
+        res.status(204).send('Delete successful!'))
       .catch((err) => {
         err = new Error('Error occurred while deleting meal!');
         err.status = 400;

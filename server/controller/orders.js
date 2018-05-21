@@ -80,7 +80,7 @@ class OrdersController {
           })
             .catch(err => next(err));
         });
-        res.status(200).send({
+        res.status(201).send({
           success: true,
           message: 'Order placed successfully!',
         });
