@@ -1,3 +1,4 @@
+/* eslint no-console: off */
 
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -20,8 +21,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to Book A Meal!' });
+  res.status(200).json({ message: 'Welcome to Book A Meal!' });
 });
+
 app.use(usersRouter);
 
 app.use(authorize);
@@ -29,6 +31,10 @@ app.use(mealRouter);
 app.use(menuRouter);
 app.use(ordersRouter);
 app.use(myErrorHandler);
+
+app.get('*', (req, res) => {
+  res.redirect('/');
+});
 
 
 app.listen(port, () => {
