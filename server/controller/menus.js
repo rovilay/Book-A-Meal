@@ -27,14 +27,22 @@ class MenusController {
         attributes: ['id', 'title', 'price'],
         through: {
           attributes: ['id'],
-        },
+        }
       }],
     })
-      .then(menu => res.status(200).send({
-        success: true,
-        message: 'Menus retrieved successfully',
-        menus: menu,
-      }))
+      .then((menus) => {
+        if (menus === null || menus.length === 0) {
+          const err = new Error('No menu found!');
+          err.status = 404;
+          return next(err);
+        }
+
+        return res.status(200).send({
+          success: true,
+          message: 'Menus retrieved successfully',
+          menus
+        });
+      })
       .catch((err) => {
         err = new Error('Error occurred while getting all menus!');
         err.status = 400;
@@ -112,7 +120,7 @@ class MenusController {
       .then((menu) => {
         menu.addMeals(newMenu.meals)
           .then(() => {
-            res.status(200).send({
+            res.status(201).send({
               success: true,
               message: 'Menu posted successfully!',
             });
