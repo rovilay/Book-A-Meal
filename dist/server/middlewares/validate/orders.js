@@ -10,6 +10,8 @@ var _toConsumableArray3 = _interopRequireDefault(_toConsumableArray2);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* eslint no-restricted-globals: off */
+
 /**
  * Validates sent order inputs
  *
@@ -21,7 +23,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
  * @return {object} next
  */
 function validateOrder(req, res, next) {
-  var keys = ['deliveryAddress', 'totalPrice', 'meals'];
+  var keys = ['deliveryAddress', 'meals'];
   var newOrder = req.body;
   keys.forEach(function (key) {
     if (newOrder['' + key] === undefined || newOrder['' + key] === '') {
@@ -29,18 +31,21 @@ function validateOrder(req, res, next) {
       err.status = 400;
       return next(err);
     }
+  });
 
-    // check meals content
-    var meals = [].concat((0, _toConsumableArray3.default)(newOrder.meals));
-    if (meals !== '' || meals !== undefined) {
-      // if meals isn't empty check its content
-      meals.forEach(function (meal) {
-        if (meal.id === '' || meal.id === undefined || meal.portion === '' || meal.portion === undefined) {
-          var _err = new Error('meal entry is not correct');
-          _err.status = 400;
-          return next(_err);
-        }
-      });
+  if (newOrder.meals.length === 0) {
+    var err = new Error('meals field is empty');
+    err.status = 400;
+    return next(err);
+  }
+
+  // check meals content
+  var meals = [].concat((0, _toConsumableArray3.default)(newOrder.meals));
+  meals.forEach(function (meal) {
+    if (meal.id === '' || meal.id === undefined || meal.portion === '' || meal.portion === undefined || parseInt(meal.portion, 10) === 0 || isNaN(meal.portion)) {
+      var _err = new Error('meal entry is not correct');
+      _err.status = 400;
+      return next(_err);
     }
   });
 

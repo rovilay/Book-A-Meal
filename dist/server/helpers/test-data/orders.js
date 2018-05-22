@@ -5,7 +5,6 @@ Object.defineProperty(exports, "__esModule", {
 });
 var orderData = [{
   deliveryAddress: 'Ikotun Lagos',
-  totalPrice: 2000,
   meals: [{
     id: '4b62aed4-2610-4340-97ae-c27a8136c2ff',
     portion: 5
@@ -15,7 +14,6 @@ var orderData = [{
   }]
 }, {
   deliveryAddress: 'maryland Lagos',
-  totalPrice: 4000,
   meals: [{
     id: '4b62aed4-2610-4340-97ae-c27a8136c2ff',
     portion: 2

@@ -60,7 +60,7 @@ describe('Menus API routes', function (done) {
 
   describe('GET /api/v1/menus', function (done) {
     it('should get all menus', function (done) {
-      _chai2.default.request(_app2.default.listen()).get('/api/v1/menus').set('Authorization', adminToken).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).get('/api/v1/menus').set('Authorization', 'Bearer ' + adminToken).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.success).to.equal(true);
@@ -80,7 +80,7 @@ describe('Menus API routes', function (done) {
     });
 
     it('should not allow customer get all menus', function (done) {
-      _chai2.default.request(_app2.default.listen()).get('/api/v1/menus').set('Authorization', customerToken).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).get('/api/v1/menus').set('Authorization', 'Bearer ' + customerToken).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(403);
         expect(res.body.message).to.equal('User not allowed!');
@@ -91,7 +91,7 @@ describe('Menus API routes', function (done) {
 
   describe('GET /api/v1/menus/:DD/:MM/:YYYY', function (done) {
     it('should get menus on specified date only', function (done) {
-      _chai2.default.request(_app2.default.listen()).get('/api/v1/menus/16/05/2018').set('Authorization', adminToken).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).get('/api/v1/menus/16/05/2018').set('Authorization', 'Bearer ' + adminToken).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.success).to.equal(true);
@@ -112,7 +112,7 @@ describe('Menus API routes', function (done) {
     });
 
     it('should allow customers', function (done) {
-      _chai2.default.request(_app2.default.listen()).get('/api/v1/menus/17/05/2018').set('Authorization', customerToken).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).get('/api/v1/menus/17/05/2018').set('Authorization', 'Bearer ' + customerToken).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.success).to.equal(true);
@@ -122,7 +122,7 @@ describe('Menus API routes', function (done) {
     });
 
     it('should return error if menu date not found', function (done) {
-      _chai2.default.request(_app2.default.listen()).get('/api/v1/menus/30/05/2018').set('Authorization', customerToken).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).get('/api/v1/menus/30/05/2018').set('Authorization', 'Bearer ' + customerToken).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(404);
         expect(res.body.success).to.equal(false);
@@ -134,9 +134,9 @@ describe('Menus API routes', function (done) {
 
   describe('POST /api/v1/menus', function (done) {
     it('should add menu only if admin', function (done) {
-      _chai2.default.request(_app2.default.listen()).post('/api/v1/menus').set('Authorization', adminToken).send(_menus2.default[0]).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).post('/api/v1/menus').set('Authorization', 'Bearer ' + adminToken).send(_menus2.default[0]).end(function (err, res) {
         if (err) return done(err);
-        expect(res.status).to.equal(200);
+        expect(res.status).to.equal(201);
         expect(res.body.success).to.equal(true);
         expect(res.body.message).to.equal('Menu posted successfully!');
         done();
@@ -144,7 +144,7 @@ describe('Menus API routes', function (done) {
     });
 
     it('should not allow customers post menu', function (done) {
-      _chai2.default.request(_app2.default.listen()).post('/api/v1/menus').set('Authorization', customerToken).send(_menus2.default[1]).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).post('/api/v1/menus').set('Authorization', 'Bearer ' + customerToken).send(_menus2.default[1]).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(403);
         expect(res.body.message).to.equal('User not allowed!');
@@ -153,7 +153,7 @@ describe('Menus API routes', function (done) {
     });
 
     it('should return error if input not correct', function (done) {
-      _chai2.default.request(_app2.default.listen()).post('/api/v1/menus').set('Authorization', adminToken).send({
+      _chai2.default.request(_app2.default.listen()).post('/api/v1/menus').set('Authorization', 'Bearer ' + adminToken).send({
         postOn: '',
         meals: ['dea6b55b-a9d3-424c-8cfa-e6581185c4c8', '4b62aed4-2610-4340-97ae-c27a8136c2ff']
       }).end(function (err, res) {
@@ -161,6 +161,41 @@ describe('Menus API routes', function (done) {
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
         expect(res.body.message).to.equal('postOn field is empty');
+        done();
+      });
+    });
+  });
+
+  describe('PUT /api/v1/menus/:DD/:MM/:YYYY', function (done) {
+    it('should update menu only if admin', function (done) {
+      _chai2.default.request(_app2.default.listen()).put('/api/v1/menus/18/05/2020').set('Authorization', 'Bearer ' + adminToken).send({
+        meals: ['dea6b55b-a9d3-424c-8cfa-e6581185c4c8', '4b62aed4-2610-4340-97ae-c27a8136c2ff']
+      }).end(function (err, res) {
+        if (err) return done(err);
+        expect(res.status).to.equal(200);
+        expect(res.body.message).to.equal('Menu updated successfully!');
+        done();
+      });
+    });
+
+    it('should should not update if customer', function (done) {
+      _chai2.default.request(_app2.default.listen()).put('/api/v1/menus/19/05/2021').set('Authorization', 'Bearer ' + customerToken).send({
+        meals: ['4b62aed4-2610-4340-97ae-c27a8136c2ff']
+      }).end(function (err, res) {
+        if (err) return done(err);
+        expect(res.status).to.equal(403);
+        expect(res.body.message).to.equal('User not allowed!');
+        done();
+      });
+    });
+
+    it('should return error 404 if date menus on date not found', function (done) {
+      _chai2.default.request(_app2.default.listen()).put('/api/v1/menus/19/05/2031').set('Authorization', 'Bearer ' + adminToken).send({
+        meals: ['4b62aed4-2610-4340-97ae-c27a8136c2ff']
+      }).end(function (err, res) {
+        if (err) return done(err);
+        expect(res.status).to.equal(404);
+        expect(res.body.message).to.equal('Menu for date: 2031-05-19, not found!');
         done();
       });
     });

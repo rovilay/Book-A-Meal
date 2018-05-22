@@ -31,14 +31,43 @@ var should = _chai2.default.should();
 var expect = _chai2.default.expect;
 
 describe('validate Order inputs', function () {
-  var req = (0, _sinonExpressMock.mockReq)({
-    body: {}
+  var req1 = (0, _sinonExpressMock.mockReq)({
+    body: {
+      deliveryAddress: "123 XXXXX",
+      meals: ""
+    }
+  });
+
+  var req2 = (0, _sinonExpressMock.mockReq)({
+    body: {
+      deliveryAddress: "123 XXXXX",
+      meals: []
+    }
+  });
+  var req3 = (0, _sinonExpressMock.mockReq)({
+    body: {
+      deliveryAddress: "123 XXXXX",
+      meals: [{
+        id: "",
+        portion: 7
+      }]
+    }
   });
   var next = _sinon2.default.spy();
   var res = (0, _sinonExpressMock.mockRes)();
 
   it('should return next on err', function () {
-    (0, _orders2.default)(req, res, next);
+    (0, _orders2.default)(req1, res, next);
+    expect(next).to.have.been.called;
+  });
+
+  it('should return next on err', function () {
+    (0, _orders2.default)(req2, res, next);
+    expect(next).to.have.been.called;
+  });
+
+  it('should return next on err', function () {
+    (0, _orders2.default)(req3, res, next);
     expect(next).to.have.been.called;
   });
 });

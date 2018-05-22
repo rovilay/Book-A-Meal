@@ -46,13 +46,19 @@ describe('Authenticate middleware', function () {
 
   var reqHeader = (0, _sinonExpressMock.mockReq)({
     headers: {
-      authorization: '' + token
+      authorization: 'Bearer ' + token
     }
   });
 
   var wrongReqHeader = (0, _sinonExpressMock.mockReq)({
     headers: {
-      authorization: 'asdgrtutjjhkj'
+      authorization: '' + token
+    }
+  });
+
+  var wrongReqHeader2 = (0, _sinonExpressMock.mockReq)({
+    headers: {
+      authorization: 'Bearer asdgrtutjjhkj'
     }
   });
 
@@ -72,8 +78,13 @@ describe('Authenticate middleware', function () {
     next.should.have.been.called;
   });
 
-  it('should return status 401 if token wrong', function () {
+  it('should return status 403 if token wrong', function () {
     (0, _authenticate2.default)(wrongReqHeader, res, next);
+    next.should.have.been.called;
+  });
+
+  it('should return status 403 if token wrong', function () {
+    (0, _authenticate2.default)(wrongReqHeader2, res, next);
     next.should.have.been.called;
   });
 
@@ -82,7 +93,7 @@ describe('Authenticate middleware', function () {
     res.status.should.be.calledWith(403);
     res.json.should.be.calledWith({
       success: false,
-      message: 'Token is undefined!'
+      message: 'Token is undefined or invalid!'
     });
   });
 });
