@@ -21,6 +21,12 @@ function validateOrder(req, res, next) {
     }
   });
 
+  if (newOrder.meals.length === 0) {
+    const err = new Error('meals field is empty');
+    err.status = 400;
+    return next(err);
+  }
+
   // check meals content
   const meals = [...newOrder.meals];
   meals.forEach((meal) => {
