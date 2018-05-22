@@ -1,4 +1,5 @@
 import db from '../../models/index';
+import checkMeal from '../helpers/checkMeal';
 
 /**
  * Handles operations on menu routes
@@ -112,25 +113,86 @@ class MenusController {
    */
   static postMenu(req, res, next) {
     const newMenu = req.body;
-
-    db.Menu.create({
-      UserId: req.user.id,
-      postOn: newMenu.postOn,
-    })
-      .then((menu) => {
-        menu.addMeals(newMenu.meals)
-          .then(() => {
-            res.status(201).send({
-              success: true,
-              message: 'Menu posted successfully!',
-            });
+    checkMeal(newMenu.meals, next)
+      .then((check) => {
+        if (check === true) {
+          db.Menu.findOrCreate({
+            where: { postOn: newMenu.postOn },
+            defaults: { UserId: req.user.id }
           })
-          .catch(err => next(err));
-      })
-      .catch((err) => {
-        err = new Error('Error occurred while posting menu!');
-        err.status = 400;
-        return next(err);
+            .then((menu) => {
+              if (menu[1] === true) {
+                menu[0].addMeals(newMenu.meals)
+                  .then(() => {
+                    res.status(201).send({
+                      success: true,
+                      message: 'Menu posted successfully!',
+                    });
+                  })
+                  .catch(err => next(err));
+              } else {
+                const err = new Error(`Menu for date: ${newMenu.postOn} have already been posted!`);
+                err.status = 400;
+                throw err;
+              }
+            })
+            .catch(err => next(err));
+        }
+      });
+  }
+
+
+  /**
+   * Updates Menu  by date
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof MenusController
+   */
+  static updateMenu(req, res, next) {
+    const updatedMenu = req.body;
+    const day = req.params.DD;
+    const month = req.params.MM;
+    const year = req.params.YYYY;
+    const date = `${year}-${month}-${day}`;
+    checkMeal(updatedMenu.meals, next)
+      .then((check) => {
+        if (check === true) {
+          db.Menu.findOne({
+            where: { postOn: date },
+            attributes: ['id']
+          })
+            .then((menu) => {
+              if (menu !== null) {
+                db.MenuMeal.destroy({
+                  where: {
+                    MenuId: menu.id,
+                  }
+                });
+
+                updatedMenu.meals.forEach((meal) => {
+                  db.MenuMeal.create({
+                    MenuId: menu.id,
+                    MealId: meal
+                  })
+                    .catch(err => next(err));
+                });
+
+                res.status(200).send({
+                  success: true,
+                  message: 'Menu updated successfully!',
+                });
+              } else {
+                const err = new Error(`Menu for date: ${date}, not found!`);
+                err.status = 404;
+                throw err;
+              }
+            })
+            .catch(err => next(err));
+        }
       });
   }
 }

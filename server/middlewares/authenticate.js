@@ -20,7 +20,7 @@ function verifyToken(req, res, next) {
     // verify token
     jwt.verify(token, process.env.SECRET, (err, userData) => {
       if (err || userData === undefined) {
-        err.status = 401;
+        err.status = 403;
         return next(err);
       }
 

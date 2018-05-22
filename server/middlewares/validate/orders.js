@@ -1,3 +1,5 @@
+/* eslint no-restricted-globals: off */
+
 /**
  * Validates sent order inputs
  *
@@ -9,7 +11,7 @@
  * @return {object} next
  */
 function validateOrder(req, res, next) {
-  const keys = ['deliveryAddress', 'totalPrice', 'meals'];
+  const keys = ['deliveryAddress', 'meals'];
   const newOrder = req.body;
   keys.forEach((key) => {
     if (newOrder[`${key}`] === undefined || newOrder[`${key}`] === '') {
@@ -17,17 +19,21 @@ function validateOrder(req, res, next) {
       err.status = 400;
       return next(err);
     }
+  });
 
-    // check meals content
-    const meals = [...newOrder.meals];
-    if (meals !== '' || meals !== undefined) { // if meals isn't empty check its content
-      meals.forEach((meal) => {
-        if (meal.id === '' || meal.id === undefined || meal.portion === '' || meal.portion === undefined) {
-          const err = new Error('meal entry is not correct');
-          err.status = 400;
-          return next(err);
-        }
-      });
+  if (newOrder.meals.length === 0) {
+    const err = new Error('meals field is empty');
+    err.status = 400;
+    return next(err);
+  }
+
+  // check meals content
+  const meals = [...newOrder.meals];
+  meals.forEach((meal) => {
+    if (meal.id === '' || meal.id === undefined || meal.portion === '' || meal.portion === undefined || parseInt(meal.portion, 10) === 0 || isNaN(meal.portion)) {
+      const err = new Error('meal entry is not correct');
+      err.status = 400;
+      return next(err);
     }
   });
 
