@@ -52,7 +52,6 @@ app.use(_bodyParser2.default.urlencoded({ extended: true }));
 app.get('/', function (req, res) {
   res.status(200).json({ message: 'Welcome to Book-A-Meal!' });
 });
-
 // app.get('*', (req, res, next) => {
 //   // res.redirect('/');
 //   const err = new Error('404 page not found!');

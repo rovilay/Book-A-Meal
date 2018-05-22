@@ -22,7 +22,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Welcome to Book-A-Meal!' });
-
+});
 // app.get('*', (req, res, next) => {
 //   // res.redirect('/');
 //   const err = new Error('404 page not found!');
