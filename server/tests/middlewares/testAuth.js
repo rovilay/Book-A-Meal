@@ -26,13 +26,19 @@ describe('Authenticate middleware', () => {
 
   const reqHeader = mockReq({
     headers: {
+      authorization: `Bearer ${token}`
+    }
+  });
+  
+  const wrongReqHeader = mockReq({
+    headers: {
       authorization: `${token}`
     }
   });
 
-  const wrongReqHeader = mockReq({
+  const wrongReqHeader2 = mockReq({
     headers: {
-      authorization: `asdgrtutjjhkj`
+      authorization: `Bearer asdgrtutjjhkj`
     }
   });
 
@@ -52,8 +58,13 @@ describe('Authenticate middleware', () => {
     next.should.have.been.called;
   });
 
-  it('should return status 401 if token wrong', () => {
+  it('should return status 403 if token wrong', () => {
     authenticate(wrongReqHeader, res, next);
+    next.should.have.been.called;
+  });
+
+  it('should return status 403 if token wrong', () => {
+    authenticate(wrongReqHeader2, res, next);
     next.should.have.been.called;
   });
   
@@ -62,7 +73,7 @@ describe('Authenticate middleware', () => {
     res.status.should.be.calledWith(403);
     res.json.should.be.calledWith({
       success: false,
-      message: 'Token is undefined!'
+      message: 'Token is undefined or invalid!'
     });
   });
   

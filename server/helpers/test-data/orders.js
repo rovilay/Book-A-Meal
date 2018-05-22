@@ -1,7 +1,6 @@
 const orderData = [
   {
     deliveryAddress: 'Ikotun Lagos',
-    totalPrice: 2000,
     meals: [
       {
         id: '4b62aed4-2610-4340-97ae-c27a8136c2ff',
@@ -15,7 +14,6 @@ const orderData = [
   },
   {
     deliveryAddress: 'maryland Lagos',
-    totalPrice: 4000,
     meals: [
       {
         id: '4b62aed4-2610-4340-97ae-c27a8136c2ff',

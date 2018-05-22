@@ -1,3 +1,4 @@
+/* eslint no-console: off */
 
 import express from 'express';
 import bodyParser from 'body-parser';
@@ -12,7 +13,7 @@ import myErrorHandler from './middlewares/errorHandler';
 require('dotenv').config(); //
 
 const app = express();
-const port = process.env.PORT || 4000;
+const port = process.env.PORT || 3000;
 
 // Parse incoming requests data
 app.use(bodyParser.json());
@@ -20,9 +21,17 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get('/', (req, res) => {
-  res.json({ message: 'Welcome to Book A Meal!' });
+  res.status(200).json({ message: 'Welcome to Book A Meal!' });
 });
+
 app.use(usersRouter);
+
+// app.get('*', (req, res, next) => {
+//   // res.redirect('/');
+//   const err = new Error('404 page not found!');
+//   err.status = 404;
+//   return next(err);
+// });
 
 app.use(authorize);
 app.use(mealRouter);
