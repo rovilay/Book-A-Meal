@@ -16,6 +16,10 @@ var _index = require('../../models/index');
 
 var _index2 = _interopRequireDefault(_index);
 
+var _checkMeal = require('../helpers/checkMeal');
+
+var _checkMeal2 = _interopRequireDefault(_checkMeal);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /**
@@ -54,11 +58,17 @@ var MenusController = function () {
             attributes: ['id']
           }
         }]
-      }).then(function (menu) {
+      }).then(function (menus) {
+        if (menus === null || menus.length === 0) {
+          var err = new Error('No menu found!');
+          err.status = 404;
+          return next(err);
+        }
+
         return res.status(200).send({
           success: true,
           message: 'Menus retrieved successfully',
-          menus: menu
+          menus: menus
         });
       }).catch(function (err) {
         err = new Error('Error occurred while getting all menus!');
@@ -133,23 +143,87 @@ var MenusController = function () {
     key: 'postMenu',
     value: function postMenu(req, res, next) {
       var newMenu = req.body;
-
-      _index2.default.Menu.create({
-        UserId: req.user.id,
-        postOn: newMenu.postOn
-      }).then(function (menu) {
-        menu.addMeals(newMenu.meals).then(function () {
-          res.status(200).send({
-            success: true,
-            message: 'Menu posted successfully!'
+      (0, _checkMeal2.default)(newMenu.meals, next).then(function (check) {
+        if (check === true) {
+          _index2.default.Menu.findOrCreate({
+            where: { postOn: newMenu.postOn },
+            defaults: { UserId: req.user.id }
+          }).then(function (menu) {
+            if (menu[1] === true) {
+              menu[0].addMeals(newMenu.meals).then(function () {
+                res.status(201).send({
+                  success: true,
+                  message: 'Menu posted successfully!'
+                });
+              }).catch(function (err) {
+                return next(err);
+              });
+            } else {
+              var err = new Error('Menu for date: ' + newMenu.postOn + ' have already been posted!');
+              err.status = 400;
+              throw err;
+            }
+          }).catch(function (err) {
+            return next(err);
           });
-        }).catch(function (err) {
-          return next(err);
-        });
-      }).catch(function (err) {
-        err = new Error('Error occurred while posting menu!');
-        err.status = 400;
-        return next(err);
+        }
+      });
+    }
+
+    /**
+     * Updates Menu  by date
+     *
+     * @static
+     * @param  {object} req - Request object
+     * @param  {object} res - Response object
+     * @param {function} next - next object (for error handling)
+     * @return {json} res.send
+     * @memberof MenusController
+     */
+
+  }, {
+    key: 'updateMenu',
+    value: function updateMenu(req, res, next) {
+      var updatedMenu = req.body;
+      var day = req.params.DD;
+      var month = req.params.MM;
+      var year = req.params.YYYY;
+      var date = year + '-' + month + '-' + day;
+      (0, _checkMeal2.default)(updatedMenu.meals, next).then(function (check) {
+        if (check === true) {
+          _index2.default.Menu.findOne({
+            where: { postOn: date },
+            attributes: ['id']
+          }).then(function (menu) {
+            if (menu !== null) {
+              _index2.default.MenuMeal.destroy({
+                where: {
+                  MenuId: menu.id
+                }
+              });
+
+              updatedMenu.meals.forEach(function (meal) {
+                _index2.default.MenuMeal.create({
+                  MenuId: menu.id,
+                  MealId: meal
+                }).catch(function (err) {
+                  return next(err);
+                });
+              });
+
+              res.status(200).send({
+                success: true,
+                message: 'Menu updated successfully!'
+              });
+            } else {
+              var err = new Error('Menu for date: ' + date + ', not found!');
+              err.status = 404;
+              throw err;
+            }
+          }).catch(function (err) {
+            return next(err);
+          });
+        }
       });
     }
   }]);

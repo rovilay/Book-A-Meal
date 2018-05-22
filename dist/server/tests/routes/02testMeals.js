@@ -47,7 +47,7 @@ describe('Meals API routes', function (done) {
 
   describe('POST /api/v1/meals', function (done) {
     it('should post meals to db if admin', function (done) {
-      _chai2.default.request(_app2.default.listen()).post('/api/v1/meals').set('Authorization', adminToken).send(_meals2.default[0]).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).post('/api/v1/meals').set('Authorization', 'Bearer ' + adminToken).send(_meals2.default[0]).end(function (err, res) {
         expect(res.status).to.equal(201);
         expect(res.body.success).to.equal(true);
         expect(res.body.message).to.equal('Meal added successfully');
@@ -57,7 +57,7 @@ describe('Meals API routes', function (done) {
     });
 
     it('should not allow customer', function (done) {
-      _chai2.default.request(_app2.default.listen()).post('/api/v1/meals').set('Authorization', customerToken).send(_meals2.default[1]).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).post('/api/v1/meals').set('Authorization', 'Bearer ' + customerToken).send(_meals2.default[1]).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(403);
         expect(res.body.message).to.equal('User not allowed!');
@@ -66,7 +66,7 @@ describe('Meals API routes', function (done) {
     });
 
     it('should check for incomplete meal input', function (done) {
-      _chai2.default.request(_app2.default.listen()).put('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff').set('Authorization', adminToken).send({
+      _chai2.default.request(_app2.default.listen()).put('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff').set('Authorization', 'Bearer ' + adminToken).send({
         title: 'Bread and butter',
         description: 'So sweet',
         image: 'https://image.com'
@@ -83,7 +83,7 @@ describe('Meals API routes', function (done) {
 
   describe('GET /api/v1/meals', function (done) {
     it('should return all meals in database if admin', function (done) {
-      _chai2.default.request(_app2.default.listen()).get('/api/v1/meals').set('Authorization', adminToken).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).get('/api/v1/meals').set('Authorization', 'Bearer ' + adminToken).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.success).to.equal(true);
@@ -109,7 +109,7 @@ describe('Meals API routes', function (done) {
     });
 
     it('should not allow customers', function (done) {
-      _chai2.default.request(_app2.default.listen()).get('/api/v1/meals').set('Authorization', customerToken).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).get('/api/v1/meals').set('Authorization', 'Bearer ' + customerToken).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(403);
         expect(res.body.message).to.equal('User not allowed!');
@@ -120,7 +120,7 @@ describe('Meals API routes', function (done) {
 
   describe('GET /api/v1/meals/:id', function (done) {
     it('should return a single meal if id specified', function (done) {
-      _chai2.default.request(_app2.default.listen()).get('/api/v1/meals/dea6b55b-a9d3-424c-8cfa-e6581185c4c8').set('Authorization', adminToken).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).get('/api/v1/meals/dea6b55b-a9d3-424c-8cfa-e6581185c4c8').set('Authorization', 'Bearer ' + adminToken).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.success).to.equal(true);
@@ -142,7 +142,7 @@ describe('Meals API routes', function (done) {
     });
 
     it('should return 404 if meal do not exist', function (done) {
-      _chai2.default.request(_app2.default.listen()).get('/api/v1/meals/dea6b55b-a9d3-424c-8cfa-e6581185ffff').set('Authorization', adminToken).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).get('/api/v1/meals/dea6b55b-a9d3-424c-8cfa-e6581185ffff').set('Authorization', 'Bearer ' + adminToken).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(404);
         expect(res.body.success).to.equal(false);
@@ -152,7 +152,7 @@ describe('Meals API routes', function (done) {
     });
 
     it('should not allow customers get a meal', function (done) {
-      _chai2.default.request(_app2.default.listen()).get('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff').set('Authorization', customerToken).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).get('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff').set('Authorization', 'Bearer ' + customerToken).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(403);
         expect(res.body.message).to.equal('User not allowed!');
@@ -163,7 +163,7 @@ describe('Meals API routes', function (done) {
 
   describe('PUT /api/v1/meals/:id', function (done) {
     it('should update meal if meal exist', function (done) {
-      _chai2.default.request(_app2.default.listen()).put('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff').set('Authorization', adminToken).send(_meals2.default[1]).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).put('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff').set('Authorization', 'Bearer ' + adminToken).send(_meals2.default[1]).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(200);
         expect(res.body.success).to.equal(true);
@@ -179,7 +179,7 @@ describe('Meals API routes', function (done) {
     });
 
     it('should return error if meal not found', function (done) {
-      _chai2.default.request(_app2.default.listen()).put('/api/v1/meals/3').set('Authorization', adminToken).send(_meals2.default[0]).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).put('/api/v1/meals/3').set('Authorization', 'Bearer ' + adminToken).send(_meals2.default[0]).end(function (err, res) {
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
         expect(res.body.message).to.equal('Error occurred while updating meal!');
@@ -189,7 +189,7 @@ describe('Meals API routes', function (done) {
     });
 
     it('should not allow customer update', function (done) {
-      _chai2.default.request(_app2.default.listen()).put('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff').set('Authorization', customerToken).send(_meals2.default[0]).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).put('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff').set('Authorization', 'Bearer ' + customerToken).send(_meals2.default[0]).end(function (err, res) {
         expect(res.status).to.equal(403);
         expect(res.body.message).to.equal('User not allowed!');
 
@@ -198,7 +198,7 @@ describe('Meals API routes', function (done) {
     });
 
     it('should check for incomplete meal input', function (done) {
-      _chai2.default.request(_app2.default.listen()).put('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff').set('Authorization', adminToken).send({
+      _chai2.default.request(_app2.default.listen()).put('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff').set('Authorization', 'Bearer ' + adminToken).send({
         description: 'So sweet',
         price: 900,
         image: 'https://image.com'
@@ -214,7 +214,7 @@ describe('Meals API routes', function (done) {
 
   describe('DELETE /api/v1/meals/:id', function (done) {
     it('should delete specified meal', function (done) {
-      _chai2.default.request(_app2.default.listen()).delete('/api/v1/meals/dea6b55b-a9d3-424c-8cfa-e6581185c4c8').set('Authorization', adminToken).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).delete('/api/v1/meals/dea6b55b-a9d3-424c-8cfa-e6581185c4c8').set('Authorization', 'Bearer ' + adminToken).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(204);
         done();
@@ -222,7 +222,7 @@ describe('Meals API routes', function (done) {
     });
 
     it('should not allow customer delete', function (done) {
-      _chai2.default.request(_app2.default.listen()).del('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff').set('Authorization', customerToken).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).del('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff').set('Authorization', 'Bearer ' + customerToken).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(403);
         expect(res.body.message).to.equal('User not allowed!');
@@ -232,7 +232,7 @@ describe('Meals API routes', function (done) {
     });
 
     it('should return error for wrong id', function (done) {
-      _chai2.default.request(_app2.default.listen()).del('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136').set('Authorization', adminToken).end(function (err, res) {
+      _chai2.default.request(_app2.default.listen()).del('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136').set('Authorization', 'Bearer ' + adminToken).end(function (err, res) {
         if (err) return done(err);
         expect(res.status).to.equal(400);
         expect(res.body.message).to.equal('Error occurred while deleting meal!');

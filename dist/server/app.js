@@ -38,18 +38,28 @@ var _errorHandler2 = _interopRequireDefault(_errorHandler);
 
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
+/* eslint no-console: off */
+
 require('dotenv').config(); //
 
 var app = (0, _express2.default)();
-var port = process.env.PORT || 4000;
+var port = process.env.PORT || 3000;
 
 // Parse incoming requests data
 app.use(_bodyParser2.default.json());
 app.use(_bodyParser2.default.urlencoded({ extended: true }));
 
 app.get('/', function (req, res) {
-  res.json({ message: 'Welcome to Book A Meal!' });
+  res.status(200).json({ message: 'Welcome to Book-A-Meal!' });
 });
+
+app.get('*', function (req, res, next) {
+  // res.redirect('/');
+  var err = new Error('404 page not found!');
+  err.status = 404;
+  return next(err);
+});
+
 app.use(_usersRoutes2.default);
 
 app.use(_authenticate2.default);
