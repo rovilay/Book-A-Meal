@@ -21,7 +21,7 @@ app.use(bodyParser.urlencoded({ extended: true }));
 
 
 app.get('/', (req, res) => {
-  res.status(200).json({ message: 'Welcome to Book A Meal' });
+  res.status(200).json({ message: 'Welcome to Book-A-Meal' });
 });
 
 app.use(usersRouter);
