@@ -220,7 +220,7 @@ class OrdersController {
                         portion: updatedPortion[index],
                       })
                         .catch((err) => {
-                          err.status = 409;
+                          err.status = 400;
                           return next(err);
                         });
                     });
@@ -231,7 +231,6 @@ class OrdersController {
                   }
                 })
                 .catch((err) => {
-                  // err = new Error('Error occurred while updating order!');
                   err.status = 400;
                   return next(err);
                 });
