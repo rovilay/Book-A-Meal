@@ -12,14 +12,45 @@ const should = chai.should();
 const expect = chai.expect;
 
 describe('validate Order inputs', () => {
-  const req = mockReq({
-    body: {}
+  const req1 = mockReq({
+    body: {
+      deliveryAddress: "123 XXXXX",
+      meals: ""
+    }
+  });
+
+  const req2 = mockReq({
+    body: {
+      deliveryAddress: "123 XXXXX",
+      meals: []
+    }
+  });
+  const req3 = mockReq({
+    body: {
+      deliveryAddress: "123 XXXXX",
+      meals: [
+        {
+          id: "",
+          portion: 7
+        }
+      ]
+    }
   });
   const next = sinon.spy();
   const res = mockRes();
 
   it('should return next on err', () => {
-    validateOrder(req, res, next);
+    validateOrder(req1, res, next);
+    expect(next).to.have.been.called;
+  });
+
+  it('should return next on err', () => {
+    validateOrder(req2, res, next);
+    expect(next).to.have.been.called;
+  });
+
+  it('should return next on err', () => {
+    validateOrder(req3, res, next);
     expect(next).to.have.been.called;
   });
 });

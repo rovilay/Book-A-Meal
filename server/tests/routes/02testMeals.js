@@ -30,7 +30,7 @@ describe('Meals API routes', (done) => {
     it('should post meals to db if admin', (done) => {
       chai.request(app.listen())
         .post('/api/v1/meals')
-        .set('Authorization', adminToken)
+        .set('Authorization', `Bearer ${adminToken}`)
         .send(mealData[0])
         .end((err, res) => {
           expect(res.status).to.equal(201);
@@ -44,7 +44,7 @@ describe('Meals API routes', (done) => {
     it('should not allow customer', (done) => {
       chai.request(app.listen())
         .post('/api/v1/meals')
-        .set('Authorization', customerToken)
+        .set('Authorization', `Bearer ${customerToken}`)
         .send(mealData[1])
         .end((err, res) => {
           if (err) return done(err);
@@ -57,7 +57,7 @@ describe('Meals API routes', (done) => {
     it('should check for incomplete meal input', (done) => {
       chai.request(app.listen())
       .put('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff')
-      .set('Authorization', adminToken)
+      .set('Authorization', `Bearer ${adminToken}`)
       .send({
         title: 'Bread and butter',
         description: 'So sweet',
@@ -78,7 +78,7 @@ describe('Meals API routes', (done) => {
     it('should return all meals in database if admin', (done) => {
       chai.request(app.listen())
       .get('/api/v1/meals')
-      .set('Authorization', adminToken)
+      .set('Authorization', `Bearer ${adminToken}`)
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(200);
@@ -107,7 +107,7 @@ describe('Meals API routes', (done) => {
     it('should not allow customers', (done) => {
       chai.request(app.listen())
       .get('/api/v1/meals')
-      .set('Authorization', customerToken)
+      .set('Authorization', `Bearer ${customerToken}`)
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(403);
@@ -121,7 +121,7 @@ describe('Meals API routes', (done) => {
     it('should return a single meal if id specified', (done) => {
       chai.request(app.listen())
       .get('/api/v1/meals/dea6b55b-a9d3-424c-8cfa-e6581185c4c8')
-      .set('Authorization', adminToken)
+      .set('Authorization', `Bearer ${adminToken}`)
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(200);
@@ -146,7 +146,7 @@ describe('Meals API routes', (done) => {
     it('should return 404 if meal do not exist', (done) => {
       chai.request(app.listen())
       .get('/api/v1/meals/dea6b55b-a9d3-424c-8cfa-e6581185ffff')
-      .set('Authorization', adminToken)
+      .set('Authorization', `Bearer ${adminToken}`)
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(404);
@@ -159,7 +159,7 @@ describe('Meals API routes', (done) => {
     it('should not allow customers get a meal', (done) => {
       chai.request(app.listen())
       .get('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff')
-      .set('Authorization', customerToken)
+      .set('Authorization', `Bearer ${customerToken}`)
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(403);
@@ -173,7 +173,7 @@ describe('Meals API routes', (done) => {
     it('should update meal if meal exist', (done) => {
       chai.request(app.listen())
       .put('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff')
-      .set('Authorization', adminToken)
+      .set('Authorization', `Bearer ${adminToken}`)
       .send(mealData[1])
       .end((err, res) => {
         if(err) return done(err);
@@ -193,7 +193,7 @@ describe('Meals API routes', (done) => {
     it('should return error if meal not found', (done) => {
       chai.request(app.listen())
       .put('/api/v1/meals/3')
-      .set('Authorization', adminToken)
+      .set('Authorization', `Bearer ${adminToken}`)
       .send(mealData[0])
       .end((err, res) => {
         expect(res.status).to.equal(400);
@@ -207,7 +207,7 @@ describe('Meals API routes', (done) => {
     it('should not allow customer update', (done) => {
       chai.request(app.listen())
       .put('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff')
-      .set('Authorization', customerToken)
+      .set('Authorization', `Bearer ${customerToken}`)
       .send(mealData[0])
       .end((err, res) => {
         expect(res.status).to.equal(403);
@@ -220,7 +220,7 @@ describe('Meals API routes', (done) => {
     it('should check for incomplete meal input', (done) => {
       chai.request(app.listen())
       .put('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff')
-      .set('Authorization', adminToken)
+      .set('Authorization', `Bearer ${adminToken}`)
       .send({
         description: 'So sweet',
         price: 900,
@@ -240,7 +240,7 @@ describe('Meals API routes', (done) => {
     it('should delete specified meal', (done) => {
       chai.request(app.listen())
       .delete('/api/v1/meals/dea6b55b-a9d3-424c-8cfa-e6581185c4c8')
-      .set('Authorization', adminToken)
+      .set('Authorization', `Bearer ${adminToken}`)
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(204);
@@ -251,7 +251,7 @@ describe('Meals API routes', (done) => {
     it('should not allow customer delete', (done) => {
       chai.request(app.listen())
       .del('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136c2ff')
-      .set('Authorization', customerToken)
+      .set('Authorization', `Bearer ${customerToken}`)
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(403);
@@ -264,7 +264,7 @@ describe('Meals API routes', (done) => {
     it('should return error for wrong id', (done) => {
       chai.request(app.listen())
       .del('/api/v1/meals/4b62aed4-2610-4340-97ae-c27a8136')
-      .set('Authorization', adminToken)
+      .set('Authorization', `Bearer ${adminToken}`)
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(400);
