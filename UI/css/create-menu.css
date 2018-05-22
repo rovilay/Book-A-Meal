@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
     font: 1em/1.5 'Segoe UI', Tahoma, Geneva, Verdana, sans-sarif;
+    height: 100%
 }
 
 * {
@@ -17,6 +18,8 @@ body {
     overflow: hidden
 }
 
+
+
 .welcome-container {
     max-width: 270px;
     margin: 0 auto;
@@ -27,7 +30,7 @@ body {
 
 .container .form-title, .display-title
 {
-  color: #000;
+  color: #ff8619;
   text-transform: capitalize;
   font-size: 40px;
   font-weight: 600;
@@ -46,7 +49,7 @@ body {
 
 .header {
     overflow: hidden;
-    background-color: #007bff;
+    background-color: #ff8619;
     padding: 20px 10px;
   }
   
@@ -141,21 +144,22 @@ body {
     width: 100%;
     margin-top: 10px;
     padding: 10px;
-    border: 1px solid #007bff;
+    border: 0px;
     border-radius: 4px;
-    background: #007bff;
+    background: #61b750;
     color: snow;
     font-size: 20px;
     cursor: pointer;
 }
 
 .card form button:hover {
-    background: blue;
+    background: #ff8619;
     transition: background-color 1s ease-out
 }
 
 .welcome {
-    margin: au;
+    margin: auto;
+    background: url('../images/menu_img.jpg') no-repeat;
 }
 
 .welcome img {
@@ -165,6 +169,7 @@ body {
 }
 .admin-info {
     text-align: justify;
+    color: #fff
 }
 
 
@@ -201,7 +206,7 @@ body {
 
 /* Footer */
 footer {
-    background: #007bff;
+    background: #ff8619;
     color: snow;
     text-align: center
 }

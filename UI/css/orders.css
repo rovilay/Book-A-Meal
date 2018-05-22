@@ -4,6 +4,7 @@ body {
     margin: 0;
     padding: 0;
     font: 1em/1.5 'Segoe UI', Tahoma, Geneva, Verdana, sans-sarif;
+    height: 100%;
 }
 
 * {
@@ -15,7 +16,7 @@ p {
 }
 
 a {
-  color: #007bff;
+  color: #ff8619;
 }
 
 a:active {
@@ -26,7 +27,7 @@ a:active {
 
 .header {
   overflow: hidden;
-  background-color: #007bff;
+  background-color: #ff8619;
   padding: 20px 10px;
 }
 
@@ -99,7 +100,7 @@ a:active {
 }
 
 .title {
-  color: #007bff;
+  color: #ff8619;
   text-transform: capitalize;
   font-size: 1.8rem;
   font-weight: 500;
@@ -128,7 +129,7 @@ tr:nth-of-type(even) {
 }
 
 tr th {
-  background-color:#007bff;
+  background-color:#61b750;
   color: white;
   font-weight: bold;
   padding: 1.4rem
@@ -144,7 +145,7 @@ td {
 
 
 tr:hover {
-  background: rgb(196, 248, 250)
+  background: rgba(97, 183, 80, 0.411)
 }
 
 
@@ -206,7 +207,7 @@ tr:hover {
 
 /* Footer */
 footer {
-  background: #007bff;
+  background: #ff8619;
   color: snow;
   text-align: center;
   padding: 1.4rem;
