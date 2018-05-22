@@ -23,7 +23,7 @@ color: #6c757d
 }
 
 .primary {
-color: #007bff
+color: #ff8619
 }
 
 .container {
@@ -59,7 +59,7 @@ section .container {
 
 .header {
   overflow: hidden;
-  background-color: #007bff;
+  background-color: #ff8619;
   padding: 20px 10px;
 }
 
@@ -125,7 +125,7 @@ section .container {
 
 .card .form-title
 {
-  color: #007bff;
+  color: #ff8619;
   text-transform: capitalize;
   font-size: 50px;
   font-weight: 800;
@@ -187,8 +187,8 @@ margin-top: 7px;
 
 .add-btn {
 width: 100%;
-border: 1px solid #007bff;
-color: #007bff;
+border: 1px solid #61b750;
+color: #61b750;
 font-weight: bold;
 }
 
@@ -218,7 +218,7 @@ font-weight: bold;
 
 .add-btn:hover, .add-btn:focus {
 border: none;
-background: #007bff;
+background: #61b750;
 color: #fff
 }
 
@@ -244,7 +244,7 @@ color: #fff
 
 label {
   display: block;
-  color: #fff;
+  color: #000;
   text-transform: capitalize;
   font-size: 1.5em;
   font-weight: 500;
@@ -265,7 +265,7 @@ label {
 }
 
 .container .display-title {
-  color: #000;
+  color: #ff8619;
   text-transform: capitalize;
   font-size: 30px;
   font-weight: 600;
@@ -291,7 +291,7 @@ float: left;
 }
 
 .meal-card .icons .edit {
-  color: #007bff
+  color: #61b750
 }
 
 .meal-card .icons .trash {
@@ -302,7 +302,7 @@ float: left;
 /* footer */
 footer {
   text-align: center;
-  background: #007bff;
+  background: #ff8619;
   color: #fff;
   margin-top: 1em
 }
