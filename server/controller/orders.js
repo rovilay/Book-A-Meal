@@ -84,7 +84,7 @@ class OrdersController {
       .then((orders) => {
         if (orders.length < 1) {
           const err = new Error('No order found!');
-          err.status = 400;
+          err.status = 404;
           return next(err);
         }
 
@@ -226,7 +226,7 @@ class OrdersController {
                     });
                     res.status(200).send({
                       success: true,
-                      message: 'Update successfull',
+                      message: 'Update successful',
                     });
                   }
                 })

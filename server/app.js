@@ -24,12 +24,12 @@ app.get('/', (req, res) => {
   res.status(200).json({ message: 'Welcome to Book-A-Meal!' });
 });
 
-app.get('*', (req, res, next) => {
-  // res.redirect('/');
-  const err = new Error('404 page not found!');
-  err.status = 404;
-  return next(err);
-});
+// app.get('*', (req, res, next) => {
+//   // res.redirect('/');
+//   const err = new Error('404 page not found!');
+//   err.status = 404;
+//   return next(err);
+// });
 
 app.use(usersRouter);
 

@@ -120,7 +120,7 @@ var OrdersController = function () {
       }).then(function (orders) {
         if (orders.length < 1) {
           var err = new Error('No order found!');
-          err.status = 400;
+          err.status = 404;
           return next(err);
         }
 
@@ -271,7 +271,7 @@ var OrdersController = function () {
                 });
                 res.status(200).send({
                   success: true,
-                  message: 'Update successfull'
+                  message: 'Update successful'
                 });
               }
             }).catch(function (err) {
