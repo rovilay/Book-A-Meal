@@ -12,6 +12,10 @@ var _bodyParser = require('body-parser');
 
 var _bodyParser2 = _interopRequireDefault(_bodyParser);
 
+var _swaggerUiExpress = require('swagger-ui-express');
+
+var _swaggerUiExpress2 = _interopRequireDefault(_swaggerUiExpress);
+
 var _mealRoutes = require('./routes/mealRoutes');
 
 var _mealRoutes2 = _interopRequireDefault(_mealRoutes);
@@ -36,6 +40,10 @@ var _errorHandler = require('./middlewares/errorHandler');
 
 var _errorHandler2 = _interopRequireDefault(_errorHandler);
 
+var _swagger = require('./helpers/swagger.json');
+
+var _swagger2 = _interopRequireDefault(_swagger);
+
 function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { default: obj }; }
 
 /* eslint no-console: off */
@@ -52,13 +60,9 @@ app.use(_bodyParser2.default.urlencoded({ extended: true }));
 app.get('/', function (req, res) {
   res.status(200).json({ message: 'Welcome to Book-A-Meal!' });
 });
-// app.get('*', (req, res, next) => {
-//   // res.redirect('/');
-//   const err = new Error('404 page not found!');
-//   err.status = 404;
-//   return next(err);
-// });
 
+// Swagger docs routes
+app.use('/api/v1/api-docs', _swaggerUiExpress2.default.serve, _swaggerUiExpress2.default.setup(_swagger2.default));
 app.use(_usersRoutes2.default);
 
 app.use(_authenticate2.default);
