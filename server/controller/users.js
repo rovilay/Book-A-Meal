@@ -76,6 +76,7 @@ class UsersController {
               res.status(200).send({
                 success: true,
                 message: 'You are logged in!',
+                userId: user.id,
                 token,
               });
             });
