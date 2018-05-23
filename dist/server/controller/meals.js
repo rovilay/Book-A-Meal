@@ -44,14 +44,17 @@ var MealsController = function () {
      */
     value: function getAllMeals(req, res, next) {
       _index2.default.Meal.findAll().then(function (meals) {
-        return res.status(200).send({
+        if (meals === null || meals.length === 0) {
+          var err = new Error('No Meal found!');
+          err.status = 404;
+          throw err;
+        }
+        res.status(200).send({
           success: true,
           message: 'Meals retrieved successfully',
           meals: meals
         });
-      }).catch(function () {
-        var err = new Error('Error occurred while getting all meals!');
-        err.status = 400;
+      }).catch(function (err) {
         return next(err);
       });
     }
@@ -176,7 +179,7 @@ var MealsController = function () {
           id: req.params.id
         }
       }).then(function () {
-        return res.status(204).send('Delete successful');
+        return res.status(204).send('Delete successful!');
       }).catch(function (err) {
         err = new Error('Error occurred while deleting meal!');
         err.status = 400;

@@ -1,4 +1,5 @@
 body {
+  min-height: 100%;
   margin: 0;
   padding: 0;
   font: 0.9em/1.5 'Segoe UI', Tahoma, Geneva, Verdana, sans-sarif;
@@ -6,7 +7,7 @@ body {
 
 /* Global */
 .container {
-  width: 95%;
+  width: 100%;
   margin:auto;
   overflow: hidden
 }
@@ -22,7 +23,7 @@ ul {
 
 .header {
   overflow: hidden;
-  background-color: #007bff;
+  background-color: #ff8619;
   padding: 20px 10px;
 }
 
@@ -127,7 +128,7 @@ ul {
   min-height: 60vh;
   background: #fff ;
   background-size: cover;
-  color: #007bff;
+  color: #ff8619;
   text-align: center; 
   font-size: 20px
 }
@@ -144,7 +145,7 @@ ul {
 }
 
 #showcase1 a {
-  color: #007bff;
+  color: #ff8619;
   text-decoration: none;
 }
 
@@ -155,10 +156,13 @@ ul {
 }
 
 /* Menu section */
+#showcase2 {
+  margin-top: -2em;
+}
 #showcase2 .container {
-  max-width: 1170px;
-  margin: 0 auto;
-  padding: 1em;
+  width: 100%;
+  /* margin: 4rem ; */
+  padding: 4em;
   overflow: hidden;
   margin-top: -16px
   
@@ -171,7 +175,7 @@ ul {
 
 .boxes {
   display: grid;
-  grid-gap: 20px;
+  grid-gap: 1rem;
   grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
   align-content: center;
   padding-top: 1.5em
@@ -179,7 +183,7 @@ ul {
 }
 
 .menu-title {
-  color: #007bff;
+  color: #ff8619;
   text-transform: capitalize;
   font-size: 2.8rem;
   font-weight: 600;
@@ -201,7 +205,6 @@ width: 100%
 
 .menu-info {
   padding: 12px 16px;
-  max-height: 200px;
   text-align: justify
 }
 
@@ -216,7 +219,7 @@ width: 100%
 .bold {
   font-size: 0.9rem;
   font-weight: bold;
-  color: #007bff
+  color: #ff8619
 }
 
 input[type=submit] {
@@ -228,7 +231,7 @@ input[type=submit] {
   border: 1px solid #ccc;
   border-radius: 4px;
   padding: 2px 2px;
-  background: #007bff;
+  background: #61B750;
   color: snow;
   cursor: pointer;
   font-size: 0.9rem
@@ -236,7 +239,7 @@ input[type=submit] {
 
 input[type=submit]:hover, 
 input[type=submit]:focus {
-  background: blue;
+  background: #ff8619;
   transition: background-color 1s ease-out
 }
 
@@ -247,12 +250,19 @@ input[type=submit]:focus {
     font-weight: 700;
     margin-top: 1em
   }
+
+  .menu-box {
+    max-width: 12rem;
+  }
 }
 
 /* footer */
 footer {
+  display: grid;
   text-align: center;
-  background: #007bff;
+  background: #ff8619;
   color: #fff;
+  grid-row-start: 2;
+  grid-row-end: 3;
   margin-top: 1em
 }

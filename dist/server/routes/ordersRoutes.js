@@ -34,6 +34,8 @@ var ordersRouter = _express2.default.Router();
 
 ordersRouter.get('/api/v1/orders', _adminOnly2.default, _orders2.default.getAllOrders);
 
+ordersRouter.get('/api/v1/orders/:userId', _orders2.default.getOrdersById);
+
 ordersRouter.post('/api/v1/orders', _customerOnly2.default, _checktime2.default.canOrder, _orders4.default, _orders2.default.postOrder);
 
 ordersRouter.put('/api/v1/orders/:id', _customerOnly2.default, _checktime2.default.canUpdate, _orders4.default, _orders2.default.updateOrder);

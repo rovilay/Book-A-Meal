@@ -18,7 +18,7 @@ p {
 
 .header {
   overflow: hidden;
-  background-color: #007bff;
+  background-color: #ff8619;
   padding: 20px 10px;
 }
 
@@ -90,7 +90,7 @@ p {
 }
 
 .title {
-  color: #007bff;
+  color: #ff8619;
   text-transform: capitalize;
   font-size: 1.8rem;
   font-weight: 500;
@@ -134,7 +134,7 @@ order {
 .order-btn {
   float: right;
   width: 30%;
-  background: #007bff;
+  background: #61b750;
   color: snow;
   font-weight: bold;
 }
@@ -163,7 +163,9 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
-
+table a {
+  color: rgba(224, 63, 14, 0.685);
+}
 tr:nth-of-type(odd) {
   background-color: #ddd
 }
@@ -173,7 +175,7 @@ tr:nth-of-type(even) {
 }
 
 tr th {
-  background-color: #007bff;
+  background-color: #61b750;
   color: white;
   font-weight: bold;
   padding: 1.4rem
@@ -187,7 +189,7 @@ td {
 }
 
 tr:hover {
-  background: rgb(196, 248, 250)
+  background: rgba(97, 183, 80, 0.411)
 }
 
 @media screen and (max-width:930px) {
@@ -230,7 +232,7 @@ tr:hover {
 /* Footer */
 
 footer {
-  background: #007bff;
+  background: #ff8619;
   color: snow;
   text-align: center;
   padding: 1.4rem;

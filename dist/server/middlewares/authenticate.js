@@ -23,13 +23,14 @@ require('dotenv').config();
  */
 function verifyToken(req, res, next) {
   // Get auth header from req header
-  var token = req.headers.authorization;
+  var bearerToken = req.headers.authorization;
 
-  if (token !== undefined) {
+  if (bearerToken && bearerToken.split(' ')[0] === 'Bearer') {
+    var token = bearerToken.split(' ')[1];
     // verify token
     _jsonwebtoken2.default.verify(token, process.env.SECRET, function (err, userData) {
       if (err || userData === undefined) {
-        err.status = 401;
+        err.status = 403;
         return next(err);
       }
 
@@ -39,7 +40,7 @@ function verifyToken(req, res, next) {
   } else {
     return res.status(403).json({
       success: false,
-      message: 'Token is undefined!'
+      message: 'Token is undefined or invalid!'
     });
   }
 }
