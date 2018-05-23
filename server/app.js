@@ -2,12 +2,14 @@
 
 import express from 'express';
 import bodyParser from 'body-parser';
+import swaggerUi from 'swagger-ui-express';
 import mealRouter from './routes/mealRoutes';
 import menuRouter from './routes/menuRoutes';
 import ordersRouter from './routes/ordersRoutes';
 import usersRouter from './routes/usersRoutes';
 import authorize from './middlewares/authenticate';
 import myErrorHandler from './middlewares/errorHandler';
+import swaggerDoc from './helpers/swagger.json';
 
 
 require('dotenv').config(); //
@@ -23,13 +25,9 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.get('/', (req, res) => {
   res.status(200).json({ message: 'Welcome to Book-A-Meal!' });
 });
-// app.get('*', (req, res, next) => {
-//   // res.redirect('/');
-//   const err = new Error('404 page not found!');
-//   err.status = 404;
-//   return next(err);
-// });
 
+// Swagger docs routes
+app.use('/api/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 app.use(usersRouter);
 
 app.use(authorize);
