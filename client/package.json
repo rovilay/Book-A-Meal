@@ -1,0 +1,39 @@
+{
+  "name": "book-a-meal",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "start-dev": "webpack-dev-server --mode development --open --hot",
+    "build": "webpack --mode production"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/rovilay/Book-A-Meal.git"
+  },
+  "author": "Akinola Ogooluwa",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/rovilay/Book-A-Meal/issues"
+  },
+  "homepage": "https://github.com/rovilay/Book-A-Meal#readme",
+  "dependencies": {
+    "prop-types": "^15.6.1",
+    "react": "^16.4.0",
+    "react-dom": "^16.4.0",
+    "style-loader": "^0.21.0"
+  },
+  "devDependencies": {
+    "babel-core": "^6.26.3",
+    "babel-loader": "^7.1.4",
+    "babel-preset-env": "^1.7.0",
+    "babel-preset-react": "^6.24.1",
+    "css-loader": "^0.28.11",
+    "html-webpack-plugin": "^3.2.0",
+    "scss-loader": "0.0.1",
+    "webpack": "^4.8.3",
+    "webpack-cli": "^2.1.4",
+    "webpack-dev-server": "^3.1.4"
+  },
+  "proxy": "http://localhost:3000"
+}
