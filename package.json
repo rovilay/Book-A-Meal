@@ -19,7 +19,9 @@
     "build-mig": "babel migrations -d dist/migrations && babel config -d dist/config",
     "build-ui": "babel UI -d dist/UI",
     "serve": "node dist/app.js",
-    "start-dev": "node_modules/.bin/nodemon ./server/app.js --exec babel-node",
+    "server": "node_modules/.bin/nodemon ./server/app.js --exec babel-node",
+    "client": "npm run start-dev --prefix client",
+    "start-dev": "concurrently \"npm run server\" \"npm run client\"",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint \"server/**/*.js\" --fix"
   },
@@ -61,6 +63,7 @@
   },
   "devDependencies": {
     "babel-plugin-istanbul": "^4.1.6",
+    "concurrently": "^3.5.1",
     "coveralls": "^3.0.0",
     "eslint": "^4.19.1",
     "eslint-config-airbnb": "^16.1.0",
