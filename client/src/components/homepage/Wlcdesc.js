@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const Welcome = props => (
-  <div className="container">
+  <div className="desc-container">
     <h1>Are you busy and hungry?</h1>
     <h2>Would you want to eat your favourite food from your favourite resturant?</h2>
     <p>Use this app to keep track of our menu and place orders at your convinience.</p>

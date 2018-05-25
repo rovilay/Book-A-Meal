@@ -1,11 +1,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import '../../assests/css/style.css';
+import '../../assests/scss/style.scss';
 import Footer from '../common/Footer';
 import Header from '../common/Header';
 import Showcase from './Showcase';
 import Welcome from './Wlcdesc';
+import Menu from '../common/Menu';
 
 class IndexPage extends Component {
   render() {
@@ -15,6 +16,7 @@ class IndexPage extends Component {
         {/* <h1>Book-A-Meal</h1> */}
         <Showcase />
         <Welcome navData={this.props.nav} />
+        <Menu />
         <Footer />
       </div>
     );
