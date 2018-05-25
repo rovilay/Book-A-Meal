@@ -9,13 +9,34 @@ module.exports = {
   },
   module: {
     rules: [
-      { test: /\.css$/, loader: 'style-loader!css-loader' },
+      {
+        test: /\.css$/,
+        loader: 'style-loader!css-loader',
+      },
       {
         test: /\.js$/,
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
           presets: ['es2015', 'react']
+        }
+      },
+      {
+        test: /\.(png|jpg|jpeg)$/,
+        use: [
+          {
+            loader: 'url-loader',
+            options: {
+              limit: 25000,
+            }
+          }
+        ]
+      },
+      {
+        test: /\.(png|jpg|jpeg)$/,
+        loader: 'file-loader',
+        query: {
+          name: 'images/[hash].[ext]'
         }
       },
     ]
