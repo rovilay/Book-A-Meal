@@ -1,0 +1,110 @@
+
+* {
+  box-sizing: border-box;
+}
+
+a {
+  color: blue;
+}
+
+.signup-container {
+  max-width:600px;
+  margin: 0 auto;
+  padding: 1em;
+  overflow: hidden
+}
+
+section .signup-container {
+  padding-top: 0;
+}
+
+.signup-card {
+  width: inherit;
+  border: 1px solid #ccc;
+  padding: 1.4em
+}
+
+.signup-card .form-title {
+  color: #000;
+  text-transform: capitalize;
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center
+}
+
+.signup-card .signup-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr; 
+  grid-gap: 1.3em
+}
+
+.signup-card .signup-form p {
+  margin: 0;
+}
+
+.signup-card form .full {
+  grid-column: 1 / 3;
+}
+
+.signup-card form button, .signup-card form input[type=text], .signup-card form input[type=email], .signup-card form input[type=password] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.signup-card .asterik {
+  color: red;
+}
+
+.btn-1 {
+  border: none;
+  background: #61B750;
+  color: #fff;
+  padding: 1em 2em;
+  font-size: 1em;
+  text-align: center;
+  border-radius: 0.5em;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+}
+
+.btn-1:hover, .btn-1:focus {
+  background: #ff8619;
+  transition: background-color 2s ease-out
+}
+
+
+label {
+  display: block;
+  text-transform: capitalize;
+  font-size: 1em;
+  font-weight: 700
+}
+
+hr {
+  color: #cccccc
+}
+
+
+/* alert */
+.alert-danger {
+  color: rgb(240, 98, 98);
+}
+ 
+.alert-success {
+  color: #48e048;
+}
+/* Section */
+
+#signup-section {
+  margin-top: 30px;
+}
+
+/* Small screens */
+@media(max-width:500px) {
+  .signup-card .signup-form {
+    display: inline;
+  }  
+}
