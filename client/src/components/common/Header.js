@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { Link } from 'react-router-dom';
 
 class Header extends Component {
   render() {
     return (
       <header>
         <div className="header">
-          <a href="index.html" className="logo">Book-A-Meal</a>
+          <Link to="/" className="logo">Book-A-Meal</Link>
           <div className="header-right">
-            {this.props.navData.map((nav, i) => <a href={nav.link} key={i}>{nav.title}</a>)}
+            {this.props.navData.map((nav, i) => <Link to={nav.link} key={i}>{nav.title}</Link>)}
           </div>
         </div>
       </header>
