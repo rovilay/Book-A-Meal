@@ -79,10 +79,9 @@ ul {
 			text-decoration: none;
 			font-weight: bold;
 		}
-	}
-	.active {
-		text-decoration: none;
-		font-weight: bold;
+		&:focus {
+			font-weight: bold;
+		}
 	}
 }
 .header-right {
@@ -93,6 +92,11 @@ ul {
 		border-radius: 4px;
 	}
 }
+
+// .is-active {
+// 	font-weight: bold
+// }
+
 @media screen and(max-width: 590px) {
 	.header-right {
 		float: none;

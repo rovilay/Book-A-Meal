@@ -1,24 +1,37 @@
-import React, { Component } from 'react';
+import React from 'react';
+import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { NavLink } from 'react-router-dom';
 
-class Header extends Component {
-  render() {
-    return (
-      <header>
-        <div className="header">
-          <Link to="/" className="logo">Book-A-Meal</Link>
-          <div className="header-right">
-            {this.props.navData.map((nav, i) => <Link to={nav.link} key={i}>{nav.title}</Link>)}
-          </div>
+const Header = (props) => {
+  const { navLinks } = props;
+  return (
+    <header>
+      <div className="header">
+        <NavLink to="/" className="logo" exact >Book-A-Meal</NavLink>
+        <div className="header-right">
+          {navLinks &&
+            navLinks.map((nav, i) => (
+              <NavLink
+                to={nav.link}
+                key={i}
+                className="is-active"
+              >
+                {nav.title}
+              </NavLink>
+            ))}
         </div>
-      </header>
-    );
-  }
-}
-
-Header.propTypes = {
-  navData: PropTypes.array.isRequired
+      </div>
+    </header>
+  );
 };
 
-export default Header;
+Header.propTypes = {
+  navLinks: PropTypes.array.isRequired
+};
+
+const mapStateToProps = state => ({
+  navLinks: state.navLinks
+});
+
+export default connect(mapStateToProps)(Header);

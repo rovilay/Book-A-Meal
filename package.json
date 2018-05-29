@@ -21,7 +21,7 @@
     "serve": "node dist/app.js",
     "server": "node_modules/.bin/nodemon ./server/app.js --exec babel-node",
     "client": "npm run start-dev --prefix client",
-    "start-dev": "concurrently \"npm run server\" \"npm run client\"",
+    "start-dev": "concurrently --kill-others-on-fail \"npm run server\" \"npm run client\"",
     "coverage": "nyc report --reporter=text-lcov | coveralls",
     "lint": "eslint \"server/**/*.js\" --fix"
   },

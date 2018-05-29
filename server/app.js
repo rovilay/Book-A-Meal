@@ -15,7 +15,7 @@ import swaggerDoc from './helpers/swagger.json';
 require('dotenv').config(); //
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT || 4000;
 
 // Parse incoming requests data
 app.use(bodyParser.json());

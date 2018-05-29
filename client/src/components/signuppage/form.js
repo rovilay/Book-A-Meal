@@ -1,29 +1,28 @@
 /* eslint jsx-a11y/label-has-for:0 */
 
 import React, { Component } from 'react';
-// import PropTypes from 'prop-types';
+import PropTypes from 'prop-types';
 import { Link } from 'react-router-dom';
 
 class SignUpForm extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      fname: '',
-      lname: '',
+      firstName: '',
+      lastName: '',
       email: '',
       password: '',
       cpassword: '',
       address: '',
       address2: '',
-      phone: '',
-      phone2: '',
+      Phone: '',
+      Phone2: '',
       city: '',
       state: ''
     };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    // this.changeTitle = this.changeTitle.bind(this);
   }
 
   onChange(e) {
@@ -33,14 +32,11 @@ class SignUpForm extends Component {
   onSubmit(e) {
     e.preventDefault();
     console.log(this.state);
-  }
-
-
-  changeTitle() {
-    const checkbox = document.querySelector('#admin-checkbox');
-    if (checkbox.checked) {
-      this.setState({ title: 'Admin Login' });
+    if (this.state.password !== ' ' && this.state.cpassword !== this.state.password) {
+      console.log('password and cpassword do not match');
+      return;
     }
+    this.props.signUpReq(this.state);
   }
 
   render() {
@@ -52,31 +48,31 @@ class SignUpForm extends Component {
         </div>
         <form id="signup" className="signup-form" onSubmit={this.onSubmit} >
           <p>
-            <label htmlFor="fname">
+            <label htmlFor="firstName">
               First name
               <span className="asterik">*</span>
             </label>
             <input
               type="text"
               placeholder="Enter first name"
-              name="fname"
+              name="firstName"
               id="signup-fname"
-              value={this.state.fname}
+              value={this.state.firstName}
               onChange={this.onChange}
               required
             />
           </p>
 
           <p>
-            <label htmlFor="lname">Last name
+            <label htmlFor="lastName">Last name
               <span className="asterik">*</span>
             </label>
             <input
               type="text"
               placeholder="Enter last name"
-              name="lname"
+              name="lastName"
               id="signup-lname"
-              value={this.state.lname}
+              value={this.state.lastName}
               onChange={this.onChange}
               required
             />
@@ -99,31 +95,31 @@ class SignUpForm extends Component {
           </p>
 
           <p>
-            <label htmlFor="phone">
+            <label htmlFor="Phone">
               Phone
               <span className="asterik">*</span>
             </label>
             <input
               type="text"
               placeholder="Enter phone number"
-              name="phone"
+              name="Phone"
               id="signup-phone"
-              value={this.state.phone}
+              value={this.state.Phone}
               onChange={this.onChange}
               required
             />
           </p>
 
           <p>
-            <label htmlFor="phone2">
+            <label htmlFor="Phone2">
               Phone 2
             </label>
             <input
               type="text"
               id="signup-phone2"
               placeholder="Enter phone number"
-              name="phone2"
-              value={this.state.phone2}
+              name="Phone2"
+              value={this.state.Phone2}
               onChange={this.onChange}
             />
           </p>
@@ -236,8 +232,8 @@ class SignUpForm extends Component {
   }
 }
 
-// SignUpForm.propTypes = {
-//   title: PropTypes.string.isRequired
-// };
+SignUpForm.propTypes = {
+  signUpReq: PropTypes.func.isRequired
+};
 
 export default SignUpForm;
