@@ -2,8 +2,11 @@
 
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
+import { Link, Redirect } from 'react-router-dom';
 import classname from 'classnames';
+import validator from 'validator';
+
+import sigupValidator from '../../helpers/signupValidator';
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -20,6 +23,8 @@ class SignUpForm extends Component {
       Phone2: '',
       city: '',
       state: '',
+      isValid: false,
+      redirect: false,
       response: {}
     };
 
@@ -28,7 +33,9 @@ class SignUpForm extends Component {
   }
 
   onChange(e) {
-    this.setState({ [e.target.name]: e.target.value.trim() });
+    const { name, value } = e.target;
+    this.setState({ [name]: value.trim() });
+    this.setState({ isValid: sigupValidator(this.state) });
   }
 
   onSubmit(e) {
@@ -41,23 +48,18 @@ class SignUpForm extends Component {
       .then((res) => {
         const { data } = res;
         this.setState({
-          firstName: '',
-          lastName: '',
-          email: '',
-          password: '',
-          cpassword: '',
-          address: '',
-          address2: '',
-          Phone: '',
-          Phone2: '',
-          city: '',
-          state: '',
-          response: { ...data }
+          isValid: false,
+          redirect: true,
+          response: { ...data },
         });
       })
       .catch((err) => {
-        const { data } = err.response;
-        return this.setState({ response: { ...data } });
+        if (err.response) {
+          const { data } = err.response;
+          return this.setState({ response: { ...data } });
+        }
+
+        return err;
       });
   }
 
@@ -96,6 +98,17 @@ class SignUpForm extends Component {
                 onChange={this.onChange}
                 required
               />
+              {
+                (this.state.firstName && !validator.isAlpha(this.state.firstName))
+                &&
+                <span
+                  id="alert"
+                  role="alert"
+                  className="alert-danger"
+                >
+                  First name is invalid
+                </span>
+              }
             </p>
 
             <p>
@@ -111,6 +124,19 @@ class SignUpForm extends Component {
                 onChange={this.onChange}
                 required
               />
+              {
+                (this.state.lastName && !validator.isAlpha(this.state.lastName))
+                &&
+                (
+                  <span
+                    id="alert"
+                    role="alert"
+                    className="alert-danger"
+                  >
+                    Last name is invalid
+                  </span>
+                )
+              }
             </p>
 
             <p className="full">
@@ -127,6 +153,17 @@ class SignUpForm extends Component {
                 minLength="10"
                 required
               />
+              {
+                (this.state.email && !validator.isEmail(this.state.email))
+                &&
+                <span
+                  id="alert"
+                  role="alert"
+                  className="alert-danger"
+                >
+                  email is invalid
+                </span>
+              }
             </p>
 
             <p>
@@ -203,6 +240,17 @@ class SignUpForm extends Component {
                 onChange={this.onChange}
                 required
               />
+              {
+                (this.state.city && !validator.isAlpha(this.state.city))
+                &&
+                <span
+                  id="alert"
+                  role="alert"
+                  className="alert-danger"
+                >
+                  city is not valid
+                </span>
+              }
             </p>
 
             <p>
@@ -219,6 +267,17 @@ class SignUpForm extends Component {
                 onChange={this.onChange}
                 required
               />
+              {
+                (this.state.state && !validator.isAlpha(this.state.state))
+                &&
+                <span
+                  id="alert"
+                  role="alert"
+                  className="alert-danger"
+                >
+                  state is invalid
+                </span>
+              }
             </p>
 
             <p>
@@ -281,7 +340,15 @@ class SignUpForm extends Component {
             </p>
 
             <p className="full">
-              <button type="submit" name="signupbtn" id="signupbtn" className="signupbtn btn-1">Sign Up</button>
+              <button
+                type="submit"
+                name="signupbtn"
+                id="signupbtn"
+                className="signupbtn btn-1"
+                disabled={!this.state.isValid}
+              >
+                Sign Up
+              </button>
             </p>
           </form>
         </div>
@@ -295,6 +362,10 @@ class SignUpForm extends Component {
           >
             {message}
           </p>
+        }
+
+        {
+          this.state.redirect && <Redirect to="/login" />
         }
       </div>
     );

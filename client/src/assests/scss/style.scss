@@ -228,13 +228,12 @@ input[type=submit] {
 	cursor: pointer;
 	font-size: 0.9rem;
 	&:hover {
-		background: $color_west_side_approx;
-		transition: background-color 1s ease-out;
+		transition: background-color 0.1s ease-out;
 	}
-	&:focus {
-		background: $color_west_side_approx;
-		transition: background-color 1s ease-out;
-	}
+	// &:focus {
+	// 	background: $color_west_side_approx;
+	// 	transition: background-color 1s ease-out;
+	// }
 }
 @media screen and(max-width: 500px) {
 	.menu-title {
