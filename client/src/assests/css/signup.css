@@ -90,11 +90,12 @@ hr {
 
 /* alert */
 .alert-danger {
-  color: rgb(240, 98, 98);
+  color: rgb(219, 41, 41);
 }
  
 .alert-success {
   color: #48e048;
+  text-transform: capitalize
 }
 /* Section */
 

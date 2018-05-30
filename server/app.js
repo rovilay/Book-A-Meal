@@ -2,6 +2,7 @@
 
 import express from 'express';
 import bodyParser from 'body-parser';
+import cors from 'cors';
 import swaggerUi from 'swagger-ui-express';
 import mealRouter from './routes/mealRoutes';
 import menuRouter from './routes/menuRoutes';
@@ -20,6 +21,7 @@ const port = process.env.PORT || 4000;
 // Parse incoming requests data
 app.use(bodyParser.json());
 app.use(bodyParser.urlencoded({ extended: true }));
+app.use(cors());
 
 
 app.get('/', (req, res) => {
