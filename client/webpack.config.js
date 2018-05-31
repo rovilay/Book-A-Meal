@@ -3,7 +3,7 @@ const path = require('path');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: ['babel-polyfill', './src/index.js'],
   output: {
     path: path.join(__dirname, '/public'),
     filename: 'index_bundle.js',
@@ -60,5 +60,9 @@ module.exports = {
     port: 9000,
     historyApiFallback: true,
     contentBase: path.join(__dirname, '/public')
+  },
+  node: {
+    net: 'empty',
+    dns: 'empty'
   }
 };
