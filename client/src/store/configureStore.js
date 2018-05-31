@@ -2,17 +2,25 @@
 
 import { createStore, combineReducers, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+import { composeWithDevTools } from 'redux-devtools-extension';
 
-import navLinksReducers from '../reducers/navLinks';
+import navLinksReducer from '../reducers/navLinks';
+import signUpReducer from '../reducers/signup';
+import loginReducer from '../reducers/login';
 
 export default () => {
   const store = createStore(
     combineReducers(
       {
-        navLinks: navLinksReducers
+        navLinks: navLinksReducer,
+        signUp: signUpReducer,
+        login: loginReducer
       }
     ),
-    applyMiddleware(thunk));
+    composeWithDevTools(
+      applyMiddleware(thunk)
+    )
+  );
   return store;
 };
 
