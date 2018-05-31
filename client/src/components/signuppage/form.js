@@ -3,10 +3,12 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
+import { connect } from 'react-redux';
 import classname from 'classnames';
 import validator from 'validator';
 
 import sigupValidator from '../../helpers/signupValidator';
+import setSuccessfulSignUpMsg from '../../actions/signup';
 
 class SignUpForm extends Component {
   constructor(props) {
@@ -44,7 +46,7 @@ class SignUpForm extends Component {
       const err = { success: false, message: 'passwords do not match!' };
       return this.setState({ response: { ...err } });
     }
-    this.props.signUpReq(this.state)
+    this.props.signUpReq(this.state, '/api/v1/auth/signup')
       .then((res) => {
         const { data } = res;
         this.setState({
@@ -52,6 +54,8 @@ class SignUpForm extends Component {
           redirect: true,
           response: { ...data },
         });
+
+        this.props.dispatch(setSuccessfulSignUpMsg(this.state.response.message));
       })
       .catch((err) => {
         if (err.response) {
@@ -373,7 +377,8 @@ class SignUpForm extends Component {
 }
 
 SignUpForm.propTypes = {
-  signUpReq: PropTypes.func.isRequired
+  signUpReq: PropTypes.func.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
-export default SignUpForm;
+export default connect()(SignUpForm);

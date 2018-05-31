@@ -13,7 +13,9 @@ const SignUpPage = props => (
   <div className="main-container">
     <section id="signup-section" className="grid">
       <div className="signup-container">
-        <Form signUpReq={props.postReq} />
+        <Form
+          signUpReq={props.postReq}
+        />
         <p>
           <Link to="/Login">Click Here! to Log in </Link>
         </p>

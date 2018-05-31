@@ -1,7 +1,13 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import jwt from 'jsonwebtoken';
+// import axios from 'axios';
 
-import FormTitle from './formtitle';
+import serverReq from '../../helpers/serverReq';
+import { storeInLs, delFromLs } from '../../helpers/Ls';
+import setUserData from '../../actions/login';
+
+// import validator from 'validator';
 
 class LoginForm extends Component {
   constructor(props) {
@@ -9,28 +15,33 @@ class LoginForm extends Component {
     this.state = {
       email: '',
       password: '',
-      title: 'Customer Login'
     };
 
-    this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    this.changeTitle = this.changeTitle.bind(this);
+    this.onChange = this.onChange.bind(this);
   }
 
   onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value.trim() });
   }
 
-  onSubmit(e) {
+  async onSubmit(e) {
     e.preventDefault();
-    console.log(this.state);
-  }
+    const { dispatch } = this.props;
+    const response = await serverReq('post', '/api/v1/auth/login', this.state);
+    const {
+      token,
+      message,
+      success,
+    } = response.data;
 
-
-  changeTitle() {
-    const checkbox = document.querySelector('#admin-checkbox');
-    if (checkbox.checked) {
-      this.setState({ title: 'Admin Login' });
+    if (success) {
+      storeInLs(token, 'jwt');
+      const userData = jwt.decode(token).user;
+      dispatch(setUserData({ message, success, ...userData }));
+    } else {
+      delFromLs('jwt');
+      dispatch(setUserData({ message, success }));
     }
   }
 
@@ -38,8 +49,10 @@ class LoginForm extends Component {
     return (
       <div className="card">
         <div id="form-card" className="card-body" >
-          <FormTitle title={this.props.title} />
-
+          <div className="form-title" id="login-form-title">
+            User Login
+            <hr />
+          </div>
           <form id="login" className="login-form" onSubmit={this.onSubmit}>
             <p>
               <label htmlFor="email">Email
@@ -69,6 +82,17 @@ class LoginForm extends Component {
                 onChange={this.onChange}
                 required
               />
+              {/* {
+                (password !== undefined && !password)
+                &&
+                <span
+                  id="alert"
+                  role="alert"
+                  className="alert-danger"
+                >
+                  password is invalid
+                </span>
+              } */}
             </p>
 
             <p>
@@ -76,7 +100,13 @@ class LoginForm extends Component {
             </p>
 
             <p>
-              <button type="submit" id="loginbtn" className="loginbtn btn-1">Login</button>
+              <button
+                type="submit"
+                id="loginbtn"
+                className="loginbtn btn-1"
+              >
+                Login
+              </button>
             </p>
           </form>
         </div>
@@ -86,7 +116,7 @@ class LoginForm extends Component {
 }
 
 LoginForm.propTypes = {
-  title: PropTypes.string.isRequired
+  dispatch: PropTypes.func.isRequired
 };
 
 export default LoginForm;
