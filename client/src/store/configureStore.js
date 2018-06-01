@@ -7,6 +7,7 @@ import { composeWithDevTools } from 'redux-devtools-extension';
 import navLinksReducer from '../reducers/navLinks';
 import signUpReducer from '../reducers/signup';
 import loginReducer from '../reducers/login';
+import menuReducer from '../reducers/menu';
 
 export default () => {
   const store = createStore(
@@ -15,6 +16,7 @@ export default () => {
         navLinks: navLinksReducer,
         signUp: signUpReducer,
         login: loginReducer,
+        todayMenu: menuReducer
       }
     ),
     composeWithDevTools(

@@ -1,20 +1,16 @@
-const setMenu = ({
-  admin = '',
-  success: isLogin,
-  message: loginMessage,
-  id = '',
-  exp: expire = ''
+const setTodayMenu = ({
+  success: gotMenu,
+  message,
+  Meals = []
 }) => (
   {
-    type: 'SET_USER_DATA',
-    userData: {
-      id,
-      loginMessage,
-      isLogin,
-      admin,
-      expire
+    type: 'SET_TODAY_MENU',
+    menu: {
+      message,
+      gotMenu,
+      Meals
     }
   }
 );
 
-export default setMenu;
+export default setTodayMenu;
