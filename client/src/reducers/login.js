@@ -3,7 +3,8 @@ const userDataDefaultState = {
     id: '',
     loginMessage: '',
     isLogin: false,
-    admin: ''
+    admin: '',
+    expire: ''
   }
 };
 
