@@ -1,7 +1,10 @@
 
-const setNav = navLinks => ({
+export const setNav = navLinks => ({
   type: 'SET_NAV_BAR',
   navData: [...navLinks]
 });
 
-export default setNav;
+export const setDefaultNav = () => ({
+  type: 'SET_DEFAULT_NAV'
+});
+

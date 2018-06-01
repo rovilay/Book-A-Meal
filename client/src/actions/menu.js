@@ -1,4 +1,4 @@
-const setUserData = ({
+const setMenu = ({
   admin = '',
   success: isLogin,
   message: loginMessage,
@@ -17,4 +17,4 @@ const setUserData = ({
   }
 );
 
-export default setUserData;
+export default setMenu;
