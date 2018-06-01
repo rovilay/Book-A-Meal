@@ -1,19 +1,40 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+// import { connect } from 'react-redux';
+// import { withRouter } from 'react-router-dom';
 
 class MealCard extends Component {
+  // constructor(props) {
+  //   super(props);
+  //   // this.state = {
+  //   //   redirect: false
+  //   // };
+
+  //   // this.onSubmit = this.onSubmit.bind(this);
+  // }
+
+  // onSubmit(e) {
+  //   e.preventDefault();
+  //   const { user, history } = this.props;
+
+  //   if (!user.isLogin) {
+  //     history.push('/login');
+  //   }
+  // }
+
   render() {
+    const { mealData, onSubmit } = this.props;
     return (
       <div className="menu-box">
-        <img src={this.props.mealData.image} alt="menu02" />
-        <form className="menu-info">
+        <img src={mealData.image} alt="menu02" />
+        <form className="menu-info" onSubmit={onSubmit}>
           <h2>
-            {this.props.mealData.title}
+            {mealData.title}
           </h2>
           <p className="bold">Price (&#8358;):
-            <span> {this.props.mealData.price}</span>
+            <span> {mealData.price}</span>
           </p>
-          <p>{this.props.mealData.description}</p>
+          <p>{mealData.description}</p>
           <p className="bold">
               Portion: &nbsp;<input type="number" min="1" id="Qty" className="Qty" />
           </p>
@@ -27,8 +48,15 @@ class MealCard extends Component {
 }
 
 MealCard.propTypes = {
-  mealData: PropTypes.object.isRequired
+  mealData: PropTypes.object.isRequired,
+  onSubmit: PropTypes.func.isRequired
+  // user: PropTypes.object.isRequired,
+  // history: PropTypes.object.isRequired
 };
+
+// const mapStateToProps = state => ({
+//   user: state.login.user
+// });
 
 export default MealCard;
 

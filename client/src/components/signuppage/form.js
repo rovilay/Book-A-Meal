@@ -8,6 +8,7 @@ import classname from 'classnames';
 import validator from 'validator';
 
 import sigupValidator from '../../helpers/signupValidator';
+import serverReq from '../../helpers/serverReq';
 import setSuccessfulSignUpMsg from '../../actions/signup';
 
 class SignUpForm extends Component {
@@ -40,31 +41,28 @@ class SignUpForm extends Component {
     this.setState({ isValid: sigupValidator(this.state) });
   }
 
-  onSubmit(e) {
+  async onSubmit(e) {
     e.preventDefault();
     if (this.state.password && this.state.cpassword !== this.state.password) {
       const err = { success: false, message: 'passwords do not match!' };
       return this.setState({ response: { ...err } });
     }
-    this.props.signUpReq(this.state, '/api/v1/auth/signup')
-      .then((res) => {
-        const { data } = res;
-        this.setState({
-          isValid: false,
-          redirect: true,
-          response: { ...data },
-        });
+    const response = await serverReq('post', '/api/v1/auth/signup', this.state);
+    const {
+      success,
+      message
+    } = response.data;
 
-        this.props.dispatch(setSuccessfulSignUpMsg(this.state.response.message));
-      })
-      .catch((err) => {
-        if (err.response) {
-          const { data } = err.response;
-          return this.setState({ response: { ...data } });
-        }
-
-        return err;
+    if (success) {
+      this.setState({
+        isValid: false,
+        redirect: true,
+        response: { success, message },
       });
+      this.props.dispatch(setSuccessfulSignUpMsg(this.state.response.message));
+    } else {
+      this.setState({ response: { success, message } });
+    }
   }
 
   render() {
@@ -377,7 +375,6 @@ class SignUpForm extends Component {
 }
 
 SignUpForm.propTypes = {
-  signUpReq: PropTypes.func.isRequired,
   dispatch: PropTypes.func.isRequired
 };
 

@@ -2,6 +2,7 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import classname from 'classnames';
 
 import setSuccessfulSignUpMsg from '../../actions/signup';
 import Form from './form';
@@ -20,7 +21,8 @@ class LogInPage extends Component {
   }
 
   render() {
-    const { signUpSuccess, dispatch } = this.props;
+    const { signUpSuccess, dispatch, user } = this.props;
+    const { loginMessage, expire, admin } = user;
     return (
       <div className="main-container">
         <section id="section-a" className="grid">
@@ -36,13 +38,24 @@ class LogInPage extends Component {
                 {signUpSuccess.message}
               </p>
             }
+            {
+              (loginMessage)
+              &&
+              <span
+                id="alert"
+                role="alert"
+                className={classname('alert-danger', { 'alert-success': loginMessage.includes('logged in!') })}
+              >
+                {loginMessage}
+              </span>
+            }
             <p>
               <Link to="/SignUp">
                 Click Here to SignUp!
               </Link>
             </p>
 
-            <Form dispatch={dispatch} />
+            <Form dispatch={dispatch} admin={admin} expire={expire} />
           </div>
         </section>
         <Footer />
@@ -53,11 +66,14 @@ class LogInPage extends Component {
 
 LogInPage.propTypes = {
   signUpSuccess: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  signUpSuccess: state.signUp.signUpSuccess
+  signUpSuccess: state.signUp.signUpSuccess,
+  user: state.login.user,
+
 });
 
 export default connect(mapStateToProps)(LogInPage);

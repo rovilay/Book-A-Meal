@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
+import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import jwt from 'jsonwebtoken';
-// import axios from 'axios';
 
 import serverReq from '../../helpers/serverReq';
 import { storeInLs, delFromLs } from '../../helpers/Ls';
@@ -27,7 +27,7 @@ class LoginForm extends Component {
 
   async onSubmit(e) {
     e.preventDefault();
-    const { dispatch } = this.props;
+    const { dispatch, history } = this.props;
     const response = await serverReq('post', '/api/v1/auth/login', this.state);
     const {
       token,
@@ -37,8 +37,19 @@ class LoginForm extends Component {
 
     if (success) {
       storeInLs(token, 'jwt');
-      const userData = jwt.decode(token).user;
-      dispatch(setUserData({ message, success, ...userData }));
+      const {
+        user,
+        exp
+      } = jwt.decode(token);
+
+      dispatch(setUserData({
+        message,
+        success,
+        ...user,
+        exp
+      }));
+
+      history.push('/dashboard');
     } else {
       delFromLs('jwt');
       dispatch(setUserData({ message, success }));
@@ -82,17 +93,6 @@ class LoginForm extends Component {
                 onChange={this.onChange}
                 required
               />
-              {/* {
-                (password !== undefined && !password)
-                &&
-                <span
-                  id="alert"
-                  role="alert"
-                  className="alert-danger"
-                >
-                  password is invalid
-                </span>
-              } */}
             </p>
 
             <p>
@@ -116,7 +116,8 @@ class LoginForm extends Component {
 }
 
 LoginForm.propTypes = {
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 };
 
-export default LoginForm;
+export default withRouter(LoginForm);

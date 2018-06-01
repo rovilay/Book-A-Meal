@@ -1,34 +1,26 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import setNavLinks from '../../actions/navLinks';
+
+import navData from '../../helpers/navData';
+import { setNav } from '../../actions/navLinks';
 
 
 class MenuPage extends Component {
   componentDidMount() {
-    this.props.dispatch(setNavLinks(this.props.navLinks));
+    this.props.dispatch(setNav(navData.customerNav));
   }
   render() {
     return (
       <div>
-        Menu Page!
+        customer Page!
       </div>
     );
   }
 }
 
-MenuPage.defaultProps = {
-  navLinks: [
-    {
-      title: 'Meal',
-      link: '/menu'
-    }
-  ]
-};
-
 MenuPage.propTypes = {
   dispatch: PropTypes.func.isRequired,
-  navLinks: PropTypes.arrayOf(PropTypes.object)
 };
 
 export default connect()(MenuPage);
