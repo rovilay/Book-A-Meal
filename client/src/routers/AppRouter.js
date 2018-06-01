@@ -5,7 +5,9 @@ import Header from '../components/common/Header';
 import HomePage from '../components/homepage/Index';
 import LogInPage from '../components/loginpage/Index';
 import SignUpPage from '../components/signuppage/Index';
-import MenuPage from '../components/menupage/Index';
+import chooseDashboard from '../helpers/chooseDashboard';
+import CustomerDashboard from '../components/customerpages/Index';
+import AdminDashboard from '../components/adminpages/Index';
 import NotFoundPage from '../components/common/NotFound';
 
 const AppRouter = () => (
@@ -16,7 +18,10 @@ const AppRouter = () => (
         <Route path="/" exact component={HomePage} />
         <Route path="/signUp" exact component={SignUpPage} />
         <Route path="/login" component={LogInPage} />
-        <Route path="/menu" component={MenuPage} />
+        <Route
+          path="/dashboard"
+          component={chooseDashboard(AdminDashboard, CustomerDashboard)}
+        />
         <Route component={NotFoundPage} />
       </Switch>
     </div>
