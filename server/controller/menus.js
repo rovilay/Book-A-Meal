@@ -73,7 +73,7 @@ class MenusController {
         attributes: ['firstName', 'lastName'],
       }, {
         model: db.Meal,
-        attributes: ['id', 'title', 'price'],
+        attributes: ['id', 'title', 'price', 'image'],
         through: {
           attributes: ['id'],
         },
