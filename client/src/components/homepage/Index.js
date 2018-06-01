@@ -5,7 +5,8 @@ import { withRouter } from 'react-router';
 import moment from 'moment';
 
 import serverReq from '../../helpers/serverReq';
-import { getFromLs } from '../../helpers/Ls';
+import { getFromLs, storeInLs } from '../../helpers/Ls';
+import setTodayMenu from '../../actions/menu';
 import Showcase from './Showcase';
 import Welcome from './Wlcdesc';
 import Menu from './Menu';
@@ -24,15 +25,19 @@ class IndexPage extends Component {
     if (token) {
       serverReq('get', `/api/v1/menus/${DD}/${MM}/${YYYY}`, '', token)
         .then((response) => {
-          const { data, success } = response;
-          if (success) {
-            console.log(data.menu[0].meals);
+          const { data } = response;
+          if (data) {
+            storeInLs('todayMenu', data);
           }
         })
         .catch((err) => {
           console.log(err);
-        })
+        });
     }
+  }
+
+  componentDidMount() {
+    this.addMenuToStore();
   }
 
   onAddMealToCart(e) {
@@ -42,6 +47,16 @@ class IndexPage extends Component {
     if (!user.isLogin) {
       history.push('/login');
     }
+  }
+
+  addMenuToStore() {
+    const { dispatch } = this.props;
+    const todayMenu = JSON.parse(getFromLs('todayMenu'));
+    const { success, message, menu } = todayMenu;
+    console.log(todayMenu);
+    const { Meals } = menu[0];
+    console.log(Meals, success, message);
+    return dispatch(setTodayMenu({ success, message, Meals }));
   }
 
   render() {
@@ -58,54 +73,15 @@ class IndexPage extends Component {
 }
 
 IndexPage.propTypes = {
-  menu: PropTypes.array,
+  menu: PropTypes.array.isRequired,
   user: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired
-};
-
-IndexPage.defaultProps = {
-  menu: [
-    {
-      title: 'Sharwama',
-      description: 'So sweet!',
-      price: 500,
-      image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1527282604/menu02.jpg'
-    },
-    {
-      title: 'Beans and Bread',
-      description: 'So sweet!',
-      price: 500,
-      image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1527282607/menu01.jpg'
-    },
-    {
-      title: 'Rice and Stew',
-      description: 'So sweet!',
-      price: 500,
-      image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1527282604/menu02.jpg'
-    },
-    {
-      title: 'Spaghetti',
-      description: 'So sweet!',
-      price: 500,
-      image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1527282604/menu02.jpg'
-    },
-    {
-      title: 'Indomie',
-      description: 'So sweet!',
-      price: 500,
-      image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1527282604/menu02.jpg'
-    },
-    {
-      title: 'Ice cream',
-      description: 'So sweet!',
-      price: 500,
-      image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1527282604/menu02.jpg'
-    }
-  ]
+  history: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  user: state.login.user
+  user: state.login.user,
+  menu: state.todayMenu.Meals
 });
 
 export default connect(mapStateToProps)(withRouter(IndexPage));
