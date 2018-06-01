@@ -13,18 +13,21 @@ const baseUrl = 'http://Localhost:4000';
  */
 async function serverReq(method, url, data, authToken) {
   try {
-    let headers;
+    // let headers;
     if (data) {
       data = { ...data };
     }
 
     if (authToken) {
-      headers = { Authorization: `Bearer ${authToken}` };
+      axios.interceptors.request.use((config) => {
+        config.headers.Authorization = `Bearer ${authToken}`;
+        return config;
+      });
     }
 
     const instance = await axios({
       baseURL: baseUrl,
-      headers,
+      // headers,
       method,
       url,
       data

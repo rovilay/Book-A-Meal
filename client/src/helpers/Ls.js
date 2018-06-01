@@ -1,6 +1,6 @@
 
-export const storeInLs = (token, dataKey) => {
-  localStorage.setItem(dataKey, token);
+export const storeInLs = (dataKey, item) => {
+  localStorage.setItem(dataKey, JSON.stringify(item));
 };
 
 export const getFromLs = dataKey => localStorage.getItem(dataKey);
