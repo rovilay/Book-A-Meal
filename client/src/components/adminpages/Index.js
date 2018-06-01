@@ -6,7 +6,7 @@ import navData from '../../helpers/navData';
 import { setNav } from '../../actions/navLinks';
 
 
-class MenuPage extends Component {
+class AdminDashboard extends Component {
   componentDidMount() {
     this.props.dispatch(setNav(navData.adminNavDefault));
   }
@@ -19,8 +19,8 @@ class MenuPage extends Component {
   }
 }
 
-MenuPage.propTypes = {
+AdminDashboard.propTypes = {
   dispatch: PropTypes.func.isRequired,
 };
 
-export default connect()(MenuPage);
+export default connect()(AdminDashboard);

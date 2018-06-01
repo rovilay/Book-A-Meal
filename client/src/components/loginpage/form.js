@@ -36,7 +36,7 @@ class LoginForm extends Component {
     } = response.data;
 
     if (success) {
-      storeInLs(token, 'jwt');
+      storeInLs('jwt', token);
       const {
         user,
         exp

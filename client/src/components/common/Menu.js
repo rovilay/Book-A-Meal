@@ -1,7 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import MealCard from '../common/MealCard';
+import MealCard from './MealCard';
 
 class Menu extends Component {
   render() {
@@ -17,7 +17,7 @@ class Menu extends Component {
         }
         <div className="boxes" id="menu-display">
           {
-            menu.map((meal, i) => <MealCard key={i} mealData={meal} onSubmit={onAddMealToCart} />)
+            menu.map(meal => <MealCard key={meal.id} mealData={meal} onSubmit={onAddMealToCart} />)
           }
         </div>
       </div>

@@ -1,12 +1,14 @@
 export const addMealToCart = ({
   id,
-  price,
+  title,
+  price: unitPrice,
   portion
 }) => ({
   type: 'ADD_MEAL_TO_CART',
   meal: {
     id,
-    price,
+    title,
+    unitPrice,
     portion
   }
 });

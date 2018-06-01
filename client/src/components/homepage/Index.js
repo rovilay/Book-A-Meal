@@ -33,6 +33,9 @@ class IndexPage extends Component {
         .catch((err) => {
           console.log(err);
         });
+    } else {
+      const { history } = this.props;
+      history.push('/');
     }
   }
 
@@ -51,12 +54,12 @@ class IndexPage extends Component {
 
   addMenuToStore() {
     const { dispatch } = this.props;
-    const todayMenu = JSON.parse(getFromLs('todayMenu'));
-    const { success, message, menu } = todayMenu;
-    console.log(todayMenu);
-    const { Meals } = menu[0];
-    console.log(Meals, success, message);
-    return dispatch(setTodayMenu({ success, message, Meals }));
+    const todayMenu = getFromLs('todayMenu');
+    if (todayMenu) {
+      const { success, message, menu } = todayMenu;
+      const { Meals } = menu[0];
+      return dispatch(setTodayMenu({ success, message, Meals }));
+    }
   }
 
   render() {

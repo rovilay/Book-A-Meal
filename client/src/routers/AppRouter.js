@@ -6,7 +6,7 @@ import HomePage from '../components/homepage/Index';
 import LogInPage from '../components/loginpage/Index';
 import SignUpPage from '../components/signuppage/Index';
 import chooseDashboard from '../helpers/chooseDashboard';
-import CustomerDashboard from '../components/customerpages/Index';
+import CustomerDashboard from '../components/customerpages/dashboard/Index';
 import AdminDashboard from '../components/adminpages/Index';
 import NotFoundPage from '../components/common/NotFound';
 

@@ -1,27 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
-// import { withRouter } from 'react-router-dom';
 
 class MealCard extends Component {
-  // constructor(props) {
-  //   super(props);
-  //   // this.state = {
-  //   //   redirect: false
-  //   // };
-
-  //   // this.onSubmit = this.onSubmit.bind(this);
-  // }
-
-  // onSubmit(e) {
-  //   e.preventDefault();
-  //   const { user, history } = this.props;
-
-  //   if (!user.isLogin) {
-  //     history.push('/login');
-  //   }
-  // }
-
   render() {
     const { mealData, onSubmit } = this.props;
     return (
@@ -50,13 +30,7 @@ class MealCard extends Component {
 MealCard.propTypes = {
   mealData: PropTypes.object.isRequired,
   onSubmit: PropTypes.func.isRequired
-  // user: PropTypes.object.isRequired,
-  // history: PropTypes.object.isRequired
 };
-
-// const mapStateToProps = state => ({
-//   user: state.login.user
-// });
 
 export default MealCard;
 

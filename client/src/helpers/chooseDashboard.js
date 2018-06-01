@@ -14,7 +14,8 @@ export default function (CompA, CompB) {
       super(props);
       this.state = {
         userData: {},
-        expire: ''
+        expire: '',
+        token: ''
       };
     }
 
@@ -27,7 +28,7 @@ export default function (CompA, CompB) {
           exp
         } = jwt.decode(token);
 
-        this.setState({ userData: { ...userData }, expire: exp });
+        this.setState({ userData: { ...userData }, expire: exp, token });
       } else {
         history.push('/login');
         dispatch(setDefaultNav());
@@ -41,15 +42,20 @@ export default function (CompA, CompB) {
       }
     }
 
+    onAddMealToCart(e) {
+      e.preventDefault()
+    }
+
     render() {
-      const { admin } = this.state.userData;
+      const { userData, token } = this.state;
+      const { admin } = userData;
       return (
         <div>
           {
-            (admin) && <CompA />
+            (admin) && <CompA {...this.props} token={token} />
           }
           {
-            (!admin) && <CompB />
+            (!admin) && <CompB {...this.props} token={token} />
           }
         </div>
       );
@@ -58,11 +64,13 @@ export default function (CompA, CompB) {
 
   chooseDashboard.propTypes = {
     history: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired
+    dispatch: PropTypes.func.isRequired,
+    todayMenu: PropTypes.array.isRequired
   };
 
   const mapStateToProps = state => ({
-    user: state.login.user
+    user: state.login.user,
+    todayMenu: state.todayMenu.Meals
   });
 
   return connect(mapStateToProps)(withRouter(chooseDashboard));
