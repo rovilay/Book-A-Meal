@@ -25,7 +25,7 @@ class MenusController {
         attributes: ['firstName', 'lastName'],
       }, {
         model: db.Meal,
-        attributes: ['id', 'title', 'price'],
+        attributes: ['id', 'title', 'price', 'description', 'image'],
         through: {
           attributes: ['id'],
         }
@@ -73,7 +73,7 @@ class MenusController {
         attributes: ['firstName', 'lastName'],
       }, {
         model: db.Meal,
-        attributes: ['id', 'title', 'price', 'image'],
+        attributes: ['id', 'title', 'price', 'image', 'description'],
         through: {
           attributes: ['id'],
         },
