@@ -14,7 +14,7 @@ export default () => {
       {
         navLinks: navLinksReducer,
         signUp: signUpReducer,
-        login: loginReducer
+        login: loginReducer,
       }
     ),
     composeWithDevTools(
