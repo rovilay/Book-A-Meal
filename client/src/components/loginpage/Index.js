@@ -2,7 +2,6 @@ import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import classname from 'classnames';
 
 import setSuccessfulSignUpMsg from '../../actions/signup';
 import Form from './form';
@@ -12,9 +11,10 @@ import '../../assests/css/login.css';
 
 class LogInPage extends Component {
   componentDidMount() {
+    const { dispatch } = this.props;
     setTimeout(
       () => {
-        this.props.dispatch(setSuccessfulSignUpMsg(''));
+        dispatch(setSuccessfulSignUpMsg(''));
       },
       5000
     );
@@ -39,12 +39,12 @@ class LogInPage extends Component {
               </p>
             }
             {
-              (loginMessage)
+              (loginMessage !== 'You are logged in!')
               &&
               <span
                 id="alert"
                 role="alert"
-                className={classname('alert-danger', { 'alert-success': loginMessage.includes('logged in!') })}
+                className="alert-danger"
               >
                 {loginMessage}
               </span>
