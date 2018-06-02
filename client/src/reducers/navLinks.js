@@ -1,5 +1,5 @@
 
-const navLinksReducersDefaultState = [
+const navLinksDefaultState = [
   {
     title: 'Log In',
     link: '/login'
@@ -10,12 +10,12 @@ const navLinksReducersDefaultState = [
   }
 ];
 
-const navLinksReducer = (state = navLinksReducersDefaultState, action) => {
+const navLinksReducer = (state = navLinksDefaultState, action) => {
   switch (action.type) {
     case 'SET_NAV_BAR':
       return [...action.navData];
     case 'SET_DEFAULT_NAV':
-      return state;
+      return [...navLinksDefaultState];
     default:
       return state;
   }
