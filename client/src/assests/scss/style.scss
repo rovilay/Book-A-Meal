@@ -93,10 +93,6 @@ ul {
 	}
 }
 
-// .is-active {
-// 	font-weight: bold
-// }
-
 @media screen and(max-width: 590px) {
 	.header-right {
 		float: none;
@@ -251,6 +247,22 @@ input[type=submit] {
 		font-weight: 600;
 	}
 }
+.btn {
+	background-color: #61b750;
+	color: #fff;
+	text-align: center;
+	padding: 0.6rem;
+	text-decoration: none;
+	font-size: 1rem;
+	line-height: 25px;
+	border-radius: 4px;
+	cursor: pointer;
+}
+.btn:hover {
+	background-color: #46b430;
+	transition: background-color 0.1s ease-out;
+}
+
 footer {
 	display: grid;
 	text-align: center;
