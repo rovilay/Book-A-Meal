@@ -50,7 +50,7 @@ class CustomerDashboard extends Component {
   render() {
     const { todayMenu } = this.props;
     return (
-      <div>
+      <div className="main-container">
         <div className="container">
           <div className="welcome">
             <img
@@ -60,8 +60,10 @@ class CustomerDashboard extends Component {
             />
             <p>Happy Eating!</p>
           </div>
+          <Menu
+            menu={todayMenu}
+          />
         </div>
-        <Menu menu={todayMenu} />
         <Footer />
       </div>
     );

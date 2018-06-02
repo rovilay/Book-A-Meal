@@ -5,7 +5,7 @@ import MealCard from './MealCard';
 
 class Menu extends Component {
   render() {
-    const { menu, onAddMealToCart } = this.props;
+    const { menu } = this.props;
     return (
       <div className="menu-container">
         {
@@ -17,7 +17,12 @@ class Menu extends Component {
         }
         <div className="boxes" id="menu-display">
           {
-            menu.map(meal => <MealCard key={meal.id} mealData={meal} onSubmit={onAddMealToCart} />)
+            menu.map(meal => (
+              <MealCard
+                key={meal.id}
+                mealData={meal}
+              />
+            ))
           }
         </div>
       </div>
@@ -27,7 +32,6 @@ class Menu extends Component {
 
 Menu.propTypes = {
   menu: PropTypes.array.isRequired,
-  onAddMealToCart: PropTypes.func.isRequired
 };
 
 export default Menu;
