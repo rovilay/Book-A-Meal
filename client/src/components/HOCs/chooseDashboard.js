@@ -4,9 +4,9 @@ import { withRouter } from 'react-router-dom';
 import jwt from 'jsonwebtoken';
 import PropTypes from 'prop-types';
 
-import isExpired from './isExpired';
-import { setDefaultNav } from '../actions/navLinks';
-import { getFromLs } from './Ls';
+import isExpired from '../../helpers/isExpired';
+import { setDefaultNav } from '../../actions/navLinks';
+import { getFromLs } from '../../helpers/Ls';
 
 export default function (CompA, CompB) {
   class ChooseDashboard extends Component {
