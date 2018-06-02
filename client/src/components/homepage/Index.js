@@ -9,16 +9,10 @@ import { getFromLs, storeInLs } from '../../helpers/Ls';
 import setTodayMenu from '../../actions/menu';
 import Showcase from './Showcase';
 import Welcome from './Wlcdesc';
-import Menu from './Menu';
+import Menu from '../common/Menu';
 import Footer from '../common/Footer';
 
 class IndexPage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.onAddMealToCart = this.onAddMealToCart.bind(this);
-  }
-
   componentWillMount() {
     const [DD, MM, YYYY] = moment().format('DD-MM-YYYY').split('-');
     const token = getFromLs('jwt');
@@ -43,14 +37,6 @@ class IndexPage extends Component {
     this.addMenuToStore();
   }
 
-  onAddMealToCart(e) {
-    e.preventDefault();
-    const { user, history } = this.props;
-
-    if (!user.isLogin) {
-      history.push('/login');
-    }
-  }
 
   addMenuToStore() {
     const { dispatch } = this.props;
@@ -68,7 +54,7 @@ class IndexPage extends Component {
       <div className="main-container">
         <Showcase />
         <Welcome />
-        <Menu menu={menu} onAddMealToCart={this.onAddMealToCart} />
+        <Menu menu={menu} />
         <Footer />
       </div>
     );
@@ -77,7 +63,7 @@ class IndexPage extends Component {
 
 IndexPage.propTypes = {
   menu: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired,
+  // user: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 };
