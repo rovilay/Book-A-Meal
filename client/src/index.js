@@ -1,12 +1,25 @@
+/* eslint no-console: 0 */
+
 import React from 'react';
 import ReactDOM from 'react-dom';
-import { BrowserRouter as Router } from 'react-router-dom';
+import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 
-import App from './components/App';
+import { persistor, store } from './store/configureStore';
+import AppRouter from './routers/AppRouter';
+import './assests/scss/style.scss';
 
-ReactDOM.render(
-  <Router>
-    <App />
-  </Router>,
-  document.querySelector('#root')
+store.subscribe(() => {
+  const state = store.getState();
+  console.log(state);
+});
+
+const jsx = (
+  <Provider store={store}>
+    <PersistGate loading={null} persistor={persistor}>
+      <AppRouter />
+    </PersistGate>
+  </Provider>
 );
+
+ReactDOM.render(jsx, document.querySelector('#root'));

@@ -1,43 +1,61 @@
 import React, { Component } from 'react';
 import { Link } from 'react-router-dom';
-// import PropTypes from 'prop-types';
-// import { Route } from 'react-router-dom';
+import { connect } from 'react-redux';
+import PropTypes from 'prop-types';
 
-import '../../assests/css/login.css';
+import setSuccessfulSignUpMsg from '../../actions/signup';
 import Form from './form';
 import Footer from '../common/Footer';
-import CheckBox from './admincheck';
+import '../../assests/css/login.css';
 
 
 class LogInPage extends Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      title: 'Cusmtomer Login'
-    };
-
-    // this.checkbox = document.getElementById('admin-checkbox');
-    // if (this.checkbox.checked) {
-    //   this.setState({ title: 'Admin Login' });
-    // }
+  componentDidMount() {
+    const { dispatch } = this.props;
+    setTimeout(
+      () => {
+        dispatch(setSuccessfulSignUpMsg(''));
+      },
+      5000
+    );
   }
 
   render() {
+    const { signUpSuccess, dispatch, user } = this.props;
+    const { loginMessage, expire, admin } = user;
     return (
       <div className="main-container">
         <section id="section-a" className="grid">
           <div className="login-form-container">
-            {/* <div id="alert" role="alert"></div> */}
-
-            <CheckBox />
-
+            {
+              signUpSuccess.message
+              &&
+              <p
+                id="alert"
+                role="alert"
+                className="alert-success"
+              >
+                {signUpSuccess.message}
+              </p>
+            }
+            {
+              (loginMessage !== 'You are logged in!')
+              &&
+              <span
+                id="alert"
+                role="alert"
+                className="alert-danger"
+              >
+                {loginMessage}
+              </span>
+            }
             <p>
               <Link to="/SignUp">
-              Click Here to SignUp!
+                Click Here to SignUp!
               </Link>
             </p>
 
-            <Form title={this.state.title} />
+            <Form dispatch={dispatch} admin={admin} expire={expire} />
           </div>
         </section>
         <Footer />
@@ -46,4 +64,16 @@ class LogInPage extends Component {
   }
 }
 
-export default LogInPage;
+LogInPage.propTypes = {
+  signUpSuccess: PropTypes.object.isRequired,
+  dispatch: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired
+};
+
+const mapStateToProps = state => ({
+  signUpSuccess: state.signUp.signUpSuccess,
+  user: state.login.user,
+
+});
+
+export default connect(mapStateToProps)(LogInPage);

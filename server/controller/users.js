@@ -30,7 +30,7 @@ class UsersController {
         });
       })
       .catch((err) => {
-        err = new Error('An error occurred, user not created!');
+        err = new Error('An error occurred, user already exist!');
         err.status = 400;
         return next(err);
       });

@@ -1,11 +1,11 @@
 const path = require('path');
-const HtmlWebpackPlugin = require('html-webpack-plugin');
+// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 
 module.exports = {
-  entry: './src/index.js',
+  entry: ['babel-polyfill', './src/index.js'],
   output: {
-    path: path.join(__dirname, '/dist'),
+    path: path.join(__dirname, '/public'),
     filename: 'index_bundle.js',
     publicPath: '/'
   },
@@ -24,7 +24,7 @@ module.exports = {
         loader: 'babel-loader',
         exclude: /node_modules/,
         query: {
-          presets: ['es2015', 'react']
+          presets: ['env', 'react']
         }
       },
       {
@@ -45,18 +45,28 @@ module.exports = {
           name: 'images/[hash].[ext]'
         }
       },
+      {
+        test: /\.svg$/,
+        loader: 'svg-inline-loader',
+      },
     ]
   },
   plugins: [
-    new HtmlWebpackPlugin({
-      template: './src/index.html',
-      filename: './index.html'
-    }),
+    // new HtmlWebpackPlugin({
+    //   template: './src/index.html',
+    //   filename: './index.html'
+    // }),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin()
   ],
+  devtool: 'cheap-module-eval-source-map',
   devServer: {
     port: 9000,
-    historyApiFallback: true
+    historyApiFallback: true,
+    contentBase: path.join(__dirname, '/public')
+  },
+  node: {
+    net: 'empty',
+    dns: 'empty'
   }
 };

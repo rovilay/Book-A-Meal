@@ -1,11 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import MealCard from './MealCard';
+import MealCard from '../common/MealCard';
 
 class Menu extends Component {
   render() {
-    const { menu } = this.props;
+    const { menu, onAddMealToCart } = this.props;
     return (
       <div className="menu-container">
         {
@@ -17,12 +17,7 @@ class Menu extends Component {
         }
         <div className="boxes" id="menu-display">
           {
-            menu.map(meal => (
-              <MealCard
-                key={meal.id}
-                mealData={meal}
-              />
-            ))
+            menu.map((meal, i) => <MealCard key={i} mealData={meal} onSubmit={onAddMealToCart} />)
           }
         </div>
       </div>
@@ -32,6 +27,7 @@ class Menu extends Component {
 
 Menu.propTypes = {
   menu: PropTypes.array.isRequired,
+  onAddMealToCart: PropTypes.func.isRequired
 };
 
 export default Menu;

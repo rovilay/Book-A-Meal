@@ -70,9 +70,8 @@ section .signup-container {
   display: block;
 }
 
-.btn-1:hover, .btn-1:focus {
-  background: #ff8619;
-  transition: background-color 2s ease-out
+.btn-1:disabled {
+  background: #8f8d8d;
 }
 
 
@@ -90,11 +89,12 @@ hr {
 
 /* alert */
 .alert-danger {
-  color: rgb(240, 98, 98);
+  color: rgb(219, 41, 41);
 }
  
 .alert-success {
   color: #48e048;
+  text-transform: capitalize
 }
 /* Section */
 
