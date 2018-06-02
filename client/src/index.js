@@ -3,12 +3,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
+import { PersistGate } from 'redux-persist/lib/integration/react';
 
-import configureStore from './store/configureStore';
+import { persistor, store } from './store/configureStore';
 import AppRouter from './routers/AppRouter';
 import './assests/scss/style.scss';
-
-const store = configureStore();
 
 store.subscribe(() => {
   const state = store.getState();
@@ -17,7 +16,9 @@ store.subscribe(() => {
 
 const jsx = (
   <Provider store={store}>
-    <AppRouter />
+    <PersistGate loading={null} persistor={persistor}>
+      <AppRouter />
+    </PersistGate>
   </Provider>
 );
 
