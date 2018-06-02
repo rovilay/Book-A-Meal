@@ -17,3 +17,8 @@ export const deleteMealInCart = ({ id }) => ({
   type: 'DELETE_MEAL_IN_CART',
   mealId: id
 });
+
+export const emptyCart = () => ({
+  type: 'EMPTY_CART',
+});
+
