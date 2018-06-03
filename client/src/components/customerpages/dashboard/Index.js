@@ -38,9 +38,8 @@ class CustomerDashboard extends Component {
     const todayMenu = getFromLs('todayMenu');
 
     dispatch(setNav(navData.customerNav));
-    console.log(todayMenu);
 
-    if (todayMenu) {
+    if (todayMenu && todayMenu.success) {
       const { success, message, menu } = todayMenu;
       const { Meals } = menu[0];
       dispatch(setTodayMenu({ success, message, Meals }));

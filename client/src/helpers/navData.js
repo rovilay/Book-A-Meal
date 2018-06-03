@@ -39,7 +39,7 @@ const customerNav = [
   },
   {
     title: 'Cart(4)',
-    link: '/dashboard/cart'
+    link: '/cart'
   },
   {
     title: 'Log Out',
