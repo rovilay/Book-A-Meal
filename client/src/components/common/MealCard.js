@@ -30,14 +30,16 @@ class MealCard extends Component {
     const onSubmit = (e) => {
       e.preventDefault();
       const token = getFromLs('jwt');
-      const {
-        user,
-        exp
-      } = jwt.decode(token);
-      this.setState({ isAdmin: user.admin });
-      if (token && !isExpired(exp) && !user.admin) {
-        dispatch(addMealToCart({ ...mealData, portion }));
-      } else if (token === null) {
+      if (token) {
+        const {
+          user,
+          exp
+        } = jwt.decode(token);
+        if (!isExpired(exp) && !user.admin) {
+          dispatch(addMealToCart({ ...mealData, portion }));
+          this.setState({ isAdmin: user.admin });
+        }
+      } else {
         history.push('/login');
       }
     };

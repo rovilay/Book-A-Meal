@@ -41,8 +41,8 @@ class IndexPage extends Component {
   addMenuToStore() {
     const { dispatch } = this.props;
     const todayMenu = getFromLs('todayMenu');
-    if (todayMenu) {
-      const { success, message, menu } = todayMenu;
+    const { success, message, menu } = todayMenu;
+    if (todayMenu && success) {
       const { Meals } = menu[0];
       return dispatch(setTodayMenu({ success, message, Meals }));
     }

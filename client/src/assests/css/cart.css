@@ -1,51 +1,4 @@
-/* Global */
-
-body {
-  margin: 0;
-  padding: 0;
-  font: 1em/1.5 'Segoe UI', Tahoma, Geneva, Verdana, sans-sarif;
-}
-
-* {
-  box-sizing: border-box;
-}
-
-p {
-  margin: 0;
-}
-
-/* header */
-
-.header {
-  overflow: hidden;
-  background-color: #ff8619;
-  padding: 20px 10px;
-}
-
-.header a {
-  float: left;
-  color: snow;
-  text-align: center;
-  padding: 12px;
-  text-decoration: none;
-  font-size: 18px;
-  line-height: 25px;
-  border-radius: 4px;
- 
-}
-
-.header a.logo  {
-  font-size: 25px;
-  font-weight: bold;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-.header a.logo  {
-  font-size: 35px;
-  font-weight: bold;
-  text-transform: uppercase;
-  text-decoration: none;
-}
+/* 
 
 .header a.logo:hover  {
 
@@ -76,13 +29,13 @@ p {
   .header-right {
     float: none;
   }
-}
+} */
 
 /* content */
 
 /* Cart  */
 
-.container {
+.table-container {
   max-width: 1170px;
   border: none;
   margin-left: 10%;
@@ -128,7 +81,7 @@ order {
 
 .btn-1:hover,
 .btn-1:focus {
-  transition: background-color 1s ease-out
+  transition: background-color 0.2s ease-out
 }
 
 .order-btn {
@@ -227,18 +180,4 @@ tr:hover {
     font-weight: bold;
     content: attr(data-title);
   }
-}
-
-/* Footer */
-
-footer {
-  background: #ff8619;
-  color: snow;
-  text-align: center;
-  padding: 1.4rem;
-  margin-top: 3em;
-}
-
-footer .container {
-  padding: 0
 }

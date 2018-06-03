@@ -13,9 +13,9 @@ export const addMealToCart = ({
   }
 });
 
-export const deleteMealInCart = ({ id }) => ({
+export const deleteMealInCart = id => ({
   type: 'DELETE_MEAL_IN_CART',
-  mealId: id
+  mealPos: id
 });
 
 export const emptyCart = () => ({

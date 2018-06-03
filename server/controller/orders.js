@@ -128,7 +128,7 @@ class OrdersController {
             .then((meals) => { // calculate order's total price
               let totPrice = 0;
               meals.forEach((meal, index) => {
-                totPrice += meal.price * orderPortion[index];
+                totPrice += (meal.price * orderPortion[index]);
               });
               return totPrice;
             })

@@ -231,6 +231,36 @@ input[type=submit] {
 	// 	transition: background-color 1s ease-out;
 	// }
 }
+
+.btn-1 {
+  font-size: 0.8em;
+  padding: 1em 2em;
+  text-align: center;
+  border-radius: 0.5em;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+  margin-top: 7px;
+}
+
+.btn-1:hover,
+.btn-1:focus {
+  transition: background-color 0.2s ease-out
+}
+
+.loginbtn {
+  background: #61B750
+}
+.deleteBtn {
+	background: #ff8619;
+	color: #fff
+}
+.deleteBtn:hover {
+	background: #61b750;
+	color: #fff
+}
+
+
 @media screen and(max-width: 500px) {
 	.menu-title {
 		text-transform: capitalize;

@@ -23,20 +23,30 @@ const Header = (props) => {
         <NavLink to="/" className="logo" exact >Book-A-Meal</NavLink>
         <div className="header-right">
           {navLinks &&
-            navLinks.map((nav, i) => (
-              (nav.title === 'Log Out')
-              ?
-              (
-                <button
-                  className="btn"
-                  onClick={onLogOut}
-                  key={i}
-                >
-                  {nav.title}
-                </button>
-              )
-              :
-              (
+            navLinks.map((nav, i) => {
+              if (nav.title === 'Log Out') {
+                return (
+                  <button
+                    className="btn"
+                    onClick={onLogOut}
+                    key={i}
+                  >
+                    {nav.title}
+                  </button>
+                );
+              }
+              if (nav.title === 'Cart(4)') {
+                return (
+                  <NavLink
+                    to={nav.link}
+                    key={i}
+                    className="is-active"
+                  >
+                    Cart({props.cart.length})
+                  </NavLink>
+                );
+              }
+              return (
                 <NavLink
                   to={nav.link}
                   key={i}
@@ -44,8 +54,9 @@ const Header = (props) => {
                 >
                   {nav.title}
                 </NavLink>
-              )
-            ))}
+              );
+            })
+          }
         </div>
       </div>
     </header>
@@ -59,7 +70,8 @@ Header.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  navLinks: state.navLinks
+  navLinks: state.navLinks,
+  cart: state.cart
 });
 
 export default connect(mapStateToProps)(withRouter(Header));
