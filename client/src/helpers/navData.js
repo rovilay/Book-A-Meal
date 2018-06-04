@@ -35,7 +35,7 @@ const customerNav = [
   },
   {
     title: 'Orders',
-    link: '/dashboard/orders'
+    link: '/orders'
   },
   {
     title: 'Cart(4)',

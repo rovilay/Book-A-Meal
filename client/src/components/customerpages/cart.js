@@ -11,6 +11,7 @@ import serverReq from '../../helpers/serverReq';
 import { getFromLs } from '../../helpers/Ls';
 import isExpired from '../../helpers/isExpired';
 import { emptyCart } from '../../actions/cart';
+import tableHead from '../../helpers/tableHead';
 import TableHead from '../common/Table/TableHead';
 import TableRow from '../common/Table/TableRow';
 import setCartTotalPrice from '../../actions/cartTotPr';
@@ -20,13 +21,12 @@ class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
-      tableHead: [],
       deliveryAddress: '',
       message: '',
       success: false
     };
 
-    this.getTotalPrice = this.setTableHead.bind(this);
+    this.setTotalPrice = this.setTotPrice.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onOrder = this.onOrder.bind(this);
   }
@@ -39,7 +39,10 @@ class Cart extends Component {
   }
 
   componentDidMount() {
-    this.setTableHead();
+    const { cart, history } = this.props;
+    if (cart && cart.length < 1) {
+      return history.push('/dashboard');
+    }
   }
 
   componentDidUpdate() {
@@ -85,22 +88,9 @@ class Cart extends Component {
     dispatch(setCartTotalPrice(totPrice));
   }
 
-
-  setTableHead() {
-    const { cart, history } = this.props;
-    let tableHead;
-    if (cart && cart.length > 0) {
-      tableHead = Object.keys(cart[0]);
-    } else {
-      return history.push('/dashboard');
-    }
-    this.setState({ tableHead });
-  }
-
   render() {
     const { cart, totPrice } = this.props;
     const {
-      tableHead,
       message,
       success
     } = this.state;
@@ -139,7 +129,7 @@ class Cart extends Component {
               />
             </p>
             <table>
-              <TableHead tableHead={tableHead} lastColTitle="Delete" price="Price" />
+              <TableHead tableHead={tableHead.cartTableHead} />
               <tbody>
                 {
                   cart.map((meal, i) => <TableRow key={i} item={meal} sn={++i} />)

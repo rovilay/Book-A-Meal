@@ -12,7 +12,7 @@ import rootReducer from '../reducers/rootReducer';
 const persistConfig = {
   key: 'root',
   storage,
-  whiteList: ['cart'],
+  whiteList: ['cart', 'orders'],
   stateReconciler: autoMergeLevel2
 };
 

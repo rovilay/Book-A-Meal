@@ -5,28 +5,14 @@ const TableHead = props => (
   <thead>
     <tr>
       {
-        props.tableHead.map((head, i) => (
-          (head === 'id')
-          ?
-            <th key={i} >No</th>
-          :
-            <th key={i}>{head}</th>
-        ))
+        props.tableHead.map((title, i) => (<th key={i}>{title}</th>))
       }
-      {
-        (props.price)
-        &&
-        <th>{props.price}</th>
-      }
-      <th>{props.lastColTitle}</th>
     </tr>
   </thead>
 );
 
 TableHead.propTypes = {
   tableHead: PropTypes.array.isRequired,
-  lastColTitle: PropTypes.string.isRequired,
-  price: PropTypes.string.isRequired
 };
 
 export default TableHead;

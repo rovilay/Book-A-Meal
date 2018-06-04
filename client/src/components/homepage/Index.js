@@ -24,13 +24,12 @@ class IndexPage extends Component {
             storeInLs('todayMenu', data);
           }
         })
-        .catch((err) => {
-          console.log(err);
-        });
-    } else {
-      const { history } = this.props;
-      history.push('/');
+        .catch(err => err);
     }
+    // else {
+    //   const { history } = this.props;
+    //   history.push('/');
+    // }
   }
 
   componentDidMount() {
@@ -63,8 +62,7 @@ class IndexPage extends Component {
 
 IndexPage.propTypes = {
   menu: PropTypes.array.isRequired,
-  // user: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
+  // history: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 };
 
