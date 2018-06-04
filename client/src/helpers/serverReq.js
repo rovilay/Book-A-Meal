@@ -11,13 +11,8 @@ const baseUrl = 'http://Localhost:4000';
  * @param  {any} authToken - the token for setting authorization header (optional)
  * @return {promise} reponse data
  */
-async function serverReq(method, url, data, authToken) {
+async function serverReq(method, url, data = {}, authToken) {
   try {
-    // let headers;
-    if (data) {
-      data = { ...data };
-    }
-
     if (authToken) {
       axios.interceptors.request.use((config) => {
         config.headers.Authorization = `Bearer ${authToken}`;

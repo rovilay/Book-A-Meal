@@ -8,6 +8,7 @@ import loginReducer from './login';
 import menuReducer from './menu';
 import cartReducer from './cart';
 import cartTotPriceReducer from './cartTotPr';
+import ordersReducer from './orders';
 
 const rootReducer = combineReducers(
   {
@@ -16,7 +17,8 @@ const rootReducer = combineReducers(
     login: loginReducer,
     todayMenu: menuReducer,
     cart: cartReducer,
-    cartTotalPrice: cartTotPriceReducer
+    cartTotalPrice: cartTotPriceReducer,
+    orders: ordersReducer
   }
 );
 

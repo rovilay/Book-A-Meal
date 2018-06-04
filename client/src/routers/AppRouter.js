@@ -7,6 +7,7 @@ import LogInPage from '../components/loginpage/Index';
 import SignUpPage from '../components/signuppage/Index';
 import chooseDashboard from '../components/HOCs/chooseDashboard';
 import CustomerDashboard from '../components/customerpages/dashboard/Index';
+import customerOrder from '../components/customerpages/order';
 import Cart from '../components/customerpages/Cart';
 import CheckLogin from '../components/HOCs/checkLogin';
 import AdminDashboard from '../components/adminpages/Index';
@@ -25,6 +26,7 @@ const AppRouter = () => (
           component={chooseDashboard(AdminDashboard, CustomerDashboard)}
         />
         <Route path="/cart" exact component={Cart} />
+        <Route path="/orders" exact component={customerOrder} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>

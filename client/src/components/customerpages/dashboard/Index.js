@@ -7,7 +7,7 @@ import moment from 'moment';
 import { storeInLs, getFromLs } from '../../../helpers/Ls';
 import serverReq from '../../../helpers/serverReq';
 import '../../../assests/css/menu.css';
-// import waiter from '../../../assests/images/waiter2.svg';
+import waiter from '../../../assests/images/waiter2.svg';
 import navData from '../../../helpers/navData';
 import { setNav } from '../../../actions/navLinks';
 import setTodayMenu from '../../../actions/menu';
@@ -54,7 +54,7 @@ class CustomerDashboard extends Component {
           <div className="welcome">
             <img
               className="img-circle"
-              src="../../../assests/images/waiter2.svg"
+              src={waiter}
               alt="waiter"
             />
             <p>Happy Eating!</p>
