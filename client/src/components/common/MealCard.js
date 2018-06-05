@@ -47,9 +47,9 @@ class MealCard extends Component {
       <div className="menu-box">
         <img src={mealData.image} alt="menu02" />
         <form className="menu-info" onSubmit={onSubmit}>
-          <h3>
+          <h4>
             {mealData.title}
-          </h3>
+          </h4>
           <p className="bold">Price (&#8358;):
             <span> {mealData.price}</span>
           </p>

@@ -7,7 +7,7 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 
 import { persistor, store } from './store/configureStore';
 import AppRouter from './routers/AppRouter';
-import './assests/scss/style.scss';
+import './assets/scss/style.scss';
 
 store.subscribe(() => {
   const state = store.getState();
