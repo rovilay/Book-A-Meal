@@ -13,7 +13,7 @@ export default function (CompA, CompB) {
     constructor(props) {
       super(props);
       this.state = {
-        userData: {},
+        admin: false,
         expire: '',
         token: ''
       };
@@ -24,11 +24,15 @@ export default function (CompA, CompB) {
       const token = getFromLs('jwt');
       if (token) {
         const {
-          user: userData,
+          admin,
           exp: expire
         } = jwt.decode(token);
 
-        this.setState({ userData, expire, token });
+        this.setState({
+          admin,
+          expire,
+          token
+        });
       } else {
         history.push('/login');
         dispatch(setDefaultNav());
@@ -43,8 +47,7 @@ export default function (CompA, CompB) {
     }
 
     render() {
-      const { userData, token } = this.state;
-      const { admin } = userData;
+      const { admin, token } = this.state;
       return (
         <div>
           {
