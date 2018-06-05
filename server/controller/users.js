@@ -52,17 +52,26 @@ class UsersController {
       where: {
         email: loginUser.email.toLowerCase(),
       },
-      attributes: ['id', 'admin', 'password'],
+      attributes: ['id', 'firstName', 'lastName', 'admin', 'password'],
 
     })
       .then((found) => {
+        const {
+          id,
+          firstName,
+          lastName,
+          admin,
+          password
+        } = found;
         // Compare password
-        bcrypt.compare(loginUser.password, found.password)
+        bcrypt.compare(loginUser.password, password)
           .then((response) => {
             if (response) {
               return {
-                id: found.id,
-                admin: found.admin,
+                id,
+                admin,
+                firstName,
+                lastName
               };
             }
 
@@ -70,13 +79,15 @@ class UsersController {
             err.status = 400;
             throw err;
           })
-          .then((user) => {
+          .then(() => {
             // generate token
-            jwt.sign({ user }, process.env.SECRET, { expiresIn: '24h' }, (err, token) => {
+            jwt.sign({ id, admin }, process.env.SECRET, { expiresIn: '24h' }, (err, token) => {
               res.status(200).send({
                 success: true,
                 message: 'You are logged in!',
-                userId: user.id,
+                userId: id,
+                firstName,
+                lastName,
                 token,
               });
             });
