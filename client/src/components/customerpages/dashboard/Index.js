@@ -47,11 +47,15 @@ class CustomerDashboard extends Component {
   }
 
   render() {
-    const { todayMenu } = this.props;
+    const { user, todayMenu } = this.props;
+    const { firstName, lastName } = user;
     return (
       <div className="main-container">
         <div className="container">
           <div className="welcome">
+            <p>
+              Welcome, {firstName} {lastName}
+            </p>
             <img
               className="img-circle"
               src={waiter}
@@ -73,6 +77,7 @@ CustomerDashboard.propTypes = {
   dispatch: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
+  user: PropTypes.object.isRequired,
   todayMenu: PropTypes.array.isRequired
 };
 
