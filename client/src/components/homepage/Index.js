@@ -40,10 +40,12 @@ class IndexPage extends Component {
   addMenuToStore() {
     const { dispatch } = this.props;
     const todayMenu = getFromLs('todayMenu');
-    const { success, message, menu } = todayMenu;
-    if (todayMenu && success) {
-      const { Meals } = menu[0];
-      return dispatch(setTodayMenu({ success, message, Meals }));
+    if (todayMenu) {
+      const { success, message, menu } = todayMenu;
+      if (todayMenu && success) {
+        const { Meals } = menu[0];
+        return dispatch(setTodayMenu({ success, message, Meals }));
+      }
     }
   }
 
