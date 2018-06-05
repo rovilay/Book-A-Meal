@@ -7,6 +7,7 @@ import { NavLink } from 'react-router-dom';
 import { delFromLs } from '../../helpers/Ls';
 import { emptyCart } from '../../actions/cart';
 import { setDefaultNav } from '../../actions/navLinks';
+import { logOutUser } from '../../actions/login';
 
 const Header = (props) => {
   const { navLinks, history, dispatch } = props;
@@ -15,6 +16,7 @@ const Header = (props) => {
     delFromLs('jwt');
     dispatch(emptyCart());
     dispatch(setDefaultNav());
+    dispatch(logOutUser());
     history.push('/');
   };
   return (
