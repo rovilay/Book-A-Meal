@@ -26,10 +26,6 @@ class IndexPage extends Component {
         })
         .catch(err => err);
     }
-    // else {
-    //   const { history } = this.props;
-    //   history.push('/');
-    // }
   }
 
   componentDidMount() {
@@ -64,7 +60,6 @@ class IndexPage extends Component {
 
 IndexPage.propTypes = {
   menu: PropTypes.array.isRequired,
-  // history: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 };
 
