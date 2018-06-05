@@ -25,10 +25,10 @@ export default function (CompA, CompB) {
       if (token) {
         const {
           user: userData,
-          exp
+          exp: expire
         } = jwt.decode(token);
 
-        this.setState({ userData: { ...userData }, expire: exp, token });
+        this.setState({ userData, expire, token });
       } else {
         history.push('/login');
         dispatch(setDefaultNav());

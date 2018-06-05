@@ -6,8 +6,8 @@ import moment from 'moment';
 
 import { storeInLs, getFromLs } from '../../../helpers/Ls';
 import serverReq from '../../../helpers/serverReq';
-import '../../../assests/css/menu.css';
-import waiter from '../../../assests/images/waiter2.svg';
+import '../../../assets/css/menu.css';
+import waiter from '../../../assets/images/waiter2.svg';
 import navData from '../../../helpers/navData';
 import { setNav } from '../../../actions/navLinks';
 import setTodayMenu from '../../../actions/menu';

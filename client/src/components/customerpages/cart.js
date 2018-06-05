@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import jwt from 'jsonwebtoken';
 import classname from 'classnames';
 
-import '../../assests/css/cart.css';
+import '../../assets/css/cart.css';
 import serverReq from '../../helpers/serverReq';
 import { getFromLs } from '../../helpers/Ls';
 import isExpired from '../../helpers/isExpired';
@@ -43,6 +43,8 @@ class Cart extends Component {
     if (cart && cart.length < 1) {
       return history.push('/dashboard');
     }
+
+    this.setTotPrice();
   }
 
   componentDidUpdate() {
