@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 // import axios from 'axios';
 import postReq from '../../helpers/serverReq';
-import '../../assests/css/signup.css';
+import '../../assets/css/signup.css';
 import Form from './form';
 import Footer from '../common/Footer';
 
