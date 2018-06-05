@@ -65,7 +65,7 @@ class MenusController {
     const day = req.params.DD;
     const month = req.params.MM;
     const year = req.params.YYYY;
-    const date = `${year}-${month}-${day}`;
+    const date = `${day}/${month}/${year}`;
 
     db.Menu.findAll({
       include: [{
