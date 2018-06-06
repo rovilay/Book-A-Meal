@@ -24,7 +24,7 @@ function verifyToken(req, res, next) {
         return next(err);
       }
 
-      req.user = userData.user;
+      req.user = { ...userData };
       return next();
     });
   } else {

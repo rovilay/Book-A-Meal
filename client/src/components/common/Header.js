@@ -37,7 +37,7 @@ const Header = (props) => {
                   </button>
                 );
               }
-              if (nav.title === 'Cart(4)') {
+              if (nav.title === 'Cart') {
                 return (
                   <NavLink
                     to={nav.link}

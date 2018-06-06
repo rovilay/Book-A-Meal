@@ -34,12 +34,12 @@ const customerNav = [
     link: '/dashboard'
   },
   {
-    title: 'Orders',
-    link: '/orders'
+    title: 'Cart',
+    link: '/cart'
   },
   {
-    title: 'Cart(4)',
-    link: '/cart'
+    title: 'Orders',
+    link: '/orders'
   },
   {
     title: 'Log Out',

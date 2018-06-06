@@ -62,11 +62,11 @@ class Cart extends Component {
     const token = getFromLs('jwt');
     if (token) {
       const {
-        user,
+        admin,
         exp
       } = jwt.decode(token);
 
-      if (!isExpired(exp) && !user.admin && cart.length > 0) {
+      if (!isExpired(exp) && !admin && cart.length > 0) {
         const response = await serverReq('post', '/api/v1/orders', { deliveryAddress, meals: cart }, token);
         const { success, message } = response.data;
         this.setState({ success, message });

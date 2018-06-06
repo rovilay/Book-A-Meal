@@ -2,7 +2,7 @@ const ordersDefaultState = {
   success: false,
   message: '',
   grandTotalPrice: 0,
-  orders: []
+  history: []
 };
 
 const ordersReducer = (state = ordersDefaultState, action) => {

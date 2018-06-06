@@ -17,6 +17,7 @@ class MealCard extends Component {
     };
 
     this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onChange(e) {
@@ -24,29 +25,35 @@ class MealCard extends Component {
     this.setState({ [name]: parseInt(value.trim(), 10) });
   }
 
-  render() {
+  onSubmit(e) {
     const { mealData, dispatch, history } = this.props;
-    const { isAdmin, portion } = this.state;
-    const onSubmit = (e) => {
-      e.preventDefault();
-      const token = getFromLs('jwt');
-      if (token) {
-        const {
-          user,
-          exp
-        } = jwt.decode(token);
-        if (!isExpired(exp) && !user.admin) {
-          dispatch(addMealToCart({ ...mealData, portion }));
-          this.setState({ isAdmin: user.admin });
-        }
+    const { portion } = this.state;
+    e.preventDefault();
+    const token = getFromLs('jwt');
+    if (token) {
+      const {
+        admin,
+        exp
+      } = jwt.decode(token);
+      if (!isExpired(exp) && !admin) {
+        dispatch(addMealToCart({ ...mealData, portion }));
+        this.setState({ isAdmin: admin });
+        // document.querySelector('#portion').value = '';
       } else {
         history.push('/login');
       }
-    };
+    } else {
+      history.push('/login');
+    }
+  }
+
+  render() {
+    const { mealData } = this.props;
+    const { isAdmin } = this.state;
     return (
       <div className="menu-box">
         <img src={mealData.image} alt="menu02" />
-        <form className="menu-info" onSubmit={onSubmit}>
+        <form className="menu-info" onSubmit={this.onSubmit}>
           <h4>
             {mealData.title}
           </h4>

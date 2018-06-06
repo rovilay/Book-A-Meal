@@ -66,11 +66,11 @@ class CustomerOrder extends Component {
         <hr />
         <div className="container">
           {
-            (grandTotalPrice)
+            (grandTotalPrice >= 0)
             &&
             (
               <p>
-                Grand Total: {grandTotalPrice}
+                Grand Total (&#8358;): {grandTotalPrice}
               </p>
             )
           }

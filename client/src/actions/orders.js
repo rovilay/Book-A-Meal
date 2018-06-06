@@ -1,13 +1,13 @@
 const setCustomerOrders = ({
   success,
-  orders,
+  orders: history,
   grandTotalPrice,
   message
 }) => ({
   type: 'SET_CUSTOMER_ORDERS',
   orders: {
     success,
-    orders,
+    history,
     grandTotalPrice,
     message
   }
