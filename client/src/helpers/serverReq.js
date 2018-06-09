@@ -9,7 +9,7 @@ const baseUrl = 'http://Localhost:4000';
  * @param  {any} data - the payload to be sent with the request (optional)
  * depending on the request method
  * @param  {any} authToken - the token for setting authorization header (optional)
- * @return {promise} reponse data
+ * @return {Promise} reponse data
  */
 async function serverReq(method, url, data = {}, authToken) {
   try {
