@@ -6,6 +6,7 @@ import moment from 'moment';
 
 import serverReq from '../../helpers/serverReq';
 import { getFromLs, storeInLs } from '../../helpers/Ls';
+import { setDefaultNav } from '../../actions/navLinks';
 import setTodayMenu from '../../actions/menu';
 import Showcase from './Showcase';
 import Welcome from './Wlcdesc';
@@ -29,6 +30,8 @@ class IndexPage extends Component {
   }
 
   componentDidMount() {
+    const { dispatch } = this.props;
+    dispatch(setDefaultNav());
     this.addMenuToStore();
   }
 
