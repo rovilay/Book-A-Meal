@@ -6,6 +6,8 @@ import PropTypes from 'prop-types';
 import moment from 'moment';
 import jwt from 'jsonwebtoken';
 
+import '../../assets/css/table.css';
+import Modal from '../common/modal';
 import tableHead from '../../helpers/tableHead';
 import TableHead from '../common/Table/TableHead';
 import TableRow from '../common/Table/OrderTableRow';
@@ -16,12 +18,12 @@ import setCustomerOrders from '../../actions/orders';
 import Footer from '../common/Footer';
 
 class CustomerOrder extends Component {
-  componentWillMount() {
-    this.getOrders();
-  }
+  // componentWillMount() {
+  // }
 
   componentDidMount() {
     this.addOrdersToStore();
+    this.getOrders();
   }
 
   async getOrders() {
@@ -29,11 +31,11 @@ class CustomerOrder extends Component {
     const { history } = this.props;
     if (token) {
       const {
-        user,
+        id,
+        admin,
         exp
       } = jwt.decode(token);
 
-      const { id, admin } = user;
       if (!isExpired(exp) && !admin) {
         const response = await serverReq('get', `/api/v1/orders/${id}`, '', token);
         const { data } = response;
@@ -57,14 +59,56 @@ class CustomerOrder extends Component {
   }
 
   render() {
-    const { orders, grandTotalPrice } = this.props.orders;
+    const { history, grandTotalPrice } = this.props.orders;
     return (
       <div className="main-container">
         <div className="title" id="menu-title">
           Your Order History
         </div>
         <hr />
-        <div className="container">
+        <div className="table-container">
+          <table>
+            <TableHead tableHead={tableHead.customerOrderHead} />
+            <tbody>
+              {
+                history.map((order, i) => {
+                  const {
+                    id: orderId,
+                    createdAt: date,
+                    totalPrice,
+                    deliveryAddress: address,
+                    Meals: meals
+                  } = order;
+
+                  const time = moment(date).format('HH:mm');
+
+                  const item = {
+                      sn: ++i,
+                      orderId,
+                      date: moment(date).format('LL'),
+                      totalPrice,
+                    };
+
+                  const orderDetails = {
+                    meals,
+                    address,
+                    totalPrice,
+                    time,
+                    date: moment(date).format('LL')
+                  };
+
+                  return (
+                    <TableRow
+                      key={i}
+                      item={item}
+                      sn={++i}
+                      orderDetails={orderDetails}
+                    />
+                  );
+                })
+              }
+            </tbody>
+          </table>
           {
             (grandTotalPrice >= 0)
             &&
@@ -74,25 +118,7 @@ class CustomerOrder extends Component {
               </p>
             )
           }
-          <table>
-            <TableHead tableHead={tableHead.customerOrderHead} />
-            <tbody>
-              {
-                orders.map((order, i) => {
-                  const { id: orderId, createdAt: date, totalPrice } = order;
-                  const item = {
-                      sn: ++i,
-                      orderId,
-                      date: moment(date).format('L'),
-                      totalPrice,
-                      Details: 'view details'
-                    };
-
-                  return <TableRow key={i} item={item} sn={++i} />;
-                })
-              }
-            </tbody>
-          </table>
+          <Modal />
         </div>
         <Footer />
       </div>
