@@ -65,7 +65,7 @@ class MenusController {
     const day = req.params.DD;
     const month = req.params.MM;
     const year = req.params.YYYY;
-    const date = `${day}/${month}/${year}`;
+    const date = `${year}-${month}-${day}`;
 
     db.Menu.findAll({
       include: [{
@@ -115,7 +115,7 @@ class MenusController {
     const newMenu = req.body;
     checkMeal(newMenu.meals, next)
       .then((check) => {
-        if (check === true) {
+        if (check) {
           db.Menu.findOrCreate({
             where: { postOn: newMenu.postOn },
             defaults: { UserId: req.user.id }
