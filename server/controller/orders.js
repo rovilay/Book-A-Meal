@@ -123,12 +123,20 @@ class OrdersController {
         if (check === true) {
           db.Meal.findAll({
             where: { id: orderMeals },
-            attributes: ['price']
+            attributes: ['id', 'price']
           })
-            .then((meals) => { // calculate order's total price
+            .then((resMeals) => { // calculate order's total price
               let totPrice = 0;
-              meals.forEach((meal, index) => {
-                totPrice += (meal.price * orderPortion[index]);
+              resMeals.forEach((resMeal) => {
+                const { meals } = newOrder;
+                let i = 0;
+                while (i < meals.length) {
+                  const { id, portion } = meals[i];
+                  if (resMeal.id === id) {
+                    totPrice += (resMeal.price * portion);
+                  }
+                  i++;
+                }
               });
               return totPrice;
             })
@@ -154,7 +162,6 @@ class OrdersController {
                   });
                 })
                 .catch((err) => {
-                  // err = new Error('Error occurred while placing order!');
                   err.status = 400;
                   return next(err);
                 });
