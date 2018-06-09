@@ -251,11 +251,11 @@ input[type=submit] {
 .loginbtn {
   background: #61B750
 }
-.deleteBtn {
+.btn-col {
 	background: #ff8619;
 	color: #fff
 }
-.deleteBtn:hover {
+.btn-col:hover {
 	background: #61b750;
 	color: #fff
 }
@@ -293,6 +293,36 @@ input[type=submit] {
 	transition: background-color 0.1s ease-out;
 }
 
+.closeBtn {
+	position: absolute;
+	right: 10px;
+	
+}
+
+/* Modal */
+.modal {
+	position: absolute;
+	top: 10%;
+	left: 10%;
+	right: 10%;
+	// bottom: 10px;
+	padding-bottom: 3rem;
+	overflow: auto;
+	background-color: #fff;
+	height: auto;
+	max-width: 100%
+}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.7);
+}
+
+/* footer */ 
 footer {
 	display: grid;
 	text-align: center;
