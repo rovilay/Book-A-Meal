@@ -1,12 +1,12 @@
 import express from 'express';
 import mealController from '../controller/meals';
 import validateMeal from '../middlewares/validate/meals';
-
+import authorize from '../middlewares/authenticate';
 import adminOnly from '../middlewares/adminOnly';
 
 const mealRouter = express.Router();
 
-
+mealRouter.use(authorize);
 mealRouter.get('/api/v1/meals', adminOnly, mealController.getAllMeals);
 mealRouter.get('/api/v1/meals/:id', adminOnly, mealController.getMeal);
 mealRouter.delete('/api/v1/meals/:id', adminOnly, mealController.deleteMeal);
