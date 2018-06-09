@@ -54,7 +54,7 @@ class TableRow extends Component {
         </td>
         <td data-title="delete">
           <button
-            className="deleteBtn btn-1"
+            className="btn-col btn-1"
             onClick={this.deleteRow}
           >
             delete
