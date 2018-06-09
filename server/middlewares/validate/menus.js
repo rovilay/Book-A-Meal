@@ -22,7 +22,7 @@ export function validateMenu(req, res, next) {
     }
   });
 
-  if (moment(req.body.postOn, 'DD/MM/YYYY', true).isValid() === false) {
+  if (moment(req.body.postOn, 'YYYY-MM-DD', true).isValid() === false) {
     const err = new Error('postOn input is invalid');
     err.status = 400;
     return next(err);
