@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import jwt from 'jsonwebtoken';
 import classname from 'classnames';
 
-import '../../assets/css/cart.css';
+import '../../assets/css/table.css';
 import serverReq from '../../helpers/serverReq';
 import { getFromLs } from '../../helpers/Ls';
 import isExpired from '../../helpers/isExpired';
