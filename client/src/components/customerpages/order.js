@@ -14,16 +14,15 @@ import TableRow from '../common/Table/OrderTableRow';
 import serverReq from '../../helpers/serverReq';
 import isExpired from '../../helpers/isExpired';
 import { getFromLs, storeInLs } from '../../helpers/Ls';
-import setCustomerOrders from '../../actions/orders';
+import { setCustomerOrders } from '../../actions/orders';
+import setModal from '../../actions/modal';
 import Footer from '../common/Footer';
 
 class CustomerOrder extends Component {
-  // componentWillMount() {
-  // }
-
   componentDidMount() {
     this.addOrdersToStore();
     this.getOrders();
+    this.hideModal();
   }
 
   async getOrders() {
@@ -48,6 +47,17 @@ class CustomerOrder extends Component {
     } else {
       history.push('/login');
     }
+  }
+
+  hideModal() {
+    const { dispatch } = this.props;
+    dispatch(setModal({
+      isOpen: false,
+      isEdit: false,
+      isInfo: false,
+      close: true,
+      contentLabel: '',
+    }));
   }
 
   addOrdersToStore() {
