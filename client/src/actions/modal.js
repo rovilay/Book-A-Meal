@@ -1,6 +1,7 @@
 const setModal = ({
   isOpen,
-  // afterOpen = '',
+  isEdit,
+  isInfo,
   close,
   contentLabel,
   content = {}
@@ -9,7 +10,8 @@ const setModal = ({
     type: 'SET_MODAL',
     modal: {
       isOpen,
-      // afterOpen,
+      isEdit,
+      isInfo,
       close,
       contentLabel,
       content
