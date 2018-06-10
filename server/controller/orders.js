@@ -184,7 +184,6 @@ class OrdersController {
   static updateOrder(req, res, next) {
     const updatedOrder = req.body;
     const updatedMeals = updatedOrder.meals.map(meal => meal.id); // Get all meal id
-
     const updatedPortion = updatedOrder.meals.map(meal => meal.portion); // Get all meal portion
 
     checkMeal(updatedMeals, next)
@@ -194,10 +193,18 @@ class OrdersController {
             where: { id: updatedMeals },
             attributes: ['price']
           })
-            .then((meals) => { // calculate order's total price
+            .then((resMeals) => { // calculate order's total price
               let totPrice = 0;
-              meals.forEach((meal, index) => {
-                totPrice += meal.price * updatedPortion[index];
+              resMeals.forEach((resMeal) => {
+                const { meals } = updatedOrder;
+                let i = 0;
+                while (i < meals.length) {
+                  const { id, portion } = meals[i];
+                  if (resMeal.id === id) {
+                    totPrice += (resMeal.price * portion);
+                  }
+                  i++;
+                }
               });
               return totPrice;
             })
