@@ -3,6 +3,7 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import FontAwesome from 'react-fontawesome';
 
 import { delFromLs } from '../../helpers/Ls';
 import { emptyCart } from '../../actions/cart';
@@ -44,7 +45,10 @@ const Header = (props) => {
                     key={i}
                     className="is-active"
                   >
-                    Cart({props.cart.length})
+                    <FontAwesome
+                      name="cart-plus"
+                    />
+                    ({props.cart.length})
                   </NavLink>
                 );
               }
