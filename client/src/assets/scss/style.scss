@@ -260,7 +260,6 @@ input[type=submit] {
 	color: #fff
 }
 
-
 @media screen and(max-width: 500px) {
 	.menu-title {
 		text-transform: capitalize;
@@ -320,6 +319,13 @@ input[type=submit] {
 	right: 0;
 	bottom: 0;
 	background-color: rgba(0,0,0,0.7);
+}
+
+@media screen and(max-width: 530px) {
+	.modal {
+		height: 100%;
+		top: 3%
+	}
 }
 
 /* footer */ 

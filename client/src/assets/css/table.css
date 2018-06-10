@@ -109,7 +109,20 @@ tr:hover {
   background: rgba(97, 183, 80, 0.411)
 }
 
-@media screen and (max-width:930px) {
+.btn-2 {
+	float: left;
+	font-size: 0.5em;
+  padding: 1em 2em;
+  text-align: center;
+  border-radius: 0.5em;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+	margin-top: 7px;
+	margin-left: 4px
+}
+
+@media screen and (max-width:530px) {
   .container {
     padding: 0;
   }
@@ -147,4 +160,10 @@ tr:hover {
     font-weight: bold;
     content: attr(data-title);
   }
+  .btn-2 {
+		margin-top: 0.7em;
+		margin-bottom: 0em;
+		display: block;
+		float: none
+	}
 }
