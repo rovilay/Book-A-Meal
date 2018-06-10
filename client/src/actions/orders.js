@@ -1,4 +1,4 @@
-const setCustomerOrders = ({
+export const setCustomerOrders = ({
   success,
   orders: history,
   grandTotalPrice,
@@ -13,4 +13,19 @@ const setCustomerOrders = ({
   }
 });
 
-export default setCustomerOrders;
+export const setEditOrder = ({
+  deliveryAddress,
+  orderedMeals
+}) => ({
+  type: 'SET_EDIT_ORDER',
+  editOrder: {
+    deliveryAddress,
+    orderedMeals
+  }
+});
+
+export const deleteMealInEditOrder = id => ({
+  type: 'DEL_MEAL_EDIT_ORDER',
+  mealId: id
+});
+
