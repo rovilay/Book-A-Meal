@@ -1,7 +1,8 @@
 const modalDefaultState = {
   isOpen: false,
+  isEdit: false,
+  isInfo: false,
   close: true,
-  // afterOpen: {}
   content: {},
   contentLable: ''
 };
