@@ -1,8 +1,10 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import FontAwesome from 'react-fontawesome';
 
 import setModal from '../../../actions/modal';
+import { setEditOrder } from '../../../actions/orders';
 import TableCol from './TableCol';
 
 class TableRow extends Component {
@@ -10,15 +12,34 @@ class TableRow extends Component {
     super(props);
 
     this.showDetails = this.showDetails.bind(this);
+    this.editOrder = this.editOrder.bind(this);
   }
 
   showDetails() {
     const { dispatch, orderDetails } = this.props;
     dispatch(setModal({
       isOpen: true,
+      isInfo: true,
+      isEdit: false,
       close: false,
       contentLabel: 'Order details',
       content: { ...orderDetails }
+    }));
+  }
+
+  editOrder() {
+    const { dispatch, orderDetails } = this.props;
+    dispatch(setModal({
+      isOpen: true,
+      isEdit: true,
+      isInfo: false,
+      close: false,
+      contentLabel: 'Edit Order',
+      content: { ...orderDetails }
+    }));
+    dispatch(setEditOrder({
+      deliveryAddress: orderDetails.address,
+      orderedMeals: orderDetails.meals
     }));
   }
 
@@ -36,12 +57,39 @@ class TableRow extends Component {
           item.orderId
           &&
           <td data-title="view details">
-            <button
+            <a
+              role="button"
+              href="#"
               onClick={this.showDetails}
-              className="btn-col btn-1"
+              className="btn-col btn-2"
             >
-            view details
-            </button>
+              <FontAwesome
+                name="info-circle"
+                size="2x"
+              />
+            </a>
+            <a
+              onClick={this.editOrder}
+              href="#"
+              role="button"
+              className="btn-col btn-2"
+            >
+              <FontAwesome
+                name="edit"
+                size="2x"
+              />
+            </a>
+            <a
+              onClick={this.showDetails}
+              href="#"
+              role="button"
+              className="btn-col btn-2"
+            >
+              <FontAwesome
+                name="times"
+                size="2x"
+              />
+            </a>
           </td>
         }
       </tr>
