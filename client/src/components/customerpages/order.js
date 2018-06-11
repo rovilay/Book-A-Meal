@@ -10,7 +10,7 @@ import '../../assets/css/table.css';
 import Modal from '../common/modal';
 import tableHead from '../../helpers/tableHead';
 import TableHead from '../common/Table/TableHead';
-import TableRow from '../common/Table/OrderTableRow';
+import OrderTableRow from '../common/Table/OrderTableRow';
 import serverReq from '../../helpers/serverReq';
 import isExpired from '../../helpers/isExpired';
 import { getFromLs, storeInLs } from '../../helpers/Ls';
@@ -108,7 +108,7 @@ class CustomerOrder extends Component {
                   };
 
                   return (
-                    <TableRow
+                    <OrderTableRow
                       key={i}
                       item={item}
                       sn={++i}

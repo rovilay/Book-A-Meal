@@ -38,6 +38,7 @@ const OrderDetailsTable = (props) => {
           {
             orderMeals.map((meal, i) => {
               const {
+                id,
                 title: Meal,
                 price: unitPrice,
                 OrderMeal
@@ -57,6 +58,8 @@ const OrderDetailsTable = (props) => {
                   key={i}
                   item={item}
                   sn={++i}
+                  id={id}
+                  {...props}
                 />
               );
             })
@@ -69,7 +72,7 @@ const OrderDetailsTable = (props) => {
 
 OrderDetailsTable.propTypes = {
   title: PropTypes.string.isRequired,
-  content: PropTypes.object.isRequired
+  content: PropTypes.object.isRequired,
 };
 
 export default OrderDetailsTable;

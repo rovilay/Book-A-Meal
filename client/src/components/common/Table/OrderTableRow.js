@@ -29,6 +29,27 @@ class TableRow extends Component {
 
   editOrder() {
     const { dispatch, orderDetails } = this.props;
+    const { meals } = orderDetails;
+    const orderedMeals = [];
+    meals.map((meal) => {
+      const {
+        id,
+        title,
+        price: unitPrice,
+        OrderMeal
+      } = meal;
+      const { portion } = OrderMeal;
+      const price = unitPrice * portion;
+      const item = {
+        id,
+        title,
+        unitPrice,
+        portion,
+        price
+      };
+      orderedMeals.push(item);
+    });
+
     dispatch(setModal({
       isOpen: true,
       isEdit: true,
@@ -37,9 +58,10 @@ class TableRow extends Component {
       contentLabel: 'Edit Order',
       content: { ...orderDetails }
     }));
+
     dispatch(setEditOrder({
       deliveryAddress: orderDetails.address,
-      orderedMeals: orderDetails.meals
+      orderedMeals
     }));
   }
 

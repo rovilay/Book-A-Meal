@@ -20,6 +20,28 @@ const ordersReducer = (state = ordersDefaultState, action) => {
           ...action.editOrder
         }
       };
+    case 'UPDATE_MEAL_PORTION':
+      return (() => {
+        const { mealId, portion: newPortion } = action.meal;
+        const { deliveryAddress, orderedMeals } = state.editOrder;
+        const temp = orderedMeals;
+        let res;
+        temp.map((meal) => {
+          const { id, unitPrice } = meal;
+          if (id === mealId) {
+            meal.portion = parseInt(newPortion, 10);
+            meal.price = meal.portion * unitPrice;
+          }
+          res = temp;
+        });
+        return {
+          ...state,
+          editOrder: {
+            deliveryAddress,
+            orderedMeals: [...res]
+          }
+        };
+      })();
     case 'DEL_MEAL_EDIT_ORDER':
       return (() => {
         const { deliveryAddress, orderedMeals } = state.editOrder;

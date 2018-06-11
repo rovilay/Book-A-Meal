@@ -24,6 +24,17 @@ export const setEditOrder = ({
   }
 });
 
+export const updateMealPortion = ({
+  mealId,
+  portion
+}) => ({
+  type: 'UPDATE_MEAL_PORTION',
+  meal: {
+    mealId,
+    portion
+  }
+});
+
 export const deleteMealInEditOrder = id => ({
   type: 'DEL_MEAL_EDIT_ORDER',
   mealId: id

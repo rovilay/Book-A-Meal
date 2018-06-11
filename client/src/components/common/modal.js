@@ -56,6 +56,7 @@ class ModalComp extends Component {
             <OrderDetailsTable
               title={contentLabel}
               content={content}
+              {...this.props}
             />
           )
         }
@@ -66,7 +67,6 @@ class ModalComp extends Component {
           (
             <EditOrderTable
               title={contentLabel}
-              // content={content}
               isEdit={isEdit}
               editOrder={editOrder}
               {...this.props}

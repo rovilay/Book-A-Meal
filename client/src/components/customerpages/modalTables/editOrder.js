@@ -4,13 +4,14 @@ import PropTypes from 'prop-types';
 
 import tableHead from '../../../helpers/tableHead';
 import TableHead from '../../common/Table/TableHead';
-import TableRow from '../../common/Table/ModalTableRow';
+import ModalTableRow from '../../common/Table/ModalTableRow';
 
 class EditOrderTable extends Component {
   constructor(props) {
     super(props);
     this.state = {
       deliveryAddress: ''
+      // portion:
     };
 
     this.updateOrder = this.updateOrder.bind(this);
@@ -24,11 +25,14 @@ class EditOrderTable extends Component {
 
   updateOrder(e) {
     e.preventDefault();
+    console.log('order Updated');
   }
 
   updateDeliveryAddress(e) {
-    this.setState({ [e.target.name]: e.target.value });
+    this.setState({ [e.target.name]: e.target.value.trim() });
+    // console.log(this.state.deliveryAddress);
   }
+
   render() {
     const {
       title,
@@ -37,13 +41,6 @@ class EditOrderTable extends Component {
       editOrder
     } = this.props;
     const { orderedMeals } = editOrder;
-    // const {
-    //   meals: orderMeals,
-    //   address,
-    //   // totalPrice,
-    //   // date,
-    //   // time
-    // } = content;
 
     return (
       <div className="table-container">
@@ -84,11 +81,12 @@ class EditOrderTable extends Component {
                   const {
                     id,
                     title: Meal,
-                    price: unitPrice,
-                    OrderMeal
+                    unitPrice,
+                    portion,
+                    price
                   } = meal;
-                  const { portion } = OrderMeal;
-                  const price = unitPrice * portion;
+                  // const { portion } = OrderMeal;
+                  // const price = unitPrice * portion;
                   const item = {
                     sn: ++i,
                     Meal,
@@ -98,7 +96,7 @@ class EditOrderTable extends Component {
                   };
 
                   return (
-                    <TableRow
+                    <ModalTableRow
                       key={id}
                       item={item}
                       id={id}
@@ -120,7 +118,6 @@ class EditOrderTable extends Component {
               type="submit"
               name="orderbtn"
               id="order-btn"
-              // disabled={cart.length < 1}
               className="order-btn btn-1"
             >
               Update order
@@ -134,10 +131,15 @@ class EditOrderTable extends Component {
 
 EditOrderTable.propTypes = {
   title: PropTypes.string.isRequired,
-  // content: PropTypes.object.isRequired,
   isEdit: PropTypes.bool.isRequired,
   editOrder: PropTypes.object.isRequired,
   dispatch: PropTypes.func.isRequired
 };
 
+// const mapStateToProps = state => ({
+//   editOrder: state.orders.editOrder
+// });
+
+// export default connect(mapStateToProps)(EditOrderTable);
 export default EditOrderTable;
+
