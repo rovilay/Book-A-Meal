@@ -1,11 +1,13 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 
 import isExpired from '../../helpers/isExpired';
 import { getFromLs } from '../../helpers/Ls';
-import { setDefaultNav } from '../../actions/navLinks';
+import getTodayMenu from '../../actions/menu';
+import { setDefaultNav, setNav } from '../../actions/navLinks';
 
 /**
  *
@@ -24,12 +26,12 @@ export default function (CompA, CompB) {
     }
 
     componentWillMount() {
-      const { history, dispatch } = this.props;
+      const { history } = this.props;
       const { expire } = this.props.user;
       const token = getFromLs('jwt');
 
       if (isExpired(expire)) {
-        dispatch(setDefaultNav());
+        this.props.setDefaultNav();
         return history.push('/login');
       }
 
@@ -54,9 +56,11 @@ export default function (CompA, CompB) {
 
   ChooseDashboard.propTypes = {
     history: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired,
-    todayMenu: PropTypes.array.isRequired,
-    user: PropTypes.object.isRequired
+    setDefaultNav: PropTypes.func.isRequired,
+    setNav: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    todayMenu: PropTypes.array.isRequired
+
   };
 
   const mapStateToProps = state => ({
@@ -64,5 +68,14 @@ export default function (CompA, CompB) {
     todayMenu: state.todayMenu.Meals
   });
 
-  return connect(mapStateToProps)(withRouter(ChooseDashboard));
+  const mapDispatchToProps = dispatch => bindActionCreators(
+    {
+      setDefaultNav,
+      getTodayMenu,
+      setNav
+    },
+    dispatch
+  );
+
+  return connect(mapStateToProps, mapDispatchToProps)(withRouter(ChooseDashboard));
 }

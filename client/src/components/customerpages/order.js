@@ -12,10 +12,17 @@ import Modal from '../common/modal';
 import tableHead from '../../helpers/tableHead';
 import TableHead from '../common/Table/TableHead';
 import OrderTableRow from '../common/Table/OrderTableRow';
-import serverReq from '../../helpers/serverReq';
 import isExpired from '../../helpers/isExpired';
-import { getFromLs, storeInLs } from '../../helpers/Ls';
-import { setCustomerOrders, deleteMealInEditOrder, updateMealPortion, updateOrder, setEditOrder, deleteOrder } from '../../actions/orders';
+import { getFromLs } from '../../helpers/Ls';
+import {
+  setCustomerOrders,
+  deleteMealInEditOrder,
+  updateMealPortion,
+  updateOrder,
+  setEditOrder,
+  deleteOrder,
+  getOrders
+} from '../../actions/orders';
 import setModal from '../../actions/modal';
 import Footer from '../common/Footer';
 
@@ -26,14 +33,15 @@ class CustomerOrder extends Component {
     this.hideModal = this.hideModal.bind(this);
     this.deleteRow = this.deleteRow.bind(this);
     this.updatePortion = this.updatePortion.bind(this);
+    this.getCustomerOrders = this.getCustomerOrders.bind(this);
   }
   componentDidMount() {
-    this.getOrders();
-    this.addOrdersToStore();
+    this.getCustomerOrders();
+    // this.addOrdersToStore();
     this.hideModal();
   }
 
-  async getOrders() {
+  getCustomerOrders() {
     const token = getFromLs('jwt');
     const { history } = this.props;
     if (token) {
@@ -44,11 +52,7 @@ class CustomerOrder extends Component {
       } = jwt.decode(token);
 
       if (!isExpired(exp) && !admin) {
-        const response = await serverReq('get', `/api/v1/orders/${id}`, '', token);
-        const { data } = response;
-        if (data) {
-          storeInLs('orders', data);
-        }
+        this.props.getOrders(id);
       } else {
         history.push('/login');
       }
@@ -67,23 +71,12 @@ class CustomerOrder extends Component {
     });
   }
 
-  // showDetails(orderDetails) {
-  //   this.props.setModal({
-  //     isOpen: true,
-  //     isInfo: true,
-  //     isEdit: false,
-  //     close: false,
-  //     contentLabel: 'Order details',
-  //     content: { ...orderDetails }
-  //   });
+  // addOrdersToStore() {
+  //   const orders = getFromLs('orders');
+  //   if (orders) {
+  //     this.props.setCustomerOrders({ ...orders });
+  //   }
   // }
-
-  addOrdersToStore() {
-    const orders = getFromLs('orders');
-    if (orders) {
-      this.props.setCustomerOrders({ ...orders });
-    }
-  }
 
   deleteRow(id) {
     this.props.deleteMealInEditOrder(id);
@@ -179,6 +172,7 @@ CustomerOrder.propTypes = {
   deleteMealInEditOrder: PropTypes.func.isRequired,
   updateMealPortion: PropTypes.func.isRequired,
   setCustomerOrders: PropTypes.func.isRequired,
+  getOrders: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -196,7 +190,8 @@ const mapDispatchToProps = dispatch => bindActionCreators(
     updateMealPortion,
     setCustomerOrders,
     setEditOrder,
-    deleteOrder
+    deleteOrder,
+    getOrders
   },
   dispatch
 );

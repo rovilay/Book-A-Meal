@@ -1,49 +1,25 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
-// import { withRouter } from 'react-router-dom';
-import moment from 'moment';
 
-import { storeInLs, getFromLs } from '../../../helpers/Ls';
-import serverReq from '../../../helpers/serverReq';
 import '../../../assets/css/menu.css';
 import waiter from '../../../assets/images/waiter2.svg';
 import navData from '../../../helpers/navData';
-import { setNav } from '../../../actions/navLinks';
-import setTodayMenu from '../../../actions/menu';
 import Menu from '../../common/Menu';
 import Footer from '../../common/Footer';
 
 
 class CustomerDashboard extends Component {
   componentWillMount() {
-    const [DD, MM, YYYY] = moment().format('DD-MM-YYYY').split('-');
     const { history, token } = this.props;
-    if (token) {
-      serverReq('get', `/api/v1/menus/${DD}/${MM}/${YYYY}`, '', token)
-        .then((response) => {
-          const { data } = response;
-          if (data) {
-            storeInLs('todayMenu', data);
-          }
-        })
-        .catch(err => err);
-    } else {
+    if (!token) {
       history.push('/');
     }
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    const todayMenu = getFromLs('todayMenu');
-
-    dispatch(setNav(navData.customerNav));
-
-    if (todayMenu && todayMenu.success) {
-      const { success, message, menu } = todayMenu;
-      const { Meals } = menu[0];
-      dispatch(setTodayMenu({ success, message, Meals }));
-    }
+    const { getTodayMenu, setNav } = this.props;
+    setNav(navData.customerNav);
+    getTodayMenu();
   }
 
   render() {
@@ -74,11 +50,12 @@ class CustomerDashboard extends Component {
 }
 
 CustomerDashboard.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
   user: PropTypes.object.isRequired,
-  todayMenu: PropTypes.array.isRequired
+  getTodayMenu: PropTypes.func.isRequired,
+  todayMenu: PropTypes.array.isRequired,
+  setNav: PropTypes.func.isRequired,
 };
 
 export default CustomerDashboard;
