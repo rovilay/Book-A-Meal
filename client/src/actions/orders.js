@@ -1,21 +1,16 @@
 import serverReq from '../helpers/serverReq';
 
-/**
- * Sends async server requests using the axios api
- *
- * @param  {Object} - payload of updated meals
- * @return {Function} that dispatches an Update order action to the redux store
- */
-export const updateOrder = (id, data) => (dispatch) => {
-  // axios.post()
-  const { deliveryAddress, meals } = data;
-  serverReq('put', `/api/v1/orders/${id}`, data)
-    .then((res) => {
-      console.log(res);
-    })
-    .catch(err => err);
-};
+// export const deleteOrder = id => ({
+//   type: 'DELETE_ORDER',
+//   mealId: id
+// });
 
+/**
+ * Redux action that sets Customer orders in redux store
+ *
+ * @param  {Object} - consist of details about the order
+ * @return {Object}  - action object
+ */
 export const setCustomerOrders = ({
   success,
   orders: history,
@@ -31,16 +26,26 @@ export const setCustomerOrders = ({
   }
 });
 
+const orderServerRes = ({ success, message }) => ({
+  type: 'ORDER_SERVER_RES',
+  serverRes: {
+    success,
+    message
+  }
+});
+
 export const setEditOrder = ({
   orderId,
   deliveryAddress,
-  orderedMeals
+  orderedMeals,
+  totalPrice
 }) => ({
   type: 'SET_EDIT_ORDER',
   editOrder: {
     orderId,
     deliveryAddress,
-    orderedMeals
+    orderedMeals,
+    totalPrice
   }
 });
 
@@ -64,4 +69,36 @@ export const deleteMealInEditOrder = id => ({
   type: 'DEL_MEAL_EDIT_ORDER',
   mealId: id
 });
+
+/**
+ * Sends async server requests to update order using the axios api
+ *
+ * @param  {string} id - ID of order to update
+ * @param  {Object} data - payload of updated meals
+ * @return {Function} - dispatches an Update order action to the redux store
+ */
+export const updateOrder = (id, data) => (dispatch) => {
+  serverReq('put', `/api/v1/orders/${id}`, data)
+    .then((res) => {
+      const { success, message } = res.data;
+      dispatch(orderServerRes({ success, message }));
+    })
+    .catch(err => err);
+};
+
+/**
+ * Sends async server requests to delete order using the axios api
+ *
+ * @param  {string} id - ID of order to delete
+ * @return {Function} - dispatches server response to store action to the redux store
+ */
+export const deleteOrder = id => (dispatch) => {
+  // axios.post()
+  serverReq('delete', `/api/v1/orders/${id}`)
+    .then((res) => {
+      const { success, message } = res.data;
+      dispatch(orderServerRes({ success, message }));
+    })
+    .catch(err => err);
+};
 
