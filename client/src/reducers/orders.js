@@ -3,7 +3,8 @@ const ordersDefaultState = {
   message: '',
   grandTotalPrice: 0,
   history: [],
-  editOrder: {}
+  editOrder: {},
+  serverRes: {}
 };
 
 const ordersReducer = (state = ordersDefaultState, action) => {
@@ -25,12 +26,17 @@ const ordersReducer = (state = ordersDefaultState, action) => {
         const { mealId, portion: newPortion } = action.meal;
         const { deliveryAddress, orderedMeals, orderId } = state.editOrder;
         const temp = orderedMeals;
+        let totalPrice = 0;
         let res;
         temp.map((meal) => {
           const { id, unitPrice } = meal;
           if (id === mealId) {
             meal.portion = parseInt(newPortion, 10);
             meal.price = meal.portion * unitPrice;
+            totalPrice += meal.price;
+          } else {
+            meal.price = meal.portion * unitPrice;
+            totalPrice += meal.price;
           }
           res = temp;
         });
@@ -39,17 +45,11 @@ const ordersReducer = (state = ordersDefaultState, action) => {
           editOrder: {
             orderId,
             deliveryAddress,
-            orderedMeals: [...res]
+            orderedMeals: [...res],
+            totalPrice
           }
         };
       })();
-    // case 'UPDATE_DELIVERY_ADDRESS':
-    //   return {
-    //     ...state,
-    //     editOrder: {
-    //       deliveryAddress: action.address
-    //     }
-    //   };
     case 'DEL_MEAL_EDIT_ORDER':
       return (() => {
         const { deliveryAddress, orderedMeals } = state.editOrder;
@@ -69,6 +69,11 @@ const ordersReducer = (state = ordersDefaultState, action) => {
           }
         };
       })();
+    case 'ORDER_SERVER_RES':
+      return {
+        ...state,
+        serverRes: { ...action.serverRes }
+      };
     default:
       return state;
   }

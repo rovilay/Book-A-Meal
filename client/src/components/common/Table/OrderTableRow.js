@@ -1,36 +1,33 @@
-import React, { Component } from 'react';
-import { connect } from 'react-redux';
+import React from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 
-import setModal from '../../../actions/modal';
-import { setEditOrder } from '../../../actions/orders';
 import TableCol from './TableCol';
 
-class TableRow extends Component {
-  constructor(props) {
-    super(props);
+const OrderTableRow = (props) => {
+  const {
+    setModal,
+    orderDetails,
+    item,
+    setEditOrder,
+    deleteOrder
+  } = props;
 
-    this.showDetails = this.showDetails.bind(this);
-    this.editOrder = this.editOrder.bind(this);
-  }
-
-  showDetails() {
-    const { dispatch, orderDetails } = this.props;
-    dispatch(setModal({
+  const showDetails = () => {
+    setModal({
       isOpen: true,
       isInfo: true,
       isEdit: false,
       close: false,
       contentLabel: 'Order details',
       content: { ...orderDetails }
-    }));
-  }
+    });
+  };
 
-  editOrder() {
-    const { dispatch, orderDetails } = this.props;
+  const editOrder = () => {
     const { orderId, meals } = orderDetails;
     const orderedMeals = [];
+    let totalPrice = 0;
 
     meals.map((meal) => {
       const {
@@ -41,95 +38,91 @@ class TableRow extends Component {
       } = meal;
       const { portion } = OrderMeal;
       const price = unitPrice * portion;
-      const item = {
+      totalPrice += price;
+      orderedMeals.push({
         id,
         title,
         unitPrice,
         portion,
         price
-      };
-      orderedMeals.push(item);
+      });
     });
 
-    dispatch(setModal({
+    setModal({
       isOpen: true,
       isEdit: true,
       isInfo: false,
       close: false,
       contentLabel: 'Edit Order',
       content: { ...orderDetails }
-    }));
+    });
 
-    dispatch(setEditOrder({
+    setEditOrder({
       orderId,
       deliveryAddress: orderDetails.address,
-      orderedMeals
-    }));
-  }
+      orderedMeals,
+      totalPrice
+    });
+  };
 
-  render() {
-    const { item } = this.props;
-
-    return (
-      <tr key={item.id}>
-        {
-          Object.keys(item).map((key, i) => (
-            (<TableCol dataTitle={key} val={item[key]} key={i} />)
-          ))
-        }
-        {
-          item.orderId
-          &&
-          <td data-title="view details">
-            <a
-              role="button"
-              href="#"
-              onClick={this.showDetails}
-              className="btn-col btn-2"
-            >
-              <FontAwesome
-                name="info-circle"
-                size="2x"
-              />
-            </a>
-            <a
-              onClick={this.editOrder}
-              href="#"
-              role="button"
-              className="btn-col btn-2"
-            >
-              <FontAwesome
-                name="edit"
-                size="2x"
-              />
-            </a>
-            <a
-              onClick={this.showDetails}
-              href="#"
-              role="button"
-              className="btn-col btn-2"
-            >
-              <FontAwesome
-                name="times"
-                size="2x"
-              />
-            </a>
-          </td>
-        }
-      </tr>
-    );
-  }
-}
-
-TableRow.propTypes = {
-  item: PropTypes.object.isRequired,
-  orderDetails: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired
+  return (
+    <tr key={item.id}>
+      {
+        Object.keys(item).map((key, i) => (
+          (<TableCol dataTitle={key} val={item[key]} key={i} />)
+        ))
+      }
+      {
+        item.orderId
+        &&
+        <td data-title="view details">
+          <a
+            role="button"
+            href="#"
+            onClick={showDetails}
+            className="btn-col btn-2"
+          >
+            <FontAwesome
+              name="info-circle"
+              size="2x"
+            />
+          </a>
+          <a
+            onClick={editOrder}
+            href="#"
+            role="button"
+            className="btn-col btn-2"
+          >
+            <FontAwesome
+              name="edit"
+              size="2x"
+            />
+          </a>
+          <a
+            onClick={() => {
+              deleteOrder(item.orderId);
+            }}
+            href="#"
+            role="button"
+            className="btn-col btn-2"
+          >
+            <FontAwesome
+              name="times"
+              size="2x"
+            />
+          </a>
+        </td>
+      }
+    </tr>
+  );
 };
 
-const mapStateToProps = state => ({
-  cart: state.cart,
-  orders: state.order
-});
+OrderTableRow.propTypes = {
+  item: PropTypes.object.isRequired,
+  orderDetails: PropTypes.object.isRequired,
+  setModal: PropTypes.func.isRequired,
+  setEditOrder: PropTypes.func.isRequired,
+  deleteOrder: PropTypes.func.isRequired
+};
 
-export default connect(mapStateToProps)(TableRow);
+export default OrderTableRow;

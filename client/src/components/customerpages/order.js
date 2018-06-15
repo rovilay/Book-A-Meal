@@ -1,6 +1,7 @@
 /* eslint class-methods-use-this:0 */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -14,11 +15,18 @@ import OrderTableRow from '../common/Table/OrderTableRow';
 import serverReq from '../../helpers/serverReq';
 import isExpired from '../../helpers/isExpired';
 import { getFromLs, storeInLs } from '../../helpers/Ls';
-import { setCustomerOrders } from '../../actions/orders';
+import { setCustomerOrders, deleteMealInEditOrder, updateMealPortion, updateOrder, setEditOrder, deleteOrder } from '../../actions/orders';
 import setModal from '../../actions/modal';
 import Footer from '../common/Footer';
 
 class CustomerOrder extends Component {
+  constructor(props) {
+    super(props);
+
+    this.hideModal = this.hideModal.bind(this);
+    this.deleteRow = this.deleteRow.bind(this);
+    this.updatePortion = this.updatePortion.bind(this);
+  }
   componentDidMount() {
     this.getOrders();
     this.addOrdersToStore();
@@ -50,22 +58,41 @@ class CustomerOrder extends Component {
   }
 
   hideModal() {
-    const { dispatch } = this.props;
-    dispatch(setModal({
+    this.props.setModal({
       isOpen: false,
       isEdit: false,
       isInfo: false,
       close: true,
       contentLabel: '',
-    }));
+    });
   }
 
+  // showDetails(orderDetails) {
+  //   this.props.setModal({
+  //     isOpen: true,
+  //     isInfo: true,
+  //     isEdit: false,
+  //     close: false,
+  //     contentLabel: 'Order details',
+  //     content: { ...orderDetails }
+  //   });
+  // }
+
   addOrdersToStore() {
-    const { dispatch } = this.props;
     const orders = getFromLs('orders');
     if (orders) {
-      dispatch(setCustomerOrders({ ...orders }));
+      this.props.setCustomerOrders({ ...orders });
     }
+  }
+
+  deleteRow(id) {
+    this.props.deleteMealInEditOrder(id);
+    console.log('row deleted');
+  }
+
+
+  updatePortion(mealId, portion) {
+    this.props.updateMealPortion({ mealId, portion });
   }
 
   render() {
@@ -114,6 +141,7 @@ class CustomerOrder extends Component {
                       item={item}
                       sn={++i}
                       orderDetails={orderDetails}
+                      {...this.props}
                     />
                   );
                 })
@@ -129,7 +157,12 @@ class CustomerOrder extends Component {
               </p>
             )
           }
-          <Modal />
+          <Modal
+            hideModal={this.hideModal}
+            deleteRow={this.deleteRow}
+            updatePortion={this.updatePortion}
+            {...this.props}
+          />
         </div>
         <Footer />
       </div>
@@ -140,12 +173,32 @@ class CustomerOrder extends Component {
 
 CustomerOrder.propTypes = {
   orders: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  setModal: PropTypes.func.isRequired,
+  updateOrder: PropTypes.func.isRequired,
+  deleteMealInEditOrder: PropTypes.func.isRequired,
+  updateMealPortion: PropTypes.func.isRequired,
+  setCustomerOrders: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  orders: state.orders
+  orders: state.orders,
+  modal: state.modal,
+  editOrder: state.orders.editOrder,
+  userId: state.login.user.id
 });
 
-export default connect(mapStateToProps)(withRouter(CustomerOrder));
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    setModal,
+    updateOrder,
+    deleteMealInEditOrder,
+    updateMealPortion,
+    setCustomerOrders,
+    setEditOrder,
+    deleteOrder
+  },
+  dispatch
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CustomerOrder));
