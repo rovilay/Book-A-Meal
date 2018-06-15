@@ -1,3 +1,21 @@
+import serverReq from '../helpers/serverReq';
+
+/**
+ * Sends async server requests using the axios api
+ *
+ * @param  {Object} - payload of updated meals
+ * @return {Function} that dispatches an Update order action to the redux store
+ */
+export const updateOrder = (id, data) => (dispatch) => {
+  // axios.post()
+  const { deliveryAddress, meals } = data;
+  serverReq('put', `/api/v1/orders/${id}`, data)
+    .then((res) => {
+      console.log(res);
+    })
+    .catch(err => err);
+};
+
 export const setCustomerOrders = ({
   success,
   orders: history,
@@ -14,11 +32,13 @@ export const setCustomerOrders = ({
 });
 
 export const setEditOrder = ({
+  orderId,
   deliveryAddress,
   orderedMeals
 }) => ({
   type: 'SET_EDIT_ORDER',
   editOrder: {
+    orderId,
     deliveryAddress,
     orderedMeals
   }
@@ -33,6 +53,11 @@ export const updateMealPortion = ({
     mealId,
     portion
   }
+});
+
+export const updateDelAddress = deliveryAddress => ({
+  type: 'UPDATE_DELIVERY_ADDRESS',
+  address: deliveryAddress
 });
 
 export const deleteMealInEditOrder = id => ({

@@ -20,8 +20,8 @@ import Footer from '../common/Footer';
 
 class CustomerOrder extends Component {
   componentDidMount() {
-    this.addOrdersToStore();
     this.getOrders();
+    this.addOrdersToStore();
     this.hideModal();
   }
 
@@ -100,6 +100,7 @@ class CustomerOrder extends Component {
                     };
 
                   const orderDetails = {
+                    orderId,
                     meals,
                     address,
                     totalPrice,

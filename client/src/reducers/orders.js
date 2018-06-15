@@ -23,7 +23,7 @@ const ordersReducer = (state = ordersDefaultState, action) => {
     case 'UPDATE_MEAL_PORTION':
       return (() => {
         const { mealId, portion: newPortion } = action.meal;
-        const { deliveryAddress, orderedMeals } = state.editOrder;
+        const { deliveryAddress, orderedMeals, orderId } = state.editOrder;
         const temp = orderedMeals;
         let res;
         temp.map((meal) => {
@@ -37,11 +37,19 @@ const ordersReducer = (state = ordersDefaultState, action) => {
         return {
           ...state,
           editOrder: {
+            orderId,
             deliveryAddress,
             orderedMeals: [...res]
           }
         };
       })();
+    // case 'UPDATE_DELIVERY_ADDRESS':
+    //   return {
+    //     ...state,
+    //     editOrder: {
+    //       deliveryAddress: action.address
+    //     }
+    //   };
     case 'DEL_MEAL_EDIT_ORDER':
       return (() => {
         const { deliveryAddress, orderedMeals } = state.editOrder;

@@ -29,8 +29,9 @@ class TableRow extends Component {
 
   editOrder() {
     const { dispatch, orderDetails } = this.props;
-    const { meals } = orderDetails;
+    const { orderId, meals } = orderDetails;
     const orderedMeals = [];
+
     meals.map((meal) => {
       const {
         id,
@@ -60,6 +61,7 @@ class TableRow extends Component {
     }));
 
     dispatch(setEditOrder({
+      orderId,
       deliveryAddress: orderDetails.address,
       orderedMeals
     }));

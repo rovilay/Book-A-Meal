@@ -7,6 +7,13 @@ import isExpired from '../../helpers/isExpired';
 import { getFromLs } from '../../helpers/Ls';
 import { setDefaultNav } from '../../actions/navLinks';
 
+/**
+ *
+ * @export {function} HOC function that returns a component
+ * @param  {any} CompA Caterer/Admin dashboard component
+ * @param  {any} CompB Customer dashboard component
+ * @return {Component} depending on if user is a customer or caterer/admin
+ */
 export default function (CompA, CompB) {
   class ChooseDashboard extends Component {
     constructor(props) {

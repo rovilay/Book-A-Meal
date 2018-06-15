@@ -51,8 +51,9 @@ class EditTableCol extends Component {
       isEdit,
       val,
       dataTitle,
+      mealId,
       updatePortion,
-      changePortion
+      // changePortion
     } = this.props;
 
     return (
@@ -68,10 +69,10 @@ class EditTableCol extends Component {
               id="portion"
               className="portion"
               name="portion"
-              // defaultValue={portion}
-              defaultValue={val}
-              onChange={changePortion}
-              onBlur={updatePortion}
+              onChange={(e) => {
+                const portion = e.target.value;
+                updatePortion(mealId, portion);
+              }}
               required
             />
           )
@@ -87,10 +88,8 @@ EditTableCol.propTypes = {
   dataTitle: PropTypes.string.isRequired,
   val: PropTypes.any.isRequired,
   isEdit: PropTypes.bool.isRequired,
-  // mealId: PropTypes.any.isRequired,
-  // dispatch: PropTypes.func.isRequired,
-  updatePortion: PropTypes.func.isRequired,
-  changePortion: PropTypes.func.isRequired
+  mealId: PropTypes.any.isRequired,
+  updatePortion: PropTypes.func.isRequired
 };
 
 export default EditTableCol;

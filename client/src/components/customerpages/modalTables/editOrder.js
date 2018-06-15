@@ -11,11 +11,7 @@ class EditOrderTable extends Component {
     super(props);
     this.state = {
       deliveryAddress: ''
-      // portion:
     };
-
-    this.updateOrder = this.updateOrder.bind(this);
-    this.updateDeliveryAddress = this.updateDeliveryAddress.bind(this);
   }
 
   componentWillMount() {
@@ -23,24 +19,18 @@ class EditOrderTable extends Component {
     this.setState({ deliveryAddress });
   }
 
-  updateOrder(e) {
-    e.preventDefault();
-    console.log('order Updated');
-  }
-
-  updateDeliveryAddress(e) {
-    this.setState({ [e.target.name]: e.target.value.trim() });
-    // console.log(this.state.deliveryAddress);
-  }
+  // updateDeliveryAddress(e) {
+  //   this.setState({ [e.target.name]: e.target.value.trim() });
+  //   console.log(document.getElementById('address').value);
+  // }
 
   render() {
     const {
       title,
-      // content,
-      isEdit,
-      editOrder
+      editOrder,
+      updateOrder,
     } = this.props;
-    const { orderedMeals } = editOrder;
+    const { orderId, orderedMeals: meals } = editOrder;
 
     return (
       <div className="table-container">
@@ -55,9 +45,20 @@ class EditOrderTable extends Component {
             {message}
           </p>
         } */}
-        {title}
+        <h2 className="title">
+          {title}
+        </h2>
 
-        <form onSubmit={this.updateOrder}>
+        <hr />
+
+        <form onSubmit={(e) => {
+          e.preventDefault();
+          const deliveryAddress = document.getElementById('delivery-address').value.trim();
+          const data = { deliveryAddress, meals };
+          updateOrder(orderId, data);
+          console.log('order updated!');
+        }}
+        >
           <p>
             <label htmlFor="address">
               Address:
@@ -66,24 +67,21 @@ class EditOrderTable extends Component {
               type="text"
               placeholder="Enter delivery address"
               name="deliveryAddress"
-              id="cart-address"
-              // defaultValue={deliveryAddress}
-              onChange={this.updateDeliveryAddress}
-              value={this.state.deliveryAddress}
+              id="delivery-address"
+              defaultValue={editOrder.deliveryAddress}
               required
             />
           </p>
           <table>
-            <TableHead tableHead={tableHead.cartTableHead} />
+            <TableHead tableHead={tableHead.editOrderTableHead} />
             <tbody>
               {
-                orderedMeals.map((meal, i) => {
+                meals.map((meal, i) => {
                   const {
                     id,
                     title: Meal,
                     unitPrice,
                     portion,
-                    price
                   } = meal;
                   // const { portion } = OrderMeal;
                   // const price = unitPrice * portion;
@@ -92,7 +90,6 @@ class EditOrderTable extends Component {
                     Meal,
                     unitPrice,
                     portion,
-                    price
                   };
 
                   return (
@@ -100,8 +97,6 @@ class EditOrderTable extends Component {
                       key={id}
                       item={item}
                       id={id}
-                      isEdit={isEdit}
-                      editOrder={editOrder}
                       {...this.props}
                     />
                   );
@@ -131,9 +126,8 @@ class EditOrderTable extends Component {
 
 EditOrderTable.propTypes = {
   title: PropTypes.string.isRequired,
-  isEdit: PropTypes.bool.isRequired,
   editOrder: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired
+  updateOrder: PropTypes.func.isRequired,
 };
 
 // const mapStateToProps = state => ({

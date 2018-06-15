@@ -1,4 +1,5 @@
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
@@ -6,6 +7,7 @@ import Modal from 'react-modal';
 import setModal from '../../actions/modal';
 import OrderDetailsTable from '../customerpages/modalTables/orderDetails';
 import EditOrderTable from '../customerpages/modalTables/editOrder';
+import { deleteMealInEditOrder, updateMealPortion, updateOrder } from '../../actions/orders';
 
 Modal.setAppElement('#root');
 class ModalComp extends Component {
@@ -13,26 +15,40 @@ class ModalComp extends Component {
     super(props);
 
     this.hideDetails = this.hideDetails.bind(this);
+    this.deleteRow = this.deleteRow.bind(this);
+    this.updatePortion = this.updatePortion.bind(this);
+    // this.updateOrder = this.updateOrder.bind(this);
   }
+
   hideDetails() {
-    const { dispatch } = this.props;
-    dispatch(setModal({
+    this.props.setModal({
       isOpen: false,
       isEdit: false,
       isInfo: false,
       close: true,
       contentLabel: '',
-    }));
+    });
   }
+
+  deleteRow(id) {
+    this.props.deleteMealInEditOrder(id);
+    console.log('row deleted');
+  }
+
+
+  updatePortion(mealId, portion) {
+    this.props.updateMealPortion({ mealId, portion });
+  }
+
+
   render() {
-    const { modal, editOrder } = this.props;
     const {
       isOpen,
       isInfo,
       isEdit,
       content,
       contentLabel
-    } = modal;
+    } = this.props.modal;
     return (
       <Modal
         isOpen={isOpen}
@@ -56,6 +72,8 @@ class ModalComp extends Component {
             <OrderDetailsTable
               title={contentLabel}
               content={content}
+              deleteRow={this.deleteRow}
+              updatePortion={this.updatePortion}
               {...this.props}
             />
           )
@@ -68,7 +86,8 @@ class ModalComp extends Component {
             <EditOrderTable
               title={contentLabel}
               isEdit={isEdit}
-              editOrder={editOrder}
+              deleteRow={this.deleteRow}
+              updatePortion={this.updatePortion}
               {...this.props}
             />
           )
@@ -80,13 +99,25 @@ class ModalComp extends Component {
 
 ModalComp.propTypes = {
   modal: PropTypes.object.isRequired,
-  editOrder: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired
+  setModal: PropTypes.func.isRequired,
+  deleteMealInEditOrder: PropTypes.func.isRequired,
+  updateMealPortion: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   modal: state.modal,
-  editOrder: state.orders.editOrder
+  editOrder: state.orders.editOrder,
+  userId: state.login.user.id
 });
 
-export default connect(mapStateToProps)(ModalComp);
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    setModal,
+    updateOrder,
+    deleteMealInEditOrder,
+    updateMealPortion
+  },
+  dispatch
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(ModalComp);

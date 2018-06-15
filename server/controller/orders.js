@@ -191,7 +191,7 @@ class OrdersController {
         if (check === true) {
           db.Meal.findAll({ // find meal and get their price
             where: { id: updatedMeals },
-            attributes: ['price']
+            attributes: ['id', 'price']
           })
             .then((resMeals) => { // calculate order's total price
               let totPrice = 0;
