@@ -14,7 +14,7 @@ const baseUrl = 'http://Localhost:4000';
  * @return {Promise} reponse data or error
  */
 async function serverReq(method, url, data = {}, authToken) {
-  const token = authToken || getFromLs('jwt');
+  const token = getFromLs('jwt') || authToken;
   try {
     if (token) {
       axios.interceptors.request.use((config) => {
