@@ -73,16 +73,6 @@ export const updateMealPortion = ({
   }
 });
 
-// /**
-//  *
-//  * @param {string} deliveryAddress - address of meal to delete
-//  * @returns {Object} - returns object of action type and mealId properties
-//  */
-// export const updateDelAddress = deliveryAddress => ({
-//   type: 'UPDATE_DELIVERY_ADDRESS',
-//   address: deliveryAddress
-// });
-
 /**
  * Redux action that delete ordered meal in store
  *
