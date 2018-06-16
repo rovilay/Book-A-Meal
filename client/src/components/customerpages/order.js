@@ -135,6 +135,7 @@ class CustomerOrder extends Component {
                       item={item}
                       sn={++i}
                       orderDetails={orderDetails}
+                      notify={this.notify}
                       {...this.props}
                     />
                   );
@@ -194,7 +195,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
     setCustomerOrders,
     setEditOrder,
     deleteOrder,
-    getOrders
+    getOrders,
   },
   dispatch
 );

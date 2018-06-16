@@ -10,7 +10,9 @@ const OrderTableRow = (props) => {
     orderDetails,
     item,
     setEditOrder,
-    deleteOrder
+    deleteOrder,
+    notify,
+    orders
   } = props;
 
   const showDetails = () => {
@@ -101,6 +103,7 @@ const OrderTableRow = (props) => {
           <a
             onClick={() => {
               deleteOrder(item.orderId);
+              notify(orders.serverRes.message);
             }}
             href="#"
             role="button"
@@ -122,7 +125,9 @@ OrderTableRow.propTypes = {
   orderDetails: PropTypes.object.isRequired,
   setModal: PropTypes.func.isRequired,
   setEditOrder: PropTypes.func.isRequired,
-  deleteOrder: PropTypes.func.isRequired
+  deleteOrder: PropTypes.func.isRequired,
+  notify: PropTypes.func.isRequired,
+  orders: PropTypes.object.isRequired
 };
 
 export default OrderTableRow;
