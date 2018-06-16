@@ -260,6 +260,15 @@ input[type=submit] {
 	color: #fff
 }
 
+.toast {
+	background: #61b750;
+	color: #ffffff;
+	border: #ff8619
+}
+.toast-progress {
+	color: #ff8619
+}
+
 @media screen and(max-width: 500px) {
 	.menu-title {
 		text-transform: capitalize;
@@ -295,7 +304,7 @@ input[type=submit] {
 .closeBtn {
 	position: absolute;
 	right: 10px;
-	
+
 }
 
 /* Modal */
@@ -328,7 +337,7 @@ input[type=submit] {
 	}
 }
 
-/* footer */ 
+/* footer */
 footer {
 	display: grid;
 	text-align: center;

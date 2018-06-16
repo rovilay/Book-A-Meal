@@ -122,6 +122,14 @@ tr:hover {
 	margin-left: 4px
 }
 
+.toast {
+	color: #ffffff;
+	background-color: #61B750
+}
+.toast-progress {
+  color: #ff8619
+}
+
 @media screen and (max-width:530px) {
   .container {
     padding: 0;
