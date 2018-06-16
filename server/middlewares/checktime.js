@@ -28,7 +28,7 @@ class checkTime {
         const err = new Error("You can't modify order anymore");
         err.status = 403;
         const [createdAt] = [found.dataValues.createdAt]; // Get the time created
-        const timeCheck = moment(createdAt).add(12, 'hour') > moment(); // compare expiry time with present time
+        const timeCheck = moment(createdAt).add(1, 'hour') > moment(); // compare expiry time with present time
         if (timeCheck) {
           return next();
         }
