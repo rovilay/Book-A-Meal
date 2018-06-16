@@ -1,51 +1,30 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
-import moment from 'moment';
 
-import serverReq from '../../helpers/serverReq';
-import { getFromLs, storeInLs } from '../../helpers/Ls';
 import { setDefaultNav } from '../../actions/navLinks';
-import setTodayMenu from '../../actions/menu';
+import getTodayMenu from '../../actions/menu';
 import Showcase from './Showcase';
 import Welcome from './Wlcdesc';
 import Menu from '../common/Menu';
 import Footer from '../common/Footer';
 
 class IndexPage extends Component {
-  componentWillMount() {
-    const [DD, MM, YYYY] = moment().format('DD-MM-YYYY').split('-');
-    const token = getFromLs('jwt');
-    if (token) {
-      serverReq('get', `/api/v1/menus/${DD}/${MM}/${YYYY}`, '', token)
-        .then((response) => {
-          const { data } = response;
-          if (data) {
-            storeInLs('todayMenu', data);
-          }
-        })
-        .catch(err => err);
-    }
+  constructor(props) {
+    super(props);
+
+    this.addMealToCart = this.addMealToCart.bind(this);
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    dispatch(setDefaultNav());
-    this.addMenuToStore();
+    this.props.setDefaultNav();
+    this.props.getTodayMenu();
   }
 
-
-  addMenuToStore() {
-    const { dispatch } = this.props;
-    const todayMenu = getFromLs('todayMenu');
-    if (todayMenu) {
-      const { success, message, menu } = todayMenu;
-      if (todayMenu && success) {
-        const { Meals } = menu[0];
-        return dispatch(setTodayMenu({ success, message, Meals }));
-      }
-    }
+  addMealToCart() {
+    this.props.history.push('/login');
   }
 
   render() {
@@ -54,7 +33,12 @@ class IndexPage extends Component {
       <div className="main-container">
         <Showcase />
         <Welcome />
-        <Menu menu={menu} />
+        <Menu
+          menu={menu}
+          addMealToCart={this.addMealToCart}
+          notify={this.notify}
+          {...this.props}
+        />
         <Footer />
       </div>
     );
@@ -63,7 +47,9 @@ class IndexPage extends Component {
 
 IndexPage.propTypes = {
   menu: PropTypes.array.isRequired,
-  dispatch: PropTypes.func.isRequired
+  getTodayMenu: PropTypes.func.isRequired,
+  setDefaultNav: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
@@ -71,4 +57,12 @@ const mapStateToProps = state => ({
   menu: state.todayMenu.Meals
 });
 
-export default connect(mapStateToProps)(withRouter(IndexPage));
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    setDefaultNav,
+    getTodayMenu,
+  },
+  dispatch
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(IndexPage));

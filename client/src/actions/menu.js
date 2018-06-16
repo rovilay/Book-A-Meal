@@ -31,12 +31,14 @@ const getTodayMenu = () => (dispatch) => {
   const [DD, MM, YYYY] = moment().format('DD-MM-YYYY').split('-');
   serverReq('get', `/api/v1/menus/${DD}/${MM}/${YYYY}`)
     .then((response) => {
-      const { success, menu, message } = response.data;
-      let Meals = [];
-      if (menu) {
-        Meals = [...menu[0].Meals];
+      if (response.data) {
+        const { success, menu, message } = response.data;
+        let Meals = [];
+        if (menu) {
+          Meals = [...menu[0].Meals];
+        }
+        dispatch(setTodayMenu({ success, Meals, message }));
       }
-      dispatch(setTodayMenu({ success, Meals, message }));
     })
     .catch((err) => { console.log(err); });
 };

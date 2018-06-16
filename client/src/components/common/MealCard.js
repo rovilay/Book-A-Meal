@@ -28,7 +28,9 @@ class MealCard extends Component {
 
     if (!isExpired(user.expire) && !user.admin) {
       addMealToCart({ ...mealData, portion });
-      notify();
+      if (notify) {
+        notify();
+      }
     } else {
       history.push('/login');
     }
@@ -82,10 +84,14 @@ class MealCard extends Component {
   }
 }
 
+MealCard.defaultProps = {
+  notify: undefined
+};
+
 MealCard.propTypes = {
   mealData: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  notify: PropTypes.func.isRequired,
+  notify: PropTypes.func,
   user: PropTypes.object.isRequired,
   addMealToCart: PropTypes.func.isRequired
 };

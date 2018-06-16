@@ -103,18 +103,20 @@ export const deleteMealInEditOrder = id => ({
 export const getOrders = userId => (dispatch) => {
   serverReq('get', `/api/v1/orders/${userId}`)
     .then((res) => {
-      const {
-        success,
-        message,
-        orders,
-        grandTotalPrice
-      } = res.data;
-      dispatch(setCustomerOrders({
-        success,
-        message,
-        orders,
-        grandTotalPrice
-      }));
+      if (res.data) {
+        const {
+          success,
+          message,
+          orders,
+          grandTotalPrice
+        } = res.data;
+        dispatch(setCustomerOrders({
+          success,
+          message,
+          orders,
+          grandTotalPrice
+        }));
+      }
     })
     .catch((err) => {
       console.log(err);
