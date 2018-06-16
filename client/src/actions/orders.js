@@ -27,7 +27,7 @@ export const setCustomerOrders = ({
  * @param {Object}  - object with property success and message
  * @returns {Object} - returns object of action type and serverRes
  */
-const orderServerRes = ({ success, message }) => ({
+export const orderServerRes = ({ success, message }) => ({
   type: 'ORDER_SERVER_RES',
   serverRes: {
     success,
