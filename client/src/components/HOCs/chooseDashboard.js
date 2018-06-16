@@ -7,6 +7,7 @@ import PropTypes from 'prop-types';
 import isExpired from '../../helpers/isExpired';
 import { getFromLs } from '../../helpers/Ls';
 import getTodayMenu from '../../actions/menu';
+import { addMealToCart } from '../../actions/cart';
 import { setDefaultNav, setNav } from '../../actions/navLinks';
 
 /**
@@ -59,7 +60,8 @@ export default function (CompA, CompB) {
     setDefaultNav: PropTypes.func.isRequired,
     setNav: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
-    todayMenu: PropTypes.array.isRequired
+    todayMenu: PropTypes.array.isRequired,
+    addMealToCart: PropTypes.func.isRequired,
 
   };
 
@@ -72,7 +74,8 @@ export default function (CompA, CompB) {
     {
       setDefaultNav,
       getTodayMenu,
-      setNav
+      setNav,
+      addMealToCart
     },
     dispatch
   );
