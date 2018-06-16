@@ -8,7 +8,7 @@ import mealRouter from './routes/mealRoutes';
 import menuRouter from './routes/menuRoutes';
 import ordersRouter from './routes/ordersRoutes';
 import usersRouter from './routes/usersRoutes';
-import authorize from './middlewares/authenticate';
+// import authorize from './middlewares/authenticate';
 import myErrorHandler from './middlewares/errorHandler';
 import swaggerDoc from './helpers/swagger.json';
 
@@ -31,9 +31,9 @@ app.get('/', (req, res) => {
 app.use('/api/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 app.use(usersRouter);
 
-app.use(authorize);
-app.use(mealRouter);
+// app.use(authorize);
 app.use(menuRouter);
+app.use(mealRouter);
 app.use(ordersRouter);
 app.use(myErrorHandler);
 

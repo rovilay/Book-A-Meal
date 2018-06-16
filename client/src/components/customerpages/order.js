@@ -1,45 +1,60 @@
 /* eslint class-methods-use-this:0 */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import jwt from 'jsonwebtoken';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
+import '../../assets/css/table.css';
+import Modal from '../common/modal';
 import tableHead from '../../helpers/tableHead';
 import TableHead from '../common/Table/TableHead';
-import TableRow from '../common/Table/OrderTableRow';
-import serverReq from '../../helpers/serverReq';
+import OrderTableRow from '../common/Table/OrderTableRow';
 import isExpired from '../../helpers/isExpired';
-import { getFromLs, storeInLs } from '../../helpers/Ls';
-import setCustomerOrders from '../../actions/orders';
+import { getFromLs } from '../../helpers/Ls';
+import {
+  setCustomerOrders,
+  deleteMealInEditOrder,
+  updateMealPortion,
+  updateOrder,
+  setEditOrder,
+  deleteOrder,
+  getOrders
+} from '../../actions/orders';
+import setModal from '../../actions/modal';
 import Footer from '../common/Footer';
 
 class CustomerOrder extends Component {
-  componentWillMount() {
-    this.getOrders();
-  }
+  constructor(props) {
+    super(props);
 
+    this.hideModal = this.hideModal.bind(this);
+    this.deleteRow = this.deleteRow.bind(this);
+    this.updatePortion = this.updatePortion.bind(this);
+    this.getCustomerOrders = this.getCustomerOrders.bind(this);
+    this.notify = this.notify.bind(this);
+  }
   componentDidMount() {
-    this.addOrdersToStore();
+    this.getCustomerOrders();
+    this.hideModal();
   }
 
-  async getOrders() {
+  getCustomerOrders() {
     const token = getFromLs('jwt');
     const { history } = this.props;
     if (token) {
       const {
-        user,
+        id,
+        admin,
         exp
       } = jwt.decode(token);
 
-      const { id, admin } = user;
       if (!isExpired(exp) && !admin) {
-        const response = await serverReq('get', `/api/v1/orders/${id}`, '', token);
-        const { data } = response;
-        if (data) {
-          storeInLs('orders', data);
-        }
+        this.props.getOrders(id);
       } else {
         history.push('/login');
       }
@@ -48,51 +63,102 @@ class CustomerOrder extends Component {
     }
   }
 
-  addOrdersToStore() {
-    const { dispatch } = this.props;
-    const orders = getFromLs('orders');
-    if (orders) {
-      dispatch(setCustomerOrders({ ...orders }));
-    }
+  hideModal() {
+    this.props.setModal({
+      isOpen: false,
+      isEdit: false,
+      isInfo: false,
+      close: true,
+      contentLabel: '',
+    });
+  }
+
+  deleteRow(id) {
+    this.props.deleteMealInEditOrder(id);
+  }
+
+  updatePortion(mealId, portion) {
+    this.props.updateMealPortion({ mealId, portion });
+  }
+
+  notify(msg) {
+    toast(msg, {
+      position: toast.POSITION.TOP_CENTER,
+      className: 'toast',
+      progressClassName: 'toast-progress'
+    });
   }
 
   render() {
-    const { orders, grandTotalPrice } = this.props.orders;
+    const { history, grandTotalPrice } = this.props.orders;
     return (
       <div className="main-container">
         <div className="title" id="menu-title">
           Your Order History
         </div>
         <hr />
-        <div className="container">
-          {
-            (grandTotalPrice)
-            &&
-            (
-              <p>
-                Grand Total: {grandTotalPrice}
-              </p>
-            )
-          }
+        <div className="table-container">
           <table>
             <TableHead tableHead={tableHead.customerOrderHead} />
             <tbody>
               {
-                orders.map((order, i) => {
-                  const { id: orderId, createdAt: date, totalPrice } = order;
+                history.map((order, i) => {
+                  const {
+                    id: orderId,
+                    createdAt: date,
+                    totalPrice,
+                    deliveryAddress: address,
+                    Meals: meals
+                  } = order;
+
+                  const time = moment(date).format('HH:mm');
+
                   const item = {
                       sn: ++i,
                       orderId,
-                      date: moment(date).format('L'),
+                      date: moment(date).format('LL'),
                       totalPrice,
-                      Details: 'view details'
                     };
 
-                  return <TableRow key={i} item={item} sn={++i} />;
+                  const orderDetails = {
+                    orderId,
+                    meals,
+                    address,
+                    totalPrice,
+                    time,
+                    date: moment(date).format('LL')
+                  };
+
+                  return (
+                    <OrderTableRow
+                      key={i}
+                      item={item}
+                      sn={++i}
+                      orderDetails={orderDetails}
+                      {...this.props}
+                    />
+                  );
                 })
               }
             </tbody>
           </table>
+          {
+            (grandTotalPrice >= 0)
+            &&
+            (
+              <p>
+                Grand Total (&#8358;): {grandTotalPrice}
+              </p>
+            )
+          }
+          <Modal
+            hideModal={this.hideModal}
+            deleteRow={this.deleteRow}
+            updatePortion={this.updatePortion}
+            notify={this.notify}
+            {...this.props}
+          />
+          <ToastContainer />
         </div>
         <Footer />
       </div>
@@ -103,12 +169,34 @@ class CustomerOrder extends Component {
 
 CustomerOrder.propTypes = {
   orders: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  setModal: PropTypes.func.isRequired,
+  updateOrder: PropTypes.func.isRequired,
+  deleteMealInEditOrder: PropTypes.func.isRequired,
+  updateMealPortion: PropTypes.func.isRequired,
+  setCustomerOrders: PropTypes.func.isRequired,
+  getOrders: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  orders: state.orders
+  orders: state.orders,
+  modal: state.modal,
+  editOrder: state.orders.editOrder,
+  userId: state.login.user.id
 });
 
-export default connect(mapStateToProps)(withRouter(CustomerOrder));
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    setModal,
+    updateOrder,
+    deleteMealInEditOrder,
+    updateMealPortion,
+    setCustomerOrders,
+    setEditOrder,
+    deleteOrder,
+    getOrders
+  },
+  dispatch
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CustomerOrder));

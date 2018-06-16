@@ -1,16 +1,19 @@
 /* eslint jsx-a11y/label-has-for:0 */
+/* eslint class-methods-use-this:0 */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import jwt from 'jsonwebtoken';
-import classname from 'classnames';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import '../../assests/css/cart.css';
+import '../../assets/css/table.css';
 import serverReq from '../../helpers/serverReq';
 import { getFromLs } from '../../helpers/Ls';
 import isExpired from '../../helpers/isExpired';
-import { emptyCart } from '../../actions/cart';
+import { emptyCart, deleteMealInCart } from '../../actions/cart';
+import { orderServerRes } from '../../actions/orders';
 import tableHead from '../../helpers/tableHead';
 import TableHead from '../common/Table/TableHead';
 import TableRow from '../common/Table/TableRow';
@@ -22,13 +25,13 @@ class Cart extends Component {
     super(props);
     this.state = {
       deliveryAddress: '',
-      message: '',
-      success: false
     };
 
     this.setTotalPrice = this.setTotPrice.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onOrder = this.onOrder.bind(this);
+    this.notify = this.notify.bind(this);
+    this.deleteRow = this.deleteRow.bind(this);
   }
 
   componentWillMount() {
@@ -43,6 +46,8 @@ class Cart extends Component {
     if (cart && cart.length < 1) {
       return history.push('/dashboard');
     }
+
+    this.setTotPrice();
   }
 
   componentDidUpdate() {
@@ -55,19 +60,25 @@ class Cart extends Component {
 
   async onOrder(e) {
     e.preventDefault();
-    const { dispatch, history, cart } = this.props;
+    const {
+      dispatch,
+      history,
+      cart
+    } = this.props;
     const { deliveryAddress } = this.state;
     const token = getFromLs('jwt');
     if (token) {
       const {
-        user,
+        admin,
         exp
       } = jwt.decode(token);
 
-      if (!isExpired(exp) && !user.admin && cart.length > 0) {
+      if (!isExpired(exp) && !admin && cart.length > 0) {
         const response = await serverReq('post', '/api/v1/orders', { deliveryAddress, meals: cart }, token);
         const { success, message } = response.data;
-        this.setState({ success, message });
+        // this.setState({ success, message });
+        dispatch(orderServerRes({ success, message }));
+        this.notify(this.props.orderServerRes.message);
         dispatch(emptyCart());
       }
     } else {
@@ -88,12 +99,23 @@ class Cart extends Component {
     dispatch(setCartTotalPrice(totPrice));
   }
 
+  notify(msg) {
+    toast(msg, {
+      position: toast.POSITION.TOP_CENTER,
+      className: 'toast',
+      progressClassName: 'toast-progress'
+    });
+  }
+
+  deleteRow(sn) {
+    const { dispatch } = this.props;
+    const id = sn - 1;
+    dispatch(deleteMealInCart(id));
+    this.notify('Meal deleted successfully!');
+  }
+
   render() {
     const { cart, totPrice } = this.props;
-    const {
-      message,
-      success
-    } = this.state;
     return (
       <div className="main-container">
         <div className="title" id="cart-title">
@@ -101,7 +123,7 @@ class Cart extends Component {
         </div>
         <hr />
         <div className="table-container">
-          {
+          {/* {
             message
             &&
             <p
@@ -111,7 +133,7 @@ class Cart extends Component {
             >
               {message}
             </p>
-          }
+          } */}
 
           <form onSubmit={this.onOrder}>
             <p>
@@ -132,7 +154,21 @@ class Cart extends Component {
               <TableHead tableHead={tableHead.cartTableHead} />
               <tbody>
                 {
-                  cart.map((meal, i) => <TableRow key={i} item={meal} sn={++i} />)
+                  cart.map((meal, i) => {
+                    const price = meal.unitPrice * meal.portion;
+                    const item = {
+                      ...meal,
+                      price
+                    };
+                    return (
+                      <TableRow
+                        key={i}
+                        item={item}
+                        sn={++i}
+                        deleteRow={this.deleteRow}
+                      />
+                    );
+                  })
                 }
               </tbody>
             </table>
@@ -152,6 +188,7 @@ class Cart extends Component {
               </button>
             </div>
           </form>
+          <ToastContainer />
         </div>
         <Footer />
       </div>
@@ -163,12 +200,14 @@ Cart.propTypes = {
   cart: PropTypes.array.isRequired,
   totPrice: PropTypes.number.isRequired,
   history: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired
+  dispatch: PropTypes.func.isRequired,
+  orderServerRes: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   cart: state.cart,
-  totPrice: state.cartTotalPrice
+  totPrice: state.cartTotalPrice,
+  orderServerRes: state.orders.serverRes
 });
 
 export default connect(mapStateToProps)(withRouter(Cart));

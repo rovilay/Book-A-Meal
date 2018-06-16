@@ -1,57 +1,53 @@
+/* eslint class-methods-use-this: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-// import { connect } from 'react-redux';
-// import { withRouter } from 'react-router-dom';
-import moment from 'moment';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
-import { storeInLs, getFromLs } from '../../../helpers/Ls';
-import serverReq from '../../../helpers/serverReq';
-import '../../../assests/css/menu.css';
-import waiter from '../../../assests/images/waiter2.svg';
+import '../../../assets/css/menu.css';
+import waiter from '../../../assets/images/waiter2.svg';
 import navData from '../../../helpers/navData';
-import { setNav } from '../../../actions/navLinks';
-import setTodayMenu from '../../../actions/menu';
 import Menu from '../../common/Menu';
 import Footer from '../../common/Footer';
 
 
 class CustomerDashboard extends Component {
+  constructor(props) {
+    super(props);
+
+    this.notify = this.notify.bind(this);
+  }
   componentWillMount() {
-    const [DD, MM, YYYY] = moment().format('DD-MM-YYYY').split('-');
     const { history, token } = this.props;
-    if (token) {
-      serverReq('get', `/api/v1/menus/${DD}/${MM}/${YYYY}`, '', token)
-        .then((response) => {
-          const { data } = response;
-          if (data) {
-            storeInLs('todayMenu', data);
-          }
-        })
-        .catch(err => err);
-    } else {
+    if (!token) {
       history.push('/');
     }
   }
 
   componentDidMount() {
-    const { dispatch } = this.props;
-    const todayMenu = getFromLs('todayMenu');
+    const { getTodayMenu, setNav } = this.props;
+    setNav(navData.customerNav);
+    getTodayMenu();
+  }
 
-    dispatch(setNav(navData.customerNav));
-
-    if (todayMenu && todayMenu.success) {
-      const { success, message, menu } = todayMenu;
-      const { Meals } = menu[0];
-      dispatch(setTodayMenu({ success, message, Meals }));
-    }
+  notify() {
+    toast.success('Meal added to cart!', {
+      position: toast.POSITION.BOTTOM_LEFT,
+      className: 'toast',
+      progressClassName: 'toast-progress'
+    });
   }
 
   render() {
-    const { todayMenu } = this.props;
+    const { user, todayMenu } = this.props;
+    const { firstName, lastName } = user;
     return (
       <div className="main-container">
         <div className="container">
           <div className="welcome">
+            <p>
+              Welcome, {firstName} {lastName}
+            </p>
             <img
               className="img-circle"
               src={waiter}
@@ -61,8 +57,11 @@ class CustomerDashboard extends Component {
           </div>
           <Menu
             menu={todayMenu}
+            notify={this.notify}
+            {...this.props}
           />
         </div>
+        <ToastContainer />
         <Footer />
       </div>
     );
@@ -70,10 +69,12 @@ class CustomerDashboard extends Component {
 }
 
 CustomerDashboard.propTypes = {
-  dispatch: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired,
   token: PropTypes.string.isRequired,
-  todayMenu: PropTypes.array.isRequired
+  user: PropTypes.object.isRequired,
+  getTodayMenu: PropTypes.func.isRequired,
+  todayMenu: PropTypes.array.isRequired,
+  setNav: PropTypes.func.isRequired,
 };
 
 export default CustomerDashboard;

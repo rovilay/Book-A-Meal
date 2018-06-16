@@ -1,22 +1,14 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
-import { connect } from 'react-redux';
-import jwt from 'jsonwebtoken';
 
-import { getFromLs } from '../../helpers/Ls';
-import { addMealToCart } from '../../actions/cart';
 import isExpired from '../../helpers/isExpired';
 
 class MealCard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isAdmin: false,
-      portion: 0
-    };
 
     this.onChange = this.onChange.bind(this);
+    this.onSubmit = this.onSubmit.bind(this);
   }
 
   onChange(e) {
@@ -24,38 +16,43 @@ class MealCard extends Component {
     this.setState({ [name]: parseInt(value.trim(), 10) });
   }
 
-  render() {
-    const { mealData, dispatch, history } = this.props;
-    const { isAdmin, portion } = this.state;
-    const onSubmit = (e) => {
-      e.preventDefault();
-      const token = getFromLs('jwt');
-      if (token) {
-        const {
-          user,
-          exp
-        } = jwt.decode(token);
-        if (!isExpired(exp) && !user.admin) {
-          dispatch(addMealToCart({ ...mealData, portion }));
-          this.setState({ isAdmin: user.admin });
-        }
-      } else {
-        history.push('/login');
+  onSubmit(e) {
+    const {
+      mealData,
+      history,
+      notify,
+      user,
+      addMealToCart
+    } = this.props;
+    const { portion } = this.state;
+
+    if (!isExpired(user.expire) && !user.admin) {
+      addMealToCart({ ...mealData, portion });
+      if (notify) {
+        notify();
       }
-    };
+    } else {
+      history.push('/login');
+    }
+
+    e.preventDefault();
+  }
+
+  render() {
+    const { mealData, user } = this.props;
     return (
       <div className="menu-box">
         <img src={mealData.image} alt="menu02" />
-        <form className="menu-info" onSubmit={onSubmit}>
-          <h3>
+        <form className="menu-info" onSubmit={this.onSubmit}>
+          <h4>
             {mealData.title}
-          </h3>
+          </h4>
           <p className="bold">Price (&#8358;):
             <span> {mealData.price}</span>
           </p>
           <p>{mealData.description}</p>
           {
-            (!isAdmin)
+            (!user.admin)
             &&
             (
               <span>
@@ -87,11 +84,17 @@ class MealCard extends Component {
   }
 }
 
-MealCard.propTypes = {
-  mealData: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+MealCard.defaultProps = {
+  notify: undefined
 };
 
-export default connect()(withRouter(MealCard));
+MealCard.propTypes = {
+  mealData: PropTypes.object.isRequired,
+  history: PropTypes.object.isRequired,
+  notify: PropTypes.func,
+  user: PropTypes.object.isRequired,
+  addMealToCart: PropTypes.func.isRequired
+};
+
+export default MealCard;
 

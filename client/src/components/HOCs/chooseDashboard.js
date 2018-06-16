@@ -1,50 +1,47 @@
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
-import jwt from 'jsonwebtoken';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 
 import isExpired from '../../helpers/isExpired';
-import { setDefaultNav } from '../../actions/navLinks';
 import { getFromLs } from '../../helpers/Ls';
+import getTodayMenu from '../../actions/menu';
+import { addMealToCart } from '../../actions/cart';
+import { setDefaultNav, setNav } from '../../actions/navLinks';
 
+/**
+ *
+ * @export {function} HOC function that returns a component
+ * @param  {any} CompA Caterer/Admin dashboard component
+ * @param  {any} CompB Customer dashboard component
+ * @return {Component} depending on if user is a customer or caterer/admin
+ */
 export default function (CompA, CompB) {
   class ChooseDashboard extends Component {
     constructor(props) {
       super(props);
       this.state = {
-        userData: {},
-        expire: '',
         token: ''
       };
     }
 
     componentWillMount() {
-      const { history, dispatch } = this.props;
+      const { history } = this.props;
+      const { expire } = this.props.user;
       const token = getFromLs('jwt');
-      if (token) {
-        const {
-          user: userData,
-          exp
-        } = jwt.decode(token);
-
-        this.setState({ userData: { ...userData }, expire: exp, token });
-      } else {
-        history.push('/login');
-        dispatch(setDefaultNav());
-      }
-
-      const { expire } = this.state;
 
       if (isExpired(expire)) {
-        history.push('/');
-        dispatch(setDefaultNav());
+        this.props.setDefaultNav();
+        return history.push('/login');
       }
+
+      this.setState({ token });
     }
 
     render() {
-      const { userData, token } = this.state;
-      const { admin } = userData;
+      const { token } = this.state;
+      const { admin } = this.props.user;
       return (
         <div>
           {
@@ -60,8 +57,12 @@ export default function (CompA, CompB) {
 
   ChooseDashboard.propTypes = {
     history: PropTypes.object.isRequired,
-    dispatch: PropTypes.func.isRequired,
-    todayMenu: PropTypes.array.isRequired
+    setDefaultNav: PropTypes.func.isRequired,
+    setNav: PropTypes.func.isRequired,
+    user: PropTypes.object.isRequired,
+    todayMenu: PropTypes.array.isRequired,
+    addMealToCart: PropTypes.func.isRequired,
+
   };
 
   const mapStateToProps = state => ({
@@ -69,5 +70,15 @@ export default function (CompA, CompB) {
     todayMenu: state.todayMenu.Meals
   });
 
-  return connect(mapStateToProps)(withRouter(ChooseDashboard));
+  const mapDispatchToProps = dispatch => bindActionCreators(
+    {
+      setDefaultNav,
+      getTodayMenu,
+      setNav,
+      addMealToCart
+    },
+    dispatch
+  );
+
+  return connect(mapStateToProps, mapDispatchToProps)(withRouter(ChooseDashboard));
 }

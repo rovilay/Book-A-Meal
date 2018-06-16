@@ -1,7 +1,9 @@
-const setUserData = ({
+export const setUserData = ({
   admin = '',
   success: isLogin,
   message: loginMessage,
+  firstName = '',
+  lastName = '',
   id = '',
   exp: expire = ''
 }) => (
@@ -11,10 +13,16 @@ const setUserData = ({
       id,
       loginMessage,
       isLogin,
+      firstName,
+      lastName,
       admin,
       expire
     }
   }
 );
 
-export default setUserData;
+export const logOutUser = () => (
+  {
+    type: 'LOG_OUT_USER'
+  }
+);

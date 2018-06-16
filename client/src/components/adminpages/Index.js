@@ -10,6 +10,7 @@ class AdminDashboard extends Component {
   componentDidMount() {
     this.props.dispatch(setNav(navData.adminNavDefault));
   }
+
   render() {
     return (
       <div>

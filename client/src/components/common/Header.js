@@ -3,10 +3,12 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
+import FontAwesome from 'react-fontawesome';
 
 import { delFromLs } from '../../helpers/Ls';
 import { emptyCart } from '../../actions/cart';
 import { setDefaultNav } from '../../actions/navLinks';
+import { logOutUser } from '../../actions/login';
 
 const Header = (props) => {
   const { navLinks, history, dispatch } = props;
@@ -15,6 +17,7 @@ const Header = (props) => {
     delFromLs('jwt');
     dispatch(emptyCart());
     dispatch(setDefaultNav());
+    dispatch(logOutUser());
     history.push('/');
   };
   return (
@@ -35,14 +38,17 @@ const Header = (props) => {
                   </button>
                 );
               }
-              if (nav.title === 'Cart(4)') {
+              if (nav.title === 'Cart') {
                 return (
                   <NavLink
                     to={nav.link}
                     key={i}
                     className="is-active"
                   >
-                    Cart({props.cart.length})
+                    <FontAwesome
+                      name="cart-plus"
+                    />
+                    ({props.cart.length})
                   </NavLink>
                 );
               }

@@ -1,5 +1,7 @@
 import axios from 'axios';
 
+import { getFromLs } from './Ls';
+
 const baseUrl = 'http://Localhost:4000';
 /**
  * Sends async server requests using the axios api
@@ -9,13 +11,14 @@ const baseUrl = 'http://Localhost:4000';
  * @param  {any} data - the payload to be sent with the request (optional)
  * depending on the request method
  * @param  {any} authToken - the token for setting authorization header (optional)
- * @return {promise} reponse data
+ * @return {Promise} reponse data or error
  */
 async function serverReq(method, url, data = {}, authToken) {
+  const token = getFromLs('jwt') || authToken;
   try {
-    if (authToken) {
+    if (token) {
       axios.interceptors.request.use((config) => {
-        config.headers.Authorization = `Bearer ${authToken}`;
+        config.headers.Authorization = `Bearer ${token}`;
         return config;
       });
     }

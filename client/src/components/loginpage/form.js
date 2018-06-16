@@ -5,7 +5,7 @@ import jwt from 'jsonwebtoken';
 
 import serverReq from '../../helpers/serverReq';
 import { storeInLs, delFromLs } from '../../helpers/Ls';
-import setUserData from '../../actions/login';
+import { setUserData } from '../../actions/login';
 
 // import validator from 'validator';
 
@@ -33,19 +33,25 @@ class LoginForm extends Component {
       token,
       message,
       success,
+      firstName,
+      lastName
     } = response.data;
 
     if (success) {
       storeInLs('jwt', token);
       const {
-        user,
+        id,
+        admin,
         exp
       } = jwt.decode(token);
 
       dispatch(setUserData({
         message,
         success,
-        ...user,
+        id,
+        admin,
+        firstName,
+        lastName,
         exp
       }));
 

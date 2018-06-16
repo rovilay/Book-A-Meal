@@ -115,7 +115,7 @@ class MenusController {
     const newMenu = req.body;
     checkMeal(newMenu.meals, next)
       .then((check) => {
-        if (check === true) {
+        if (check) {
           db.Menu.findOrCreate({
             where: { postOn: newMenu.postOn },
             defaults: { UserId: req.user.id }

@@ -3,6 +3,8 @@ const userDataDefaultState = {
     id: '',
     loginMessage: '',
     isLogin: false,
+    firstName: '',
+    lastName: '',
     admin: '',
     expire: ''
   }
@@ -17,6 +19,8 @@ const loginReducer = (state = userDataDefaultState, action) => {
           ...action.userData
         }
       };
+    case 'LOG_OUT_USER':
+      return { ...userDataDefaultState };
     default:
       return state;
   }

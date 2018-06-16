@@ -3,10 +3,12 @@ import ordersController from '../controller/orders';
 import validateOrder from '../middlewares/validate/orders';
 import checkTime from '../middlewares/checktime';
 import adminOnly from '../middlewares/adminOnly';
+import authorize from '../middlewares/authenticate';
 import customerOnly from '../middlewares/customerOnly';
 
 const ordersRouter = express.Router();
 
+ordersRouter.use(authorize);
 ordersRouter.get('/api/v1/orders', adminOnly, ordersController.getAllOrders);
 
 ordersRouter.get('/api/v1/orders/:userId', ordersController.getOrdersById);

@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import setSuccessfulSignUpMsg from '../../actions/signup';
 import Form from './form';
 import Footer from '../common/Footer';
-import '../../assests/css/login.css';
+import '../../assets/css/login.css';
 
 
 class LogInPage extends Component {

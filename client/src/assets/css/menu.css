@@ -52,10 +52,24 @@
   text-align: center
 }
 
+.empty {
+  font-size: 4rem;
+  color: #d3d3d3;
+  font-weight: bold;
+  padding-left: 6.5rem;
+  padding-top: 4rem;
+}
+
 @media screen and (max-width: 500px) {
   .card .menu-title {
     text-transform: capitalize;
     font-size: 1.8rem;
     font-weight: 700;
+  }
+  .empty {
+    font-size: 1.5em;
+    color: #d3d3d3;
+    font-weight: bold;
+    padding-left: 4.5rem;
   }
 }
