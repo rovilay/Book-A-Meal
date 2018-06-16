@@ -2,6 +2,7 @@ const modalDefaultState = {
   isOpen: false,
   isEdit: false,
   isInfo: false,
+  isSetMenu: false,
   close: true,
   content: {},
   contentLable: ''

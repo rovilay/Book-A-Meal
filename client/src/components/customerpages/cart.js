@@ -123,18 +123,6 @@ class Cart extends Component {
         </div>
         <hr />
         <div className="table-container">
-          {/* {
-            message
-            &&
-            <p
-              id="alert"
-              role="alert"
-              className={classname('alert-danger', { 'alert-success': success })}
-            >
-              {message}
-            </p>
-          } */}
-
           <form onSubmit={this.onOrder}>
             <p>
               <label htmlFor="address">

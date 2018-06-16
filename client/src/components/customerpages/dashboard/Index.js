@@ -5,7 +5,6 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import '../../../assets/css/menu.css';
-import waiter from '../../../assets/images/waiter2.svg';
 import navData from '../../../helpers/navData';
 import Menu from '../../common/Menu';
 import Footer from '../../common/Footer';
@@ -50,7 +49,7 @@ class CustomerDashboard extends Component {
             </p>
             <img
               className="img-circle"
-              src={waiter}
+              src="https://res.cloudinary.com/dcqnswemi/image/upload/v1529142882/waiter2.svg"
               alt="waiter"
             />
             <p>Happy Eating!</p>

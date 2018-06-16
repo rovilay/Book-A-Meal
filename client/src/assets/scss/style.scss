@@ -245,7 +245,7 @@ input[type=submit] {
 
 .btn-1:hover,
 .btn-1:focus {
-  transition: background-color 0.2s ease-out
+  transition: background-color 0.05s ease-in
 }
 
 .loginbtn {
@@ -335,6 +335,27 @@ input[type=submit] {
 		height: 100%;
 		top: 3%
 	}
+}
+
+.menu_table table{
+	display: table;
+	width: 100%;
+}
+.menu_table table thead,   .menu_table table tbody {
+	float: left;
+	width: 100%;
+}
+.menu_table table tbody {
+	overflow: auto;
+	height: 400px;
+}
+.menu_table table tr {
+	width: 100%;
+	display: table;
+	text-align: center;
+}
+.menu_table table th,   .menu_table table td {
+	width:20%;
 }
 
 /* footer */

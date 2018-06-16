@@ -10,7 +10,7 @@ import CustomerDashboard from '../components/customerpages/dashboard/Index';
 import customerOrder from '../components/customerpages/order';
 import Cart from '../components/customerpages/Cart';
 import CheckLogin from '../components/HOCs/checkLogin';
-import AdminDashboard from '../components/adminpages/Index';
+import AdminDashboard from '../components/adminpages/dashboard/Index';
 import NotFoundPage from '../components/common/NotFound';
 
 const AppRouter = () => (

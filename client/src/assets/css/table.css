@@ -79,6 +79,7 @@ table {
   width: 100%;
   border-collapse: collapse;
 }
+
 table a {
   color: rgba(224, 63, 14, 0.685);
   cursor: pointer;
