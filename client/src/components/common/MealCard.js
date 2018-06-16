@@ -1,20 +1,11 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { withRouter } from 'react-router';
-import { connect } from 'react-redux';
-import jwt from 'jsonwebtoken';
 
-import { getFromLs } from '../../helpers/Ls';
-import { addMealToCart } from '../../actions/cart';
 import isExpired from '../../helpers/isExpired';
 
 class MealCard extends Component {
   constructor(props) {
     super(props);
-    this.state = {
-      isAdmin: false,
-      portion: 0
-    };
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
@@ -26,30 +17,27 @@ class MealCard extends Component {
   }
 
   onSubmit(e) {
-    const { mealData, dispatch, history } = this.props;
+    const {
+      mealData,
+      history,
+      notify,
+      user,
+      addMealToCart
+    } = this.props;
     const { portion } = this.state;
-    e.preventDefault();
-    const token = getFromLs('jwt');
-    if (token) {
-      const {
-        admin,
-        exp
-      } = jwt.decode(token);
-      if (!isExpired(exp) && !admin) {
-        dispatch(addMealToCart({ ...mealData, portion }));
-        this.setState({ isAdmin: admin });
-        // document.querySelector('#portion').value = '';
-      } else {
-        history.push('/login');
-      }
+
+    if (!isExpired(user.expire) && !user.admin) {
+      addMealToCart({ ...mealData, portion });
+      notify();
     } else {
       history.push('/login');
     }
+
+    e.preventDefault();
   }
 
   render() {
-    const { mealData } = this.props;
-    const { isAdmin } = this.state;
+    const { mealData, user } = this.props;
     return (
       <div className="menu-box">
         <img src={mealData.image} alt="menu02" />
@@ -62,7 +50,7 @@ class MealCard extends Component {
           </p>
           <p>{mealData.description}</p>
           {
-            (!isAdmin)
+            (!user.admin)
             &&
             (
               <span>
@@ -96,9 +84,11 @@ class MealCard extends Component {
 
 MealCard.propTypes = {
   mealData: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  notify: PropTypes.func.isRequired,
+  user: PropTypes.object.isRequired,
+  addMealToCart: PropTypes.func.isRequired
 };
 
-export default connect()(withRouter(MealCard));
+export default MealCard;
 

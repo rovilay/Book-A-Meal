@@ -19,6 +19,7 @@ const Menu = (props) => {
                 <MealCard
                   key={meal.id}
                   mealData={meal}
+                  {...props}
                 />
               ))
             }
