@@ -6,6 +6,8 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import jwt from 'jsonwebtoken';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import '../../assets/css/table.css';
 import Modal from '../common/modal';
@@ -34,10 +36,10 @@ class CustomerOrder extends Component {
     this.deleteRow = this.deleteRow.bind(this);
     this.updatePortion = this.updatePortion.bind(this);
     this.getCustomerOrders = this.getCustomerOrders.bind(this);
+    this.notify = this.notify.bind(this);
   }
   componentDidMount() {
     this.getCustomerOrders();
-    // this.addOrdersToStore();
     this.hideModal();
   }
 
@@ -71,21 +73,20 @@ class CustomerOrder extends Component {
     });
   }
 
-  // addOrdersToStore() {
-  //   const orders = getFromLs('orders');
-  //   if (orders) {
-  //     this.props.setCustomerOrders({ ...orders });
-  //   }
-  // }
-
   deleteRow(id) {
     this.props.deleteMealInEditOrder(id);
-    console.log('row deleted');
   }
-
 
   updatePortion(mealId, portion) {
     this.props.updateMealPortion({ mealId, portion });
+  }
+
+  notify(msg) {
+    toast(msg, {
+      position: toast.POSITION.TOP_CENTER,
+      className: 'toast',
+      progressClassName: 'toast-progress'
+    });
   }
 
   render() {
@@ -154,8 +155,10 @@ class CustomerOrder extends Component {
             hideModal={this.hideModal}
             deleteRow={this.deleteRow}
             updatePortion={this.updatePortion}
+            notify={this.notify}
             {...this.props}
           />
+          <ToastContainer />
         </div>
         <Footer />
       </div>
@@ -172,7 +175,7 @@ CustomerOrder.propTypes = {
   deleteMealInEditOrder: PropTypes.func.isRequired,
   updateMealPortion: PropTypes.func.isRequired,
   setCustomerOrders: PropTypes.func.isRequired,
-  getOrders: PropTypes.func.isRequired
+  getOrders: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({

@@ -11,22 +11,13 @@ const EditOrderTable = (props) => {
     title,
     editOrder,
     updateOrder,
+    notify,
+    orders
   } = props;
   const { orderId, orderedMeals: meals, totalPrice } = editOrder;
 
   return (
     <div className="table-container">
-      {/* {
-        message
-        &&
-        <p
-          id="alert"
-          role="alert"
-          className={classname('alert-danger', { 'alert-success': success })}
-        >
-          {message}
-        </p>
-      } */}
       <h2 className="title">
         {title}
       </h2>
@@ -38,6 +29,7 @@ const EditOrderTable = (props) => {
         const deliveryAddress = document.getElementById('delivery-address').value.trim();
         const data = { deliveryAddress, meals };
         updateOrder(orderId, data);
+        notify(orders.serverRes.message);
       }}
       >
         <p>
@@ -110,6 +102,8 @@ EditOrderTable.propTypes = {
   title: PropTypes.string.isRequired,
   editOrder: PropTypes.object.isRequired,
   updateOrder: PropTypes.func.isRequired,
+  notify: PropTypes.func.isRequired,
+  orders: PropTypes.object.isRequired
 };
 
 export default EditOrderTable;
