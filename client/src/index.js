@@ -9,6 +9,7 @@ import { persistor, store } from './store/configureStore';
 import AppRouter from './routers/AppRouter';
 import './assets/scss/style.scss';
 import './assets/css/create-menu.css';
+import './assets/css/table.css';
 
 // store.subscribe(() => {
 //   const state = store.getState();
