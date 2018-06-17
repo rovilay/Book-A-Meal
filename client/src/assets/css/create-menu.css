@@ -71,7 +71,7 @@
     border-radius: 4px;
 }
 
-.setMenuCard form button {
+.addBtn {
     width: 100%;
     margin-top: 10px;
     padding: 10px;
@@ -82,14 +82,20 @@
     font-size: 20px;
     cursor: pointer;
 }
-
-.setMenuCard form button:hover {
+.addBtn:hover {
     background: #ff8619;
-    transition: background-color 1s ease-out
+    color: snow;
+    transition: background-color 0.05s ease-out
+}
+
+.addBtn:disabled, .addBtn:disabled:hover {
+	background: #8e8d8d
 }
 
 .checkbox-card {
     display: grid;
+    overflow-y: scroll;
+    height: 100px;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1em
 }
