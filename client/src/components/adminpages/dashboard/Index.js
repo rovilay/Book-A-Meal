@@ -15,7 +15,7 @@ import {
   getMenus,
   postMenu
 } from '../../../actions/admin';
-import MenuTable from './MenuTable/Index';
+import MenuTable from './MenuTable/MenuTable';
 import SetMenuCard from './MenuCard/setMenu';
 import Footer from '../../common/Footer';
 
