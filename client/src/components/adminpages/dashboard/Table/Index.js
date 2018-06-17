@@ -8,14 +8,14 @@ import MenuTableRow from './MenuTableRow';
 
 class MenuTable extends Component {
   render() {
-    const { menus } = this.props;
+    const sortedMenus = this.props.menus.sort((a, b) => new Date(b.postOn) - new Date(a.postOn));
     return (
       <div className="menu_table">
         <table>
           <TableHead tableHead={tableHead.menuTableHead} />
           <tbody>
             {
-              menus.map((menu, i) => {
+              sortedMenus.map((menu, i) => {
                 const {
                   id: menuId,
                   postOn,

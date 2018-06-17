@@ -226,10 +226,6 @@ input[type=submit] {
 	&:hover {
 		transition: background-color 0.1s ease-out;
 	}
-	// &:focus {
-	// 	background: $color_west_side_approx;
-	// 	transition: background-color 1s ease-out;
-	// }
 }
 
 .btn-1 {
@@ -246,6 +242,11 @@ input[type=submit] {
 .btn-1:hover,
 .btn-1:focus {
   transition: background-color 0.05s ease-in
+}
+
+.btn-1:disabled:hover,
+.btn-1:disabled:focus {
+	color: #8e8d8d
 }
 
 .loginbtn {
@@ -337,6 +338,8 @@ input[type=submit] {
 	}
 }
 
+/* Admin Menu Table*/
+
 .menu_table table{
 	display: table;
 	width: 100%;
@@ -356,6 +359,11 @@ input[type=submit] {
 }
 .menu_table table th,   .menu_table table td {
 	width:20%;
+}
+
+/* Menu Form */
+input[type=checkbox] {
+	cursor: pointer;
 }
 
 /* footer */
