@@ -78,35 +78,57 @@ input[type=text] {
 table {
   width: 100%;
   border-collapse: collapse;
+  display: table;
+}
+
+table thead,   table tbody {
+	float: left;
+	width: 100%;
+}
+
+table tbody {
+	overflow: auto;
+	max-height: 400px;
 }
 
 table a {
   color: rgba(224, 63, 14, 0.685);
   cursor: pointer;
 }
-tr:nth-of-type(odd) {
+
+table tr {
+	width: 100%;
+	display: table;
+	text-align: center;
+}
+
+table th,   table td {
+	width:20%;
+}
+
+table tr:nth-of-type(odd) {
   background-color: #ddd
 }
 
-tr:nth-of-type(even) {
+table tr:nth-of-type(even) {
   background-color: snow
 }
 
-tr th {
+table tr th {
   background-color: #61b750;
   color: white;
   font-weight: bold;
   padding: 1.4rem
 }
 
-td {
+table td {
   padding: 5px;
   border: 1px solid white;
   text-align: center;
   padding: 1.4rem
 }
 
-tr:hover {
+table tr:hover {
   background: rgba(97, 183, 80, 0.411)
 }
 
@@ -130,6 +152,32 @@ tr:hover {
 .toast-progress {
   color: #ff8619
 }
+
+/* Admin Menu Table*/
+
+/* .menu_table table{
+	display: table;
+	width: 100%;
+}
+
+.menu_table table tbody {
+	overflow: auto;
+	height: 100px;
+}
+.menu_table table tr {
+	width: 100%;
+	display: table;
+	text-align: center;
+}
+.menu_table table th,   .menu_table table td {
+	width:20%;
+} */
+
+/* Menu Form */
+input[type=checkbox] {
+	cursor: pointer;
+}
+
 
 @media screen and (max-width:530px) {
   .container {

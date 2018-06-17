@@ -338,33 +338,33 @@ input[type=submit] {
 	}
 }
 
-/* Admin Menu Table*/
+// /* Admin Menu Table*/
 
-.menu_table table{
-	display: table;
-	width: 100%;
-}
-.menu_table table thead,   .menu_table table tbody {
-	float: left;
-	width: 100%;
-}
-.menu_table table tbody {
-	overflow: auto;
-	height: 400px;
-}
-.menu_table table tr {
-	width: 100%;
-	display: table;
-	text-align: center;
-}
-.menu_table table th,   .menu_table table td {
-	width:20%;
-}
+// .menu_table table{
+// 	display: table;
+// 	width: 100%;
+// }
+// .menu_table table thead,   .menu_table table tbody {
+// 	float: left;
+// 	width: 100%;
+// }
+// .menu_table table tbody {
+// 	overflow: auto;
+// 	height: 100px;
+// }
+// .menu_table table tr {
+// 	width: 100%;
+// 	display: table;
+// 	text-align: center;
+// }
+// .menu_table table th,   .menu_table table td {
+// 	width:20%;
+// }
 
-/* Menu Form */
-input[type=checkbox] {
-	cursor: pointer;
-}
+// /* Menu Form */
+// input[type=checkbox] {
+// 	cursor: pointer;
+// }
 
 /* footer */
 footer {
