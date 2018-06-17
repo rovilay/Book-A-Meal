@@ -47,13 +47,14 @@ const ModalTableRow = (props) => {
 
 ModalTableRow.defaultProps = {
   isEdit: false,
+  deleteRow: undefined
 };
 
 ModalTableRow.propTypes = {
   item: PropTypes.object.isRequired,
   isEdit: PropTypes.bool,
   id: PropTypes.any.isRequired,
-  deleteRow: PropTypes.func.isRequired,
+  deleteRow: PropTypes.func,
 };
 
 export default ModalTableRow;

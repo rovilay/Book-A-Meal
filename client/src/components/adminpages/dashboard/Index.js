@@ -8,15 +8,10 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import navData from '../../../helpers/navData';
 import { setNav } from '../../../actions/navLinks';
-import {
-  getMeals,
-  addMealToNewMenu,
-  removeMealFromNewMenu,
-  getMenus,
-  postMenu
-} from '../../../actions/admin';
+import adminActions from '../../../actions/admin';
 import MenuTable from './MenuTable/MenuTable';
 import SetMenuCard from './MenuCard/setMenu';
+import ModalComp from './Modal/Modal';
 import Footer from '../../common/Footer';
 
 
@@ -26,13 +21,20 @@ class AdminDashboard extends Component {
 
     this.setNewMenuMeal = this.setNewMenuMeal.bind(this);
     this.submitNewMenu = this.submitNewMenu.bind(this);
+    this.showMenuDetails = this.showMenuDetails.bind(this);
+    this.hideModal = this.hideModal.bind(this);
     this.notify = this.notify.bind(this);
   }
+
+  // componentWillMount() {
+  //   this.props.setDefault();
+  // }
 
   componentDidMount() {
     this.props.setNav(navData.adminNavDefault);
     this.props.getMeals();
     this.props.getMenus();
+    this.hideModal();
   }
 
   setNewMenuMeal(mealId) {
@@ -64,6 +66,28 @@ class AdminDashboard extends Component {
     });
   }
 
+  hideModal() {
+    this.props.setModal({
+      isOpen: false,
+      isEdit: false,
+      isInfo: false,
+      close: true,
+      contentLabel: '',
+      content: {}
+    });
+  }
+
+  showMenuDetails(menuDetail) {
+    this.props.setModal({
+      isOpen: true,
+      isInfo: true,
+      isEdit: false,
+      close: false,
+      contentLabel: 'Menu details',
+      content: { menuDetails: [...menuDetail] }
+    });
+  }
+
   render() {
     return (
       <div className="main-container">
@@ -86,9 +110,16 @@ class AdminDashboard extends Component {
         <div className="container">
           <div className="menu-title">Menu List</div>
           <MenuTable
+            showMenuDetails={this.showMenuDetails}
             {...this.props}
           />
         </div>
+        <ModalComp
+          hideModal={this.hideModal}
+          // deleteRow={this.deleteRow}
+          notify={this.notify}
+          {...this.props}
+        />
         <ToastContainer />
         <Footer />
       </div>
@@ -105,24 +136,22 @@ AdminDashboard.propTypes = {
   getMenus: PropTypes.func.isRequired,
   postMenu: PropTypes.func.isRequired,
   newMenuMeals: PropTypes.array.isRequired,
-  serverRes: PropTypes.object.isRequired
+  serverRes: PropTypes.object.isRequired,
+  setModal: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   meals: state.admin.meals,
   newMenuMeals: state.admin.setMenuMeals,
   menus: state.admin.menus,
-  serverRes: state.admin.serverRes
+  serverRes: state.admin.serverRes,
+  modal: state.admin.modal
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
     setNav,
-    getMeals,
-    addMealToNewMenu,
-    removeMealFromNewMenu,
-    getMenus,
-    postMenu
+    ...adminActions
   },
   dispatch
 );

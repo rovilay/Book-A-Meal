@@ -5,12 +5,19 @@ import FontAwesome from 'react-fontawesome';
 import TableCol from '../../../common/Table/TableCol';
 
 const MenuTableRow = (props) => {
-  const { item } = props;
+  const { item, showMenuDetails } = props;
+  const menu = {
+    sn: item.sn,
+    menuId: item.menuId,
+    postOn: item.postOn,
+    createdBy: item.createdBy,
+  };
+
   return (
-    <tr key={item.menuId}>
+    <tr key={menu.menuId}>
       {
-        Object.keys(item).map((key, i) => (
-          (<TableCol dataTitle={key} val={item[key]} key={i} />)
+        Object.keys(menu).map((key, i) => (
+          (<TableCol dataTitle={key} val={menu[key]} key={i} />)
         ))
       }
 
@@ -19,7 +26,9 @@ const MenuTableRow = (props) => {
           <a
             role="button"
             href="#"
-            // onClick={showDetails}
+            onClick={() => {
+              showMenuDetails(item.Meals);
+            }}
             className="btn-col btn-2"
           >
             <FontAwesome
@@ -46,6 +55,7 @@ const MenuTableRow = (props) => {
 
 MenuTableRow.propTypes = {
   item: PropTypes.object.isRequired,
+  showMenuDetails: PropTypes.func.isRequired
 };
 
 export default MenuTableRow;

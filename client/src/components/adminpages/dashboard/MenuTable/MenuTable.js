@@ -20,16 +20,19 @@ class MenuTable extends Component {
                   id: menuId,
                   postOn,
                   User,
+                  Meals
                 } = menu;
                 const item = {
                   sn: ++i,
                   menuId,
                   postOn: moment(postOn).format('LL'),
-                  createdBy: `${User.firstName} ${User.lastName}`
+                  createdBy: `${User.firstName} ${User.lastName}`,
+                  Meals
                 };
                 return (<MenuTableRow
                   key={menuId}
                   item={item}
+                  {...this.props}
                 />);
               })
             }
@@ -41,7 +44,7 @@ class MenuTable extends Component {
 }
 
 MenuTable.propTypes = {
-  menus: PropTypes.array.isRequired
+  menus: PropTypes.array.isRequired,
 };
 
 export default MenuTable;
