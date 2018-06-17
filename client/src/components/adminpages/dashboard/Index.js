@@ -3,10 +3,15 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 
-import '../../../assets/css/create-menu.css';
 import navData from '../../../helpers/navData';
 import { setNav } from '../../../actions/navLinks';
-import { getMeals, setdefault, setNewMenu, getMenus } from '../../../actions/admin';
+import {
+  getMeals,
+  addMealToNewMenu,
+  removeMealFromNewMenu,
+  getMenus,
+  postMenu
+} from '../../../actions/admin';
 import MenuTable from './Table/Index';
 import SetMenuCard from './setMenu';
 import Footer from '../../common/Footer';
@@ -16,7 +21,8 @@ class AdminDashboard extends Component {
   constructor(props) {
     super(props);
 
-    this.addMealToMenu = this.addMealToMenu.bind(this);
+    this.setNewMenuMeal = this.setNewMenuMeal.bind(this);
+    this.submitNewMenu = this.submitNewMenu.bind(this);
   }
 
   componentDidMount() {
@@ -25,8 +31,21 @@ class AdminDashboard extends Component {
     this.props.getMenus();
   }
 
-  addMealToMenu(mealId) {
-    this.props.setNewMenu(mealId);
+  setNewMenuMeal(mealId) {
+    const checkbox = document.getElementById(mealId);
+    if (checkbox.checked === true) {
+      this.props.addMealToNewMenu(mealId);
+    } else {
+      this.props.removeMealFromNewMenu(mealId);
+    }
+  }
+
+  submitNewMenu(e) {
+    e.preventDefault();
+    const meals = [...this.props.newMenuMeals];
+    const date = document.getElementById('postOn').value;
+    const postOn = date.split('/').reverse().join('-');
+    this.props.postMenu({ postOn, meals });
   }
 
   render() {
@@ -43,11 +62,13 @@ class AdminDashboard extends Component {
         </div>
         <div className="setmenu-container">
           <SetMenuCard
+            setNewMenuMeal={this.setNewMenuMeal}
+            submitNewMenu={this.submitNewMenu}
             {...this.props}
-            addMealToMenu={this.addMealToMenu}
           />
         </div>
         <div className="container">
+          <div className="menu-title">Menu List</div>
           <MenuTable
             {...this.props}
           />
@@ -62,13 +83,16 @@ AdminDashboard.propTypes = {
   setNav: PropTypes.func.isRequired,
   getMeals: PropTypes.func.isRequired,
   meals: PropTypes.array.isRequired,
-  setNewMenu: PropTypes.func.isRequired,
-  getMenus: PropTypes.func.isRequired
+  addMealToNewMenu: PropTypes.func.isRequired,
+  removeMealFromNewMenu: PropTypes.func.isRequired,
+  getMenus: PropTypes.func.isRequired,
+  postMenu: PropTypes.func.isRequired,
+  newMenuMeals: PropTypes.array.isRequired,
 };
 
 const mapStateToProps = state => ({
   meals: state.admin.meals,
-  setMenuMeals: state.admin.setMenuMeals,
+  newMenuMeals: state.admin.setMenuMeals,
   menus: state.admin.menus
 });
 
@@ -76,8 +100,10 @@ const mapDispatchToProps = dispatch => bindActionCreators(
   {
     setNav,
     getMeals,
-    setNewMenu,
-    getMenus
+    addMealToNewMenu,
+    removeMealFromNewMenu,
+    getMenus,
+    postMenu
   },
   dispatch
 );
