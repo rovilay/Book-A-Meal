@@ -16,18 +16,6 @@ const MenuDetailsTable = (props) => {
         {title}
       </h2>
       <hr />
-      {/* <p>
-        <span className="bold">Date:</span> {date}
-      </p>
-      <p>
-        <span className="bold">Time:</span> {time}
-      </p>
-      <p>
-        <span className="bold">Address:</span> {address}
-      </p>
-      <p>
-        <span className="bold">Total Price (&#8358;):</span> {totalPrice}
-      </p> */}
       <table>
         <TableHead tableHead={tableHead.menuDetailHead} />
         <tbody>
