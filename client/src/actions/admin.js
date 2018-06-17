@@ -1,15 +1,39 @@
 import serverReq from '../helpers/serverReq';
 
 /**
- * Adds mealId to set menu in store
+ * Adds mealId to new menu in store
  *
  * @param  {string}  mealId - Id of meal for the menu
  * @return {Object} - returns an object that consist of properties type 'SET_NEW_MENU' and mealId
  */
-export const setNewMenu = mealId => (
+export const addMealToNewMenu = mealId => (
   {
-    type: 'SET_NEW_MENU',
+    type: 'ADD_MEAL_NEW_MENU',
     mealId
+  }
+);
+
+/**
+ * Remove mealId from new menu in store
+ *
+ * @param  {string}  mealId - Id of meal for the menu
+ * @return {Object} - returns an object that consist of properties type 'SET_NEW_MENU' and mealId
+ */
+export const removeMealFromNewMenu = mealId => (
+  {
+    type: 'REMOVE_MEAL_NEW_MENU',
+    mealId
+  }
+);
+
+/**
+ * Empty new menu in store
+ *
+ * @return {Object} - returns an object that consist of properties type 'SET_NEW_MENU' and mealId
+ */
+export const emptyNewMenu = () => (
+  {
+    type: 'EMPTY_NEW_MENU',
   }
 );
 
@@ -73,6 +97,9 @@ export const getMeals = () => (dispatch) => {
         const { success, meals, message } = response.data;
         dispatch(setMeals(meals));
         dispatch(serverRes({ success, message }));
+        if (success) {
+          dispatch(emptyNewMenu());
+        }
       }
     })
     .catch((err) => { console.log(err); });
@@ -88,7 +115,28 @@ export const getMenus = () => (dispatch) => {
     .then((response) => {
       if (response.data) {
         const { success, menus, message } = response.data;
-        dispatch(setMenus(menus));
+        if (menus) {
+          dispatch(setMenus(menus));
+        }
+        dispatch(serverRes({ success, message }));
+      }
+    })
+    .catch((err) => { console.log(err); });
+};
+
+/**
+ * Sends async server requests to post  new menu using the axios api
+ *
+ * @param {String} postOn - date menu should be posted {YYYY-MM-DD}
+ * @param {Array} meals - Array of meal Ids
+ * @return {Function} - function that dispatches serverRes action to the redux store
+ */
+export const postMenu = ({ postOn, meals }) => (dispatch) => {
+  serverReq('post', '/api/v1/menus', { postOn, meals })
+    .then((response) => {
+      if (response.data) {
+        const { success, message } = response.data;
+        // dispatch(setMenus(menus));
         dispatch(serverRes({ success, message }));
       }
     })

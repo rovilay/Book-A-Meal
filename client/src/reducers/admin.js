@@ -12,13 +12,25 @@ const adminReducer = (state = setDefaultAdminState, action) => {
         ...state,
         meals: [...action.meals]
       };
-    case 'SET_NEW_MENU':
+    case 'ADD_MEAL_NEW_MENU':
+      return {
+        ...state,
+        setMenuMeals: [...new Set([
+          ...state.setMenuMeals,
+          action.mealId
+        ])]
+      };
+    case 'REMOVE_MEAL_NEW_MENU':
       return {
         ...state,
         setMenuMeals: [
-          ...state.setMenuMeals,
-          action.mealId
+          ...state.setMenuMeals.filter(id => id !== action.mealId)
         ]
+      };
+    case 'EMPTY_NEW_MENU':
+      return {
+        ...state,
+        setMenuMeals: []
       };
     case 'SET_MENUS':
       return {
