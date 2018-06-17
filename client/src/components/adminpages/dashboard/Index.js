@@ -1,7 +1,10 @@
+/* eslint class-methods-use-this:0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
+import { ToastContainer, toast } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
 
 import navData from '../../../helpers/navData';
 import { setNav } from '../../../actions/navLinks';
@@ -23,6 +26,7 @@ class AdminDashboard extends Component {
 
     this.setNewMenuMeal = this.setNewMenuMeal.bind(this);
     this.submitNewMenu = this.submitNewMenu.bind(this);
+    this.notify = this.notify.bind(this);
   }
 
   componentDidMount() {
@@ -46,6 +50,18 @@ class AdminDashboard extends Component {
     const date = document.getElementById('postOn').value;
     const postOn = date.split('/').reverse().join('-');
     this.props.postMenu({ postOn, meals });
+
+    setTimeout(() => {
+      this.notify(this.props.serverRes.message);
+    }, 200);
+  }
+
+  notify(msg) {
+    toast(msg, {
+      position: toast.POSITION.TOP_CENTER,
+      className: 'toast',
+      progressClassName: 'toast-progress'
+    });
   }
 
   render() {
@@ -73,6 +89,7 @@ class AdminDashboard extends Component {
             {...this.props}
           />
         </div>
+        <ToastContainer />
         <Footer />
       </div>
     );
@@ -88,12 +105,14 @@ AdminDashboard.propTypes = {
   getMenus: PropTypes.func.isRequired,
   postMenu: PropTypes.func.isRequired,
   newMenuMeals: PropTypes.array.isRequired,
+  serverRes: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   meals: state.admin.meals,
   newMenuMeals: state.admin.setMenuMeals,
-  menus: state.admin.menus
+  menus: state.admin.menus,
+  serverRes: state.admin.serverRes
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
