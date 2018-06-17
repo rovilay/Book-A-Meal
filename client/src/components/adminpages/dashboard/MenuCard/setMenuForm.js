@@ -1,6 +1,7 @@
 /* eslint jsx-a11y/label-has-for: 0 */
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import MealCheckBoxCard from './mealCheckbox';
 
@@ -12,6 +13,8 @@ const SetMenuForm = props => (
         type="date"
         placeholder="DD / MM / YYYY"
         name="menu-date"
+        min={moment().format('YYYY-MM-DD')}
+        max={moment().add('2', 'd').format('YYYY-MM-DD')}
         id="postOn"
         required
       />

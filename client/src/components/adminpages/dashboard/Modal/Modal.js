@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
 import MenuDetailsTable from '../MenuTable/MenuDetails';
+import EditMenuTable from '../MenuTable/EditMenu';
 
 Modal.setAppElement('#root');
 const ModalComp = (props) => {
@@ -10,7 +11,7 @@ const ModalComp = (props) => {
   const {
     isOpen,
     isInfo,
-    // isEdit,
+    isEdit,
     content,
     contentLabel
   } = modal;
@@ -43,17 +44,18 @@ const ModalComp = (props) => {
         )
       }
 
-      {/* {
+      {
         (isEdit)
         &&
         (
-          <EditOrderTable
+          <EditMenuTable
             title={contentLabel}
+            content={content}
             isEdit={isEdit}
             {...props}
           />
         )
-      } */}
+      }
     </Modal>
   );
 };

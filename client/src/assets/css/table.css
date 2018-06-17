@@ -44,15 +44,23 @@ order {
 
 .btn-1:hover,
 .btn-1:focus {
-  transition: background-color 0.2s ease-out
+  transition: background-color 0.2s ease-out;
 }
 
-.order-btn {
+.btn-1:disabled:hover {
+  color: white
+}
+
+.update-btn {
   float: right;
   width: 30%;
   background: #61b750;
   color: snow;
   font-weight: bold;
+}
+
+.update-btn:disabled:hover {
+  color: white
 }
 
 /* Input */

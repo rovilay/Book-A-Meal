@@ -23,6 +23,9 @@ class AdminDashboard extends Component {
     this.submitNewMenu = this.submitNewMenu.bind(this);
     this.showMenuDetails = this.showMenuDetails.bind(this);
     this.hideModal = this.hideModal.bind(this);
+    this.editMenu = this.editMenu.bind(this);
+    this.deleteRow = this.deleteRow.bind(this);
+    this.onSubmitUpdate = this.onSubmitUpdate.bind(this);
     this.notify = this.notify.bind(this);
   }
 
@@ -35,6 +38,15 @@ class AdminDashboard extends Component {
     this.props.getMeals();
     this.props.getMenus();
     this.hideModal();
+  }
+
+  onSubmitUpdate(menuDate, meals) {
+    const { updateMenu, serverRes } = this.props;
+    const data = { meals };
+    updateMenu({ menuDate, data });
+    setTimeout(() => {
+      this.notify(serverRes.message);
+    }, 2000);
   }
 
   setNewMenuMeal(mealId) {
@@ -88,6 +100,21 @@ class AdminDashboard extends Component {
     });
   }
 
+  editMenu({ menuId, postOn, meals }) {
+    this.props.setModal({
+      isOpen: true,
+      isInfo: false,
+      isEdit: true,
+      close: false,
+      contentLabel: 'Edit Menu',
+      content: { menuId, postOn, meals }
+    });
+  }
+
+  deleteRow(id) {
+    this.props.deleteMealInEditModal(id);
+  }
+
   render() {
     return (
       <div className="main-container">
@@ -111,12 +138,14 @@ class AdminDashboard extends Component {
           <div className="menu-title">Menu List</div>
           <MenuTable
             showMenuDetails={this.showMenuDetails}
+            editMenu={this.editMenu}
             {...this.props}
           />
         </div>
         <ModalComp
           hideModal={this.hideModal}
-          // deleteRow={this.deleteRow}
+          deleteRow={this.deleteRow}
+          submitUpdate={this.onSubmitUpdate}
           notify={this.notify}
           {...this.props}
         />
@@ -138,6 +167,8 @@ AdminDashboard.propTypes = {
   newMenuMeals: PropTypes.array.isRequired,
   serverRes: PropTypes.object.isRequired,
   setModal: PropTypes.func.isRequired,
+  deleteMealInEditModal: PropTypes.func.isRequired,
+  updateMenu: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({

@@ -5,7 +5,7 @@ import FontAwesome from 'react-fontawesome';
 import TableCol from '../../../common/Table/TableCol';
 
 const MenuTableRow = (props) => {
-  const { item, showMenuDetails } = props;
+  const { item, showMenuDetails, editMenu } = props;
   const menu = {
     sn: item.sn,
     menuId: item.menuId,
@@ -37,7 +37,10 @@ const MenuTableRow = (props) => {
             />
           </a>
           <a
-            // onClick={editOrder}
+            onClick={() => {
+              const { menuId, postOn, Meals: meals } = item;
+              editMenu({ menuId, postOn, meals });
+            }}
             href="#"
             role="button"
             className="btn-col btn-2"
@@ -55,7 +58,8 @@ const MenuTableRow = (props) => {
 
 MenuTableRow.propTypes = {
   item: PropTypes.object.isRequired,
-  showMenuDetails: PropTypes.func.isRequired
+  showMenuDetails: PropTypes.func.isRequired,
+  editMenu: PropTypes.func.isRequired
 };
 
 export default MenuTableRow;

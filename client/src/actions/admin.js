@@ -116,6 +116,16 @@ const setModal = ({
   }
 );
 
+/**
+ * Deletes meal in Modal content on edit state
+ *
+ * @param {String} mealId Id of meal to delete from modal in edit state
+ * @returns {Object} returns action type 'DELETE_MEAL_EDIT_MODAL' and meal Id
+ */
+const deleteMealInEditModal = mealId => ({
+  type: 'DELETE_MEAL_EDIT_MODAL',
+  mealId
+});
 
 /**
  * Sends async server requests to get all meals using the axios api
@@ -175,6 +185,24 @@ const postMenu = ({ postOn, meals }) => (dispatch) => {
     .catch((err) => { console.log(err); });
 };
 
+/**
+ * Sends async server requests to update menu using the axios api
+ *
+ * @param {String} menuDate - date of menu to update {DD/MM/YYYY}
+ * @param {Object} data - updated menu data
+ * @return {Function} - function that dispatches serverRes action to the redux store
+ */
+const updateMenu = ({ menuDate, data }) => (dispatch) => {
+  serverReq('put', `/api/v1/menus/${menuDate}`, data)
+    .then((response) => {
+      if (response.data) {
+        const { success, message } = response.data;
+        dispatch(serverRes({ success, message }));
+      }
+    })
+    .catch((err) => { console.log(err); });
+};
+
 const adminActions = {
   postMenu,
   getMeals,
@@ -184,8 +212,10 @@ const adminActions = {
   setMenus,
   setModal,
   emptyNewMenu,
+  updateMenu,
   addMealToNewMenu,
   removeMealFromNewMenu,
+  deleteMealInEditModal
 };
 
 export default adminActions;

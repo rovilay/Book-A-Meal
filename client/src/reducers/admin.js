@@ -64,6 +64,19 @@ const adminReducer = (state = setDefaultAdminState, action) => {
         ...state,
         serverRes: { ...action.response }
       };
+    case 'DELETE_MEAL_EDIT_MODAL':
+      return {
+        ...state,
+        modal: {
+          ...state.modal,
+          content: {
+            ...state.modal.content,
+            meals: [
+              ...state.modal.content.meals.filter(meal => meal.id !== action.mealId)
+            ]
+          }
+        }
+      };
     default:
       return state;
   }

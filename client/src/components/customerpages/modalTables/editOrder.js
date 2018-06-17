@@ -87,7 +87,7 @@ const EditOrderTable = (props) => {
             type="submit"
             name="orderbtn"
             id="order-btn"
-            className="order-btn btn-1"
+            className="update-btn btn-1"
             disabled={meals.length <= 0}
           >
             Update order
