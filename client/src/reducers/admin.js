@@ -2,7 +2,16 @@ const setDefaultAdminState = {
   meals: [],
   setMenuMeals: [],
   serverRes: {},
-  menus: []
+  menus: [],
+  modal: {
+    isOpen: false,
+    isEdit: false,
+    isInfo: false,
+    isSetMenu: false,
+    close: true,
+    content: {},
+    contentLable: ''
+  }
 };
 
 const adminReducer = (state = setDefaultAdminState, action) => {
@@ -11,6 +20,13 @@ const adminReducer = (state = setDefaultAdminState, action) => {
       return {
         ...state,
         meals: [...action.meals]
+      };
+    case 'SET_ADMIN_MODAL':
+      return {
+        ...state,
+        modal: {
+          ...action.modal
+        }
       };
     case 'ADD_MEAL_NEW_MENU':
       return {

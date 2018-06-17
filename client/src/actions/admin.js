@@ -6,7 +6,7 @@ import serverReq from '../helpers/serverReq';
  * @param  {string}  mealId - Id of meal for the menu
  * @return {Object} - returns an object that consist of properties type 'SET_NEW_MENU' and mealId
  */
-export const addMealToNewMenu = mealId => (
+const addMealToNewMenu = mealId => (
   {
     type: 'ADD_MEAL_NEW_MENU',
     mealId
@@ -19,7 +19,7 @@ export const addMealToNewMenu = mealId => (
  * @param  {string}  mealId - Id of meal for the menu
  * @return {Object} - returns an object that consist of properties type 'SET_NEW_MENU' and mealId
  */
-export const removeMealFromNewMenu = mealId => (
+const removeMealFromNewMenu = mealId => (
   {
     type: 'REMOVE_MEAL_NEW_MENU',
     mealId
@@ -31,7 +31,7 @@ export const removeMealFromNewMenu = mealId => (
  *
  * @return {Object} - returns an object that consist of properties type 'SET_NEW_MENU' and mealId
  */
-export const emptyNewMenu = () => (
+const emptyNewMenu = () => (
   {
     type: 'EMPTY_NEW_MENU',
   }
@@ -43,14 +43,14 @@ export const emptyNewMenu = () => (
  * @param  {Array}  menus - an array of menu
  * @return {Object} - returns an object that consist of properties type 'SET_MENU' and menus
  */
-export const setMenus = menus => (
+const setMenus = menus => (
   {
     type: 'SET_MENUS',
     menus
   }
 );
 
-export const setDefault = () => (
+const setDefault = () => (
   {
     type: 'SET_DEFAULT',
   }
@@ -73,7 +73,7 @@ const setMeals = meals => ({
  * @param {Object} - Object that consist of success, message
  * @return {Object} - returns action type and get meals response
  */
-export const serverRes = ({
+const serverRes = ({
   success,
   message
 }) => ({
@@ -84,13 +84,45 @@ export const serverRes = ({
   }
 });
 
+/**
+ * set admin modal action
+ *
+ * @param {Boolean} isOpen- open modal
+ * @param {Boolean} isEdit- modal is in edit state
+ * @param {Boolean} isInfo- modal is in info state
+ * @param {Boolean} close- close modal
+ * @param {String} contentLabel- modal content title
+ * @param {Object} content- modal content
+ * @return {Object} - returns action type and modal controls
+ */
+const setModal = ({
+  isOpen,
+  isEdit,
+  isInfo,
+  close,
+  contentLabel,
+  content = {}
+}) => (
+  {
+    type: 'SET_ADMIN_MODAL',
+    modal: {
+      isOpen,
+      isEdit,
+      isInfo,
+      close,
+      contentLabel,
+      content
+    }
+  }
+);
+
 
 /**
  * Sends async server requests to get all meals using the axios api
  *
  * @return {Function} - function that dispatches meals and serverRes action to the redux store
  */
-export const getMeals = () => (dispatch) => {
+const getMeals = () => (dispatch) => {
   serverReq('get', '/api/v1/meals')
     .then((response) => {
       if (response.data) {
@@ -110,7 +142,7 @@ export const getMeals = () => (dispatch) => {
  *
  * @return {Function} - function that dispatches meals and serverRes action to the redux store
  */
-export const getMenus = () => (dispatch) => {
+const getMenus = () => (dispatch) => {
   serverReq('get', '/api/v1/menus')
     .then((response) => {
       if (response.data) {
@@ -131,7 +163,7 @@ export const getMenus = () => (dispatch) => {
  * @param {Array} meals - Array of meal Ids
  * @return {Function} - function that dispatches serverRes action to the redux store
  */
-export const postMenu = ({ postOn, meals }) => (dispatch) => {
+const postMenu = ({ postOn, meals }) => (dispatch) => {
   serverReq('post', '/api/v1/menus', { postOn, meals })
     .then((response) => {
       if (response.data) {
@@ -143,3 +175,17 @@ export const postMenu = ({ postOn, meals }) => (dispatch) => {
     .catch((err) => { console.log(err); });
 };
 
+const adminActions = {
+  postMenu,
+  getMeals,
+  getMenus,
+  setDefault,
+  setMeals,
+  setMenus,
+  setModal,
+  emptyNewMenu,
+  addMealToNewMenu,
+  removeMealFromNewMenu,
+};
+
+export default adminActions;
