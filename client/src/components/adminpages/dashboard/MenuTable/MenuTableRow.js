@@ -38,20 +38,6 @@ const MenuTableRow = (props) => {
               size="2x"
             />
           </a>
-          <a
-            // onClick={() => {
-            //   deleteOrder(item.orderId);
-            //   notify(orders.serverRes.message);
-            // }}
-            href="#"
-            role="button"
-            className="btn-col btn-2"
-          >
-            <FontAwesome
-              name="times"
-              size="2x"
-            />
-          </a>
         </td>
       }
     </tr>
