@@ -8,7 +8,6 @@ import mealRouter from './routes/mealRoutes';
 import menuRouter from './routes/menuRoutes';
 import ordersRouter from './routes/ordersRoutes';
 import usersRouter from './routes/usersRoutes';
-// import authorize from './middlewares/authenticate';
 import myErrorHandler from './middlewares/errorHandler';
 import swaggerDoc from './helpers/swagger.json';
 

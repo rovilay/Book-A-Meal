@@ -23,7 +23,7 @@ module.exports = (sequelize, DataTypes) => {
     image: {
       type: DataTypes.STRING,
       allowNull: false,
-      defaultValue: 'https://img.com'
+      defaultValue: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg'
     },
     UserId: {
       type: DataTypes.UUID,
