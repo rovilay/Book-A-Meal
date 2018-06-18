@@ -1,4 +1,9 @@
-/* eslint class-methods-use-this:0 */
+/*
+  eslint class-methods-use-this:0,
+  eslint no-restricted-globals: 0,
+  eslint no-restricted-globals: 0,
+  eslint no-alert: 0
+*/
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -26,6 +31,7 @@ class AdminDashboard extends Component {
     this.editMenu = this.editMenu.bind(this);
     this.deleteRow = this.deleteRow.bind(this);
     this.onSubmitUpdate = this.onSubmitUpdate.bind(this);
+    this.unCheckAll = this.unCheckAll.bind(this);
     this.notify = this.notify.bind(this);
   }
 
@@ -41,21 +47,36 @@ class AdminDashboard extends Component {
   }
 
   onSubmitUpdate(menuDate, meals) {
-    const { updateMenu, serverRes } = this.props;
+    const { updateMenu } = this.props;
     const data = { meals };
+    // if (confirm('Are you sure you want to update?')) {
+    //   updateMenu({ menuDate, data });
+    // }
     updateMenu({ menuDate, data });
     setTimeout(() => {
-      this.notify(serverRes.message);
-    }, 2000);
+      this.notify(this.props.serverRes.message);
+    }, 200);
   }
 
   setNewMenuMeal(mealId) {
-    const checkbox = document.getElementById(mealId);
+    let checkbox;
+    if (this.props.modal.isEdit) {
+      checkbox = document.getElementById(`${mealId}-edit`);
+    } else {
+      checkbox = document.getElementById(mealId);
+    }
     if (checkbox.checked === true) {
       this.props.addMealToNewMenu(mealId);
-    } else {
+    } else if (checkbox.checked === false) {
       this.props.removeMealFromNewMenu(mealId);
     }
+  }
+
+  unCheckAll(mealIdArr) {
+    mealIdArr.forEach((mealId) => {
+      const checkbox = document.getElementById(mealId);
+      checkbox.checked = false;
+    });
   }
 
   submitNewMenu(e) {
@@ -109,6 +130,7 @@ class AdminDashboard extends Component {
       contentLabel: 'Edit Menu',
       content: { menuId, postOn, meals }
     });
+    this.props.emptyNewMenu();
   }
 
   deleteRow(id) {
@@ -147,6 +169,7 @@ class AdminDashboard extends Component {
           deleteRow={this.deleteRow}
           submitUpdate={this.onSubmitUpdate}
           notify={this.notify}
+          setNewMenuMeal={this.setNewMenuMeal}
           {...this.props}
         />
         <ToastContainer />
@@ -168,7 +191,9 @@ AdminDashboard.propTypes = {
   serverRes: PropTypes.object.isRequired,
   setModal: PropTypes.func.isRequired,
   deleteMealInEditModal: PropTypes.func.isRequired,
-  updateMenu: PropTypes.func.isRequired
+  updateMenu: PropTypes.func.isRequired,
+  emptyNewMenu: PropTypes.func.isRequired,
+  modal: PropTypes.object.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -176,7 +201,8 @@ const mapStateToProps = state => ({
   newMenuMeals: state.admin.setMenuMeals,
   menus: state.admin.menus,
   serverRes: state.admin.serverRes,
-  modal: state.admin.modal
+  modal: state.admin.modal,
+  editMenuMeals: state.admin.editMenuMeals
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(

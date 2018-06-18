@@ -34,6 +34,9 @@ const ModalTableRow = (props) => {
           <button
             className="btn-col btn-1"
             onClick={() => {
+              // if (confirm('Are you sure you want to delete?')) {
+              //   deleteRow(id);
+              // }
               deleteRow(id);
             }}
           >

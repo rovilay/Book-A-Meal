@@ -68,7 +68,7 @@ const setMeals = meals => ({
 });
 
 /**
- * set meal action
+ * Sends server response as action to store
  *
  * @param {Object} - Object that consist of success, message
  * @return {Object} - returns action type and get meals response
@@ -82,6 +82,16 @@ const serverRes = ({
     success,
     message
   }
+});
+
+/**
+ * resets server response as action to store
+ *
+ * @param {Object} - Object that consist of success, message
+ * @return {Object} - returns action type and get meals response
+ */
+const resetServerRes = () => ({
+  type: 'RESET_SERVER_RES',
 });
 
 /**
@@ -117,6 +127,37 @@ const setModal = ({
 );
 
 /**
+ * ADD meal in edit menu meal content on edit state
+ *
+ * @param {String} mealId Id of meal to add from modal in edit state
+ * @returns {Object} returns action type 'ADD_MEAL_EDIT_MENU' and meal Id
+ */
+const addMealInEditMenu = mealId => ({
+  type: 'ADD_MEAL_EDIT_MENU',
+  mealId
+});
+
+/**
+ * delete meal in edit menu meal content on edit state
+ *
+ * @param {String} mealId Id of meal to add from modal in edit state
+ * @returns {Object} returns action type 'DELETE_MEAL_EDIT_MENU' and meal Id
+ */
+const deleteMealInEditMenu = mealId => ({
+  type: 'DELETE_MEAL_EDIT_MENU',
+  mealId
+});
+
+/**
+ * empty meal in edit menu meal content on edit state
+ *
+ * @returns {Object} returns action type 'EMPTY_EDIT_MENU'
+ */
+const emptyEditMenu = () => ({
+  type: 'EMPTY_EDIT_MENU'
+});
+
+/**
  * Deletes meal in Modal content on edit state
  *
  * @param {String} mealId Id of meal to delete from modal in edit state
@@ -142,6 +183,9 @@ const getMeals = () => (dispatch) => {
         if (success) {
           dispatch(emptyNewMenu());
         }
+        setTimeout(() => {
+          dispatch(resetServerRes());
+        }, 1000);
       }
     })
     .catch((err) => { console.log(err); });
@@ -161,6 +205,9 @@ const getMenus = () => (dispatch) => {
           dispatch(setMenus(menus));
         }
         dispatch(serverRes({ success, message }));
+        setTimeout(() => {
+          dispatch(resetServerRes());
+        }, 1000);
       }
     })
     .catch((err) => { console.log(err); });
@@ -178,9 +225,14 @@ const postMenu = ({ postOn, meals }) => (dispatch) => {
     .then((response) => {
       if (response.data) {
         const { success, message } = response.data;
-        // dispatch(setMenus(menus));
         dispatch(serverRes({ success, message }));
+        if (success) {
+          dispatch(emptyNewMenu());
+        }
       }
+      setTimeout(() => {
+        dispatch(resetServerRes());
+      }, 1000);
     })
     .catch((err) => { console.log(err); });
 };
@@ -198,6 +250,9 @@ const updateMenu = ({ menuDate, data }) => (dispatch) => {
       if (response.data) {
         const { success, message } = response.data;
         dispatch(serverRes({ success, message }));
+        setTimeout(() => {
+          dispatch(resetServerRes());
+        }, 1000);
       }
     })
     .catch((err) => { console.log(err); });
@@ -215,7 +270,10 @@ const adminActions = {
   updateMenu,
   addMealToNewMenu,
   removeMealFromNewMenu,
-  deleteMealInEditModal
+  deleteMealInEditModal,
+  deleteMealInEditMenu,
+  addMealInEditMenu,
+  emptyEditMenu,
 };
 
 export default adminActions;

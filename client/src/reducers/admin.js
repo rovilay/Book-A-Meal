@@ -1,7 +1,11 @@
 const setDefaultAdminState = {
   meals: [],
   setMenuMeals: [],
-  serverRes: {},
+  editMenuMeals: [],
+  serverRes: {
+    success: '',
+    message: ''
+  },
   menus: [],
   modal: {
     isOpen: false,
@@ -63,6 +67,36 @@ const adminReducer = (state = setDefaultAdminState, action) => {
       return {
         ...state,
         serverRes: { ...action.response }
+      };
+    case 'RESET_SERVER_RES':
+      return {
+        ...state,
+        serverRes: {
+          success: '',
+          message: ''
+        }
+      };
+    case 'ADD_MEAL_EDIT_MENU':
+      return {
+        ...state,
+        editMenuMeals: [
+          ...new Set([
+            ...state.editMenuMeals,
+            action.mealId
+          ])
+        ]
+      };
+    case 'DELETE_MEAL_EDIT_MENU':
+      return {
+        ...state,
+        editMenuMeals: [
+          ...state.editMenuMeals.filter(id => id !== action.mealId)
+        ]
+      };
+    case 'EMPTY_EDIT_MENU':
+      return {
+        ...state,
+        editMenuMeals: []
       };
     case 'DELETE_MEAL_EDIT_MODAL':
       return {
