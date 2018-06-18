@@ -1,7 +1,7 @@
 const adminNavDefault = [
   {
     title: 'Add Meal',
-    link: '/addmeal'
+    link: '/mealpage'
   },
   {
     title: 'Orders',

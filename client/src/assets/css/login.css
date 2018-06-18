@@ -20,7 +20,7 @@ a {
   padding: 1.4em
 }
 
-.card .form-title {
+.card .login-form-title {
   color: #000;
   text-transform: capitalize;
   font-size: 28px;
@@ -77,7 +77,7 @@ hr {
 .alert-danger {
   color: rgb(240, 98, 98);
 }
- 
+
 .alert-success {
   color: #48e048;
 }

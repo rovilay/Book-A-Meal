@@ -66,7 +66,7 @@ class LoginForm extends Component {
     return (
       <div className="card">
         <div id="form-card" className="card-body" >
-          <div className="form-title" id="login-form-title">
+          <div className="login-form-title" id="login-form-title">
             User Login
             <hr />
           </div>
