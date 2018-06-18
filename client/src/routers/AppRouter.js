@@ -6,11 +6,14 @@ import HomePage from '../components/homepage/Index';
 import LogInPage from '../components/loginpage/Index';
 import SignUpPage from '../components/signuppage/Index';
 import chooseDashboard from '../components/HOCs/chooseDashboard';
+import adminOnly from '../components/HOCs/adminOnly';
+import customerOnly from '../components/HOCs/customerOnly';
 import CustomerDashboard from '../components/customerpages/dashboard/Index';
-import customerOrder from '../components/customerpages/order';
+import CustomerOrder from '../components/customerpages/order';
 import Cart from '../components/customerpages/Cart';
 import CheckLogin from '../components/HOCs/checkLogin';
 import AdminDashboard from '../components/adminpages/dashboard/Index';
+import AddMeal from '../components/adminpages/addMeal/Index';
 import NotFoundPage from '../components/common/NotFound';
 
 const AppRouter = () => (
@@ -25,8 +28,9 @@ const AppRouter = () => (
           path="/dashboard"
           component={chooseDashboard(AdminDashboard, CustomerDashboard)}
         />
-        <Route path="/cart" exact component={Cart} />
-        <Route path="/orders" exact component={customerOrder} />
+        <Route path="/cart" exact component={customerOnly(Cart)} />
+        <Route path="/orders" exact component={customerOnly(CustomerOrder)} />
+        <Route path="/addmeal" exact component={adminOnly(AddMeal)} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>
