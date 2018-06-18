@@ -6,6 +6,7 @@ const setDefaultAdminState = {
     success: '',
     message: ''
   },
+  mealOnEdit: {},
   menus: [],
   modal: {
     isOpen: false,
@@ -110,6 +111,16 @@ const adminReducer = (state = setDefaultAdminState, action) => {
             ]
           }
         }
+      };
+    case 'SET_MEAL_FOR_EDIT':
+      return {
+        ...state,
+        mealOnEdit: state.meals.filter(meal => meal.id === action.mealId)[0]
+      };
+    case 'REMOVE_MEAL_FROM_EDIT':
+      return {
+        ...state,
+        mealOnEdit: {}
       };
     default:
       return state;

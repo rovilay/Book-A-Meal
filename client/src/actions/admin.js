@@ -50,6 +50,30 @@ const setMenus = menus => (
   }
 );
 
+/**
+ * Sets a meal for edit
+ *
+ * @param  {String}  mealId - Id of meal to edit
+ * @return {Object} - returns an object that consist of properties type 'SET_MENU' and menus
+ */
+const setMealForEdit = mealId => (
+  {
+    type: 'SET_MEAL_FOR_EDIT',
+    mealId
+  }
+);
+
+/**
+ * Removes a meal from edit
+ *
+ * @return {Object} - returns an object that consist of properties type 'REMOVE_MEAL_FROM_EDIT'
+ */
+const removeMealFromEdit = () => (
+  {
+    type: 'REMOVE_MEAL_FROM_EDIT',
+  }
+);
+
 const setDefault = () => (
   {
     type: 'SET_DEFAULT',
@@ -185,6 +209,68 @@ const getMeals = () => (dispatch) => {
         }
         setTimeout(() => {
           dispatch(resetServerRes());
+        }, 2000);
+      }
+    })
+    .catch((err) => { console.log(err); });
+};
+
+/**
+ * Sends async server requests to delete meal using the axios api
+ *
+ * @param {String} mealId - Id of neal to delete
+ * @return {Function} - function that dispatches meals and serverRes action to the redux store
+ */
+const deleteMeal = mealId => (dispatch) => {
+  serverReq('delete', `/api/v1/meals/${mealId}`)
+    .then((response) => {
+      if (response.data) {
+        const { success, message } = response.data;
+        dispatch(serverRes({ success, message }));
+        // setTimeout(() => {
+        //   dispatch(resetServerRes());
+        // }, 2000);
+      }
+    })
+    .catch((err) => { console.log(err); });
+};
+
+/**
+ * Sends async server requests to post new meal using the axios api
+ *
+ * @param {Object} data - data object with property title, price, description and image(optional)
+ * @return {Function} - function that dispatches serverRes action to the redux store
+ */
+const postMeal = data => (dispatch) => {
+  serverReq('post', '/api/v1/meals', data)
+    .then((response) => {
+      if (response.data) {
+        const { success, message } = response.data;
+        dispatch(serverRes({ success, message }));
+
+        setTimeout(() => {
+          dispatch(resetServerRes());
+        }, 2000);
+      }
+    })
+    .catch((err) => { console.log(err); });
+};
+
+/**
+ * Sends async server requests to update meal using the axios api
+ *
+ * @param {String} mealId - Id of meal to update
+ * @param {Object} data - data of meal to update
+ * @return {Function} - function that dispatches serverRes action to the redux store
+ */
+const updateMeal = ({ mealId, data }) => (dispatch) => {
+  serverReq('put', `/api/v1/meals/${mealId}`, data)
+    .then((response) => {
+      if (response.data) {
+        const { success, message } = response.data;
+        dispatch(serverRes({ success, message }));
+        setTimeout(() => {
+          dispatch(resetServerRes());
         }, 1000);
       }
     })
@@ -261,6 +347,9 @@ const updateMenu = ({ menuDate, data }) => (dispatch) => {
 const adminActions = {
   postMenu,
   getMeals,
+  postMeal,
+  updateMeal,
+  deleteMeal,
   getMenus,
   setDefault,
   setMeals,
@@ -274,6 +363,8 @@ const adminActions = {
   deleteMealInEditMenu,
   addMealInEditMenu,
   emptyEditMenu,
+  setMealForEdit,
+  removeMealFromEdit
 };
 
 export default adminActions;
