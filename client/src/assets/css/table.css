@@ -191,7 +191,7 @@ input[type=checkbox] {
   .container {
     padding: 0;
   }
-  table,
+  /* table,
   table tbody,
   table tr,
   table td {
@@ -224,11 +224,17 @@ input[type=checkbox] {
     text-align: left;
     font-weight: bold;
     content: attr(data-title);
-  }
+  } */
   .btn-2 {
 		margin-top: 0.7em;
 		margin-bottom: 0em;
 		display: block;
 		float: none
 	}
+}
+
+.meal-btn[disabled],
+.meal-btn[disabled]:hover {
+	background: #6d6d6d;
+	color: #fff
 }
