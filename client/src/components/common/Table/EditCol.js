@@ -38,12 +38,16 @@ const EditTableCol = (props) => {
   );
 };
 
+EditTableCol.defaultProps = {
+  updatePortion: undefined
+};
+
 EditTableCol.propTypes = {
   dataTitle: PropTypes.string.isRequired,
   val: PropTypes.any.isRequired,
   isEdit: PropTypes.bool.isRequired,
   mealId: PropTypes.any.isRequired,
-  updatePortion: PropTypes.func.isRequired
+  updatePortion: PropTypes.func
 };
 
 export default EditTableCol;

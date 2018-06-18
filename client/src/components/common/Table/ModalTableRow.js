@@ -34,6 +34,9 @@ const ModalTableRow = (props) => {
           <button
             className="btn-col btn-1"
             onClick={() => {
+              // if (confirm('Are you sure you want to delete?')) {
+              //   deleteRow(id);
+              // }
               deleteRow(id);
             }}
           >
@@ -47,13 +50,14 @@ const ModalTableRow = (props) => {
 
 ModalTableRow.defaultProps = {
   isEdit: false,
+  deleteRow: undefined
 };
 
 ModalTableRow.propTypes = {
   item: PropTypes.object.isRequired,
   isEdit: PropTypes.bool,
   id: PropTypes.any.isRequired,
-  deleteRow: PropTypes.func.isRequired,
+  deleteRow: PropTypes.func,
 };
 
 export default ModalTableRow;

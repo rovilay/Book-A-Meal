@@ -10,6 +10,7 @@ import cartReducer from './cart';
 import cartTotPriceReducer from './cartTotPr';
 import ordersReducer from './orders';
 import modalReducer from './modal';
+import adminReducer from './admin';
 
 const rootReducer = combineReducers(
   {
@@ -20,7 +21,8 @@ const rootReducer = combineReducers(
     cart: cartReducer,
     cartTotalPrice: cartTotPriceReducer,
     orders: ordersReducer,
-    modal: modalReducer
+    modal: modalReducer,
+    admin: adminReducer
   }
 );
 

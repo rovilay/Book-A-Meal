@@ -2,6 +2,7 @@ const setModal = ({
   isOpen,
   isEdit,
   isInfo,
+  isSetMenu = false,
   close,
   contentLabel,
   content = {}
@@ -12,6 +13,7 @@ const setModal = ({
       isOpen,
       isEdit,
       isInfo,
+      isSetMenu,
       close,
       contentLabel,
       content
