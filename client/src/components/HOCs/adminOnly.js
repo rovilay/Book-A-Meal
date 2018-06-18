@@ -6,7 +6,6 @@ import PropTypes from 'prop-types';
 
 import isExpired from '../../helpers/isExpired';
 import { getFromLs } from '../../helpers/Ls';
-import { addMealToCart } from '../../actions/cart';
 import { setDefaultNav, setNav } from '../../actions/navLinks';
 
 /**
@@ -60,8 +59,6 @@ export default function (Comp) {
     setNav: PropTypes.func.isRequired,
     user: PropTypes.object.isRequired,
     todayMenu: PropTypes.array.isRequired,
-    addMealToCart: PropTypes.func.isRequired,
-
   };
 
   const mapStateToProps = state => ({
@@ -73,7 +70,6 @@ export default function (Comp) {
     {
       setDefaultNav,
       setNav,
-      addMealToCart
     },
     dispatch
   );

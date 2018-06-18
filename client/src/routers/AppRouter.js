@@ -13,7 +13,7 @@ import CustomerOrder from '../components/customerpages/order';
 import Cart from '../components/customerpages/Cart';
 import CheckLogin from '../components/HOCs/checkLogin';
 import AdminDashboard from '../components/adminpages/dashboard/Index';
-import AddMeal from '../components/adminpages/addMeal/Index';
+import MealPage from '../components/adminpages/mealPage/Index';
 import NotFoundPage from '../components/common/NotFound';
 
 const AppRouter = () => (
@@ -30,7 +30,7 @@ const AppRouter = () => (
         />
         <Route path="/cart" exact component={customerOnly(Cart)} />
         <Route path="/orders" exact component={customerOnly(CustomerOrder)} />
-        <Route path="/addmeal" exact component={adminOnly(AddMeal)} />
+        <Route path="/mealpage" exact component={adminOnly(MealPage)} />
         <Route component={NotFoundPage} />
       </Switch>
     </div>
