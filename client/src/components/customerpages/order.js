@@ -33,14 +33,58 @@ class CustomerOrder extends Component {
     super(props);
 
     this.hideModal = this.hideModal.bind(this);
+    this.showDetails = this.showDetails.bind(this);
+    this.onEditOrder = this.onEditOrder.bind(this);
     this.deleteRow = this.deleteRow.bind(this);
     this.updatePortion = this.updatePortion.bind(this);
     this.getCustomerOrders = this.getCustomerOrders.bind(this);
     this.notify = this.notify.bind(this);
   }
+
   componentDidMount() {
     this.getCustomerOrders();
     this.hideModal();
+  }
+
+  onEditOrder(orderDetails) {
+    const { orderId, meals } = orderDetails;
+    const orderedMeals = [];
+    let totalPrice = 0;
+
+    meals.map((meal) => {
+      const {
+        id,
+        title,
+        price: unitPrice,
+        OrderMeal
+      } = meal;
+      const { portion } = OrderMeal;
+      const price = unitPrice * portion;
+      totalPrice += price;
+      orderedMeals.push({
+        id,
+        title,
+        unitPrice,
+        portion,
+        price
+      });
+    });
+
+    this.props.setModal({
+      isOpen: true,
+      isEdit: true,
+      isInfo: false,
+      close: false,
+      contentLabel: 'Edit Order',
+      content: { ...orderDetails }
+    });
+
+    this.props.setEditOrder({
+      orderId,
+      deliveryAddress: orderDetails.address,
+      orderedMeals,
+      totalPrice
+    });
   }
 
   getCustomerOrders() {
@@ -73,6 +117,18 @@ class CustomerOrder extends Component {
     });
   }
 
+  showDetails(orderDetails) {
+    this.props.setModal({
+      isOpen: true,
+      isInfo: true,
+      isEdit: false,
+      isOrderInfo: false,
+      close: false,
+      contentLabel: 'Order details',
+      content: { ...orderDetails }
+    });
+  }
+
   deleteRow(id) {
     this.props.deleteMealInEditOrder(id);
   }
@@ -99,7 +155,7 @@ class CustomerOrder extends Component {
         <hr />
         <div className="table-container">
           <table>
-            <TableHead tableHead={tableHead.customerOrderHead} />
+            <TableHead tableHead={tableHead.orderHead} />
             <tbody>
               {
                 history.map((order, i) => {
@@ -135,6 +191,8 @@ class CustomerOrder extends Component {
                       item={item}
                       sn={++i}
                       orderDetails={orderDetails}
+                      onEditOrder={this.onEditOrder}
+                      showDetails={this.showDetails}
                       notify={this.notify}
                       {...this.props}
                     />
@@ -177,6 +235,7 @@ CustomerOrder.propTypes = {
   updateMealPortion: PropTypes.func.isRequired,
   setCustomerOrders: PropTypes.func.isRequired,
   getOrders: PropTypes.func.isRequired,
+  setEditOrder: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
