@@ -5,62 +5,32 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import jwt from 'jsonwebtoken';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import '../../assets/css/table.css';
-import Modal from '../common/modal';
-import tableHead from '../../helpers/tableHead';
-import TableHead from '../common/Table/TableHead';
-import OrderTableRow from '../common/Table/OrderTableRow';
-import isExpired from '../../helpers/isExpired';
-import { getFromLs } from '../../helpers/Ls';
-import {
-  setCustomerOrders,
-  deleteMealInEditOrder,
-  updateMealPortion,
-  updateOrder,
-  setEditOrder,
-  deleteOrder,
-  getOrders
-} from '../../actions/orders';
-import setModal from '../../actions/modal';
-import Footer from '../common/Footer';
 
-class CustomerOrder extends Component {
+import '../../../assets/css/table.css';
+import Modal from '../dashboard/Modal/Index';
+import navData from '../../../helpers/navData';
+import tableHead from '../../../helpers/tableHead';
+import TableHead from '../../common/Table/TableHead';
+import OrderTableRow from '../../common/Table/OrderTableRow';
+import adminActions from '../../../actions/admin';
+import Footer from '../../common/Footer';
+
+class OrderHistory extends Component {
   constructor(props) {
     super(props);
 
     this.hideModal = this.hideModal.bind(this);
-    this.deleteRow = this.deleteRow.bind(this);
-    this.updatePortion = this.updatePortion.bind(this);
-    this.getCustomerOrders = this.getCustomerOrders.bind(this);
+    this.showDetails = this.showDetails.bind(this);
     this.notify = this.notify.bind(this);
   }
+
   componentDidMount() {
-    this.getCustomerOrders();
+    this.props.setNav(navData.adminNav);
+    this.props.getAllOrders();
     this.hideModal();
-  }
-
-  getCustomerOrders() {
-    const token = getFromLs('jwt');
-    const { history } = this.props;
-    if (token) {
-      const {
-        id,
-        admin,
-        exp
-      } = jwt.decode(token);
-
-      if (!isExpired(exp) && !admin) {
-        this.props.getOrders(id);
-      } else {
-        history.push('/login');
-      }
-    } else {
-      history.push('/login');
-    }
   }
 
   hideModal() {
@@ -68,17 +38,22 @@ class CustomerOrder extends Component {
       isOpen: false,
       isEdit: false,
       isInfo: false,
+      isOrderInfo: false,
       close: true,
       contentLabel: '',
     });
   }
 
-  deleteRow(id) {
-    this.props.deleteMealInEditOrder(id);
-  }
-
-  updatePortion(mealId, portion) {
-    this.props.updateMealPortion({ mealId, portion });
+  showDetails(orderDetails) {
+    this.props.setModal({
+      isOpen: true,
+      isInfo: false,
+      isEdit: false,
+      isOrderInfo: true,
+      close: false,
+      contentLabel: 'Order details',
+      content: { ...orderDetails }
+    });
   }
 
   notify(msg) {
@@ -91,24 +66,26 @@ class CustomerOrder extends Component {
 
   render() {
     const { history, grandTotalPrice } = this.props.orders;
+    const sortedOrders = history.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     return (
       <div className="main-container">
         <div className="title" id="menu-title">
-          Your Order History
+          Order History
         </div>
         <hr />
         <div className="table-container">
           <table>
-            <TableHead tableHead={tableHead.customerOrderHead} />
+            <TableHead tableHead={tableHead.orderHead} />
             <tbody>
               {
-                history.map((order, i) => {
+                sortedOrders.map((order, i) => {
                   const {
                     id: orderId,
                     createdAt: date,
                     totalPrice,
                     deliveryAddress: address,
-                    Meals: meals
+                    Meals: meals,
+                    User
                   } = order;
 
                   const time = moment(date).format('HH:mm');
@@ -126,7 +103,8 @@ class CustomerOrder extends Component {
                     address,
                     totalPrice,
                     time,
-                    date: moment(date).format('LL')
+                    date: moment(date).format('LL'),
+                    user: `${User.firstName} ${User.lastName}`
                   };
 
                   return (
@@ -135,6 +113,7 @@ class CustomerOrder extends Component {
                       item={item}
                       sn={++i}
                       orderDetails={orderDetails}
+                      showDetails={this.showDetails}
                       notify={this.notify}
                       {...this.props}
                     />
@@ -155,7 +134,6 @@ class CustomerOrder extends Component {
           <Modal
             hideModal={this.hideModal}
             deleteRow={this.deleteRow}
-            updatePortion={this.updatePortion}
             notify={this.notify}
             {...this.props}
           />
@@ -168,36 +146,24 @@ class CustomerOrder extends Component {
   }
 }
 
-CustomerOrder.propTypes = {
+OrderHistory.propTypes = {
   orders: PropTypes.object.isRequired,
-  history: PropTypes.object.isRequired,
   setModal: PropTypes.func.isRequired,
-  updateOrder: PropTypes.func.isRequired,
-  deleteMealInEditOrder: PropTypes.func.isRequired,
-  updateMealPortion: PropTypes.func.isRequired,
-  setCustomerOrders: PropTypes.func.isRequired,
-  getOrders: PropTypes.func.isRequired,
+  modal: PropTypes.object.isRequired,
+  getAllOrders: PropTypes.func.isRequired,
+  setNav: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  orders: state.orders,
-  modal: state.modal,
-  editOrder: state.orders.editOrder,
-  userId: state.login.user.id
+  orders: state.admin.orders,
+  modal: state.admin.modal,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
-    setModal,
-    updateOrder,
-    deleteMealInEditOrder,
-    updateMealPortion,
-    setCustomerOrders,
-    setEditOrder,
-    deleteOrder,
-    getOrders,
+    ...adminActions
   },
   dispatch
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(CustomerOrder));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(OrderHistory));

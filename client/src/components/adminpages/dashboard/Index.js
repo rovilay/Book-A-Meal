@@ -16,7 +16,7 @@ import { setNav } from '../../../actions/navLinks';
 import adminActions from '../../../actions/admin';
 import MenuTable from './MenuTable/MenuTable';
 import SetMenuCard from './MenuCard/setMenu';
-import ModalComp from './Modal/Modal';
+import ModalComp from '../Modal/Index';
 import Footer from '../../common/Footer';
 
 
@@ -34,10 +34,6 @@ class AdminDashboard extends Component {
     this.unCheckAll = this.unCheckAll.bind(this);
     this.notify = this.notify.bind(this);
   }
-
-  // componentWillMount() {
-  //   this.props.setDefault();
-  // }
 
   componentDidMount() {
     this.props.setNav(navData.adminNavDefault);
