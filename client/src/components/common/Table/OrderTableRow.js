@@ -6,66 +6,14 @@ import TableCol from './TableCol';
 
 const OrderTableRow = (props) => {
   const {
-    setModal,
     orderDetails,
     item,
-    setEditOrder,
+    onEditOrder,
     deleteOrder,
     notify,
-    orders
+    orders,
+    showDetails
   } = props;
-
-  const showDetails = () => {
-    setModal({
-      isOpen: true,
-      isInfo: true,
-      isEdit: false,
-      close: false,
-      contentLabel: 'Order details',
-      content: { ...orderDetails }
-    });
-  };
-
-  const editOrder = () => {
-    const { orderId, meals } = orderDetails;
-    const orderedMeals = [];
-    let totalPrice = 0;
-
-    meals.map((meal) => {
-      const {
-        id,
-        title,
-        price: unitPrice,
-        OrderMeal
-      } = meal;
-      const { portion } = OrderMeal;
-      const price = unitPrice * portion;
-      totalPrice += price;
-      orderedMeals.push({
-        id,
-        title,
-        unitPrice,
-        portion,
-        price
-      });
-    });
-
-    setModal({
-      isOpen: true,
-      isEdit: true,
-      isInfo: false,
-      close: false,
-      contentLabel: 'Edit Order',
-      content: { ...orderDetails }
-    });
-
-    setEditOrder({
-      orderId,
-      deliveryAddress: orderDetails.address,
-      orderedMeals,
-      totalPrice
-    });
-  };
 
   return (
     <tr key={item.id}>
@@ -75,13 +23,34 @@ const OrderTableRow = (props) => {
         ))
       }
       {
-        item.orderId
+        (item.orderId && !onEditOrder)
         &&
         <td data-title="view details">
           <a
             role="button"
             href="#"
-            onClick={showDetails}
+            onClick={() => {
+              showDetails(orderDetails);
+            }}
+            className="btn-col btn-1"
+          >
+            <FontAwesome
+              name="info-circle"
+              size="2x"
+            />
+          </a>
+        </td>
+      }
+      {
+        (item.orderId && onEditOrder)
+        &&
+        <td data-title="view details">
+          <a
+            role="button"
+            href="#"
+            onClick={() => {
+              showDetails(orderDetails);
+            }}
             className="btn-col btn-2"
           >
             <FontAwesome
@@ -90,7 +59,9 @@ const OrderTableRow = (props) => {
             />
           </a>
           <a
-            onClick={editOrder}
+            onClick={() => {
+              onEditOrder(orderDetails);
+            }}
             href="#"
             role="button"
             className="btn-col btn-2"
@@ -120,14 +91,19 @@ const OrderTableRow = (props) => {
   );
 };
 
+OrderTableRow.defaultProps = {
+  onEditOrder: undefined,
+  deleteOrder: undefined
+};
+
 OrderTableRow.propTypes = {
   item: PropTypes.object.isRequired,
   orderDetails: PropTypes.object.isRequired,
-  setModal: PropTypes.func.isRequired,
-  setEditOrder: PropTypes.func.isRequired,
-  deleteOrder: PropTypes.func.isRequired,
+  onEditOrder: PropTypes.func,
+  deleteOrder: PropTypes.func,
   notify: PropTypes.func.isRequired,
-  orders: PropTypes.object.isRequired
+  showDetails: PropTypes.func.isRequired,
+  orders: PropTypes.object.isRequired,
 };
 
 export default OrderTableRow;
