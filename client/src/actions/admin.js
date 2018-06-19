@@ -92,6 +92,21 @@ const setMeals = meals => ({
 });
 
 /**
+ * set Orders action generator
+ *
+ * @param {String} grandTotalPrice- Total price of all orders
+ * @param {Array} orders- array of all orders
+ * @return {Object} - returns action object with type 'SET_ORDERS' and orders properties
+ */
+const setOrders = ({ grandTotalPrice, orders: history }) => ({
+  type: 'SET_ORDERS',
+  orders: {
+    grandTotalPrice,
+    history
+  }
+});
+
+/**
  * Sends server response as action to store
  *
  * @param {Object} - Object that consist of success, message
@@ -133,6 +148,7 @@ const setModal = ({
   isOpen,
   isEdit,
   isInfo,
+  isOrderInfo = false,
   close,
   contentLabel,
   content = {}
@@ -143,6 +159,7 @@ const setModal = ({
       isOpen,
       isEdit,
       isInfo,
+      isOrderInfo,
       close,
       contentLabel,
       content
@@ -344,6 +361,31 @@ const updateMenu = ({ menuDate, data }) => (dispatch) => {
     .catch((err) => { console.log(err); });
 };
 
+/**
+ * Sends async server requests to get all orders using the axios api
+ *
+ * @return {Function} - function that dispatches setOrders and serverRes action to the redux store
+ */
+const getAllOrders = () => (dispatch) => {
+  serverReq('get', '/api/v1/orders')
+    .then((response) => {
+      if (response.data) {
+        const {
+          success,
+          message,
+          grandTotalPrice,
+          orders
+        } = response.data;
+        dispatch(setOrders({ grandTotalPrice, orders }));
+        dispatch(serverRes({ success, message }));
+        setTimeout(() => {
+          dispatch(resetServerRes());
+        }, 1000);
+      }
+    })
+    .catch((err) => { console.log(err); });
+};
+
 const adminActions = {
   postMenu,
   getMeals,
@@ -364,7 +406,8 @@ const adminActions = {
   addMealInEditMenu,
   emptyEditMenu,
   setMealForEdit,
-  removeMealFromEdit
+  removeMealFromEdit,
+  getAllOrders
 };
 
 export default adminActions;

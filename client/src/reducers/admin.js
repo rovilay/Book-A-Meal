@@ -2,16 +2,21 @@ const setDefaultAdminState = {
   meals: [],
   setMenuMeals: [],
   editMenuMeals: [],
+  menus: [],
+  orders: {
+    grandTotalPrice: 0,
+    history: []
+  },
   serverRes: {
     success: '',
     message: ''
   },
   mealOnEdit: {},
-  menus: [],
   modal: {
     isOpen: false,
     isEdit: false,
     isInfo: false,
+    isOrderInfo: false,
     isSetMenu: false,
     close: true,
     content: {},
@@ -121,6 +126,13 @@ const adminReducer = (state = setDefaultAdminState, action) => {
       return {
         ...state,
         mealOnEdit: {}
+      };
+    case 'SET_ORDERS':
+      return {
+        ...state,
+        orders: {
+          ...action.orders
+        }
       };
     default:
       return state;
