@@ -1,6 +1,7 @@
 const path = require('path');
 // const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
+const DotEnv = require('dotenv-webpack');
 
 module.exports = {
   entry: ['babel-polyfill', './src/index.js'],
@@ -56,6 +57,7 @@ module.exports = {
     //   template: './src/index.html',
     //   filename: './index.html'
     // }),
+    new DotEnv(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin()
   ],

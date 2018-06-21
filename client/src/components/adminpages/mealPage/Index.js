@@ -13,6 +13,8 @@ import navData from '../../../helpers/navData';
 import MealForm from './MealForm';
 import MealTable from './MealTable/MealTable';
 import adminActions from '../../../actions/admin';
+import moveProgressBar from '../../../helpers/progressbar';
+import imageUploader from '../../../helpers/imageUploader';
 import Footer from '../../common/Footer';
 
 class MealPage extends Component {
@@ -20,7 +22,9 @@ class MealPage extends Component {
     super(props);
     this.state = {
       isEdit: false,
-      mealOnEditId: ''
+      mealOnEditId: '',
+      imageToUpload: '',
+      uploadedImageLink: ''
     };
 
     this.editMeal = this.editMeal.bind(this);
@@ -31,13 +35,19 @@ class MealPage extends Component {
     this.getFormVal = this.getFormVal.bind(this);
     this.onAddMeal = this.onAddMeal.bind(this);
     this.onUpdateMeal = this.onUpdateMeal.bind(this);
-    // this.onDeleteMeal = this.onDeleteMeal.bind(this);
+    this.setUploadBar = this.setUploadBar.bind(this);
   }
 
   componentDidMount() {
     this.props.setNav(navData.adminNav);
     this.props.getMeals();
     this.closeEdit();
+  }
+
+  componentDidUpdate() {
+    if (this.state.imageToUpload) {
+      moveProgressBar('progressBar', this.state.uploadedImageLink);
+    }
   }
 
   onUpdateMeal() {
@@ -55,27 +65,6 @@ class MealPage extends Component {
     }
     this.closeEdit();
   }
-
-  // onDeleteMeal(mealId) {
-  //   const { deleteMeal } = this.props;
-  //   const confirmed = confirm('Are you sure you want to delete this meal?');
-  //   if (confirmed) {
-  //     deleteMeal(mealId);
-  //     setTimeout(() => {
-  //       this.notify(this.props.serverRes.message);
-  //     }, 200);
-  //   }
-  //   if (this.props.serverRes.success) {
-  //     setTimeout(() => {
-  //       this.notify('Meal deleted successfully!');
-  //     }, 200);
-  //     this.closeEdit();
-  //   } else {
-  //     setTimeout(() => {
-  //       this.notify(this.props.serverRes.message);
-  //     }, 200);
-  //   }
-  // }
 
   onAddMeal() {
     const { postMeal } = this.props;
@@ -114,6 +103,17 @@ class MealPage extends Component {
       image
     };
     return data;
+  }
+
+  async setUploadBar() {
+    const imageFile = document.getElementById('image').files[0];
+    if (imageFile) {
+      this.setState({ imageToUpload: imageFile.name });
+      const link = await imageUploader('image');
+      this.setState({ uploadedImageLink: link });
+    } else {
+      this.setState({ imageToUpload: '' });
+    }
   }
 
   editMeal(mealId) {
@@ -166,7 +166,7 @@ class MealPage extends Component {
   }
 
   render() {
-    const { isEdit, mealOnEditId } = this.state;
+    const { isEdit, mealOnEditId, imageToUpload } = this.state;
     return (
       <div className="main-container">
         <section className="form-section">
@@ -178,7 +178,9 @@ class MealPage extends Component {
               addMeal={this.onAddMeal}
               updateMeal={this.onUpdateMeal}
               mealOnEditId={mealOnEditId}
+              imageToUpload={imageToUpload}
               notify={this.notify}
+              setUploadBar={this.setUploadBar}
             />
           </div>
         </section>

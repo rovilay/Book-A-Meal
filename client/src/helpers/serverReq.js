@@ -1,8 +1,9 @@
 import axios from 'axios';
-
 import { getFromLs } from './Ls';
 
-const baseUrl = 'http://Localhost:4000';
+// window.axios = axios;
+const baseURL = 'http://localhost:4000';
+
 /**
  * Sends async server requests using the axios api
  *
@@ -16,16 +17,13 @@ const baseUrl = 'http://Localhost:4000';
 async function serverReq(method, url, data = {}, authToken) {
   const token = getFromLs('jwt') || authToken;
   try {
-    if (token) {
-      axios.interceptors.request.use((config) => {
-        config.headers.Authorization = `Bearer ${token}`;
-        return config;
-      });
-    }
-
     const instance = await axios({
-      baseURL: baseUrl,
-      // headers,
+      baseURL,
+      headers: {
+        // 'Access-Control-Allow-Headers': 'x-client-version',
+        // 'Access-Control-Allow-Origin': '*',
+        Authorization: `Bearer ${token}`
+      },
       method,
       url,
       data

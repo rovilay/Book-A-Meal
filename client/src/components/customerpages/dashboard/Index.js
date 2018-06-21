@@ -42,18 +42,18 @@ class CustomerDashboard extends Component {
     const { firstName, lastName } = user;
     return (
       <div className="main-container">
+        <div className="welcome">
+          <p>
+            Welcome, {firstName} {lastName}
+          </p>
+          <img
+            className="img-circle"
+            src="https://res.cloudinary.com/dcqnswemi/image/upload/v1529142882/waiter2.svg"
+            alt="waiter"
+          />
+          <p>Happy Eating!</p>
+        </div>
         <div className="container">
-          <div className="welcome">
-            <p>
-              Welcome, {firstName} {lastName}
-            </p>
-            <img
-              className="img-circle"
-              src="https://res.cloudinary.com/dcqnswemi/image/upload/v1529142882/waiter2.svg"
-              alt="waiter"
-            />
-            <p>Happy Eating!</p>
-          </div>
           <Menu
             menu={todayMenu}
             notify={this.notify}

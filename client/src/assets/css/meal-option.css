@@ -186,6 +186,18 @@ label {
   line-height: 1.8em
 }
 
+/* Progress Bar */
+.progress {
+  width: 25%;
+  background-color: #6c757d
+}
+
+.progressBar {
+  width: 1%;
+  height: 20px;
+  background-color: #61b750
+}
+
 /* Meal List */
 
 .meal-card .card {

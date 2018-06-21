@@ -45,9 +45,6 @@ class AdminDashboard extends Component {
   onSubmitUpdate(menuDate, meals) {
     const { updateMenu } = this.props;
     const data = { meals };
-    // if (confirm('Are you sure you want to update?')) {
-    //   updateMenu({ menuDate, data });
-    // }
     updateMenu({ menuDate, data });
     setTimeout(() => {
       this.notify(this.props.serverRes.message);

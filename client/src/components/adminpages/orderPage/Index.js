@@ -10,7 +10,7 @@ import 'react-toastify/dist/ReactToastify.css';
 
 
 import '../../../assets/css/table.css';
-import Modal from '../dashboard/Modal/Index';
+import Modal from '../Modal/Index';
 import navData from '../../../helpers/navData';
 import tableHead from '../../../helpers/tableHead';
 import TableHead from '../../common/Table/TableHead';

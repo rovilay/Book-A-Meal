@@ -36,7 +36,7 @@ class LoginForm extends Component {
       firstName,
       lastName
     } = response.data;
-
+    console.log(success, token, message);
     if (success) {
       storeInLs('jwt', token);
       const {
