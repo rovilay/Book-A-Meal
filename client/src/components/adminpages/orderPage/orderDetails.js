@@ -38,7 +38,7 @@ const OrderDetailsTable = (props) => {
       </p>
       <table>
         <TableHead tableHead={tableHead.orderDetailHead} />
-        <tbody>
+        <tbody className="modal-table-body">
           {
             orderMeals.map((meal, i) => {
               const {
