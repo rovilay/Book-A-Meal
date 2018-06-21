@@ -99,6 +99,10 @@ table tbody {
 	max-height: 600px;
 }
 
+table .modal-table-body {
+  max-height: 300px;
+}
+
 table a {
   color: rgba(224, 63, 14, 0.685);
   cursor: pointer;

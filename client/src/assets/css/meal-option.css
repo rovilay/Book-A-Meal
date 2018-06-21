@@ -113,8 +113,18 @@ grid-column: 1 / 3;
   text-transform: capitalize
 }
 
+.meal-form .btn-3[disabled] {
+  border-color: #b6b8b6;
+  color: #b6b8b6;
+}
+
 .meal-form .btn-3:hover, .meal-form .btn-3:focus {
   transition: background-color 0.5s ease-out
+}
+
+.meal-form .btn-3[disabled]:hover,
+.meal-form .btn-3[disabled]:focus {
+  background-color: #b6b8b6
 }
 
 .meal-form .add-btn {
