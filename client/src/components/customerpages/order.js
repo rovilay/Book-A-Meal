@@ -9,7 +9,6 @@ import jwt from 'jsonwebtoken';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import '../../assets/css/table.css';
 import Modal from '../common/modal';
 import tableHead from '../../helpers/tableHead';
 import TableHead from '../common/Table/TableHead';
@@ -46,6 +45,10 @@ class CustomerOrder extends Component {
     this.hideModal();
   }
 
+  /**
+   * it sets modal up for showing order details
+   * @param {object} orderDetails consist of all details about an order
+   */
   onEditOrder(orderDetails) {
     const { orderId, meals } = orderDetails;
     const orderedMeals = [];
@@ -87,6 +90,10 @@ class CustomerOrder extends Component {
     });
   }
 
+  /**
+   * Gets customer's orders,
+   * Calls the getOrders action
+   */
   getCustomerOrders() {
     const token = getFromLs('jwt');
     const { history } = this.props;
@@ -117,6 +124,10 @@ class CustomerOrder extends Component {
     });
   }
 
+  /**
+   * Show an order details
+   * @param {Object} orderDetails consist of details of an order
+   */
   showDetails(orderDetails) {
     this.props.setModal({
       isOpen: true,
@@ -133,6 +144,13 @@ class CustomerOrder extends Component {
     this.props.deleteMealInEditOrder(id);
   }
 
+  /**
+   * Updates meal portion,
+   * Calls the updateMealPortion action
+   *
+   * @param {string} mealId id of meal to update
+   * @param {number} portion new portion of meal to update
+   */
   updatePortion(mealId, portion) {
     this.props.updateMealPortion({ mealId, portion });
   }
