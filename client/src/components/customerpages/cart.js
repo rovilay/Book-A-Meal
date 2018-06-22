@@ -1,6 +1,7 @@
 /* eslint jsx-a11y/label-has-for:0 */
 /* eslint class-methods-use-this:0 */
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
@@ -8,7 +9,6 @@ import jwt from 'jsonwebtoken';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import '../../assets/css/table.css';
 import serverReq from '../../helpers/serverReq';
 import { getFromLs } from '../../helpers/Ls';
 import isExpired from '../../helpers/isExpired';
@@ -58,12 +58,16 @@ class Cart extends Component {
     this.setState({ [e.target.name]: e.target.value });
   }
 
+  /**
+   * Places order
+   * @param {*} e DOM event
+   * Sends ordered meals to server
+   */
   async onOrder(e) {
     e.preventDefault();
     const {
-      dispatch,
       history,
-      cart
+      cart,
     } = this.props;
     const { deliveryAddress } = this.state;
     const token = getFromLs('jwt');
@@ -76,27 +80,29 @@ class Cart extends Component {
       if (!isExpired(exp) && !admin && cart.length > 0) {
         const response = await serverReq('post', '/api/v1/orders', { deliveryAddress, meals: cart }, token);
         const { success, message } = response.data;
-        // this.setState({ success, message });
-        dispatch(orderServerRes({ success, message }));
-        this.notify(this.props.orderServerRes.message);
-        dispatch(emptyCart());
+        this.props.orderServerRes({ success, message });
+        this.notify(this.props.serverRes.message);
+        this.props.emptyCart();
       }
     } else {
       history.push('/login');
     }
   }
 
+  /**
+   * Calculates total price of meals in cart,
+   * Call setCartTotalPrice action to add total price to redux store
+   */
   setTotPrice() {
-    const { cart, dispatch } = this.props;
     let totPrice = 0;
-    cart.map((meal) => {
+    this.props.cart.map((meal) => {
       const { unitPrice, portion } = meal;
       if (unitPrice && portion) {
         totPrice += (unitPrice * portion);
       }
     });
 
-    dispatch(setCartTotalPrice(totPrice));
+    this.props.setCartTotalPrice(totPrice);
   }
 
   notify(msg) {
@@ -107,10 +113,16 @@ class Cart extends Component {
     });
   }
 
+  /**
+   * Deletes meal row on cart table
+   *
+   * @param {number} sn serial number of meal on table
+   *
+   * Calls deleteMealInCart action
+   */
   deleteRow(sn) {
-    const { dispatch } = this.props;
     const id = sn - 1;
-    dispatch(deleteMealInCart(id));
+    this.props.deleteMealInCart(id);
     this.notify('Meal deleted successfully!');
   }
 
@@ -170,7 +182,7 @@ class Cart extends Component {
                 name="orderbtn"
                 id="order-btn"
                 disabled={cart.length < 1}
-                className="order-btn btn-1"
+                className="order-btn update-btn btn-1"
               >
               Place order
               </button>
@@ -188,14 +200,27 @@ Cart.propTypes = {
   cart: PropTypes.array.isRequired,
   totPrice: PropTypes.number.isRequired,
   history: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
-  orderServerRes: PropTypes.object.isRequired
+  orderServerRes: PropTypes.func.isRequired,
+  serverRes: PropTypes.object.isRequired,
+  deleteMealInCart: PropTypes.func.isRequired,
+  emptyCart: PropTypes.func.isRequired,
+  setCartTotalPrice: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   cart: state.cart,
   totPrice: state.cartTotalPrice,
-  orderServerRes: state.orders.serverRes
+  serverRes: state.orders.serverRes
 });
 
-export default connect(mapStateToProps)(withRouter(Cart));
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    setCartTotalPrice,
+    emptyCart,
+    deleteMealInCart,
+    orderServerRes
+  },
+  dispatch
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Cart));
