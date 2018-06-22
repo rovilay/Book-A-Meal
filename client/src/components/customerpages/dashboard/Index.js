@@ -9,7 +9,6 @@ import navData from '../../../helpers/navData';
 import Menu from '../../common/Menu';
 import Footer from '../../common/Footer';
 
-
 class CustomerDashboard extends Component {
   constructor(props) {
     super(props);
@@ -29,6 +28,9 @@ class CustomerDashboard extends Component {
     getTodayMenu();
   }
 
+  /**
+   * Notifies if meal is added to cart
+   */
   notify() {
     toast.success('Meal added to cart!', {
       position: toast.POSITION.BOTTOM_LEFT,
