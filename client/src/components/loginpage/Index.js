@@ -62,11 +62,13 @@ class LogInPage extends Component {
   logUserIn(e) {
     e.preventDefault();
     this.props.loginUser({ ...this.state });
-    if (this.props.user.isLogin) {
-      this.props.history.push('/dashboard');
-    } else {
-      setTimeout(this.notify(this.props.user.loginMessage), 200);
-    }
+    setTimeout(() => {
+      if (this.props.user.isLogin) {
+        this.props.history.push('/dashboard');
+      } else {
+        setTimeout(this.notify(this.props.user.loginMessage), 200);
+      }
+    }, 200);
   }
 
   render() {
