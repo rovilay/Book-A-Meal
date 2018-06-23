@@ -39,7 +39,7 @@ body {
 	@extend %extend_1;
 }
 .main-container {
-	min-height: 100vh;
+	min-height: 90vh;
 	overflow: hidden;
 	display: block;
 	position: relative;
@@ -356,6 +356,16 @@ input[type=submit] {
 	margin-bottom: 1rem
 }
 
+.notFoundCard {
+	max-width: 40rem;
+	height: 10rem;
+	border: 1px solid #ccc;
+	box-shadow: #8e8d8d;
+	// padding: 30px;
+	margin: 5%;
+	margin-top: 0;
+	text-align: center
+}
 // /* Admin Menu Table*/
 
 // .menu_table table{
