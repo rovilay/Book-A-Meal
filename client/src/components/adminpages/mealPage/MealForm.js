@@ -27,7 +27,7 @@ const Mealform = props => (
           if (props.isEdit) {
            return props.updateMeal();
           }
-          return props.addMeal();
+          return props.addMeal(e);
         }}
       >
 
@@ -77,11 +77,8 @@ const Mealform = props => (
             placeholder="Enter img link"
             name="image"
             id="image"
-            onChange={(e) => {
-              e.preventDefault();
-              if (props.checkFileSize()) {
-                props.showUploadBar();
-              }
+            onChange={() => {
+              props.showUploadBar();
             }}
           />
         </p>
@@ -190,7 +187,6 @@ Mealform.propTypes = {
   serverRes: PropTypes.object.isRequired,
   mealOnEditId: PropTypes.string.isRequired,
   notify: PropTypes.func.isRequired,
-  checkFileSize: PropTypes.func.isRequired,
   imageToUpload: PropTypes.string.isRequired,
   showUploadBar: PropTypes.func.isRequired,
   disableBtn: PropTypes.bool.isRequired

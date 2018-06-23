@@ -15,7 +15,7 @@ import CheckLogin from '../components/HOCs/checkLogin';
 import AdminDashboard from '../components/adminpages/dashboard/Index';
 import MealPage from '../components/adminpages/mealPage/Index';
 import OrderPage from '../components/adminpages/orderPage/Index';
-import NotFoundPage from '../components/common/NotFound';
+import NotFoundPage from '../components/NotFoundPage';
 
 const AppRouter = () => (
   <Router>

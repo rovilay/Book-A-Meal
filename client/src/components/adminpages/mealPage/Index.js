@@ -24,7 +24,6 @@ class MealPage extends Component {
       mealOnEditId: '',
       imageToUpload: '',
       uploadedImageLink: '',
-      // progressBar: '',
       disableBtn: false
     };
 
@@ -49,11 +48,13 @@ class MealPage extends Component {
   componentDidUpdate() {
     if (this.state.imageToUpload) {
       const url = imageUploader('image');
-      url
-        .then((res) => {
-          this.setState({ uploadedImageLink: res, disableBtn: false }); // enable btn after upload
-        })
-        .catch(err => err);
+      if (url) {
+        url
+          .then((res) => {
+            this.setState({ uploadedImageLink: res, disableBtn: false }); // enable btn after upload
+          })
+          .catch(err => err);
+      }
     }
   }
 
@@ -92,13 +93,14 @@ class MealPage extends Component {
     if (confirmed) {
       postMeal(data);
       setTimeout(() => {
-        this.notify(this.props.serverRes.message);
-        location.reload();
+        if (this.props.serverRes.success) {
+          this.notify(this.props.serverRes.message);
+          this.clearForm();
+          location.reload();
+        } else {
+          this.notify(this.props.serverRes.message);
+        }
       }, 200);
-    }
-
-    if (this.props.serverRes.success) {
-      this.clearForm();
     }
   }
 
@@ -134,8 +136,8 @@ class MealPage extends Component {
    * Shows upload progress bar if image is present
    */
   showUploadBar() {
-    const imageFile = document.getElementById('image').files[0];
-    if (imageFile) {
+    if (this.checkFileSize()) {
+      const imageFile = document.getElementById('image').files[0];
       this.setState({ imageToUpload: imageFile.name });
     } else {
       this.setState({ imageToUpload: '' });
@@ -230,6 +232,8 @@ class MealPage extends Component {
       this.setState({ disableBtn: true });
       return true;
     }
+
+    return false; // if no file
   }
 
   render() {
@@ -256,7 +260,6 @@ class MealPage extends Component {
               showUploadBar={this.showUploadBar}
               uploadedImageLink={uploadedImageLink}
               disableBtn={disableBtn}
-              checkFileSize={this.checkFileSize}
             />
           </div>
         </section>
