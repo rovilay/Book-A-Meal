@@ -147,7 +147,7 @@ class MealPage extends Component {
   /**
    * Sets meal for edit
    *
-   * @param {string} mealId Id of meal to edit
+   * @param {string} mealId Id of meal to edit,
    * Calls setMealForEdit action
    *
    */
