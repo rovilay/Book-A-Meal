@@ -1,3 +1,7 @@
+/**
+ * checks if required signup form fields are empty,
+ * also checks if password and confirm password matches
+ */
 const signupValidator = () => {
   let valid = true;
   const requiredFields = [
