@@ -256,14 +256,18 @@ const SignUpForm = props => (
             required
           />
           {
-            (props.formValues.message && props.formValues.message.includes('password'))
+            (
+              (props.formValues.cpassword || props.formValues.password)
+              &&
+              props.formValues.cpassword !== props.formValues.password
+            )
             &&
             <span
               id="alert"
               role="alert"
               className="alert-danger"
             >
-              {props.formValues.message}
+              password do not match!
             </span>
           }
         </p>
@@ -279,19 +283,22 @@ const SignUpForm = props => (
             placeholder="Confirm Password"
             name="cpassword"
             value={props.formValues.cpassword}
-            // onFocus={() => { props.checkError(); }}
             onChange={e => props.change(e)}
             required
           />
           {
-            (props.formValues.message && props.formValues.message.includes('password'))
+            (
+              (props.formValues.cpassword || props.formValues.password)
+              &&
+              props.formValues.cpassword !== props.formValues.password
+            )
             &&
             <span
               id="alert"
               role="alert"
               className="alert-danger"
             >
-              {props.formValues.message}
+              password do not match!
             </span>
           }
         </p>
@@ -336,7 +343,6 @@ SignUpForm.propTypes = {
   formValues: PropTypes.object.isRequired,
   submit: PropTypes.func.isRequired,
   change: PropTypes.func.isRequired,
-  // checkError: PropTypes.func.isRequired
 };
 
 export default connect()(SignUpForm);
