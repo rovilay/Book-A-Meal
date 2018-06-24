@@ -242,3 +242,41 @@ input[type=checkbox] {
 	background: #6d6d6d;
 	color: #fff
 }
+
+/* tool-tip */
+.meal-Image {
+	position: relative;
+}
+
+.meal-Image .tooltip {
+	visibility: hidden;
+	width: 200px;
+	height: 200px;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	position: absolute;
+	z-index: 1;
+	top: 80%;
+	left: 30%;
+	margin-left: -60px;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.meal-Image .tooltip::before {
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: #555 transparent transparent transparent;
+}
+
+.meal-Image:hover .tooltip {
+	visibility: visible;
+	opacity: 1;
+}
