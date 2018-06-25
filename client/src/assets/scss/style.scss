@@ -39,7 +39,7 @@ body {
 	@extend %extend_1;
 }
 .main-container {
-	min-height: 90vh;
+	min-height: 100vh;
 	overflow: hidden;
 	display: block;
 	position: relative;
@@ -58,6 +58,8 @@ ul {
 	overflow: hidden;
 	background-color: $color_west_side_approx;
 	padding: 20px 10px;
+	position: fixed;
+	width: 100%;
 	a {
 		float: left;
 		color: $color_soapstone_approx;
@@ -113,7 +115,7 @@ ul {
 		min-width: 200px;
 		color: $white;
 		background: linear-gradient(to bottom, $color_ship_gray_50_approx, $color_ship_gray_75_approx ), transparent;
-		margin-top: 40px;
+		margin-top: 20em;
 		padding: 10px 8px;
 		text-align: center;
 		h1 {
@@ -342,9 +344,11 @@ input[type=submit] {
 	color: #ff8619;
 	font-weight: 400;
 	text-transform: capitalize;
-  // font-size: 1.8rem;
   text-align: center;
-	// margin-top: 1rem;
+}
+
+.pull-down {
+	margin-top: 10%;
 }
 
 .big-little {

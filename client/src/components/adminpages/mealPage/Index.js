@@ -14,7 +14,6 @@ import MealForm from './MealForm';
 import MealTable from './MealTable/MealTable';
 import adminActions from '../../../actions/admin';
 import imageUploader from '../../../helpers/imageUploader';
-import Footer from '../../common/Footer';
 
 class MealPage extends Component {
   constructor(props) {
@@ -245,7 +244,7 @@ class MealPage extends Component {
       disableBtn
     } = this.state;
     return (
-      <div className="main-container">
+      <div>
         <section className="form-section">
           <div className="meal-container">
             <MealForm
@@ -275,7 +274,6 @@ class MealPage extends Component {
         <ToastContainer
           {...this.props}
         />
-        <Footer />
       </div>
     );
   }

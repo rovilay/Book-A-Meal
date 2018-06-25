@@ -9,7 +9,6 @@ import setSuccessfulSignUpMsg from '../../actions/signup';
 import sigupValidator from '../../helpers/signupValidator';
 import serverReq from '../../helpers/serverReq';
 import Form from './form';
-import Footer from '../common/Footer';
 
 class SignUpPage extends Component {
   constructor(props) {
@@ -34,7 +33,6 @@ class SignUpPage extends Component {
 
     this.onChange = this.onChange.bind(this);
     this.onSubmit = this.onSubmit.bind(this);
-    // this.checkError = this.checkError.bind(this);
   }
 
   onChange(e) {
@@ -71,22 +69,9 @@ class SignUpPage extends Component {
     }
   }
 
-  // checkError() {
-  //   if (
-  //     !this.state.password
-  //     ||
-  //     !this.state.cpassword
-  //     ||
-  //     this.state.cpassword !== this.state.password
-  //   ) {
-  //     const err = { success: false, message: 'passwords do not match!' };
-  //     return this.setState({ response: { ...err } });
-  //   }
-  // }
-
   render() {
     return (
-      <div className="main-container">
+      <div className="pull-down">
         <section id="signup-section" className="grid">
           <div className="signup-container">
             <Form
@@ -100,7 +85,6 @@ class SignUpPage extends Component {
             </p>
           </div>
         </section>
-        <Footer />
       </div>
     );
   }

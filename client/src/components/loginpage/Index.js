@@ -10,8 +10,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import setSuccessfulSignUpMsg from '../../actions/signup';
 import { loginUser } from '../../actions/login';
 import Form from './form';
-import Footer from '../common/Footer';
-import '../../assets/css/login.css';
 
 class LogInPage extends Component {
   constructor(props) {
@@ -76,7 +74,7 @@ class LogInPage extends Component {
 
   render() {
     return (
-      <div className="main-container">
+      <div className="pull-down">
         <section id="section-a" className="grid">
           <div className="login-form-container">
             <p className="link">
@@ -95,7 +93,6 @@ class LogInPage extends Component {
           </div>
         </section>
         <ToastContainer />
-        <Footer />
       </div>
     );
   }

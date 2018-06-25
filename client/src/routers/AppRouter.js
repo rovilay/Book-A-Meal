@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Header from '../components/common/Header';
+import Footer from '../components/common/Footer';
 import HomePage from '../components/homepage/Index';
 import LogInPage from '../components/loginpage/Index';
 import SignUpPage from '../components/signuppage/Index';
@@ -19,7 +20,7 @@ import NotFoundPage from '../components/NotFoundPage';
 
 const AppRouter = () => (
   <Router>
-    <div>
+    <div className="main-container">
       <Header />
       <Switch>
         <Route path="/" exact component={CheckLogin(HomePage)} />
@@ -35,6 +36,7 @@ const AppRouter = () => (
         <Route path="/orderHistory" exact component={adminOnly(OrderPage)} />
         <Route component={NotFoundPage} />
       </Switch>
+      <Footer />
     </div>
   </Router>
 );

@@ -16,7 +16,6 @@ import tableHead from '../../../helpers/tableHead';
 import TableHead from '../../common/Table/TableHead';
 import OrderTableRow from '../../common/Table/OrderTableRow';
 import adminActions from '../../../actions/admin';
-import Footer from '../../common/Footer';
 
 class OrderHistory extends Component {
   constructor(props) {
@@ -68,7 +67,7 @@ class OrderHistory extends Component {
     const { history, grandTotalPrice } = this.props.orders;
     const sortedOrders = history.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     return (
-      <div className="main-container">
+      <div className="pull-down">
         <div className="title" id="menu-title">
           Order History
         </div>
@@ -139,7 +138,6 @@ class OrderHistory extends Component {
           />
           <ToastContainer />
         </div>
-        <Footer />
       </div>
 
     );

@@ -18,7 +18,6 @@ import tableHead from '../../helpers/tableHead';
 import TableHead from '../common/Table/TableHead';
 import TableRow from '../common/Table/TableRow';
 import setCartTotalPrice from '../../actions/cartTotPr';
-import Footer from '../common/Footer';
 
 class Cart extends Component {
   constructor(props) {
@@ -129,7 +128,7 @@ class Cart extends Component {
   render() {
     const { cart, totPrice } = this.props;
     return (
-      <div className="main-container">
+      <div>
         <div className="title" id="cart-title">
           Your Cart
         </div>
@@ -190,7 +189,6 @@ class Cart extends Component {
           </form>
           <ToastContainer />
         </div>
-        <Footer />
       </div>
     );
   }

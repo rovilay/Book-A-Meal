@@ -7,7 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../../../assets/css/menu.css';
 import navData from '../../../helpers/navData';
 import Menu from '../../common/Menu';
-import Footer from '../../common/Footer';
 
 class CustomerDashboard extends Component {
   constructor(props) {
@@ -43,7 +42,7 @@ class CustomerDashboard extends Component {
     const { user, todayMenu } = this.props;
     const { firstName, lastName } = user;
     return (
-      <div className="main-container">
+      <div>
         <div className="welcome">
           <p>
             Welcome, {firstName} {lastName}
@@ -63,7 +62,6 @@ class CustomerDashboard extends Component {
           />
         </div>
         <ToastContainer />
-        <Footer />
       </div>
     );
   }

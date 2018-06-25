@@ -17,8 +17,6 @@ import adminActions from '../../../actions/admin';
 import MenuTable from './MenuTable/MenuTable';
 import SetMenuCard from './MenuCard/setMenu';
 import ModalComp from '../Modal/Index';
-import Footer from '../../common/Footer';
-
 
 class AdminDashboard extends Component {
   constructor(props) {
@@ -132,7 +130,7 @@ class AdminDashboard extends Component {
 
   render() {
     return (
-      <div className="main-container">
+      <div>
         <div className="welcome">
           <img
             src="https://res.cloudinary.com/dcqnswemi/image/upload/v1529142686/chef2.svg"
@@ -166,7 +164,6 @@ class AdminDashboard extends Component {
           {...this.props}
         />
         <ToastContainer />
-        <Footer />
       </div>
     );
   }

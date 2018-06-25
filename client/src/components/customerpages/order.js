@@ -25,7 +25,6 @@ import {
   getOrders
 } from '../../actions/orders';
 import setModal from '../../actions/modal';
-import Footer from '../common/Footer';
 
 class CustomerOrder extends Component {
   constructor(props) {
@@ -166,7 +165,7 @@ class CustomerOrder extends Component {
   render() {
     const { history, grandTotalPrice } = this.props.orders;
     return (
-      <div className="main-container">
+      <div className="pull-down">
         <div className="title" id="menu-title">
           Your Order History
         </div>
@@ -237,7 +236,6 @@ class CustomerOrder extends Component {
           />
           <ToastContainer />
         </div>
-        <Footer />
       </div>
 
     );

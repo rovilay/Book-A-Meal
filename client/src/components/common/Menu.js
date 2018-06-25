@@ -7,9 +7,13 @@ const Menu = (props) => {
   const { menu } = props;
   return (
     <div className="menu-container">
-      <div className="menu-title" id="menu-title">
-        Menu
-      </div>
+      {
+        (menu.length > 0)
+        &&
+        <div className="menu-title" id="menu-title">
+          Menu
+        </div>
+      }
       {
         (menu.length > 0)
         ?

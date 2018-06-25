@@ -28,6 +28,7 @@ section .meal-container {
 }
 
 .form-section {
+  margin-top: 6rem;
   background: url('https://res.cloudinary.com/dcqnswemi/image/upload/v1529298213/mealsbg.jpg') no-repeat;
 }
 

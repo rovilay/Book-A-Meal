@@ -8,6 +8,7 @@
 }
 
 .welcome {
+    margin-top: 6rem;
     background: url('../images/menu_img.jpg') no-repeat;
 }
 .welcome-admin {
@@ -104,13 +105,6 @@
     margin: auto;
     background: url('../images/menu_img.jpg') no-repeat;
 } */
-
-/* Footer */
-footer {
-    background: #ff8619;
-    color: snow;
-    text-align: center
-}
 
 
 /* Small screens */
