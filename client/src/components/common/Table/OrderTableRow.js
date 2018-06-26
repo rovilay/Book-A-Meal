@@ -32,7 +32,7 @@ const OrderTableRow = (props) => {
             onClick={() => {
               showDetails(orderDetails);
             }}
-            className="btn-col btn-1"
+            className="order-btn-col btn-1"
           >
             <FontAwesome
               name="info-circle"

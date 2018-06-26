@@ -8,8 +8,6 @@ import moment from 'moment';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-
-import '../../../assets/css/table.css';
 import Modal from '../Modal/Index';
 import navData from '../../../helpers/navData';
 import tableHead from '../../../helpers/tableHead';
