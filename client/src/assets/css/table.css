@@ -316,6 +316,7 @@ input[type=checkbox] {
 
 .filter form button {
   width: auto;
+  color: #ffffff;
   background-color: #61b750;
   cursor: pointer;
 }

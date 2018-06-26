@@ -1,5 +1,8 @@
+import filterify from '../helpers/filter';
+
 const setDefaultAdminState = {
   meals: [],
+  filteredMeals: [],
   setMenuMeals: [],
   editMenuMeals: [],
   menus: [],
@@ -133,6 +136,11 @@ const adminReducer = (state = setDefaultAdminState, action) => {
         orders: {
           ...action.orders
         }
+      };
+    case 'FILTER_CATERER_MEALS':
+      return {
+        ...state,
+        filteredMeals: filterify(action.filter, state.meals)
       };
     default:
       return state;
