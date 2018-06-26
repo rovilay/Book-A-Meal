@@ -6,6 +6,7 @@ const menuTableHead = ['S/N', 'Menu Id', 'Post On', 'Created By', 'Actions'];
 const mealTableHead = ['S/N', 'Meal', 'Unit Price', 'Description', 'Created On', 'Actions'];
 const menuDetailHead = ['S/N', 'Meal Id', 'Meal', 'Unit Price', 'Description'];
 const editMenuHead = ['S/N', 'Meal', 'Unit Price', 'Description', 'Actions'];
+const MonthFilter = ['January', 'Feburary', 'March', 'April', 'May', 'June', 'July', 'August', 'September', 'October', 'November', 'December'];
 
 const tableHead = {
   cartTableHead,
@@ -15,7 +16,8 @@ const tableHead = {
   menuTableHead,
   menuDetailHead,
   editMenuHead,
-  mealTableHead
+  mealTableHead,
+  MonthFilter
 };
 
 export default tableHead;

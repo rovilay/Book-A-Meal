@@ -289,3 +289,33 @@ input[type=checkbox] {
 	visibility: visible;
 	opacity: 1;
 }
+
+.filter form {
+	margin: 10px;
+  display: inline-block
+}
+
+
+.filter form .label {
+  color: #ff8619;
+  float: left;
+  font-size: 20px
+}
+
+.filter form input,
+.filter form select,
+.filter form input[type=date],
+.filter form button {
+  margin-left: 5px;
+  float: left;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  height: 3.5em;
+}
+
+.filter form button {
+  width: auto;
+  background-color: #61b750;
+  cursor: pointer;
+}

@@ -8,12 +8,12 @@ import { bindActionCreators } from 'redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import '../../../assets/css/meal-option.css';
 import navData from '../../../helpers/navData';
 import MealForm from './MealForm';
 import MealTable from './MealTable/MealTable';
 import adminActions from '../../../actions/admin';
 import imageUploader from '../../../helpers/imageUploader';
+import Filter from '../../common/Filter';
 
 class MealPage extends Component {
   constructor(props) {
@@ -286,6 +286,7 @@ class MealPage extends Component {
         </section>
         <div className="container">
           <div className="table-title">Meal Options</div>
+          <Filter />
           <MealTable
             {...this.props}
             isEdit={isEdit}
