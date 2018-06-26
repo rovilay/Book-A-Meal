@@ -58,6 +58,8 @@ ul {
 	overflow: hidden;
 	background-color: $color_west_side_approx;
 	padding: 20px 10px;
+	position: fixed;
+	width: 100%;
 	a {
 		float: left;
 		color: $color_soapstone_approx;
@@ -113,7 +115,7 @@ ul {
 		min-width: 200px;
 		color: $white;
 		background: linear-gradient(to bottom, $color_ship_gray_50_approx, $color_ship_gray_75_approx ), transparent;
-		margin-top: 40px;
+		margin-top: 20em;
 		padding: 10px 8px;
 		text-align: center;
 		h1 {
@@ -342,9 +344,11 @@ input[type=submit] {
 	color: #ff8619;
 	font-weight: 400;
 	text-transform: capitalize;
-  // font-size: 1.8rem;
   text-align: center;
-	// margin-top: 1rem;
+}
+
+.pull-down {
+	margin-top: 10%;
 }
 
 .big-little {
@@ -356,6 +360,16 @@ input[type=submit] {
 	margin-bottom: 1rem
 }
 
+.notFoundCard {
+	max-width: 40rem;
+	height: 10rem;
+	border: 1px solid #ccc;
+	box-shadow: #8e8d8d;
+	// padding: 30px;
+	margin: 5%;
+	margin-top: 0;
+	text-align: center
+}
 // /* Admin Menu Table*/
 
 // .menu_table table{
@@ -394,3 +408,4 @@ footer {
 	bottom: 0;
 	position: absolute;
 }
+

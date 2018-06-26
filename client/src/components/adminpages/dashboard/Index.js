@@ -16,9 +16,7 @@ import { setNav } from '../../../actions/navLinks';
 import adminActions from '../../../actions/admin';
 import MenuTable from './MenuTable/MenuTable';
 import SetMenuCard from './MenuCard/setMenu';
-import ModalComp from './Modal/Modal';
-import Footer from '../../common/Footer';
-
+import ModalComp from '../Modal/Index';
 
 class AdminDashboard extends Component {
   constructor(props) {
@@ -35,10 +33,6 @@ class AdminDashboard extends Component {
     this.notify = this.notify.bind(this);
   }
 
-  // componentWillMount() {
-  //   this.props.setDefault();
-  // }
-
   componentDidMount() {
     this.props.setNav(navData.adminNavDefault);
     this.props.getMeals();
@@ -49,9 +43,6 @@ class AdminDashboard extends Component {
   onSubmitUpdate(menuDate, meals) {
     const { updateMenu } = this.props;
     const data = { meals };
-    // if (confirm('Are you sure you want to update?')) {
-    //   updateMenu({ menuDate, data });
-    // }
     updateMenu({ menuDate, data });
     setTimeout(() => {
       this.notify(this.props.serverRes.message);
@@ -139,7 +130,7 @@ class AdminDashboard extends Component {
 
   render() {
     return (
-      <div className="main-container">
+      <div>
         <div className="welcome">
           <img
             src="https://res.cloudinary.com/dcqnswemi/image/upload/v1529142686/chef2.svg"
@@ -173,7 +164,6 @@ class AdminDashboard extends Component {
           {...this.props}
         />
         <ToastContainer />
-        <Footer />
       </div>
     );
   }

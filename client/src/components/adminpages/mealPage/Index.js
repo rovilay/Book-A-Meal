@@ -13,14 +13,17 @@ import navData from '../../../helpers/navData';
 import MealForm from './MealForm';
 import MealTable from './MealTable/MealTable';
 import adminActions from '../../../actions/admin';
-import Footer from '../../common/Footer';
+import imageUploader from '../../../helpers/imageUploader';
 
 class MealPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isEdit: false,
-      mealOnEditId: ''
+      mealOnEditId: '',
+      imageToUpload: '',
+      uploadedImageLink: '',
+      disableBtn: false
     };
 
     this.editMeal = this.editMeal.bind(this);
@@ -31,7 +34,9 @@ class MealPage extends Component {
     this.getFormVal = this.getFormVal.bind(this);
     this.onAddMeal = this.onAddMeal.bind(this);
     this.onUpdateMeal = this.onUpdateMeal.bind(this);
-    // this.onDeleteMeal = this.onDeleteMeal.bind(this);
+    this.showUploadBar = this.showUploadBar.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
+    this.checkFileSize = this.checkFileSize.bind(this);
   }
 
   componentDidMount() {
@@ -40,6 +45,12 @@ class MealPage extends Component {
     this.closeEdit();
   }
 
+  /**
+   * Updates Meal
+   *
+   * Calls the updateMeal action
+   * And close edit state
+   */
   onUpdateMeal() {
     const { updateMeal } = this.props;
     const data = this.getFormVal();
@@ -56,27 +67,12 @@ class MealPage extends Component {
     this.closeEdit();
   }
 
-  // onDeleteMeal(mealId) {
-  //   const { deleteMeal } = this.props;
-  //   const confirmed = confirm('Are you sure you want to delete this meal?');
-  //   if (confirmed) {
-  //     deleteMeal(mealId);
-  //     setTimeout(() => {
-  //       this.notify(this.props.serverRes.message);
-  //     }, 200);
-  //   }
-  //   if (this.props.serverRes.success) {
-  //     setTimeout(() => {
-  //       this.notify('Meal deleted successfully!');
-  //     }, 200);
-  //     this.closeEdit();
-  //   } else {
-  //     setTimeout(() => {
-  //       this.notify(this.props.serverRes.message);
-  //     }, 200);
-  //   }
-  // }
-
+  /**
+   * Posts Meal
+   *
+   * Calls the postMeal action
+   * Clears form on success
+   */
   onAddMeal() {
     const { postMeal } = this.props;
     const data = this.getFormVal();
@@ -84,22 +80,29 @@ class MealPage extends Component {
     if (confirmed) {
       postMeal(data);
       setTimeout(() => {
-        this.notify(this.props.serverRes.message);
-        location.reload();
+        if (this.props.serverRes.success) {
+          this.notify(this.props.serverRes.message);
+          this.clearForm();
+          location.reload();
+        } else {
+          this.notify(this.props.serverRes.message);
+        }
       }, 200);
-    }
-
-    if (this.props.serverRes.success) {
-      this.clearForm();
     }
   }
 
   /* eslint prefer-destructuring:0 */
+  /**
+   * Gets form values and sets image value with link from cloudinary,
+   * If no image sets default image
+   *
+   * @returns {Object} data - Object consist of meal info
+   */
   getFormVal() {
     const title = document.getElementById('meal-name').value;
     const price = document.getElementById('price').value;
     const description = document.getElementById('dsc').value;
-    let image = document.getElementById('image').value;
+    let image = this.state.uploadedImageLink;
 
     if (!image && this.state.isEdit) {
       image = this.props.mealOnEdit.image;
@@ -116,6 +119,52 @@ class MealPage extends Component {
     return data;
   }
 
+  /**
+   * Shows upload progress bar if image is present
+   */
+  showUploadBar() {
+    if (this.checkFileSize()) {
+      const imageFile = document.getElementById('image').files[0];
+      this.setState({ imageToUpload: imageFile.name });
+    } else {
+      this.setState({ imageToUpload: '' });
+    }
+  }
+
+
+  /**
+   * Uploads image to cloudinary
+   */
+  uploadImage() {
+    this.showUploadBar();
+    setTimeout(() => {
+      if (this.state.imageToUpload) {
+        const url = imageUploader('image');
+        if (url) {
+          url
+            .then((res) => {
+              if (typeof (res) === 'string') {
+                return this.setState({
+                  uploadedImageLink: res,
+                  disableBtn: false
+                }); // enable btn after upload
+              }
+
+              throw new Error(res.message);
+            })
+            .catch(err => err);
+        }
+      }
+    }, 100);
+  }
+
+  /**
+   * Sets meal for edit
+   *
+   * @param {string} mealId Id of meal to edit,
+   * Calls setMealForEdit action
+   *
+   */
   editMeal(mealId) {
     this.setState({ isEdit: true });
     this.props.setMealForEdit(mealId);
@@ -129,12 +178,28 @@ class MealPage extends Component {
     document.documentElement.scrollTop = '100px';
   }
 
+  /**
+   * Closes edit state,
+   * Calls clearForm function,
+   * Dispatch removeMealFromEdit action
+   */
   closeEdit() {
-    this.setState({ isEdit: false, mealOnEditId: '' });
+    this.setState({
+      isEdit: false,
+      mealOnEditId: '',
+      imageToUpload: '',
+      disableBtn: false,
+      uploadedImageLink: ''
+    });
     this.clearForm();
     this.props.removeMealFromEdit();
   }
 
+  /**
+   * Notifies message using toast module
+   *
+   * @param {*} msg message to notify
+   */
   notify(msg) {
     toast(msg, {
       position: toast.POSITION.TOP_CENTER,
@@ -143,6 +208,10 @@ class MealPage extends Component {
     });
   }
 
+  /**
+   * Fills form on edit state with info of meal on Edit,
+   * Sets mealOnEditId state
+   */
   fillForm() {
     const mealName = document.getElementById('meal-name');
     const price = document.getElementById('price');
@@ -154,21 +223,49 @@ class MealPage extends Component {
     this.setState({ mealOnEditId: this.props.mealOnEdit.id });
   }
 
+  /**
+   * Clears form
+   */
   clearForm() {
     const mealName = document.getElementById('meal-name');
     const price = document.getElementById('price');
     const dsc = document.getElementById('dsc');
+    const image = document.getElementById('image');
 
     mealName.value = '';
     price.value = '';
     dsc.value = '';
-    this.setState({ mealOnEditId: '' });
+    image.value = '';
+  }
+
+  /**
+   * Checks if file size exceeds 1.5mb
+   * And disables button if file is proper size
+   */
+  checkFileSize() {
+    const file = document.getElementById('image');
+    if (file.files[0]) {
+      if (file.files[0].size > 1500000) {
+        this.notify('File must not exceed 1.5mb');
+        file.value = '';
+        return false;
+      }
+      this.setState({ disableBtn: true });
+      return true;
+    }
+
+    return false; // if no file
   }
 
   render() {
-    const { isEdit, mealOnEditId } = this.state;
+    const {
+      isEdit,
+      mealOnEditId,
+      imageToUpload,
+      disableBtn
+    } = this.state;
     return (
-      <div className="main-container">
+      <div>
         <section className="form-section">
           <div className="meal-container">
             <MealForm
@@ -178,7 +275,12 @@ class MealPage extends Component {
               addMeal={this.onAddMeal}
               updateMeal={this.onUpdateMeal}
               mealOnEditId={mealOnEditId}
+              imageToUpload={imageToUpload}
               notify={this.notify}
+              showUploadBar={this.showUploadBar}
+              uploadImage={this.uploadImage}
+              uploadedImageLink={this.state.uploadedImageLink}
+              disableBtn={disableBtn}
             />
           </div>
         </section>
@@ -194,7 +296,6 @@ class MealPage extends Component {
         <ToastContainer
           {...this.props}
         />
-        <Footer />
       </div>
     );
   }

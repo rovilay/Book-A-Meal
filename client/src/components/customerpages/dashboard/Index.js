@@ -7,8 +7,6 @@ import 'react-toastify/dist/ReactToastify.css';
 import '../../../assets/css/menu.css';
 import navData from '../../../helpers/navData';
 import Menu from '../../common/Menu';
-import Footer from '../../common/Footer';
-
 
 class CustomerDashboard extends Component {
   constructor(props) {
@@ -29,6 +27,9 @@ class CustomerDashboard extends Component {
     getTodayMenu();
   }
 
+  /**
+   * Notifies if meal is added to cart
+   */
   notify() {
     toast.success('Meal added to cart!', {
       position: toast.POSITION.BOTTOM_LEFT,
@@ -41,19 +42,19 @@ class CustomerDashboard extends Component {
     const { user, todayMenu } = this.props;
     const { firstName, lastName } = user;
     return (
-      <div className="main-container">
+      <div>
+        <div className="welcome">
+          <p>
+            Welcome, {firstName} {lastName}
+          </p>
+          <img
+            className="img-circle"
+            src="https://res.cloudinary.com/dcqnswemi/image/upload/v1529142882/waiter2.svg"
+            alt="waiter"
+          />
+          <p>Happy Eating!</p>
+        </div>
         <div className="container">
-          <div className="welcome">
-            <p>
-              Welcome, {firstName} {lastName}
-            </p>
-            <img
-              className="img-circle"
-              src="https://res.cloudinary.com/dcqnswemi/image/upload/v1529142882/waiter2.svg"
-              alt="waiter"
-            />
-            <p>Happy Eating!</p>
-          </div>
           <Menu
             menu={todayMenu}
             notify={this.notify}
@@ -61,7 +62,6 @@ class CustomerDashboard extends Component {
           />
         </div>
         <ToastContainer />
-        <Footer />
       </div>
     );
   }

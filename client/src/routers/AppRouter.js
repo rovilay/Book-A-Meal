@@ -2,6 +2,7 @@ import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
 
 import Header from '../components/common/Header';
+import Footer from '../components/common/Footer';
 import HomePage from '../components/homepage/Index';
 import LogInPage from '../components/loginpage/Index';
 import SignUpPage from '../components/signuppage/Index';
@@ -14,11 +15,12 @@ import Cart from '../components/customerpages/Cart';
 import CheckLogin from '../components/HOCs/checkLogin';
 import AdminDashboard from '../components/adminpages/dashboard/Index';
 import MealPage from '../components/adminpages/mealPage/Index';
-import NotFoundPage from '../components/common/NotFound';
+import OrderPage from '../components/adminpages/orderPage/Index';
+import NotFoundPage from '../components/NotFoundPage';
 
 const AppRouter = () => (
   <Router>
-    <div>
+    <div className="main-container">
       <Header />
       <Switch>
         <Route path="/" exact component={CheckLogin(HomePage)} />
@@ -31,8 +33,10 @@ const AppRouter = () => (
         <Route path="/cart" exact component={customerOnly(Cart)} />
         <Route path="/orders" exact component={customerOnly(CustomerOrder)} />
         <Route path="/mealpage" exact component={adminOnly(MealPage)} />
+        <Route path="/orderHistory" exact component={adminOnly(OrderPage)} />
         <Route component={NotFoundPage} />
       </Switch>
+      <Footer />
     </div>
   </Router>
 );

@@ -27,7 +27,7 @@ const Mealform = props => (
           if (props.isEdit) {
            return props.updateMeal();
           }
-          return props.addMeal();
+          return props.addMeal(e);
         }}
       >
 
@@ -69,7 +69,6 @@ const Mealform = props => (
           />
         </p>
 
-
         <p>
           <label htmlFor="image">Image
           </label>
@@ -78,8 +77,25 @@ const Mealform = props => (
             placeholder="Enter img link"
             name="image"
             id="image"
+            onChange={() => {
+              props.uploadImage();
+            }}
           />
         </p>
+        {
+          (props.imageToUpload)
+          &&
+          <div className="progress">
+            <div id="progressBar" className="progressBar">0%</div>
+          </div>
+        }
+        {
+          (props.uploadedImageLink)
+          &&
+          <p>
+            <img src={props.uploadedImageLink} alt="name" />
+          </p>
+        }
         {
           (!props.isEdit)
           &&
@@ -90,6 +106,7 @@ const Mealform = props => (
                 name="addbtn"
                 id="add-btn"
                 className="add-btn btn-3"
+                disabled={props.disableBtn}
               >
                 <FontAwesome
                   name="plus"
@@ -109,6 +126,7 @@ const Mealform = props => (
                 name="updatebtn"
                 id="update-btn"
                 className="update-btn btn-3"
+                disabled={props.disableBtn}
               >
                 <FontAwesome
                   name="arrow-circle-up"
@@ -138,6 +156,7 @@ const Mealform = props => (
                     }, 200);
                   }
                 }}
+                disabled={props.disableBtn}
               >
                 <FontAwesome
                   name="times"
@@ -154,6 +173,7 @@ const Mealform = props => (
                   e.preventDefault();
                   props.closeEdit();
                 }}
+                // disabled={props.disableBtn}
               >
                 <FontAwesome
                   name="arrow-circle-left"
@@ -176,7 +196,11 @@ Mealform.propTypes = {
   isEdit: PropTypes.bool.isRequired,
   serverRes: PropTypes.object.isRequired,
   mealOnEditId: PropTypes.string.isRequired,
-  notify: PropTypes.func.isRequired
+  notify: PropTypes.func.isRequired,
+  imageToUpload: PropTypes.string.isRequired,
+  uploadedImageLink: PropTypes.string.isRequired,
+  uploadImage: PropTypes.func.isRequired,
+  disableBtn: PropTypes.bool.isRequired
 };
 
 export default Mealform;

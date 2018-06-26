@@ -8,7 +8,8 @@ import { PersistGate } from 'redux-persist/lib/integration/react';
 import { persistor, store } from './store/configureStore';
 import AppRouter from './routers/AppRouter';
 import './assets/scss/style.scss';
-import './assets/css/create-menu.css';
+import './assets/css/login.css';
+import './assets/css/admin.css';
 import './assets/css/table.css';
 
 // store.subscribe(() => {

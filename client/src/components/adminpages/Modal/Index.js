@@ -2,8 +2,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 
-import MenuDetailsTable from '../MenuTable/MenuDetails';
-import EditMenuTable from '../MenuTable/EditMenu';
+import MenuDetailsTable from '../dashboard/MenuTable/MenuDetails';
+import EditMenuTable from '../dashboard/MenuTable/EditMenu';
+import OrderDetailsTable from '../orderPage/orderDetails';
 
 Modal.setAppElement('#root');
 class ModalComp extends Component {
@@ -16,6 +17,7 @@ class ModalComp extends Component {
       isOpen,
       isInfo,
       isEdit,
+      isOrderInfo,
       content,
       contentLabel,
     } = modal;
@@ -59,16 +61,33 @@ class ModalComp extends Component {
             />
           )
         }
+
+        {
+          (isOrderInfo)
+          &&
+          (
+            <OrderDetailsTable
+              title={contentLabel}
+              content={content}
+              isEdit={isEdit}
+              {...this.props}
+            />
+          )
+        }
       </Modal>
     );
   }
 }
 
+ModalComp.defaultProps = {
+  emptyEditMenu: undefined
+};
+
 ModalComp.propTypes = {
   modal: PropTypes.object.isRequired,
   setModal: PropTypes.func.isRequired,
   hideModal: PropTypes.func.isRequired,
-  emptyEditMenu: PropTypes.func.isRequired,
+  emptyEditMenu: PropTypes.func,
 };
 
 export default ModalComp;

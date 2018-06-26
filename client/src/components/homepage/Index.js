@@ -9,7 +9,6 @@ import getTodayMenu from '../../actions/menu';
 import Showcase from './Showcase';
 import Welcome from './Wlcdesc';
 import Menu from '../common/Menu';
-import Footer from '../common/Footer';
 
 class IndexPage extends Component {
   constructor(props) {
@@ -30,16 +29,19 @@ class IndexPage extends Component {
   render() {
     const { menu } = this.props;
     return (
-      <div className="main-container">
+      <div>
         <Showcase />
         <Welcome />
-        <Menu
-          menu={menu}
-          addMealToCart={this.addMealToCart}
-          notify={this.notify}
-          {...this.props}
-        />
-        <Footer />
+        {
+          (menu.length > 0)
+          &&
+          <Menu
+            menu={menu}
+            addMealToCart={this.addMealToCart}
+            notify={this.notify}
+            {...this.props}
+          />
+        }
       </div>
     );
   }

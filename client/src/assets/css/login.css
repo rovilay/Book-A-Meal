@@ -20,8 +20,12 @@ a {
   padding: 1.4em
 }
 
+.login-form-container .link {
+  margin-left: 50px;
+}
+
 .card .login-form-title {
-  color: #000;
+  color: #61b750;
   text-transform: capitalize;
   font-size: 28px;
   font-weight: 600;

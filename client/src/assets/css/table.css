@@ -30,7 +30,7 @@ order {
 
 /* buttons */
 
-.btn-1 {
+/* .btn-1 {
   background: transparent;
   font-size: 0.8em;
   padding: 1em 2em;
@@ -45,6 +45,15 @@ order {
 .btn-1:hover,
 .btn-1:focus {
   transition: background-color 0.2s ease-out;
+} */
+
+.order-btn-col {
+  background-color: #ff8619
+}
+
+.order-btn-col:hover,
+.order-btn-col:focus {
+  background-color: #61B750
 }
 
 .btn-1:disabled:hover {
@@ -96,7 +105,11 @@ table thead,   table tbody {
 
 table tbody {
 	overflow: auto;
-	max-height: 300px;
+	max-height: 600px;
+}
+
+table .modal-table-body {
+  max-height: 300px;
 }
 
 table a {
@@ -237,4 +250,42 @@ input[type=checkbox] {
 .meal-btn[disabled]:hover {
 	background: #6d6d6d;
 	color: #fff
+}
+
+/* tool-tip */
+.meal-Image {
+	position: relative;
+}
+
+.meal-Image .tooltip {
+	visibility: hidden;
+	width: 200px;
+	height: 200px;
+	background-color: #555;
+	color: #fff;
+	text-align: center;
+	border-radius: 6px;
+	position: absolute;
+	z-index: 1;
+	top: 80%;
+	left: 30%;
+	margin-left: -60px;
+	opacity: 0;
+	transition: opacity 0.3s;
+}
+
+.meal-Image .tooltip::before {
+	content: "";
+	position: absolute;
+	bottom: 100%;
+	left: 50%;
+	margin-left: -5px;
+	border-width: 5px;
+	border-style: solid;
+	border-color: #555 transparent transparent transparent;
+}
+
+.meal-Image:hover .tooltip {
+	visibility: visible;
+	opacity: 1;
 }

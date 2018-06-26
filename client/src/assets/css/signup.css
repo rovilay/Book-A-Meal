@@ -25,7 +25,7 @@ section .signup-container {
 }
 
 .signup-card .form-title {
-  color: #000;
+  color: #61B750;
   text-transform: capitalize;
   font-size: 28px;
   font-weight: 600;
@@ -34,7 +34,7 @@ section .signup-container {
 
 .signup-card .signup-form {
   display: grid;
-  grid-template-columns: 1fr 1fr; 
+  grid-template-columns: 1fr 1fr;
   grid-gap: 1.3em
 }
 
@@ -46,18 +46,26 @@ section .signup-container {
   grid-column: 1 / 3;
 }
 
-.signup-card form button, .signup-card form input[type=text], .signup-card form input[type=email], .signup-card form input[type=password] {
+.signup-card form button,
+.signup-card form input[type=text],
+.signup-card form input[type=email],
+.signup-card form input[type=password],
+.signup-card form select {
   width: 100%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
 }
 
+.signup-card form select {
+  height: 3.5em
+}
+
 .signup-card .asterik {
   color: red;
 }
 
-.btn-1 {
+.signup-card .btn-1 {
   border: none;
   background: #61B750;
   color: #fff;
@@ -70,10 +78,13 @@ section .signup-container {
   display: block;
 }
 
-.btn-1:disabled {
+.signup-card .btn-1:disabled {
   background: #8f8d8d;
 }
 
+.signup-card .btn-1[disabled]:hover {
+  color: #ffffff
+}
 
 label {
   display: block;
@@ -91,7 +102,7 @@ hr {
 .alert-danger {
   color: rgb(219, 41, 41);
 }
- 
+
 .alert-success {
   color: #48e048;
   text-transform: capitalize
@@ -106,5 +117,5 @@ hr {
 @media(max-width:500px) {
   .signup-card .signup-form {
     display: inline;
-  }  
+  }
 }

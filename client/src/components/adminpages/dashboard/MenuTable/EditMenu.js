@@ -78,7 +78,7 @@ const EditMenuTable = (props) => {
         </div>
         <table>
           <TableHead tableHead={tableHead.editMenuHead} />
-          <tbody>
+          <tbody className="modal-table-body">
             {
               content.meals.map((meal, i) => {
                 const {

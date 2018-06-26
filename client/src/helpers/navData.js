@@ -5,7 +5,7 @@ const adminNavDefault = [
   },
   {
     title: 'Orders',
-    link: '/dashboard/orders'
+    link: '/orderHistory'
   },
   {
     title: 'Log Out',
@@ -20,7 +20,7 @@ const adminNav = [
   },
   {
     title: 'Orders',
-    link: '/dashboard/orders'
+    link: '/orderHistory'
   },
   {
     title: 'Log Out',

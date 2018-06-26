@@ -21,6 +21,7 @@ const MealTable = (props) => {
                 price: unitPrice,
                 description,
                 title: Meal,
+                image,
                 createdAt
               } = meal;
               const item = {
@@ -29,6 +30,7 @@ const MealTable = (props) => {
                 Meal,
                 unitPrice,
                 description,
+                image,
                 createdAt: moment(createdAt).format('LL'),
               };
               return (<MealTableRow

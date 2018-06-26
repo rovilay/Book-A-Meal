@@ -1,40 +1,29 @@
-const signupValidator = ({
-  firstName,
-  lastName,
-  email,
-  Phone,
-  address,
-  password,
-  cpassword,
-  city,
-  state
-}) => {
+/**
+ * checks if required signup form fields are empty,
+ * also checks if password and confirm password matches
+ */
+const signupValidator = () => {
   let valid = true;
-
-  const requiredFields = Object.values({
-    firstName,
-    lastName,
-    email,
-    Phone,
-    address,
-    password,
-    cpassword,
-    city,
-    state
-  });
+  const requiredFields = [
+    'signup-fname',
+    'signup-lname',
+    'signup-email',
+    'signup-role',
+    'signup-phone',
+    'signup-address',
+    'signup-psw',
+    'signup-cpsw',
+    'signup-city',
+    'signup-state',
+  ].map(field => document.getElementById(field).value);
 
   if (requiredFields.includes('')) {
     valid = false;
   }
 
-  // console.log(cpassword, password)
-  // if (valid && cpassword !== password) {
-  //   valid = false;
-  // }
-
-  // if ( !!valid && (cpassword === password)) {
-  //   valid = true;
-  // }
+  if (valid && (requiredFields[6] !== requiredFields[7])) {
+    valid = false;
+  }
 
   return valid;
 };

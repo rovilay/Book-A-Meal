@@ -20,7 +20,7 @@ const MealTableRow = (props) => {
     <tr key={item.mealId}>
       {
         Object.keys(Meal).map((key, i) => (
-          (<TableCol dataTitle={key} val={Meal[key]} key={i} />)
+          (<TableCol dataTitle={key} val={Meal[key]} key={i} mealImage={item.image} />)
         ))
       }
 
