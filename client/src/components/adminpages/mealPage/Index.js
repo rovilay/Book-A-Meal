@@ -35,6 +35,7 @@ class MealPage extends Component {
     this.onAddMeal = this.onAddMeal.bind(this);
     this.onUpdateMeal = this.onUpdateMeal.bind(this);
     this.showUploadBar = this.showUploadBar.bind(this);
+    this.uploadImage = this.uploadImage.bind(this);
     this.checkFileSize = this.checkFileSize.bind(this);
   }
 
@@ -42,19 +43,6 @@ class MealPage extends Component {
     this.props.setNav(navData.adminNav);
     this.props.getMeals();
     this.closeEdit();
-  }
-
-  componentDidUpdate() {
-    if (this.state.imageToUpload) {
-      const url = imageUploader('image');
-      if (url) {
-        url
-          .then((res) => {
-            this.setState({ uploadedImageLink: res, disableBtn: false }); // enable btn after upload
-          })
-          .catch(err => err);
-      }
-    }
   }
 
   /**
@@ -143,6 +131,33 @@ class MealPage extends Component {
     }
   }
 
+
+  /**
+   * Uploads image to cloudinary
+   */
+  uploadImage() {
+    this.showUploadBar();
+    setTimeout(() => {
+      if (this.state.imageToUpload) {
+        const url = imageUploader('image');
+        if (url) {
+          url
+            .then((res) => {
+              if (typeof (res) === 'string') {
+                return this.setState({
+                  uploadedImageLink: res,
+                  disableBtn: false
+                }); // enable btn after upload
+              }
+
+              throw new Error(res.message);
+            })
+            .catch(err => err);
+        }
+      }
+    }, 100);
+  }
+
   /**
    * Sets meal for edit
    *
@@ -169,7 +184,13 @@ class MealPage extends Component {
    * Dispatch removeMealFromEdit action
    */
   closeEdit() {
-    this.setState({ isEdit: false, mealOnEditId: '' });
+    this.setState({
+      isEdit: false,
+      mealOnEditId: '',
+      imageToUpload: '',
+      disableBtn: false,
+      uploadedImageLink: ''
+    });
     this.clearForm();
     this.props.removeMealFromEdit();
   }
@@ -209,11 +230,12 @@ class MealPage extends Component {
     const mealName = document.getElementById('meal-name');
     const price = document.getElementById('price');
     const dsc = document.getElementById('dsc');
+    const image = document.getElementById('image');
 
     mealName.value = '';
     price.value = '';
     dsc.value = '';
-    this.setState({ mealOnEditId: '' });
+    image.value = '';
   }
 
   /**
@@ -240,7 +262,6 @@ class MealPage extends Component {
       isEdit,
       mealOnEditId,
       imageToUpload,
-      uploadedImageLink,
       disableBtn
     } = this.state;
     return (
@@ -257,7 +278,8 @@ class MealPage extends Component {
               imageToUpload={imageToUpload}
               notify={this.notify}
               showUploadBar={this.showUploadBar}
-              uploadedImageLink={uploadedImageLink}
+              uploadImage={this.uploadImage}
+              uploadedImageLink={this.state.uploadedImageLink}
               disableBtn={disableBtn}
             />
           </div>
