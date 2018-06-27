@@ -10,8 +10,8 @@ const setDefaultAdminState = {
   orders: {
     grandTotalPrice: 0,
     history: [],
-    filteredOrders: []
   },
+  filteredOrders: [],
   serverRes: {
     success: '',
     message: ''
@@ -136,6 +136,7 @@ const adminReducer = (state = setDefaultAdminState, action) => {
       return {
         ...state,
         orders: {
+          ...state.orders,
           ...action.orders
         }
       };
@@ -149,12 +150,19 @@ const adminReducer = (state = setDefaultAdminState, action) => {
         ...state,
         filteredMenus: [...filterify(action.filter, state.menus)]
       };
-    case 'FILTER_ALL_ORDERS':
+    case 'FILTER_ORDER_HISTORY':
       return {
         ...state,
+        filteredOrders: [...filterify(action.filter, state.orders.history)],
         orders: {
           ...state.orders,
-          filteredOrders: [...filterify(action.filter, state.orders.history)]
+          grandTotalPrice: (() => {
+            let price = 0;
+            [...filterify(action.filter, state.orders.history)].forEach((order) => {
+              price += order.totalPrice;
+            });
+            return price;
+          })()
         }
       };
     default:

@@ -154,7 +154,6 @@ class AdminDashboard extends Component {
           <div className="menu-title">Menus List</div>
           <FilterComp
             {...this.props}
-            filterAction={this.props.filterAction}
             tableContent="Menus_List"
           />
           {
