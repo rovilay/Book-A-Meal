@@ -10,9 +10,9 @@ const filterify = (filter, objectToFilter) => {
   let filteredArr = [];
   if (filter.by === 'date' && filter.date) {
     objectToFilter.map((val) => {
-      if (val.createdAt) {
+      if (val.postOn || val.createdAt) {
         const filterDate = moment(filter.date).format('LL');
-        const valDate = moment(val.createdAt).format('LL');
+        const valDate = moment(val.postOn).format('LL') || moment(val.createdAt).format('LL');
         if (filterDate === valDate) {
           filteredArr.push(val);
         }

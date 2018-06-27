@@ -6,6 +6,7 @@ const setDefaultAdminState = {
   setMenuMeals: [],
   editMenuMeals: [],
   menus: [],
+  filteredMenus: [],
   orders: {
     grandTotalPrice: 0,
     history: [],
@@ -141,14 +142,19 @@ const adminReducer = (state = setDefaultAdminState, action) => {
     case 'FILTER_CATERER_MEALS':
       return {
         ...state,
-        filteredMeals: filterify(action.filter, state.meals)
+        filteredMeals: [...filterify(action.filter, state.meals)]
+      };
+    case 'FILTER_MENUS_LIST':
+      return {
+        ...state,
+        filteredMenus: [...filterify(action.filter, state.menus)]
       };
     case 'FILTER_ALL_ORDERS':
       return {
         ...state,
         orders: {
           ...state.orders,
-          filteredOrders: filterify(action.filter, state.orders.history)
+          filteredOrders: [...filterify(action.filter, state.orders.history)]
         }
       };
     default:

@@ -320,3 +320,8 @@ input[type=checkbox] {
   background-color: #61b750;
   cursor: pointer;
 }
+
+.filter form button:hover,
+.filter form button:focus {
+  background-color: rgb(67, 143, 52)
+}
