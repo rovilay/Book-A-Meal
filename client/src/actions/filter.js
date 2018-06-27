@@ -6,7 +6,7 @@
  * @param {string} filter month value if filter by = month
  * @returns {Object} returns an object of type and filter parameters
  */
-const filter = (type, { filter: by, date, month }) => (
+const filter = (type, { filter: by = 'all', date = '', month = '' }) => (
   {
     type: `FILTER_${type.toUpperCase()}`,
     filter: {

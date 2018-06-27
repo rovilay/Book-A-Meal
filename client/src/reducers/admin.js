@@ -8,7 +8,8 @@ const setDefaultAdminState = {
   menus: [],
   orders: {
     grandTotalPrice: 0,
-    history: []
+    history: [],
+    filteredOrders: []
   },
   serverRes: {
     success: '',
@@ -141,6 +142,14 @@ const adminReducer = (state = setDefaultAdminState, action) => {
       return {
         ...state,
         filteredMeals: filterify(action.filter, state.meals)
+      };
+    case 'FILTER_ALL_ORDERS':
+      return {
+        ...state,
+        orders: {
+          ...state.orders,
+          filteredOrders: filterify(action.filter, state.orders.history)
+        }
       };
     default:
       return state;

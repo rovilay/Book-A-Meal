@@ -17,7 +17,6 @@ const filterify = (filter, objectToFilter) => {
           filteredArr.push(val);
         }
       }
-
     });
   }
 

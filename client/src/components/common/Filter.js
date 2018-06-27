@@ -1,13 +1,10 @@
 /* eslint jsx-a11y/label-has-for:0 */
 import React, { Component } from 'react';
-import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 
 import tableHead from '../../helpers/tableHead';
-import filterAction from '../../actions/filter';
 
-class Filter extends Component {
+class FilterComp extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -17,12 +14,13 @@ class Filter extends Component {
     };
   }
   render() {
+    const { tableContent, filterAction } = this.props;
     return (
       <div className="filter">
         <form onSubmit={(e) => {
             e.preventDefault();
             console.log(this.state);
-            this.props.filterAction('caterer_meals', { ...this.state });
+            filterAction(tableContent, { ...this.state });
           }}
         >
           <label htmlFor="filter" className="label">Filter By:</label>
@@ -46,7 +44,7 @@ class Filter extends Component {
               id="filter-date"
               required
               onChange={(e) => {
-                this.setState({ [e.target.name]: e.target.value });
+                this.setState({ month: '', [e.target.name]: e.target.value });
               }}
             />
           }
@@ -59,7 +57,7 @@ class Filter extends Component {
               id="month"
               required
               onChange={(e) => {
-                this.setState({ [e.target.name]: e.target.value });
+                this.setState({ date: '', [e.target.name]: e.target.value });
               }}
             >
               <option value="">select month</option>
@@ -83,15 +81,9 @@ class Filter extends Component {
   }
 }
 
-Filter.propTypes = {
-  filterAction: PropTypes.func.isRequired
+FilterComp.propTypes = {
+  filterAction: PropTypes.func.isRequired,
+  tableContent: PropTypes.string.isRequired
 };
 
-const mapDispatchToProps = dispatch => bindActionCreators(
-  {
-    filterAction
-  },
-  dispatch
-);
-
-export default connect('', mapDispatchToProps)(Filter);
+export default FilterComp;
