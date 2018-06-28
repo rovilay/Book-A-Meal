@@ -35,7 +35,6 @@ const filterify = (filter, objectToFilter) => {
     filteredArr = [...objectToFilter];
   }
 
-  console.log(filteredArr);
   return filteredArr;
 };
 

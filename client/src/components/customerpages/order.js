@@ -1,4 +1,5 @@
 /* eslint class-methods-use-this:0 */
+/* eslint max-len:0 */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -24,6 +25,8 @@ import {
   deleteOrder,
   getOrders
 } from '../../actions/orders';
+import FilterComp from '../common/Filter';
+import filterAction from '../../actions/filter';
 import setModal from '../../actions/modal';
 
 class CustomerOrder extends Component {
@@ -41,6 +44,7 @@ class CustomerOrder extends Component {
 
   componentDidMount() {
     this.getCustomerOrders();
+    this.props.filterAction('customer_orders', { filter: 'all' });
     this.hideModal();
   }
 
@@ -163,7 +167,8 @@ class CustomerOrder extends Component {
   }
 
   render() {
-    const { history, grandTotalPrice } = this.props.orders;
+    const { grandTotalPrice, filteredOrders } = this.props.orders;
+    const sortedOrders = filteredOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     return (
       <div className="pull-down">
         <div className="title" id="menu-title">
@@ -171,73 +176,86 @@ class CustomerOrder extends Component {
         </div>
         <hr />
         <div className="table-container">
-          <table>
-            <TableHead tableHead={tableHead.orderHead} />
-            <tbody>
-              {
-                history.map((order, i) => {
-                  const {
-                    id: orderId,
-                    createdAt: date,
-                    totalPrice,
-                    deliveryAddress: address,
-                    Meals: meals
-                  } = order;
-
-                  const time = moment(date).format('HH:mm');
-
-                  const item = {
-                      sn: ++i,
-                      orderId,
-                      date: moment(date).format('LL'),
-                      totalPrice,
-                    };
-
-                  const orderDetails = {
-                    orderId,
-                    meals,
-                    address,
-                    totalPrice,
-                    time,
-                    date: moment(date).format('LL')
-                  };
-
-                  return (
-                    <OrderTableRow
-                      key={i}
-                      item={item}
-                      sn={++i}
-                      orderDetails={orderDetails}
-                      onEditOrder={this.onEditOrder}
-                      showDetails={this.showDetails}
-                      notify={this.notify}
-                      {...this.props}
-                    />
-                  );
-                })
-              }
-            </tbody>
-          </table>
-          {
-            (grandTotalPrice >= 0)
-            &&
-            (
-              <p>
-                Grand Total (&#8358;): {grandTotalPrice}
-              </p>
-            )
-          }
-          <Modal
-            hideModal={this.hideModal}
-            deleteRow={this.deleteRow}
-            updatePortion={this.updatePortion}
-            notify={this.notify}
+          <FilterComp
             {...this.props}
+            tableContent="customer_orders"
           />
-          <ToastContainer />
-        </div>
-      </div>
+          {
+            (filteredOrders.length === 0)
+            ?
+              <p className="empty not-found">No orders found!</p>
+            :
+              (
+                <div>
+                  <table>
+                    <TableHead tableHead={tableHead.orderHead} />
+                    <tbody>
+                      {
+                        sortedOrders.map((order, i) => {
+                          const {
+                            id: orderId,
+                            createdAt: date,
+                            totalPrice,
+                            deliveryAddress: address,
+                            Meals: meals
+                          } = order;
 
+                          const time = moment(date).format('HH:mm');
+
+                          const item = {
+                              sn: ++i,
+                              orderId,
+                              date: moment(date).format('LL'),
+                              totalPrice,
+                            };
+
+                          const orderDetails = {
+                            orderId,
+                            meals,
+                            address,
+                            totalPrice,
+                            time,
+                            date: moment(date).format('LL')
+                          };
+
+                          return (
+                            <OrderTableRow
+                              key={i}
+                              item={item}
+                              sn={++i}
+                              orderDetails={orderDetails}
+                              onEditOrder={this.onEditOrder}
+                              showDetails={this.showDetails}
+                              notify={this.notify}
+                              {...this.props}
+                            />
+                          );
+                        })
+                      }
+                    </tbody>
+                  </table>
+                  {
+                    (grandTotalPrice >= 0)
+                    &&
+                    (
+                      <p>
+                        Grand Total (&#8358;): {grandTotalPrice}
+                      </p>
+                    )
+                  }
+                </div>
+              )
+            }
+        </div>
+        <Modal
+          hideModal={this.hideModal}
+          deleteRow={this.deleteRow}
+          updatePortion={this.updatePortion}
+          notify={this.notify}
+          {...this.props}
+        />
+        <ToastContainer />
+      </div>
     );
   }
 }
@@ -251,7 +269,8 @@ CustomerOrder.propTypes = {
   updateMealPortion: PropTypes.func.isRequired,
   setCustomerOrders: PropTypes.func.isRequired,
   getOrders: PropTypes.func.isRequired,
-  setEditOrder: PropTypes.func.isRequired
+  setEditOrder: PropTypes.func.isRequired,
+  filterAction: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -271,6 +290,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
     setEditOrder,
     deleteOrder,
     getOrders,
+    filterAction
   },
   dispatch
 );

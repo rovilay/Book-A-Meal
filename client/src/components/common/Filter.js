@@ -19,7 +19,6 @@ class FilterComp extends Component {
       <div className="filter">
         <form onSubmit={(e) => {
             e.preventDefault();
-            console.log(this.state);
             filterAction(tableContent, { ...this.state });
           }}
         >

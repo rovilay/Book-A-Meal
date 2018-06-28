@@ -60,6 +60,10 @@
   padding-top: 4rem;
 }
 
+.not-found {
+  margin-left: 300PX;
+}
+
 @media screen and (max-width: 500px) {
   .card .menu-title {
     text-transform: capitalize;
