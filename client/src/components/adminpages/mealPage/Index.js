@@ -295,7 +295,7 @@ class MealPage extends Component {
           {
             (this.props.filteredMeals.length === 0)
             ?
-              <p>No Meal Found!</p>
+              <p className="empty not-found">No meal found!</p>
             :
               <MealTable
                 {...this.props}

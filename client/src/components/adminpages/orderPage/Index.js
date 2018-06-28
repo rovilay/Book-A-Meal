@@ -82,7 +82,7 @@ class OrderHistory extends Component {
           {
             (filteredOrders.length === 0)
             ?
-              <p>No orders found!</p>
+              <p className="empty not-found">No orders found!</p>
             :
               (
                 <div>
