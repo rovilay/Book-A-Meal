@@ -24,6 +24,7 @@
         "no-param-reassign": "off",
         "consistent-return": "off",
         "array-callback-return": "off",
+        "no-unused-expressions": "off",
         "no-plusplus": "off",
         "comma-dangle":"off",
         "react/jsx-uses-react": 1,

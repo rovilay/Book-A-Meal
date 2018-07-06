@@ -115,19 +115,6 @@ tr:hover {
   font-size: 1.4em
 }
 
-/* Footer */
-footer {
-  background: #ff8619;
-  color: snow;
-  text-align: center;
-  padding: 1.4rem;
-  margin-top: 1em;
-}
-
-footer .container {
-  padding: 1.4em
-}
-
 /* order history */
 #filter {
   margin: 1.2em

@@ -2,8 +2,9 @@
   eslint class-methods-use-this:0,
   eslint no-restricted-globals: 0,
   eslint no-restricted-globals: 0,
-  eslint no-alert: 0
+  eslint no-alert: 0,
 */
+/* eslint no-restricted-globals: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -49,6 +50,7 @@ class AdminDashboard extends Component {
     updateMenu({ menuDate, data });
     setTimeout(() => {
       this.notify(this.props.serverRes.message);
+      location.reload();
     }, 200);
   }
 
@@ -73,13 +75,12 @@ class AdminDashboard extends Component {
     });
   }
 
-  submitNewMenu(e) {
-    e.preventDefault();
+  submitNewMenu() {
     const meals = [...this.props.newMenuMeals];
     const date = document.getElementById('postOn').value;
     const postOn = date.split('/').reverse().join('-');
     this.props.postMenu({ postOn, meals });
-
+    location.reload();
     setTimeout(() => {
       this.notify(this.props.serverRes.message);
     }, 200);

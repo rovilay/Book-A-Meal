@@ -30,23 +30,6 @@
 
 /* buttons */
 
-/* .btn-1 {
-  background: transparent;
-  font-size: 0.8em;
-  padding: 1em 2em;
-  text-align: center;
-  border-radius: 0.5em;
-  text-decoration: none;
-  cursor: pointer;
-  display: block;
-  margin-top: 7px;
-}
-
-.btn-1:hover,
-.btn-1:focus {
-  transition: background-color 0.2s ease-out;
-} */
-
 .order-btn-col {
   background-color: #ff8619
 }
@@ -66,6 +49,11 @@
   background: #61b750;
   color: snow;
   font-weight: bold;
+}
+
+.update-btn:disabled {
+  background-color: #b9b9b9;
+  color: #ffffff;
 }
 
 .update-btn:disabled:hover {
@@ -174,26 +162,6 @@ table tr:hover {
   color: #ff8619
 }
 
-/* Admin Menu Table*/
-
-/* .menu_table table{
-	display: table;
-	width: 100%;
-}
-
-.menu_table table tbody {
-	overflow: auto;
-	height: 100px;
-}
-.menu_table table tr {
-	width: 100%;
-	display: table;
-	text-align: center;
-}
-.menu_table table th,   .menu_table table td {
-	width:20%;
-} */
-
 /* Menu Form */
 input[type=checkbox] {
 	cursor: pointer;
@@ -204,46 +172,25 @@ input[type=checkbox] {
   .container {
     padding: 0;
   }
-  /* table,
-  table tbody,
-  table tr,
-  table td {
-    display: block;
-    border-radius: 0px;
+
+  table tbody {
+    overflow: auto;
+    /* max-width: 300px; */
   }
-  tabel td a {
-    cursor: pointer;
-  }
-  tr th {
-    position: absolute;
-    left: -9999px;
-    top: -9999px
-  }
-  td {
-    border: none;
-    margin-top: 10px;
-    position: relative;
-    padding-left: 70%;
-    white-space: normal;
-    text-align: justify;
-  }
-  td:before {
-    position: absolute;
-    top: 18px;
-    left: 18px;
-    width: 40%;
-    padding-right: 10px;
-    white-space: nowrap;
-    text-align: left;
-    font-weight: bold;
-    content: attr(data-title);
-  } */
+
   .btn-2 {
 		margin-top: 0.7em;
 		margin-bottom: 0em;
 		display: block;
 		float: none
 	}
+}
+
+@media screen and (max-width: 390px) {
+  table tbody {
+    overflow: auto;
+    max-width: 360px;
+  }
 }
 
 .meal-btn[disabled],
@@ -324,4 +271,42 @@ input[type=checkbox] {
 .filter form button:hover,
 .filter form button:focus {
   background-color: rgb(67, 143, 52)
+}
+
+@media screen and (max-width: 600px) {
+  .filter form {
+    margin: 10px;
+    display: inline-block
+  }
+
+
+  .filter form .label {
+    color: #ff8619;
+    float: left;
+    font-size: 14px
+  }
+
+  .filter form input,
+  .filter form select,
+  .filter form input[type=date],
+  .filter form button {
+    margin-left: 5px;
+    float: left;
+    padding: 8px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    height: 2.5rem;
+  }
+
+  .filter form button {
+    width: auto;
+    color: #ffffff;
+    background-color: #61b750;
+    cursor: pointer;
+  }
+
+  .filter form button:hover,
+  .filter form button:focus {
+    background-color: rgb(67, 143, 52)
+  }
 }

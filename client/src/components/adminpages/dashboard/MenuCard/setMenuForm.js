@@ -6,7 +6,13 @@ import moment from 'moment';
 import MealCheckBoxCard from './mealCheckbox';
 
 const SetMenuForm = props => (
-  <form className="setmenu-form" onSubmit={props.submitNewMenu}>
+  <form
+    className="setmenu-form"
+    onSubmit={(e) => {
+      e.preventDefault();
+      props.submitNewMenu();
+    }}
+  >
     <p className="date full">
       <label htmlFor="date">Post on:</label>
       <input
