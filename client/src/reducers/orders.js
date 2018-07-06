@@ -1,8 +1,11 @@
+import filterify from '../helpers/filter';
+
 const ordersDefaultState = {
   success: false,
   message: '',
   grandTotalPrice: 0,
   history: [],
+  filteredOrders: [],
   editOrder: {},
   serverRes: {}
 };
@@ -73,6 +76,18 @@ const ordersReducer = (state = ordersDefaultState, action) => {
       return {
         ...state,
         serverRes: { ...action.serverRes }
+      };
+    case 'FILTER_CUSTOMER_ORDERS':
+      return {
+        ...state,
+        filteredOrders: [...filterify(action.filter, state.history)],
+        grandTotalPrice: (() => {
+          let price = 0;
+          [...filterify(action.filter, state.history)].forEach((order) => {
+            price += order.totalPrice;
+          });
+          return price;
+        })()
       };
     default:
       return state;

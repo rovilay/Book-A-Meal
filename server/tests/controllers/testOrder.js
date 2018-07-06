@@ -19,7 +19,7 @@ describe('OrdersController', () => {
     const req = mockReq({
       body: {
         deliveryAddress: null,
-        meals: [ 
+        meals: [
           {
             id: 'qwertyuio',
             portion: 5
@@ -46,7 +46,7 @@ describe('OrdersController', () => {
         id: 'qwertyu'
       },
       body: {
-        meals: [ 
+        meals: [
           {
             id: 'qwertyuio',
             portion: 5

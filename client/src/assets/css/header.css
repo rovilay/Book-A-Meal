@@ -1,0 +1,132 @@
+.header {
+  background-color: #ff8619;
+  overflow: hidden;
+  position: fixed;
+  display: flex;
+  justify-content: space-between;
+  padding: 10px 14px;
+  width: 100%;
+
+}
+
+.header a {
+  color: #f2f2f2;
+  text-decoration: none;
+  font-size: 17px;
+  cursor: pointer;
+}
+
+.header a.logo {
+  font-size: 2.2rem;
+  font-family: cursive;
+  font-weight: bold;
+  text-transform: uppercase;
+  text-decoration: none;
+}
+
+.header .nav-menu {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 20%;
+}
+
+.header .nav-menu a.nav-link:hover {
+  font-weight: bold
+}
+
+
+.header a.ham {
+  display: none;
+}
+
+.header button {
+  background-color: #61b750;
+  color: #fff;
+  float: right;
+  font-size: 16px;
+  line-height: 25px;
+  border-radius: 4px;
+  cursor: pointer;
+}
+
+@media screen and (max-width: 600px) {
+  * {
+    font-size: 10px;
+  }
+
+  .header .nav-menu {
+    display: none;
+  }
+
+  .header a.ham:hover {
+    color: #61b750
+  }
+
+  .header a.ham {
+    display: block;
+    font-size: 2rem;
+    position: absolute;
+    right: 15px;
+    top: 10px;
+  }
+
+  .header {
+    display: flex;
+    justify-content: space-between;
+  }
+
+  .header .nav-menu.responsive {
+    display: flex;
+    flex-direction: column;
+    align-content: unset;
+    margin-top: 40px;
+    padding: 10px;
+    width: 100px;
+  }
+
+  .header .nav-menu.responsive a {
+    margin-top: 10px;
+    border: 5px;
+    border-color: #61b750
+  }
+}
+
+@media screen and (max-width:1062px) {
+  .header .nav-menu {
+    width: 25%
+  }
+}
+
+@media screen and (max-width:949px) {
+  .header .nav-menu {
+    width: 30%
+  }
+}
+
+@media screen and (max-width:762px) {
+  .header .nav-menu {
+    width: 35%
+  }
+}
+
+@media screen and (max-width:362px) {
+  .header a.logo,
+  .header a.ham {
+    font-size: 1.5rem;
+  }
+
+  .nav-menu.responsive a.nav-link {
+    font-size: 1.2rem;
+  }
+}
+@media screen and (max-width:362px) {
+  .header a.logo,
+  .header a.ham {
+    font-size: 1.5rem;
+  }
+
+  .nav-menu.responsive a.nav-link {
+    font-size: 1.2rem;
+  }
+}

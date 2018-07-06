@@ -41,6 +41,7 @@ const customerNav = [
     title: 'Orders',
     link: '/orders'
   },
+
   {
     title: 'Log Out',
     link: '/'

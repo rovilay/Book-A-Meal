@@ -7,8 +7,8 @@ import TableHead from '../../../common/Table/TableHead';
 import MealTableRow from './MealTableRow';
 
 const MealTable = (props) => {
-  const sortedMeals = props.meals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
-  // const sortedMeals = props.meals.sort((a, b) => a.title >= b.title);
+  const sortedMeals = props.filteredMeals.sort((a, b) =>
+    new Date(b.createdAt) - new Date(a.createdAt));
   return (
     <div className="menu_table">
       <table>
@@ -47,7 +47,7 @@ const MealTable = (props) => {
 };
 
 MealTable.propTypes = {
-  meals: PropTypes.array.isRequired,
+  filteredMeals: PropTypes.array.isRequired,
 };
 
 export default MealTable;

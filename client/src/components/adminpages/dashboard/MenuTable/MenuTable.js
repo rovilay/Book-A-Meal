@@ -7,7 +7,7 @@ import TableHead from '../../../common/Table/TableHead';
 import MenuTableRow from './MenuTableRow';
 
 const MenuTable = (props) => {
-  const sortedMenus = props.menus.sort((a, b) => new Date(b.postOn) - new Date(a.postOn));
+  const sortedMenus = props.filteredMenus.sort((a, b) => new Date(b.postOn) - new Date(a.postOn));
   return (
     <div className="menu_table">
       <table>
@@ -42,7 +42,7 @@ const MenuTable = (props) => {
 };
 
 MenuTable.propTypes = {
-  menus: PropTypes.array.isRequired,
+  filteredMenus: PropTypes.array.isRequired,
 };
 
 export default MenuTable;

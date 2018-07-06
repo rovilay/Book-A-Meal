@@ -1,4 +1,5 @@
 /* eslint class-methods-use-this:0 */
+/* eslint max-len:0 */
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
@@ -13,7 +14,9 @@ import navData from '../../../helpers/navData';
 import tableHead from '../../../helpers/tableHead';
 import TableHead from '../../common/Table/TableHead';
 import OrderTableRow from '../../common/Table/OrderTableRow';
+import filterAction from '../../../actions/filter';
 import adminActions from '../../../actions/admin';
+import FilterComp from '../../common/Filter';
 
 class OrderHistory extends Component {
   constructor(props) {
@@ -27,6 +30,7 @@ class OrderHistory extends Component {
   componentDidMount() {
     this.props.setNav(navData.adminNav);
     this.props.getAllOrders();
+    this.props.filterAction('order_history', { filter: 'all' });
     this.hideModal();
   }
 
@@ -62,8 +66,8 @@ class OrderHistory extends Component {
   }
 
   render() {
-    const { history, grandTotalPrice } = this.props.orders;
-    const sortedOrders = history.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const { orders, filteredOrders } = this.props;
+    const sortedOrders = filteredOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     return (
       <div className="pull-down">
         <div className="title" id="menu-title">
@@ -71,71 +75,86 @@ class OrderHistory extends Component {
         </div>
         <hr />
         <div className="table-container">
-          <table>
-            <TableHead tableHead={tableHead.orderHead} />
-            <tbody>
-              {
-                sortedOrders.map((order, i) => {
-                  const {
-                    id: orderId,
-                    createdAt: date,
-                    totalPrice,
-                    deliveryAddress: address,
-                    Meals: meals,
-                    User
-                  } = order;
-
-                  const time = moment(date).format('HH:mm');
-
-                  const item = {
-                      sn: ++i,
-                      orderId,
-                      date: moment(date).format('LL'),
-                      totalPrice,
-                    };
-
-                  const orderDetails = {
-                    orderId,
-                    meals,
-                    address,
-                    totalPrice,
-                    time,
-                    date: moment(date).format('LL'),
-                    user: `${User.firstName} ${User.lastName}`
-                  };
-
-                  return (
-                    <OrderTableRow
-                      key={i}
-                      item={item}
-                      sn={++i}
-                      orderDetails={orderDetails}
-                      showDetails={this.showDetails}
-                      notify={this.notify}
-                      {...this.props}
-                    />
-                  );
-                })
-              }
-            </tbody>
-          </table>
-          {
-            (grandTotalPrice >= 0)
-            &&
-            (
-              <p>
-                Grand Total (&#8358;): {grandTotalPrice}
-              </p>
-            )
-          }
-          <Modal
-            hideModal={this.hideModal}
-            deleteRow={this.deleteRow}
-            notify={this.notify}
+          <FilterComp
             {...this.props}
+            tableContent="order_history"
           />
-          <ToastContainer />
+          {
+            (filteredOrders.length === 0)
+            ?
+              <p className="empty not-found">No orders found!</p>
+            :
+              (
+                <div>
+                  <table>
+                    <TableHead tableHead={tableHead.orderHead} />
+                    <tbody>
+                      {
+                        sortedOrders.map((order, i) => {
+                          const {
+                            id: orderId,
+                            createdAt: date,
+                            totalPrice,
+                            deliveryAddress: address,
+                            Meals: meals,
+                            User
+                          } = order;
+
+                          const time = moment(date).format('HH:mm');
+
+                          const item = {
+                              sn: ++i,
+                              orderId,
+                              date: moment(date).format('LL'),
+                              totalPrice,
+                            };
+
+                          const orderDetails = {
+                            orderId,
+                            meals,
+                            address,
+                            totalPrice,
+                            time,
+                            date: moment(date).format('LL'),
+                            user: `${User.firstName} ${User.lastName}`
+                          };
+
+                          return (
+                            <OrderTableRow
+                              key={i}
+                              item={item}
+                              sn={++i}
+                              orderDetails={orderDetails}
+                              showDetails={this.showDetails}
+                              notify={this.notify}
+                              {...this.props}
+                            />
+                          );
+                        })
+                      }
+                    </tbody>
+                  </table>
+
+                  {
+                    (orders.grandTotalPrice > 0)
+                    &&
+                    (
+                      <p>
+                        Grand Total (&#8358;): {orders.grandTotalPrice}
+                      </p>
+                    )
+                  }
+                </div>
+              )
+          }
         </div>
+        <Modal
+          hideModal={this.hideModal}
+          deleteRow={this.deleteRow}
+          notify={this.notify}
+          {...this.props}
+        />
+        <ToastContainer />
       </div>
 
     );
@@ -147,17 +166,21 @@ OrderHistory.propTypes = {
   setModal: PropTypes.func.isRequired,
   modal: PropTypes.object.isRequired,
   getAllOrders: PropTypes.func.isRequired,
+  filterAction: PropTypes.func.isRequired,
+  filteredOrders: PropTypes.array.isRequired,
   setNav: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
   orders: state.admin.orders,
+  filteredOrders: state.admin.filteredOrders,
   modal: state.admin.modal,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
-    ...adminActions
+    ...adminActions,
+    filterAction
   },
   dispatch
 );

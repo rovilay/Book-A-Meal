@@ -1,3 +1,5 @@
+/* eslint jsx-a11y/no-static-element-interactions: 0 */
+/* eslint jsx-a11y/click-events-have-key-events: 0 */
 import React from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
@@ -9,6 +11,7 @@ import { delFromLs } from '../../helpers/Ls';
 import { emptyCart } from '../../actions/cart';
 import { setDefaultNav } from '../../actions/navLinks';
 import { logOutUser } from '../../actions/login';
+import '../../assets/css/header.css';
 
 const Header = (props) => {
   const { navLinks, history, dispatch } = props;
@@ -20,30 +23,45 @@ const Header = (props) => {
     dispatch(logOutUser());
     history.push('/');
   };
+
+  const toggleHam = () => {
+    const nav = document.getElementById('nav-menu');
+    // const mobileMenu = document.getElementById('mobile-menu');
+    (nav.className === 'nav-menu')
+      ?
+      (
+        nav.className += ' responsive'
+      )
+      :
+      (
+        nav.className = 'nav-menu'
+      );
+  };
+
   return (
     <header>
-      <div className="header">
+      <div className="header" id="header">
         <NavLink to="/" className="logo" exact >Book-A-Meal</NavLink>
-        <div className="header-right">
+        <a
+          className="ham"
+          onClick={() => {
+            toggleHam();
+          }}
+        >
+          <FontAwesome
+            id="mobile-menu"
+            name="bars"
+          />
+        </a>
+        <div className="nav-menu" id="nav-menu">
           {navLinks &&
             navLinks.map((nav, i) => {
-              if (nav.title === 'Log Out') {
-                return (
-                  <button
-                    className="btn"
-                    onClick={onLogOut}
-                    key={i}
-                  >
-                    {nav.title}
-                  </button>
-                );
-              }
               if (nav.title === 'Cart') {
                 return (
                   <NavLink
                     to={nav.link}
                     key={i}
-                    className="is-active"
+                    className="is-active nav-link"
                   >
                     <FontAwesome
                       name="cart-plus"
@@ -52,11 +70,24 @@ const Header = (props) => {
                   </NavLink>
                 );
               }
+
+              if (nav.title === 'Log Out') {
+                return (
+                  <a
+                    className= "is-active nav-link"
+                    onClick={onLogOut}
+                    key={i}
+                  >
+                    {nav.title}
+                  </a>
+                );
+              }
+
               return (
                 <NavLink
                   to={nav.link}
                   key={i}
-                  className="is-active"
+                  className="is-active nav-link"
                 >
                   {nav.title}
                 </NavLink>

@@ -1,12 +1,17 @@
+import filterify from '../helpers/filter';
+
 const setDefaultAdminState = {
   meals: [],
+  filteredMeals: [],
   setMenuMeals: [],
   editMenuMeals: [],
   menus: [],
+  filteredMenus: [],
   orders: {
     grandTotalPrice: 0,
-    history: []
+    history: [],
   },
+  filteredOrders: [],
   serverRes: {
     success: '',
     message: ''
@@ -131,7 +136,33 @@ const adminReducer = (state = setDefaultAdminState, action) => {
       return {
         ...state,
         orders: {
+          ...state.orders,
           ...action.orders
+        }
+      };
+    case 'FILTER_CATERER_MEALS':
+      return {
+        ...state,
+        filteredMeals: [...filterify(action.filter, state.meals)]
+      };
+    case 'FILTER_MENUS_LIST':
+      return {
+        ...state,
+        filteredMenus: [...filterify(action.filter, state.menus)]
+      };
+    case 'FILTER_ORDER_HISTORY':
+      return {
+        ...state,
+        filteredOrders: [...filterify(action.filter, state.orders.history)],
+        orders: {
+          ...state.orders,
+          grandTotalPrice: (() => {
+            let price = 0;
+            [...filterify(action.filter, state.orders.history)].forEach((order) => {
+              price += order.totalPrice;
+            });
+            return price;
+          })()
         }
       };
     default:

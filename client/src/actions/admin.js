@@ -383,7 +383,7 @@ const getAllOrders = () => (dispatch) => {
         }, 1000);
       }
     })
-    .catch((err) => { console.log(err); });
+    .catch(err => err);
 };
 
 const adminActions = {

@@ -11,7 +11,7 @@ const Menu = (props) => {
         (menu.length > 0)
         &&
         <div className="menu-title" id="menu-title">
-          Menu
+          Today Menu
         </div>
       }
       {

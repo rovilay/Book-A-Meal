@@ -2,8 +2,8 @@
 /* content */
 .container {
   max-width: 1170px;
-  margin: 0 auto;
-  padding: 1em;
+  margin: auto;
+  padding: 2em;
   overflow: hidden;
 }
 
@@ -60,7 +60,11 @@
   padding-top: 4rem;
 }
 
-@media screen and (max-width: 500px) {
+.not-found {
+  margin: auto;
+}
+
+@media screen and (max-width: 600px) {
   .card .menu-title {
     text-transform: capitalize;
     font-size: 1.8rem;
@@ -71,5 +75,12 @@
     color: #d3d3d3;
     font-weight: bold;
     padding-left: 4.5rem;
+  }
+  .not-found {
+    margin: 0rem
+  }
+
+  .empty {
+    font-size: 2rem
   }
 }

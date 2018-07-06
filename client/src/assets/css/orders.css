@@ -1,72 +1,5 @@
 /* Global */
 
-/* header */
-
-.header {
-  overflow: hidden;
-  background-color: #ff8619;
-  padding: 20px 10px;
-}
-
-.header a {
-  float: left;
-  color: snow;
-  text-align: center;
-  padding: 12px;
-  text-decoration: none;
-  font-size: 18px;
-  line-height: 25px;
-  border-radius: 4px;
- 
-}
-
-.header a.logo  {
-  font-size: 25px;
-  font-weight: bold;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-.header a.logo  {
-  font-size: 35px;
-  font-weight: bold;
-  text-transform: uppercase;
-  text-decoration: none;
-}
-
-.header a.logo:hover  {
-
-  text-decoration: none;
-}
-
-
-.header a:hover, .header .active {
-  text-decoration: none;
-  font-weight: bold
-}
-
-.header-right {
-  float: right;
-}
-.header-right:hover {
-  border: none;
-  color: black;
-  border-radius: 4px;
-}
-
-
-@media screen and (max-width: 590px) {
-    .header a {
-        float: none;
-        display: block;
-        text-align: center;
-    }
-    .header-right {
-        float: none;
-    }
-}
-
-
-
 /* content */
 
 .container {
@@ -129,13 +62,13 @@ tr:hover {
 @media screen and (max-width:930px) {
   .container {
     padding:0;
-    
+
   }
 
   table,
   table tbody,
   table tr,
-  table td 
+  table td
   {
     display: block;
     border-radius: 0px;
@@ -154,7 +87,7 @@ tr:hover {
     padding-left: 70%;
     white-space: normal;
     text-align: justify;
-    
+
   }
 
   td:before {
@@ -180,19 +113,6 @@ tr:hover {
 
 #history {
   font-size: 1.4em
-}
-
-/* Footer */
-footer {
-  background: #ff8619;
-  color: snow;
-  text-align: center;
-  padding: 1.4rem;
-  margin-top: 1em;
-}
-
-footer .container {
-  padding: 1.4em
 }
 
 /* order history */

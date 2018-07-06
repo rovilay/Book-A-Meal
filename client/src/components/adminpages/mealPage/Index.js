@@ -8,12 +8,13 @@ import { bindActionCreators } from 'redux';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import '../../../assets/css/meal-option.css';
 import navData from '../../../helpers/navData';
 import MealForm from './MealForm';
 import MealTable from './MealTable/MealTable';
 import adminActions from '../../../actions/admin';
+import filterAction from '../../../actions/filter';
 import imageUploader from '../../../helpers/imageUploader';
+import FilterComp from '../../common/Filter';
 
 class MealPage extends Component {
   constructor(props) {
@@ -42,6 +43,7 @@ class MealPage extends Component {
   componentDidMount() {
     this.props.setNav(navData.adminNav);
     this.props.getMeals();
+    this.props.filterAction('caterer_meals', { filter: 'all' });
     this.closeEdit();
   }
 
@@ -286,12 +288,22 @@ class MealPage extends Component {
         </section>
         <div className="container">
           <div className="table-title">Meal Options</div>
-          <MealTable
+          <FilterComp
             {...this.props}
-            isEdit={isEdit}
-            editMeal={this.editMeal}
-            notify={this.notify}
+            tableContent="caterer_meals"
           />
+          {
+            (this.props.filteredMeals.length === 0)
+            ?
+              <p className="empty not-found">No meal found!</p>
+            :
+              <MealTable
+                {...this.props}
+                isEdit={isEdit}
+                editMeal={this.editMeal}
+                notify={this.notify}
+              />
+          }
         </div>
         <ToastContainer
           {...this.props}
@@ -311,17 +323,21 @@ MealPage.propTypes = {
   updateMeal: PropTypes.func.isRequired,
   deleteMeal: PropTypes.func.isRequired,
   serverRes: PropTypes.object.isRequired,
+  filterAction: PropTypes.func.isRequired,
+  filteredMeals: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
   meals: state.admin.meals,
+  filteredMeals: state.admin.filteredMeals,
   mealOnEdit: state.admin.mealOnEdit,
   serverRes: state.admin.serverRes,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
-    ...adminActions
+    ...adminActions,
+    filterAction
   },
   dispatch
 );

@@ -2,8 +2,9 @@
   eslint class-methods-use-this:0,
   eslint no-restricted-globals: 0,
   eslint no-restricted-globals: 0,
-  eslint no-alert: 0
+  eslint no-alert: 0,
 */
+/* eslint no-restricted-globals: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
@@ -16,6 +17,8 @@ import { setNav } from '../../../actions/navLinks';
 import adminActions from '../../../actions/admin';
 import MenuTable from './MenuTable/MenuTable';
 import SetMenuCard from './MenuCard/setMenu';
+import FilterComp from '../../common/Filter';
+import filterAction from '../../../actions/filter';
 import ModalComp from '../Modal/Index';
 
 class AdminDashboard extends Component {
@@ -37,6 +40,7 @@ class AdminDashboard extends Component {
     this.props.setNav(navData.adminNavDefault);
     this.props.getMeals();
     this.props.getMenus();
+    this.props.filterAction('menus_list', { filter: 'all' });
     this.hideModal();
   }
 
@@ -46,6 +50,7 @@ class AdminDashboard extends Component {
     updateMenu({ menuDate, data });
     setTimeout(() => {
       this.notify(this.props.serverRes.message);
+      location.reload();
     }, 200);
   }
 
@@ -70,13 +75,12 @@ class AdminDashboard extends Component {
     });
   }
 
-  submitNewMenu(e) {
-    e.preventDefault();
+  submitNewMenu() {
     const meals = [...this.props.newMenuMeals];
     const date = document.getElementById('postOn').value;
     const postOn = date.split('/').reverse().join('-');
     this.props.postMenu({ postOn, meals });
-
+    location.reload();
     setTimeout(() => {
       this.notify(this.props.serverRes.message);
     }, 200);
@@ -148,12 +152,23 @@ class AdminDashboard extends Component {
           />
         </div>
         <div className="container">
-          <div className="menu-title">Menu List</div>
-          <MenuTable
-            showMenuDetails={this.showMenuDetails}
-            editMenu={this.editMenu}
+          <div className="menu-title">Menus List</div>
+          <FilterComp
             {...this.props}
+            tableContent="Menus_List"
           />
+          {
+            (this.props.filteredMenus.length === 0)
+            ?
+              <p className="empty not-found">No menu found!</p>
+            :
+              <MenuTable
+                showMenuDetails={this.showMenuDetails}
+                editMenu={this.editMenu}
+                {...this.props}
+              />
+
+          }
         </div>
         <ModalComp
           hideModal={this.hideModal}
@@ -184,12 +199,15 @@ AdminDashboard.propTypes = {
   updateMenu: PropTypes.func.isRequired,
   emptyNewMenu: PropTypes.func.isRequired,
   modal: PropTypes.object.isRequired,
+  filterAction: PropTypes.func.isRequired,
+  filteredMenus: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
   meals: state.admin.meals,
   newMenuMeals: state.admin.setMenuMeals,
   menus: state.admin.menus,
+  filteredMenus: state.admin.filteredMenus,
   serverRes: state.admin.serverRes,
   modal: state.admin.modal,
   editMenuMeals: state.admin.editMenuMeals
@@ -198,7 +216,8 @@ const mapStateToProps = state => ({
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
     setNav,
-    ...adminActions
+    ...adminActions,
+    filterAction
   },
   dispatch
 );
