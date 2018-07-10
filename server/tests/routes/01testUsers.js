@@ -22,7 +22,7 @@ describe('Users API routes', () => {
         res.body.should.have.property('success');
         res.body.should.have.property('message');
         expect(res.body.success).to.equal(false);
-        expect(res.body.message).to.equal('An error occurred, user not created!');
+        expect(res.body.message).to.equal('An error occurred, user already exist!');
         if(err) return done(err);
         done();
       });
@@ -92,4 +92,4 @@ describe('Users API routes', () => {
       });
     });
   });
-}); 
+});
