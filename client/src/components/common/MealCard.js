@@ -41,22 +41,25 @@ class MealCard extends Component {
   render() {
     const { mealData, user } = this.props;
     return (
-      <div className="menu-box">
-        <img src={mealData.image} alt="menu02" />
-        <form className="menu-info" onSubmit={this.onSubmit}>
-          <h4>
-            {mealData.title}
-          </h4>
-          <p className="bold">Price (&#8358;):
-            <span> {mealData.price}</span>
-          </p>
-          <p>{mealData.description}</p>
-          {
-            (!user.admin)
-            &&
-            (
-              <span>
-                <p className="bold">
+      <div className="meal-card">
+        <div className="imgbox">
+          <img src={mealData.image} alt={mealData.title} />
+        </div>
+        <div className="meal-details">
+          <div className="meal-info">
+            <h2>
+              {mealData.title}
+            </h2>
+            <span>{mealData.description}</span>
+          </div>
+          <div className="price">&#8358; {mealData.price}</div>
+          <form className="meal-order" onSubmit={this.onSubmit}>
+            {
+              (!user.admin)
+              &&
+              (
+
+                <span>
                   Portion: &nbsp;<input
                     type="number"
                     min="1"
@@ -66,19 +69,24 @@ class MealCard extends Component {
                     onChange={this.onChange}
                     required
                   />
-                </p>
-                <p>
-                  <input
-                    type="submit"
-                    id="order"
-                    className="order"
-                    value="order"
-                  />
-                </p>
-              </span>
-            )
-          }
-        </form>
+                </span>
+              )
+            }
+            <br />
+            {
+              (!user.admin)
+              &&
+              (
+                <input
+                  type="submit"
+                  id="order"
+                  className="order"
+                  value="order"
+                />
+              )
+            }
+          </form>
+        </div>
       </div>
     );
   }

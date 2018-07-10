@@ -49,10 +49,6 @@ const LoginForm = props => (
           />
         </p>
 
-        {/* <p>
-          <input type="checkbox" name="remember" id="remember" /> Remember me.
-        </p> */}
-
         <p>
           <button
             type="submit"

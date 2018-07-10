@@ -4,7 +4,6 @@ import PropTypes from 'prop-types';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import '../../../assets/css/menu.css';
 import navData from '../../../helpers/navData';
 import Menu from '../../common/Menu';
 
@@ -54,7 +53,7 @@ class CustomerDashboard extends Component {
           />
           <p>Happy Eating!</p>
         </div>
-        <div className="container">
+        <div>
           <Menu
             menu={todayMenu}
             notify={this.notify}
