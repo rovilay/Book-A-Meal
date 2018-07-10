@@ -10,4 +10,3 @@ const cartTotPriceReducer = (state = cartTotPriceDefaultState, action) => {
 };
 
 export default cartTotPriceReducer;
-

@@ -2,38 +2,39 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import MealCard from './MealCard';
+import '../../assets/css/mealCard.css';
 
 const Menu = (props) => {
   const { menu } = props;
   return (
-    <div className="menu-container">
+    <section className="menu">
       {
         (menu.length > 0)
         &&
-        <div className="menu-title" id="menu-title">
-          Today Menu
+        <div className="title" id="title">
+          {"Today's Menu"}
         </div>
       }
       {
         (menu.length > 0)
-        ?
-          <div className="boxes" id="menu-display">
-            {
-              menu.map(meal => (
-                <MealCard
-                  key={meal.id}
-                  mealData={meal}
-                  {...props}
-                />
-              ))
-            }
-          </div>
-        :
-          <div className="empty">
-              Sorry No Meals Today!
-          </div>
+          ?
+            <div className="menu-container">
+              {
+                menu.map(meal => (
+                  <MealCard
+                    key={meal.id}
+                    mealData={meal}
+                    {...props}
+                  />
+                ))
+              }
+            </div>
+          :
+            <div className="empty">
+                Sorry No Meals Today!
+            </div>
       }
-    </div>
+    </section>
   );
 };
 
@@ -42,4 +43,3 @@ Menu.propTypes = {
 };
 
 export default Menu;
-

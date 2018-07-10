@@ -16,22 +16,24 @@ const OrderDetailsTable = (props) => {
   } = content;
   return (
     <div className="table-container">
-      <h2 className="title">
-        {title}
-      </h2>
-      <hr />
-      <p>
-        <span className="bold">Date:</span> {date}
-      </p>
-      <p>
-        <span className="bold">Time:</span> {time}
-      </p>
-      <p>
-        <span className="bold">Address:</span> {address}
-      </p>
-      <p>
-        <span className="bold">Total Price (&#8358;):</span> {totalPrice}
-      </p>
+      <div className="order-details">
+        <h2 className="title">
+          {title}
+        </h2>
+        <hr />
+        <p>
+          <span className="bold">Date:</span> {date}
+        </p>
+        <p>
+          <span className="bold">Time:</span> {time}
+        </p>
+        <p>
+          <span className="bold">Address:</span> {address}
+        </p>
+        <p>
+          <span className="bold">Total Price (&#8358;):</span> {totalPrice}
+        </p>
+      </div>
       <table>
         <TableHead tableHead={tableHead.orderDetailHead} />
         <tbody>

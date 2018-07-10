@@ -6,13 +6,14 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import jwt from 'jsonwebtoken';
+import FontAwesome from 'react-fontawesome';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import serverReq from '../../helpers/serverReq';
 import { getFromLs } from '../../helpers/Ls';
 import isExpired from '../../helpers/isExpired';
-import { emptyCart, deleteMealInCart } from '../../actions/cart';
+import { emptyCart, deleteMealInCart, addMealToCart } from '../../actions/cart';
 import { orderServerRes } from '../../actions/orders';
 import tableHead from '../../helpers/tableHead';
 import TableHead from '../common/Table/TableHead';
@@ -56,6 +57,7 @@ class Cart extends Component {
   onChange(e) {
     this.setState({ [e.target.name]: e.target.value });
   }
+
 
   /**
    * Places order
@@ -128,9 +130,15 @@ class Cart extends Component {
   render() {
     const { cart, totPrice } = this.props;
     return (
-      <div>
+      <section className="cartpage">
         <div className="title" id="cart-title">
-          Your Cart
+          <div>
+            <FontAwesome
+              id="mobile-menu"
+              name="cart-arrow-down"
+            />
+          </div>
+          <h1>Your Cart</h1>
         </div>
         <hr />
         <div className="table-container">
@@ -149,29 +157,32 @@ class Cart extends Component {
                 required
               />
             </p>
-            <table>
-              <TableHead tableHead={tableHead.cartTableHead} />
-              <tbody>
-                {
-                  cart.map((meal, i) => {
-                    const price = meal.unitPrice * meal.portion;
-                    const item = {
-                      ...meal,
-                      price
-                    };
-                    return (
-                      <TableRow
-                        key={i}
-                        item={item}
-                        sn={++i}
-                        deleteRow={this.deleteRow}
-                      />
-                    );
-                  })
-                }
-              </tbody>
-            </table>
-
+            <div className="res-container">
+              <table>
+                <TableHead tableHead={tableHead.cartTableHead} />
+                <tbody>
+                  {
+                    cart.map((meal, i) => {
+                      const price = meal.unitPrice * meal.portion;
+                      const item = {
+                        ...meal,
+                        price
+                      };
+                      return (
+                        <TableRow
+                          key={i}
+                          item={item}
+                          sn={++i}
+                          deleteRow={this.deleteRow}
+                          onChange={this.onChange}
+                          {...this.props}
+                        />
+                      );
+                    })
+                  }
+                </tbody>
+              </table>
+            </div>
             <div className="order">
               <span id="order-total-price">
                 Total Price: &#8358;{totPrice}
@@ -181,7 +192,7 @@ class Cart extends Component {
                 name="orderbtn"
                 id="order-btn"
                 disabled={cart.length < 1}
-                className="order-btn update-btn btn-1"
+                className="order-btn btn-1"
               >
               Place order
               </button>
@@ -189,7 +200,7 @@ class Cart extends Component {
           </form>
           <ToastContainer />
         </div>
-      </div>
+      </section>
     );
   }
 }
@@ -216,7 +227,8 @@ const mapDispatchToProps = dispatch => bindActionCreators(
     setCartTotalPrice,
     emptyCart,
     deleteMealInCart,
-    orderServerRes
+    orderServerRes,
+    addMealToCart
   },
   dispatch
 );

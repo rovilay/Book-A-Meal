@@ -117,7 +117,7 @@ var MealsController = function () {
           meal: meal
         });
       }).catch(function (err) {
-        err = new Error('Error occurred while posting meal!');
+        err = new Error('Error, Meal already exist!');
         err.status = 400;
         return next(err);
       });

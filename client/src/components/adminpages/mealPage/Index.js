@@ -266,6 +266,7 @@ class MealPage extends Component {
       imageToUpload,
       disableBtn
     } = this.state;
+
     return (
       <div>
         <section className="form-section">
@@ -286,7 +287,7 @@ class MealPage extends Component {
             />
           </div>
         </section>
-        <div className="container">
+        <div className="table-container">
           <div className="table-title">Meal Options</div>
           <FilterComp
             {...this.props}
@@ -294,15 +295,15 @@ class MealPage extends Component {
           />
           {
             (this.props.filteredMeals.length === 0)
-            ?
-              <p className="empty not-found">No meal found!</p>
-            :
-              <MealTable
-                {...this.props}
-                isEdit={isEdit}
-                editMeal={this.editMeal}
-                notify={this.notify}
-              />
+              ?
+                <p className="empty not-found">No meal found!</p>
+              :
+                <MealTable
+                  {...this.props}
+                  isEdit={isEdit}
+                  editMeal={this.editMeal}
+                  notify={this.notify}
+                />
           }
         </div>
         <ToastContainer

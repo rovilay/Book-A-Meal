@@ -16,6 +16,10 @@ var _meals3 = require('../middlewares/validate/meals');
 
 var _meals4 = _interopRequireDefault(_meals3);
 
+var _authenticate = require('../middlewares/authenticate');
+
+var _authenticate2 = _interopRequireDefault(_authenticate);
+
 var _adminOnly = require('../middlewares/adminOnly');
 
 var _adminOnly2 = _interopRequireDefault(_adminOnly);
@@ -24,6 +28,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var mealRouter = _express2.default.Router();
 
+mealRouter.use('/api/v1/meals', _authenticate2.default);
 mealRouter.get('/api/v1/meals', _adminOnly2.default, _meals2.default.getAllMeals);
 mealRouter.get('/api/v1/meals/:id', _adminOnly2.default, _meals2.default.getMeal);
 mealRouter.delete('/api/v1/meals/:id', _adminOnly2.default, _meals2.default.deleteMeal);

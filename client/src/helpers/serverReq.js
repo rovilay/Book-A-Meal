@@ -1,8 +1,10 @@
 import axios from 'axios';
+import dotenv from 'dotenv';
 import { getFromLs } from './Ls';
 
-// window.axios = axios;
-const baseURL = 'http://localhost:5000';
+dotenv.config();
+
+const baseURL = process.env.BASE_URL;
 
 /**
  * Sends async server requests using the axios api
@@ -10,7 +12,7 @@ const baseURL = 'http://localhost:5000';
  * @param  {any} method - the request verb
  * @param  {any} url - the url the request is to be sent to
  * @param  {any} data - the payload to be sent with the request (optional)
- * depending on the request method
+ *   depending on the request method
  * @param  {any} authToken - the token for setting authorization header (optional)
  * @return {Promise} reponse data or error
  */
@@ -20,8 +22,6 @@ async function serverReq(method, url, data = {}, authToken) {
     const instance = await axios({
       baseURL,
       headers: {
-        // 'Access-Control-Allow-Headers': 'x-client-version',
-        // 'Access-Control-Allow-Origin': '*',
         Authorization: `Bearer ${token}`
       },
       method,
@@ -40,4 +40,3 @@ async function serverReq(method, url, data = {}, authToken) {
 }
 
 export default serverReq;
-

@@ -13,14 +13,15 @@ class FilterComp extends Component {
       month: ''
     };
   }
+
   render() {
     const { tableContent, filterAction } = this.props;
     return (
       <div className="filter">
         <form onSubmit={(e) => {
-            e.preventDefault();
-            filterAction(tableContent, { ...this.state });
-          }}
+          e.preventDefault();
+          filterAction(tableContent, { ...this.state });
+        }}
         >
           <label htmlFor="filter" className="label">Filter By:</label>
           <select

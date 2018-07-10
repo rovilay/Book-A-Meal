@@ -1,0 +1,114 @@
+.setmenu-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1em;
+  overflow: hidden
+}
+
+.welcome {
+  margin-top: 3.5rem;
+  background: url('../images/menu_img.jpg') no-repeat;
+}
+.welcome-admin {
+  max-width: 270px;
+  margin: 0 auto;
+  padding: 2em;
+  overflow: hidden;
+  text-align: justify;
+}
+
+.welcome img {
+  border-radius: 70%;
+  width: 150px;
+  height: 150px;
+}
+.admin-info {
+  text-align: justify;
+  color: #fff
+}
+
+
+/* Form */
+.setMenuCard {
+  border: 1px solid #ccc;
+  padding: 1.4em;
+  border-radius: 10px;
+  margin-left: 5%;
+  margin-right: 5%
+}
+
+.setMenuCard form p {
+  margin: 0
+}
+
+.setMenuCard form .full {
+  grid-column: 1 / 3;
+}
+
+.setMenuCard label {
+  display: inline-block;
+  min-width: 15em;
+}
+
+.setMenuCard form input[type=number],
+.setMenuCard form input[type=date]
+{
+  width: 30%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.addBtn {
+  width: 100%;
+  margin-top: 10px;
+  padding: 10px;
+  border: 0px;
+  border-radius: 4px;
+  background: #61b750;
+  color: snow;
+  font-size: 20px;
+  cursor: pointer;
+}
+.addBtn:hover {
+  background: #ff8619;
+  color: snow;
+  transition: background-color 0.05s ease-out
+}
+
+.addBtn:disabled, .addBtn:disabled:hover {
+background: #8e8d8d
+}
+
+.checkbox-card {
+  display: grid;
+  overflow-y: scroll;
+  height: 100px;
+  grid-template-columns: 1fr 1fr 1fr;
+  grid-gap: 1em
+}
+
+/* .welcome {
+  margin: auto;
+  background: url('../images/menu_img.jpg') no-repeat;
+} */
+
+
+/* Small screens */
+
+@media(max-width:650px) {
+  .checkbox-card {
+      display: inline-block;
+  }
+  .card form button,
+  .card form input[type=number],
+  .card form input[type=date]
+  {
+      width: 100%;
+      padding: 12px;
+  }
+
+  .welcome {
+      text-align: center
+  }
+}

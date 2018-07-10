@@ -1,6 +1,8 @@
 import axios from 'axios';
+import dotenv from 'dotenv';
 import moveProgressBar from './progressbar';
 
+dotenv.config();
 /**
  * Gets image file and uploads to cloudinary
  *
@@ -10,11 +12,12 @@ import moveProgressBar from './progressbar';
 const imageUploader = (id) => {
   const fileData = new FormData();
   const imageFile = document.getElementById(id).files[0];
+  const cldNme = process.env.CLOUD_NAME || 'dcqnswemi';
 
   if (imageFile) {
     fileData.append('file', imageFile);
     fileData.append('upload_preset', 'meal_image');
-    const url = `https://api.cloudinary.com/v1_1/${process.env.CLOUD_NAME}/image/upload`;
+    const url = `https://api.cloudinary.com/v1_1/${cldNme}/image/upload`;
     return axios.post(url, fileData, {
       headers: {
         'content-type': 'application/json; charset=utf-8',
@@ -30,4 +33,3 @@ const imageUploader = (id) => {
 };
 
 export default imageUploader;
-

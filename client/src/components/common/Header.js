@@ -11,7 +11,6 @@ import { delFromLs } from '../../helpers/Ls';
 import { emptyCart } from '../../actions/cart';
 import { setDefaultNav } from '../../actions/navLinks';
 import { logOutUser } from '../../actions/login';
-import '../../assets/css/header.css';
 
 const Header = (props) => {
   const { navLinks, history, dispatch } = props;
@@ -39,62 +38,60 @@ const Header = (props) => {
   };
 
   return (
-    <header>
-      <div className="header" id="header">
-        <NavLink to="/" className="logo" exact >Book-A-Meal</NavLink>
-        <a
-          className="ham"
-          onClick={() => {
-            toggleHam();
-          }}
-        >
-          <FontAwesome
-            id="mobile-menu"
-            name="bars"
-          />
-        </a>
-        <div className="nav-menu" id="nav-menu">
-          {navLinks &&
-            navLinks.map((nav, i) => {
-              if (nav.title === 'Cart') {
-                return (
-                  <NavLink
-                    to={nav.link}
-                    key={i}
-                    className="is-active nav-link"
-                  >
-                    <FontAwesome
-                      name="cart-plus"
-                    />
-                    ({props.cart.length})
-                  </NavLink>
-                );
-              }
-
-              if (nav.title === 'Log Out') {
-                return (
-                  <a
-                    className= "is-active nav-link"
-                    onClick={onLogOut}
-                    key={i}
-                  >
-                    {nav.title}
-                  </a>
-                );
-              }
-
+    <header className="header">
+      <NavLink to="/" className="logo" exact>Book-A-Meal</NavLink>
+      <a
+        className="ham"
+        onClick={() => {
+          toggleHam();
+        }}
+      >
+        <FontAwesome
+          id="mobile-menu"
+          name="bars"
+        />
+      </a>
+      <div className="nav-menu" id="nav-menu">
+        {navLinks &&
+          navLinks.map((nav, i) => {
+            if (nav.title === 'Cart') {
               return (
                 <NavLink
                   to={nav.link}
                   key={i}
                   className="is-active nav-link"
                 >
-                  {nav.title}
+                  <FontAwesome
+                    name="cart-plus"
+                  />
+                  ({props.cart.length})
                 </NavLink>
               );
-            })
-          }
-        </div>
+            }
+
+            if (nav.title === 'Log Out') {
+              return (
+                <a
+                  className= "is-active nav-link"
+                  onClick={onLogOut}
+                  key={i}
+                >
+                  {nav.title}
+                </a>
+              );
+            }
+
+            return (
+              <NavLink
+                to={nav.link}
+                key={i}
+                className="is-active nav-link"
+              >
+                {nav.title}
+              </NavLink>
+            );
+          })
+        }
       </div>
     </header>
   );

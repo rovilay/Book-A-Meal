@@ -24,7 +24,7 @@ export default (Comp) => {
 
     render() {
       return (
-        <div>
+        <div className="hoc">
           <Comp {...this.props} />
         </div>
       );
@@ -38,4 +38,3 @@ export default (Comp) => {
 
   return connect()(withRouter(CheckLogin));
 };
-

@@ -556,7 +556,7 @@
       "put" : {
         "tags" : [ "Orders" ],
         "summary" : "Updates Order",
-        "description" : "This operation can be performed by customers only and updates can not be done \"1 hour\" after an order has been placed",
+        "description" : "This operation can be performed by customers only and updates can not be done \"1 hours\" after an order has been placed",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {
@@ -599,7 +599,7 @@
       "delete" : {
         "tags" : [ "Orders" ],
         "summary" : "Deletes Order",
-        "description" : "This operation can be performed by customers only and deleting can not be done \"1 hour\" after an order has been placed",
+        "description" : "This operation can be performed by customers only and deleting can not be done \"1 hours\" after an order has been placed",
         "consumes" : [ "application/json" ],
         "produces" : [ "application/json" ],
         "parameters" : [ {

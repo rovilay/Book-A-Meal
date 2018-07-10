@@ -9,7 +9,7 @@ import MenuTableRow from './MenuTableRow';
 const MenuTable = (props) => {
   const sortedMenus = props.filteredMenus.sort((a, b) => new Date(b.postOn) - new Date(a.postOn));
   return (
-    <div className="menu_table">
+    <div className="">
       <table>
         <TableHead tableHead={tableHead.menuTableHead} />
         <tbody>

@@ -53,7 +53,7 @@ var MenusController = function () {
           attributes: ['firstName', 'lastName']
         }, {
           model: _index2.default.Meal,
-          attributes: ['id', 'title', 'price'],
+          attributes: ['id', 'title', 'price', 'description', 'image'],
           through: {
             attributes: ['id']
           }
@@ -102,7 +102,7 @@ var MenusController = function () {
           attributes: ['firstName', 'lastName']
         }, {
           model: _index2.default.Meal,
-          attributes: ['id', 'title', 'price'],
+          attributes: ['id', 'title', 'price', 'image', 'description'],
           through: {
             attributes: ['id']
           }
@@ -144,7 +144,7 @@ var MenusController = function () {
     value: function postMenu(req, res, next) {
       var newMenu = req.body;
       (0, _checkMeal2.default)(newMenu.meals, next).then(function (check) {
-        if (check === true) {
+        if (check) {
           _index2.default.Menu.findOrCreate({
             where: { postOn: newMenu.postOn },
             defaults: { UserId: req.user.id }

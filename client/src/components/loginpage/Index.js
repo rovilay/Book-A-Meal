@@ -74,26 +74,24 @@ class LogInPage extends Component {
 
   render() {
     return (
-      <div className="pull-down">
-        <section id="section-a" className="grid">
-          <div className="login-form-container">
-            <p className="link">
-              <Link to="/SignUp">
-                Click Here to SignUp!
-              </Link>
-            </p>
+      <section id="loginpage" className="loginpage">
+        <div className="loginform-container">
+          <Form
+            {...this.props}
+            logUserIn={this.logUserIn}
+            onChange={this.onChange}
+            password={this.state.password}
+            email={this.state.email}
+          />
 
-            <Form
-              {...this.props}
-              logUserIn={this.logUserIn}
-              onChange={this.onChange}
-              password={this.state.password}
-              email={this.state.email}
-            />
-          </div>
-        </section>
+          <p className="link">
+            <Link to="/SignUp">
+              Click Here to SignUp!
+            </Link>
+          </p>
+        </div>
         <ToastContainer />
-      </div>
+      </section>
     );
   }
 }

@@ -28,8 +28,9 @@ section .meal-container {
 }
 
 .form-section {
-  margin-top: 6rem;
+  margin-top: 3.5rem;
   background: url('https://res.cloudinary.com/dcqnswemi/image/upload/v1529298213/mealsbg.jpg') no-repeat;
+  padding: 10px
 }
 
 .card {
@@ -212,7 +213,7 @@ label {
 
 /* Meal List */
 
-.meal-card .card {
+/* .meal-card .card {
   width: 70%;
   border: 0.5px solid #ccc;
   border-radius: 10px;
@@ -222,7 +223,7 @@ label {
   margin-top: 10px;
   display: block;
   background: transparent
-}
+} */
 
 .container .display-title {
   color: #ff8619;

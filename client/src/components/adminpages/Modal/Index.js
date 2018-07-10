@@ -11,6 +11,7 @@ class ModalComp extends Component {
   componentDidMount() {
     this.props.emptyEditMenu();
   }
+
   render() {
     const { hideModal, modal } = this.props;
     const {

@@ -3,11 +3,19 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
+import swal from 'sweetalert';
 
 import TableCol from '../../../common/Table/TableCol';
 
 const MealTableRow = (props) => {
-  const { item, editMeal } = props;
+  const {
+    item,
+    editMeal,
+    isEdit,
+    serverRes,
+    notify,
+    deleteMeal
+  } = props;
   const Meal = {
     sn: item.sn,
     meal: item.Meal,
@@ -43,24 +51,32 @@ const MealTableRow = (props) => {
           <a
             onClick={(e) => {
               e.preventDefault();
-              const confirmed = confirm('Are you sure you want to delete this meal?');
-              if (confirmed) {
-                props.deleteMeal(item.mealId);
-                setTimeout(() => {
-                  if (!props.serverRes.success && !props.serverRes.message) {
-                    props.notify('Meal was DELETED successfully!');
-                    location.reload();
+              // const confirmed = confirm('Are you sure you want to delete this meal?');
+              swal({
+                text: 'Are you sure you want to delete this meal?',
+                buttons: true,
+                dangerMode: true,
+              })
+                .then((confirmed) => {
+                  if (confirmed) {
+                    deleteMeal(item.mealId);
+                    setTimeout(() => {
+                      if (!serverRes.success && !serverRes.message) {
+                        notify('Meal was DELETED successfully!');
+                        location.reload();
+                      }
+                      if (serverRes.success === false) {
+                        notify(props.serverRes.message);
+                      }
+                    }, 200);
                   }
-                  if (props.serverRes.success === false) {
-                    props.notify(props.serverRes.message);
-                  }
-                }, 200);
-              }
+                })
+                .catch(err => err);
             }}
             href="#"
             role="button"
             className="btn-col btn-2 meal-btn"
-            disabled={props.isEdit}
+            disabled={isEdit}
           >
             <FontAwesome
               name="trash"

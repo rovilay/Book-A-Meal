@@ -8,7 +8,7 @@ import customerOnly from '../middlewares/customerOnly';
 
 const ordersRouter = express.Router();
 
-ordersRouter.use(authorize);
+ordersRouter.use('/api/v1/orders', authorize);
 ordersRouter.get('/api/v1/orders', adminOnly, ordersController.getAllOrders);
 
 ordersRouter.get('/api/v1/orders/:userId', ordersController.getOrdersById);

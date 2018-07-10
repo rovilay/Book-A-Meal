@@ -1,31 +1,51 @@
-.table-container {
-  max-width: 1170px;
+
+
+.cartpage {
+  margin: auto;
+  margin-bottom: 100px;
+}
+
+.cartpage .title {
+  height: 30vh;
+  width: 100%;
+  background:
+  linear-gradient(
+    rgba(0, 0, 0, 0.45),
+    rgba(0, 0, 0, 0.75)
+  ),
+  url('https://res.cloudinary.com/dcqnswemi/image/upload/v1532336227/cart.jpg') center #333 no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+  color: #ffffff;
+  text-transform: capitalize;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  font-size: 30px;
+  font-weight: 400;
+}
+
+.orderpage .title {
+  background:
+  linear-gradient(
+    rgba(0, 0, 0, 0.45),
+    rgba(0, 0, 0, 0.75)
+  ),
+  url('https://res.cloudinary.com/dcqnswemi/image/upload/v1532299618/cust.jpg') center #333 no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+}
+
+.cartpage .table-container {
+  width: 100%;
   border: none;
-  margin-left: 10%;
-  margin-right: 10%
+  margin: auto;
+  overflow-y: auto
 }
 
-.title {
-  color: #ff8619;
-  text-transform: capitalize;
-  font-size: 1.8rem;
-  font-weight: 500;
-  text-align: center;
-  margin-top: 1rem
-}
-
-.total {
-  text-transform: capitalize;
-  font-size: 1.8rem;
-  padding: 0.6rem;
-}
-
-.order {
-  margin-top: 0.7em
-}
-
-#order-total-price {
-  font-size: 1.0em;
+.table-container .order-details {
+  margin-bottom: 10px;
 }
 
 /* buttons */
@@ -69,90 +89,43 @@
   margin: 1em
 }
 
+form p {
+  margin-top: 30px;
+  display: flex;
+  justify-content: space-evenly;
+  align-items: flex-end
+}
 
-input[type=text] {
-  width: 60%;
+form p>label {
+  align-self: center
+}
+
+form p>input[type=text] {
+  width: 40%;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
   background: transparent
 }
 
+table tr td input {
+  width: 70%;
+  border: 2px solid #61B750
+}
+
 /* Table */
 
-table {
-  width: 100%;
-  border-collapse: collapse;
-  display: table;
-}
 
-table thead,   table tbody {
-	float: left;
-	width: 100%;
-}
-
-table tbody {
-	overflow: auto;
-	max-height: 600px;
-}
-
-table .modal-table-body {
-  max-height: 300px;
-}
-
-table a {
-  color: rgba(224, 63, 14, 0.685);
-  cursor: pointer;
-}
-
-table tr {
-	width: 100%;
-	display: table;
-	text-align: center;
-}
-
-table th,   table td {
-	width:20%;
-}
-
-table tr:nth-of-type(odd) {
-  background-color: #ddd
-}
-
-table tr:nth-of-type(even) {
-  background-color: snow
-}
-
-table tr th {
-  background-color: #61b750;
-  color: white;
-  font-weight: bold;
-  padding: 1.4rem
-}
-
-table td {
-  padding: 5px;
-  border: 1px solid white;
-  text-align: center;
-  padding: 1.4rem
-}
 
 table tr:hover {
   background: rgba(97, 183, 80, 0.411)
 }
 
-.btn-2 {
-	float: left;
-	font-size: 0.5em;
-  padding: 1em 2em;
-  text-align: center;
-  border-radius: 0.5em;
-  text-decoration: none;
-  cursor: pointer;
-  display: block;
-	margin-top: 7px;
-	margin-left: 4px
+form .order {
+  justify-content: space-around;
+  align-items: center
 }
+
 
 .toast {
 	color: #ffffff;
@@ -168,29 +141,321 @@ input[type=checkbox] {
 }
 
 
-@media screen and (max-width:530px) {
-  .container {
-    padding: 0;
+
+  .res-container {
+    width: 100%;
+    overflow-x: auto;
+    display: flex;
+    padding: 30px;
+    font-size: 12px;
+  }
+
+  table {
+    border-collapse: collapse;
+    width: 100%;
+    overflow: auto;
+    cursor: pointer;
+  }
+
+  table thead {
+    width: 100%;
+    background-color: #61B750;
+    color: #ffffff;
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
   }
 
   table tbody {
-    overflow: auto;
-    /* max-width: 300px; */
+    /* height: 100px; */
+    width: 100%;
+    overflow: scroll;
   }
 
-  .btn-2 {
-		margin-top: 0.7em;
-		margin-bottom: 0em;
-		display: block;
-		float: none
-	}
+  table tbody tr:nth-of-type(odd) {
+    background-color: #cccccc
+  }
+
+  table tbody tr:nth-of-type(even) {
+    background-color: #ffffff
+  }
+
+  table tbody tr:hover {
+    background: rgb(155, 233, 139)
+  }
+
+  table thead tr,
+  table tbody tr {
+    width: 100%;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  table tr th, td {
+    flex: 1;
+    display:flex;
+    align-items: center;
+    justify-content: center;
+    height: 100px;
+    width: 100%;
+    overflow: scroll;
+  }
+
+  table tr td {
+    border: 1px solid #ffffff;
+  }
+
+  .cartpage .btn-1:hover {
+    background: #61b750;
+    color: #ffffff;
+    border: none;
+
+  }
+
+.cartpage .order {
+  margin-left: 30px;
+  margin-right: 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center
 }
 
-@media screen and (max-width: 390px) {
-  table tbody {
-    overflow: auto;
-    max-width: 360px;
+.cartpage .del-btn {
+  width: 100%
+}
+
+.orderHistory-action {
+  display: flex;
+  justify-content: space-around
+}
+
+.btn-2 {
+  background: #61B750;
+  padding: 11px;
+  font-size: 12px;
+  color: #ffffff;
+  border-radius: 0.5em;
+  text-decoration: none;
+  cursor: pointer;
+  border: 1px solid #ccc;
+	margin-top: 7px;
+	margin-left: 4px
+}
+
+.modal {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  width: 90%;
+  padding: 20px;
+  top: 15%;
+  justify-content: space-between;
+  margin: auto;
+	overflow: auto;
+	background-color: #fff;
+  height: 80vh;
+}
+
+.modal .closeBtn {
+  align-self: flex-end;
+}
+
+.modal .table-container {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  overflow: scroll;
+  margin-top: 10px
+}
+
+.modal .table-container .title {
+  color: #ff8619;
+  align-self: center;
+  font-size: 25px
+}
+
+.modal .table-container form {
+  display: flex;
+  flex-direction: column;
+}
+
+.modal .table-container form>p {
+  margin-bottom: 20px;
+  display: flex;
+  justify-content: flex-start;
+}
+
+.modal .table-container tr .delete {
+  display: none;
+}
+
+.overlay {
+	position: fixed;
+	top: 0;
+	left: 0;
+	right: 0;
+	bottom: 0;
+	background-color: rgba(0,0,0,0.7);
+}
+
+.filter {
+  margin-top: 30px;
+  padding: 10px;
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center
+}
+
+.filter form {
+  width: 90%;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  align-items: center;
+}
+
+
+.filter form .label {
+  font-size: 20px
+}
+
+.filter form input,
+.filter form select,
+.filter form input[type=date],
+.filter form button {
+  margin-left: 5px;
+  margin-top: 5px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  outline-color:#ff8619
+}
+
+.filter form button {
+  width: auto;
+  color: #ffffff;
+  background-color: #61b750;
+  cursor: pointer;
+}
+
+.filter form button:hover,
+.filter form button:focus {
+  background-color: rgb(67, 143, 52)
+}
+
+@media screen and (min-width: 700px) {
+
+  form #order-total-price {
+    font-size: 28px
   }
+
+  .cartpage .title {
+    height: 50vh;
+    font-size: 80px;
+    font-weight: bold
+  }
+
+  .cartpage .del-btn {
+    width: 80%
+  }
+
+  .modal {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    padding: 20px;
+    top: 20%;
+    margin: auto;
+    overflow: auto;
+    background-color: #fff;
+    height: auto;
+  }
+
+  .modal .table-container {
+    margin: 0px;
+  }
+
+  .filter form {
+    width: 90%;
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+
+  .filter form input,
+  .filter form select,
+  .filter form input[type=date],
+  .filter form button {
+    margin-left: 5px;
+    margin-top: 5px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline-color:#ff8619
+  }
+
+  .filter form select {
+    height: 50px;
+  }
+}
+
+@media screen and (min-width: 1066px) {
+
+  .modal {
+    position: relative;
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    width: 90%;
+    padding: 20px;
+    top: 15%;
+    margin: auto;
+    overflow: auto;
+    background-color: #fff;
+    max-height: 70vh;
+  }
+
+  .modal .table-container form {
+    margin-top: 40px;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .modal .table-container form>p {
+    margin: 20px;
+    display: flex;
+    justify-content: flex-start;
+  }
+
+  .modal .table-container form>p label {
+    /* align-self: flex-start */
+    margin-top: -40px
+  }
+
+  .modal .table-container tr .mob-delete {
+    display: none;
+  }
+
+  .modal .table-container tr .delete {
+    display: flex
+  }
+
+  .filter form input,
+  .filter form select,
+  .filter form input[type=date],
+  .filter form button {
+    margin-left: 5px;
+    margin-top: 5px;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+    outline-color:#ff8619
+  }
+
 }
 
 .meal-btn[disabled],
@@ -237,76 +502,5 @@ input[type=checkbox] {
 	opacity: 1;
 }
 
-.filter form {
-	margin: 10px;
-  display: inline-block
-}
 
 
-.filter form .label {
-  color: #ff8619;
-  float: left;
-  font-size: 20px
-}
-
-.filter form input,
-.filter form select,
-.filter form input[type=date],
-.filter form button {
-  margin-left: 5px;
-  float: left;
-  padding: 12px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  height: 3.5em;
-}
-
-.filter form button {
-  width: auto;
-  color: #ffffff;
-  background-color: #61b750;
-  cursor: pointer;
-}
-
-.filter form button:hover,
-.filter form button:focus {
-  background-color: rgb(67, 143, 52)
-}
-
-@media screen and (max-width: 600px) {
-  .filter form {
-    margin: 10px;
-    display: inline-block
-  }
-
-
-  .filter form .label {
-    color: #ff8619;
-    float: left;
-    font-size: 14px
-  }
-
-  .filter form input,
-  .filter form select,
-  .filter form input[type=date],
-  .filter form button {
-    margin-left: 5px;
-    float: left;
-    padding: 8px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    height: 2.5rem;
-  }
-
-  .filter form button {
-    width: auto;
-    color: #ffffff;
-    background-color: #61b750;
-    cursor: pointer;
-  }
-
-  .filter form button:hover,
-  .filter form button:focus {
-    background-color: rgb(67, 143, 52)
-  }
-}

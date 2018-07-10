@@ -4,13 +4,13 @@ import moment from 'moment';
 
 import tableHead from '../../../../helpers/tableHead';
 import TableHead from '../../../common/Table/TableHead';
-import MealTableRow from './MealTableRow';
+import MealTableRow from './mealTableRow';
 
 const MealTable = (props) => {
-  const sortedMeals = props.filteredMeals.sort((a, b) =>
-    new Date(b.createdAt) - new Date(a.createdAt));
+  const { filteredMeals } = props;
+  const sortedMeals = filteredMeals.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
   return (
-    <div className="menu_table">
+    <div>
       <table>
         <TableHead tableHead={tableHead.mealTableHead} />
         <tbody>
@@ -33,11 +33,13 @@ const MealTable = (props) => {
                 image,
                 createdAt: moment(createdAt).format('LL'),
               };
-              return (<MealTableRow
-                key={mealId}
-                item={item}
-                {...props}
-              />);
+              return (
+                <MealTableRow
+                  key={mealId}
+                  item={item}
+                  {...props}
+                />
+              );
             })
           }
         </tbody>

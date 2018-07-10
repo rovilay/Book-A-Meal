@@ -4,6 +4,10 @@ Object.defineProperty(exports, "__esModule", {
   value: true
 });
 
+var _extends2 = require('babel-runtime/helpers/extends');
+
+var _extends3 = _interopRequireDefault(_extends2);
+
 var _jsonwebtoken = require('jsonwebtoken');
 
 var _jsonwebtoken2 = _interopRequireDefault(_jsonwebtoken);
@@ -34,7 +38,7 @@ function verifyToken(req, res, next) {
         return next(err);
       }
 
-      req.user = userData.user;
+      req.user = (0, _extends3.default)({}, userData);
       return next();
     });
   } else {

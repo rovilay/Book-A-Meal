@@ -170,8 +170,8 @@ class CustomerOrder extends Component {
     const { grandTotalPrice, filteredOrders } = this.props.orders;
     const sortedOrders = filteredOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     return (
-      <div className="pull-down">
-        <div className="title" id="menu-title">
+      <section className="cartpage orderpage">
+        <div className="title" id="">
           Your Order History
         </div>
         <hr />
@@ -182,11 +182,11 @@ class CustomerOrder extends Component {
           />
           {
             (filteredOrders.length === 0)
-            ?
-              <p className="empty not-found">No orders found!</p>
-            :
+              ?
+                <p className="empty not-found">No orders found!</p>
+              :
               (
-                <div>
+                <div className="res-container">
                   <table>
                     <TableHead tableHead={tableHead.orderHead} />
                     <tbody>
@@ -203,11 +203,11 @@ class CustomerOrder extends Component {
                           const time = moment(date).format('HH:mm');
 
                           const item = {
-                              sn: ++i,
-                              orderId,
-                              date: moment(date).format('LL'),
-                              totalPrice,
-                            };
+                            sn: ++i,
+                            orderId,
+                            date: moment(date).format('LL'),
+                            totalPrice,
+                          };
 
                           const orderDetails = {
                             orderId,
@@ -234,18 +234,24 @@ class CustomerOrder extends Component {
                       }
                     </tbody>
                   </table>
-                  {
-                    (grandTotalPrice >= 0)
-                    &&
-                    (
-                      <p>
-                        Grand Total (&#8358;): {grandTotalPrice}
-                      </p>
-                    )
-                  }
                 </div>
               )
             }
+          {
+            (filteredOrders.length !== 0)
+            &&
+            <div className="order">
+              {
+                (grandTotalPrice >= 0)
+                &&
+                (
+                  <p className="grandTot">
+                    Grand Total (&#8358;): {grandTotalPrice}
+                  </p>
+                )
+              }
+            </div>
+          }
         </div>
         <Modal
           hideModal={this.hideModal}
@@ -255,7 +261,7 @@ class CustomerOrder extends Component {
           {...this.props}
         />
         <ToastContainer />
-      </div>
+      </section>
     );
   }
 }

@@ -151,7 +151,7 @@ class AdminDashboard extends Component {
             {...this.props}
           />
         </div>
-        <div className="container">
+        <div className="table-container">
           <div className="menu-title">Menus List</div>
           <FilterComp
             {...this.props}
@@ -159,14 +159,14 @@ class AdminDashboard extends Component {
           />
           {
             (this.props.filteredMenus.length === 0)
-            ?
-              <p className="empty not-found">No menu found!</p>
-            :
-              <MenuTable
-                showMenuDetails={this.showMenuDetails}
-                editMenu={this.editMenu}
-                {...this.props}
-              />
+              ?
+                <p className="empty not-found">No menu found!</p>
+              :
+                <MenuTable
+                  showMenuDetails={this.showMenuDetails}
+                  editMenu={this.editMenu}
+                  {...this.props}
+                />
 
           }
         </div>
