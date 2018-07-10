@@ -6,18 +6,18 @@ import MealCard from './MealCard';
 const Menu = (props) => {
   const { menu } = props;
   return (
-    <div className="menu-container">
+    <div className="menu">
       {
         (menu.length > 0)
         &&
-        <div className="menu-title" id="menu-title">
-          Today Menu
-        </div>
+        <h1 className="menu-title" id="menu-title">
+          Menu
+        </h1>
       }
       {
         (menu.length > 0)
         ?
-          <div className="boxes" id="menu-display">
+          <div className="menu-container" id="">
             {
               menu.map(meal => (
                 <MealCard

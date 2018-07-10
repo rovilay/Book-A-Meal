@@ -35,7 +35,7 @@ class IndexPage extends Component {
         {
           (menu.length > 0)
           &&
-          <div className="container menu-container">
+          <div className="container">
             <Menu
               menu={menu}
               addMealToCart={this.addMealToCart}

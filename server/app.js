@@ -3,6 +3,7 @@
 import express from 'express';
 import bodyParser from 'body-parser';
 import cors from 'cors';
+import path from 'path';
 import swaggerUi from 'swagger-ui-express';
 import mealRouter from './routes/mealRoutes';
 import menuRouter from './routes/menuRoutes';
@@ -31,6 +32,7 @@ app.get('/', (req, res) => {
   res.status(200).json({ message: 'Welcome to Book-A-Meal!' });
 });
 
+app.get(express.static(path.join(__dirname, '/client/public')));
 // Swagger docs routes
 app.use('/api/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 app.use(usersRouter);

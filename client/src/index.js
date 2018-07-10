@@ -10,6 +10,7 @@ import AppRouter from './routers/AppRouter';
 import './assets/scss/style.scss';
 import './assets/css/login.css';
 import './assets/css/meal-option.css';
+import './assets/css/menu.css';
 import './assets/css/admin.css';
 import './assets/css/table.css';
 
