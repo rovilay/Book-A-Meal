@@ -29,10 +29,12 @@ describe('Users API routes', () => {
     });
 
     it('should add new user', (done) => {
+      newUser.email = 'test@test.com'
       chai.request(app.listen())
       .post('/api/v1/auth/signup')
       .send(newUser)
       .end((err, res) => {
+        console.log(res.body);
         expect(res.status).to.equal(201);
         res.body.should.have.property('success');
         res.body.should.have.property('message');
@@ -79,7 +81,7 @@ describe('Users API routes', () => {
     it('should login in user and return token', (done) => {
       chai.request(app.listen())
       .post('/api/v1/auth/login')
-      .send({ email: 'rovi@gmail.com', password: '1234567'})
+      .send({ email: 'test@test.com', password: '1234567'})
       .end((err, res) => {
         expect(res.status).to.equal(200);
         res.body.should.have.property('success');
