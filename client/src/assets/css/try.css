@@ -61,8 +61,8 @@
 }
 
 .signup-card .link {
-  align-self: center;
-
+  display: block;
+  text-align: center
 }
 
 .signup-card form .full {
@@ -75,9 +75,14 @@
 .signup-card form input[type=password],
 .signup-card form select {
   width: 100%;
+  height: 40px;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
+}
+
+.signup-card form button {
+  font-size: 16px;
 }
 
 .signup-card form select {

@@ -32,7 +32,7 @@ class CustomerDashboard extends Component {
    */
   notify() {
     toast.success('Meal added to cart!', {
-      position: toast.POSITION.BOTTOM_LEFT,
+      position: toast.POSITION.TOP_CENTER,
       className: 'toast',
       progressClassName: 'toast-progress'
     });
@@ -44,7 +44,7 @@ class CustomerDashboard extends Component {
     return (
       <div>
         <div className="welcome">
-          <p>
+          <p className="merienda">
             Welcome, {firstName} {lastName}
           </p>
         </div>
