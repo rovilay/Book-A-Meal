@@ -13,7 +13,7 @@ const SetMenuForm = props => (
       props.submitNewMenu();
     }}
   >
-    <p className="date full">
+    <p className="date">
       <label htmlFor="date">Post on:</label>
       <input
         type="date"

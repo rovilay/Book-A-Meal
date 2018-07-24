@@ -36,16 +36,19 @@ const EditMenuTable = (props) => {
       </h2>
 
       <hr />
-      <form onSubmit={(e) => {
-        e.preventDefault();
-        const meals = [...new Set(editMenuMeals.concat(temp))]; // merge new meals with old meals,returns only unique values
-        submitUpdate(menuDate, meals);
-        setTimeout(() => {
-        }, 3000);
-        if (serverRes.message === 'Menus updated successfully') {
-          hideModal();
-        }
-      }}
+      <form
+        onSubmit={(e) => {
+          e.preventDefault();
+          const meals = [...new Set(editMenuMeals.concat(temp))]; // merge new meals with old meals,returns only unique values
+          submitUpdate(menuDate, meals);
+          setTimeout(() => {
+          }, 3000);
+          if (serverRes.message === 'Menus updated successfully') {
+            hideModal();
+          }
+        }}
+
+        className="editmenu-modal-form"
       >
         <p className="big-little">
           Post On: {content.postOn}

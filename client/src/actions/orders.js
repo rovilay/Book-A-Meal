@@ -108,9 +108,7 @@ export const getOrders = userId => (dispatch) => {
         }));
       }
     })
-    .catch((err) => {
-      console.log(err);
-    });
+    .catch(err => err);
 };
 
 /**
@@ -144,4 +142,3 @@ export const deleteOrder = id => (dispatch) => {
     })
     .catch(err => err);
 };
-

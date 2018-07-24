@@ -34,8 +34,6 @@ class MealCard extends Component {
     } else {
       history.push('/login');
     }
-
-    // e.preventDefault();
   }
 
   render() {
@@ -58,7 +56,7 @@ class MealCard extends Component {
         </div>
         <div className="mobile-label">
           <span className="meal-title">{mealData.title}</span>
-          <span className="meal-price">&#8358; {mealData.price}</span>
+          <span className="meal-price">&#8358;{mealData.price}</span>
           <div className="meal-desc">{mealData.description}</div>
           <button className="mob-btn" onClick={this.onSubmit}>Order</button>
         </div>
