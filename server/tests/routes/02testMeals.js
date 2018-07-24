@@ -36,7 +36,8 @@ describe('Meals API routes', (done) => {
           expect(res.status).to.equal(201);
           expect(res.body.success).to.equal(true);
           expect(res.body.message).to.equal('Meal added successfully');
-          if (err) return err;
+          if (err) return done(err);
+          console.log(err);
           done();
         });
     });
@@ -138,7 +139,7 @@ describe('Meals API routes', (done) => {
         res.body.meal.description.should.be.a('string');
         res.body.meal.image.should.be.a('string');
         res.body.meal.price.should.be.a('number');
-      
+
         done();
       });
     });

@@ -270,7 +270,7 @@ const postMeal = data => (dispatch) => {
         }, 2000);
       }
     })
-    .catch((err) => { console.log(err); });
+    .catch(err => err);
 };
 
 /**

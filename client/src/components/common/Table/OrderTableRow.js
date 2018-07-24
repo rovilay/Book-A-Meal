@@ -44,7 +44,7 @@ const OrderTableRow = (props) => {
       {
         (item.orderId && onEditOrder)
         &&
-        <td data-title="view details">
+        <td data-title="view details" className="orderHistory-action">
           <a
             role="button"
             href="#"

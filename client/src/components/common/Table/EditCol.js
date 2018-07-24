@@ -15,24 +15,24 @@ const EditTableCol = (props) => {
 
       {
         (isEdit && dataTitle === 'portion')
-        ?
-        (
-          <input
-            type="number"
-            min="1"
-            id="portion"
-            className="portion"
-            name="portion"
-            defaultValue={val}
-            onChange={(e) => {
-              const portion = e.target.value;
-              updatePortion(mealId, portion);
-            }}
-            required
-          />
-        )
-        :
-        (val)
+          ?
+          (
+            <input
+              type="number"
+              min="1"
+              id="portion"
+              className="portion"
+              name="portion"
+              defaultValue={val}
+              onChange={(e) => {
+                const portion = e.target.value;
+                updatePortion(mealId, portion);
+              }}
+              required
+            />
+          )
+          :
+          (val)
       }
     </td>
   );

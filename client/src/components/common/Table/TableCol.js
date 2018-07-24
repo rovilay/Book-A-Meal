@@ -4,7 +4,25 @@ import classname from 'classnames';
 
 const TableCol = props => (
   <td data-title={props.dataTitle} className={classname('', { 'meal-Image': props.dataTitle === 'meal' })}>
-    {props.val}
+    {
+      props.dataTitle === 'portion'
+        ?
+          <input
+            type="number"
+            min="1"
+            id={`portion-${props.itemId}`}
+            className="portion"
+            name="portion"
+            onChange={() => {
+              const portion = document.getElementById(`portion-${props.itemId}`).value;
+              props.changePortion(portion);
+            }}
+            defaultValue = {props.val}
+            required
+          />
+        :
+        props.val
+    }
     {
       (props.dataTitle === 'meal')
       &&
@@ -17,14 +35,19 @@ const TableCol = props => (
   </td>
 );
 
+
 TableCol.defaultProps = {
-  mealImage: undefined
+  mealImage: undefined,
+  changePortion: undefined,
+  itemId: undefined
 };
 
 TableCol.propTypes = {
   dataTitle: PropTypes.string.isRequired,
   val: PropTypes.any.isRequired,
-  mealImage: PropTypes.string
+  mealImage: PropTypes.string,
+  itemId: PropTypes.string,
+  changePortion: PropTypes.func
 };
 
 export default TableCol;

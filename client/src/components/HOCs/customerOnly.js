@@ -45,7 +45,7 @@ export default function (Comp) {
       const { token } = this.state;
       const { admin } = this.props.user;
       return (
-        <div>
+        <div className="hoc">
           {
             (!admin) && <Comp {...this.props} token={token} />
           }

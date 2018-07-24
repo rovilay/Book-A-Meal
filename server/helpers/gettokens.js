@@ -10,7 +10,8 @@ require('dotenv').config();
  * @return {string} token - a token string
  */
 function getToken(user) {
-  const token = jwt.sign({ user }, process.env.SECRET, { expiresIn: '24h' });
+  const { id, admin } = user;
+  const token = jwt.sign({ id, admin }, process.env.SECRET, { expiresIn: '24h' });
   return token;
 }
 

@@ -11,7 +11,7 @@ import adminOnly from '../components/HOCs/adminOnly';
 import customerOnly from '../components/HOCs/customerOnly';
 import CustomerDashboard from '../components/customerpages/dashboard/Index';
 import CustomerOrder from '../components/customerpages/order';
-import Cart from '../components/customerpages/Cart';
+import Cart from '../components/customerpages/cart';
 import CheckLogin from '../components/HOCs/checkLogin';
 import AdminDashboard from '../components/adminpages/dashboard/Index';
 import MealPage from '../components/adminpages/mealPage/Index';
@@ -20,7 +20,7 @@ import NotFoundPage from '../components/NotFoundPage';
 
 const AppRouter = () => (
   <Router>
-    <div className="main-container">
+    <div>
       <Header />
       <Switch>
         <Route path="/" exact component={CheckLogin(HomePage)} />
@@ -30,7 +30,7 @@ const AppRouter = () => (
           path="/dashboard"
           component={chooseDashboard(AdminDashboard, CustomerDashboard)}
         />
-        <Route path="/cart" exact component={customerOnly(Cart)} />
+        <Route path="/cart" exact component={customerOnly(Cart)} className="main" />
         <Route path="/orders" exact component={customerOnly(CustomerOrder)} />
         <Route path="/mealpage" exact component={adminOnly(MealPage)} />
         <Route path="/orderHistory" exact component={adminOnly(OrderPage)} />

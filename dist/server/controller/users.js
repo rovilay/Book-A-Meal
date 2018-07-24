@@ -60,7 +60,7 @@ var UsersController = function () {
           message: 'user created successfully!'
         });
       }).catch(function (err) {
-        err = new Error('An error occurred, user not created!');
+        err = new Error('An error occurred, user already exist!');
         err.status = 400;
         return next(err);
       });
@@ -85,28 +85,38 @@ var UsersController = function () {
         where: {
           email: loginUser.email.toLowerCase()
         },
-        attributes: ['id', 'admin', 'password']
+        attributes: ['id', 'firstName', 'lastName', 'admin', 'password']
 
       }).then(function (found) {
+        var id = found.id,
+            firstName = found.firstName,
+            lastName = found.lastName,
+            admin = found.admin,
+            password = found.password;
         // Compare password
-        _bcryptjs2.default.compare(loginUser.password, found.password).then(function (response) {
+
+        _bcryptjs2.default.compare(loginUser.password, password).then(function (response) {
           if (response) {
             return {
-              id: found.id,
-              admin: found.admin
+              id: id,
+              admin: admin,
+              firstName: firstName,
+              lastName: lastName
             };
           }
 
           var err = new Error('Password do not match!');
           err.status = 400;
           throw err;
-        }).then(function (user) {
+        }).then(function () {
           // generate token
-          _jsonwebtoken2.default.sign({ user: user }, process.env.SECRET, { expiresIn: '24h' }, function (err, token) {
+          _jsonwebtoken2.default.sign({ id: id, admin: admin }, process.env.SECRET, { expiresIn: '24h' }, function (err, token) {
             res.status(200).send({
               success: true,
               message: 'You are logged in!',
-              userId: user.id,
+              userId: id,
+              firstName: firstName,
+              lastName: lastName,
               token: token
             });
           });

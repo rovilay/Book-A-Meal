@@ -151,7 +151,7 @@ class AdminDashboard extends Component {
             {...this.props}
           />
         </div>
-        <div className="container">
+        <div className="table-container">
           <div className="menu-title">Menus List</div>
           <FilterComp
             {...this.props}

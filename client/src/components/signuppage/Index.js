@@ -1,10 +1,8 @@
 import React, { Component } from 'react';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
-import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 
-import '../../assets/css/signup.css';
 import setSuccessfulSignUpMsg from '../../actions/signup';
 import sigupValidator from '../../helpers/signupValidator';
 import serverReq from '../../helpers/serverReq';
@@ -71,21 +69,16 @@ class SignUpPage extends Component {
 
   render() {
     return (
-      <div className="pull-down">
-        <section id="signup-section" className="grid">
-          <div className="signup-container">
-            <Form
-              formValues={this.state}
-              submit={this.onSubmit}
-              change={this.onChange}
-              checkError={this.checkError}
-            />
-            <p>
-              <Link to="/Login">Click Here! to Log in </Link>
-            </p>
-          </div>
-        </section>
-      </div>
+      <section className="signuppage">
+        <div className="signupform-container">
+          <Form
+            formValues={this.state}
+            submit={this.onSubmit}
+            change={this.onChange}
+            checkError={this.checkError}
+          />
+        </div>
+      </section>
     );
   }
 }
@@ -102,4 +95,3 @@ const mapDispatchToProps = dispatch => bindActionCreators(
 );
 
 export default connect('', mapDispatchToProps)(SignUpPage);
-

@@ -1,0 +1,156 @@
+* {
+  box-sizing: border-box;
+}
+
+.signuppage {
+  background:
+    linear-gradient(
+      rgba(0, 0, 0, 0.55),
+      rgba(0, 0, 0, 0.75)
+    ),
+    url('https://res.cloudinary.com/dcqnswemi/image/upload/v1532282490/loginpag3.jpg') center #333 no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+  height: auto;
+  padding: 100px 0px;
+  overflow: scroll
+}
+
+.signupform-container {
+  max-width:600px;
+  margin: 0 auto;
+  padding: 1em;
+  overflow: hidden;
+}
+
+.signup-card {
+  width: inherit;
+  padding: 1.4em;
+  background: #ffffff;
+  border-radius: 10px;
+}
+
+.signup-card .form-title {
+  color: #61B750;
+  text-transform: capitalize;
+  font-size: 28px;
+  font-weight: 600;
+  text-align: center
+}
+
+.signup-card .signup-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1.3em
+}
+
+.signup-card p,
+.signup-card .signup-form p {
+  margin-top: 10px;
+}
+
+.signup-card a {
+  color: #61B750;
+  text-decoration: none;
+  cursor: pointer;
+  font-size: 14px
+}
+
+.signup-card a:hover {
+  color: #D27C41
+}
+
+.signup-card .link {
+  align-self: center;
+
+}
+
+.signup-card form .full {
+  grid-column: 1 / 3;
+}
+
+.signup-card form button,
+.signup-card form input[type=text],
+.signup-card form input[type=email],
+.signup-card form input[type=password],
+.signup-card form select {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+}
+
+.signup-card form select {
+  height: 2.5em
+}
+
+.signup-card .asterik {
+  color: red;
+}
+
+.signup-form .btn-1 {
+  margin: auto;
+  margin: 10px 0;
+  border: none;
+  background: #61B750;
+  color: #fff;
+  padding: 1em 2em;
+  text-align: center;
+  border-radius: 0.5em;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+}
+
+.signup-card .btn-1:disabled {
+  background: #8f8d8d;
+}
+
+.signup-card .btn-1[disabled]:hover {
+  color: #ffffff
+}
+
+label {
+  display: block;
+  text-transform: capitalize;
+  font-size: 1em;
+  font-weight: 700
+}
+
+hr {
+  color: #cccccc
+}
+
+
+/* alert */
+.alert-danger {
+  color: rgb(219, 41, 41);
+}
+
+.alert-success {
+  color: #48e048;
+  text-transform: capitalize
+}
+/* Section */
+
+#signup-section {
+  margin-top: 30px;
+}
+
+/* Small screens */
+@media(max-width:500px) {
+  .signup-card .signup-form {
+    display: inline;
+  }
+}
+
+@media screen and (min-height: 1050px) {
+  .signuppage {
+    height: 100vh;
+  }
+
+  .signupform-container {
+    margin: auto;
+    margin-top: 100px
+  }
+}

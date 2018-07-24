@@ -3,6 +3,5 @@
   "emmet.includeLanguages": {
     "javascript": "html"
   },
-  "jshint.enable": false,
   "files.autoSave": "afterDelay"
 }

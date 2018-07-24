@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
+import '../../assets/css/mealCard.css';
 import isExpired from '../../helpers/isExpired';
 
 class MealCard extends Component {
@@ -16,7 +17,7 @@ class MealCard extends Component {
     this.setState({ [name]: parseInt(value.trim(), 10) });
   }
 
-  onSubmit(e) {
+  onSubmit() {
     const {
       mealData,
       history,
@@ -24,10 +25,9 @@ class MealCard extends Component {
       user,
       addMealToCart
     } = this.props;
-    const { portion } = this.state;
 
-    if (!isExpired(user.expire) && !user.admin) {
-      addMealToCart({ ...mealData, portion });
+    if (user && !isExpired(user.expire) && !user.admin) {
+      addMealToCart({ ...mealData });
       if (notify) {
         notify();
       }
@@ -35,57 +35,40 @@ class MealCard extends Component {
       history.push('/login');
     }
 
-    e.preventDefault();
+    // e.preventDefault();
   }
 
   render() {
     const { mealData, user } = this.props;
     return (
-      <div className="menu-box">
-        <img src={mealData.image} alt="menu02" />
-        <form className="menu-info" onSubmit={this.onSubmit}>
-          <h4>
-            {mealData.title}
-          </h4>
-          <p className="bold">Price (&#8358;):
-            <span> {mealData.price}</span>
-          </p>
-          <p>{mealData.description}</p>
+      <div className="mealCard-container">
+        <img className="meal-img" src={mealData.image} alt={mealData.title} />
+        <div className="overlay">
+          <div className="meal-desc">{mealData.description}</div>
           {
             (!user.admin)
             &&
-            (
-              <span>
-                <p className="bold">
-                  Portion: &nbsp;<input
-                    type="number"
-                    min="1"
-                    id="portion"
-                    className="portion"
-                    name="portion"
-                    onChange={this.onChange}
-                    required
-                  />
-                </p>
-                <p>
-                  <input
-                    type="submit"
-                    id="order"
-                    className="order"
-                    value="order"
-                  />
-                </p>
-              </span>
-            )
+            <button onClick={this.onSubmit}>Order</button>
           }
-        </form>
+        </div>
+
+        <div className="meal-label">
+          <span className="meal-title">{mealData.title}</span>
+          <span className="meal-price">&#8358; {mealData.price}</span>
+        </div>
+        <div className="mobile-label">
+          <span className="meal-title">{mealData.title}</span>
+          <span className="meal-price">&#8358; {mealData.price}</span>
+          <div className="meal-desc">{mealData.description}</div>
+          <button className="mob-btn" onClick={this.onSubmit}>Order</button>
+        </div>
       </div>
     );
   }
 }
 
 MealCard.defaultProps = {
-  notify: undefined
+  notify: undefined,
 };
 
 MealCard.propTypes = {
@@ -97,4 +80,3 @@ MealCard.propTypes = {
 };
 
 export default MealCard;
-

@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import FontAwesome from 'react-fontawesome';
 
 import EditTableCol from './EditCol';
 
@@ -30,9 +31,9 @@ const ModalTableRow = (props) => {
       {
         (isEdit)
         &&
-        <td data-title="delete">
+        <td data-title="delete" className="delete">
           <button
-            className="btn-col btn-1"
+            className="btn-col btn-2"
             onClick={() => {
               // if (confirm('Are you sure you want to delete?')) {
               //   deleteRow(id);
@@ -41,6 +42,23 @@ const ModalTableRow = (props) => {
             }}
           >
             delete
+          </button>
+        </td>
+      }
+      {
+        (isEdit)
+        &&
+        <td data-title="delete" className="mob-delete">
+          <button
+            className="btn-2"
+            onClick={() => {
+              deleteRow(id);
+            }}
+          >
+            <FontAwesome
+              name="times"
+              size="2x"
+            />
           </button>
         </td>
       }

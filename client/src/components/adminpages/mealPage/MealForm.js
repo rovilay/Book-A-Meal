@@ -11,10 +11,10 @@ const Mealform = props => (
       <div className="form-title" id="form-title">
         {
           (props.isEdit)
-          ?
-          'Edit Meal'
-          :
-          'Add Meal'
+            ?
+            'Edit Meal'
+            :
+            'Add Meal'
         }
         <hr />
       </div>
@@ -25,7 +25,7 @@ const Mealform = props => (
         onSubmit={(e) => {
           e.preventDefault();
           if (props.isEdit) {
-           return props.updateMeal();
+            return props.updateMeal();
           }
           return props.addMeal(e);
         }}

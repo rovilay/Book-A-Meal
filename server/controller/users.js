@@ -74,8 +74,7 @@ class UsersController {
                 lastName
               };
             }
-
-            const err = new Error('Email or Password incorrect!');
+            const err = new Error('Email or Password is incorrect!');
             err.status = 400;
             throw err;
           })
@@ -95,7 +94,7 @@ class UsersController {
           .catch(err => next(err));
       })
       .catch((err) => {
-        err = new Error('Email or Password incorrect!');
+        err = new Error('Email or Password is incorrect!');
         err.status = 404;
         return next(err);
       });

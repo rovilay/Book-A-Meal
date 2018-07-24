@@ -1,5 +1,4 @@
 const path = require('path');
-// const HtmlWebpackPlugin = require('html-webpack-plugin');
 const webpack = require('webpack');
 const DotEnv = require('dotenv-webpack');
 
@@ -28,17 +27,6 @@ module.exports = {
           presets: ['env', 'react']
         }
       },
-      // {
-      //   test: /\.(png|jpg|jpeg)$/,
-      //   use: [
-      //     {
-      //       loader: 'url-loader',
-      //       options: {
-      //         limit: 25000,
-      //       }
-      //     }
-      //   ]
-      // },
       {
         test: /\.(png|jpg|jpeg)$/,
         loader: 'file-loader',
@@ -55,7 +43,7 @@ module.exports = {
   plugins: [
     // new HtmlWebpackPlugin({
     //   template: './src/index.html',
-    //   filename: './index.html'
+    //   filename: 'index.html'
     // }),
     new DotEnv(),
     new webpack.NoEmitOnErrorsPlugin(),
@@ -69,6 +57,7 @@ module.exports = {
   },
   node: {
     net: 'empty',
-    dns: 'empty'
+    dns: 'empty',
+    fs: 'empty'
   }
 };

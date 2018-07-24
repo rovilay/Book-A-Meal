@@ -24,6 +24,10 @@ var _adminOnly = require('../middlewares/adminOnly');
 
 var _adminOnly2 = _interopRequireDefault(_adminOnly);
 
+var _authenticate = require('../middlewares/authenticate');
+
+var _authenticate2 = _interopRequireDefault(_authenticate);
+
 var _customerOnly = require('../middlewares/customerOnly');
 
 var _customerOnly2 = _interopRequireDefault(_customerOnly);
@@ -32,6 +36,7 @@ function _interopRequireDefault(obj) { return obj && obj.__esModule ? obj : { de
 
 var ordersRouter = _express2.default.Router();
 
+ordersRouter.use('/api/v1/orders', _authenticate2.default);
 ordersRouter.get('/api/v1/orders', _adminOnly2.default, _orders2.default.getAllOrders);
 
 ordersRouter.get('/api/v1/orders/:userId', _orders2.default.getOrdersById);

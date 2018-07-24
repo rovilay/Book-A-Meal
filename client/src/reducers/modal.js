@@ -5,7 +5,7 @@ const modalDefaultState = {
   isSetMenu: false,
   close: true,
   content: {},
-  contentLable: ''
+  contentLabel: ''
 };
 
 const modalReducer = (state = modalDefaultState, action) => {

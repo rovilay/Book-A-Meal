@@ -1,11 +1,11 @@
 const setModal = ({
-  isOpen,
-  isEdit,
-  isInfo,
+  isOpen = false,
+  isEdit = false,
+  isInfo = false,
   isSetMenu = false,
-  close,
-  contentLabel,
-  content = {}
+  close = true,
+  content = {},
+  contentLabel = ''
 }) => (
   {
     type: 'SET_MODAL',

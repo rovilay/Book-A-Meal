@@ -79,7 +79,7 @@ const EditOrderTable = (props) => {
         </table>
 
         <div className="order">
-          <span id="order-total-price" className="bold">
+          <span id="order-total-price" className="">
             <br />
             Total Price(&#8358;): {totalPrice}
           </span>

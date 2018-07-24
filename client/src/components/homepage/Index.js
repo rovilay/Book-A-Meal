@@ -6,20 +6,14 @@ import { withRouter } from 'react-router';
 
 import { setDefaultNav } from '../../actions/navLinks';
 import getTodayMenu from '../../actions/menu';
-import Showcase from './Showcase';
-import Welcome from './Wlcdesc';
 import Menu from '../common/Menu';
 
 class IndexPage extends Component {
-  constructor(props) {
-    super(props);
-
-    this.addMealToCart = this.addMealToCart.bind(this);
-  }
-
   componentDidMount() {
     this.props.setDefaultNav();
     this.props.getTodayMenu();
+
+    this.addMealToCart = this.addMealToCart.bind(this);
   }
 
   addMealToCart() {
@@ -29,24 +23,55 @@ class IndexPage extends Component {
   render() {
     const { menu } = this.props;
     return (
-      <div>
-        <Showcase />
-        <Welcome />
+      <main>
+        <section className="first-section">
+          <div className="showcase">
+            <p>Meals that perfectly <br />fits your lifestyle</p>
+            <button
+              className="view-menu-btn"
+            >
+              View menu
+            </button>
+          </div>
+        </section>
+        <section className="intro">
+          <div className="intro-container">
+            <h1 className="color-1">Are you busy and hungry?</h1>
+            <p>
+              Would you want to eat your favourite food from your favourite resturant?<br />
+              Use this app to keep track of our menu and place orders at your convinience.
+            </p>
+            <p className="buttons">
+              <button
+                className="btn-1"
+                onClick={() => {
+                  this.props.history.push('/login');
+                }}
+              >
+                Login
+              </button>
+              <button
+                className="btn-1"
+                onClick={() => {
+                  this.props.history.push('/signup');
+                }}
+              >
+                Sign up
+              </button>
+            </p>
+          </div>
+        </section>
         {
-          (menu.length > 0)
-          &&
-          (
-            <div className="container menu-container">
-              <Menu
-                menu={menu}
-                addMealToCart={this.addMealToCart}
-                notify={this.notify}
-                {...this.props}
-              />
-            </div>
-          )
-        }
-      </div>
+        (menu.length > 0)
+        &&
+        <Menu
+          menu={menu}
+          addMealToCart={this.addMealToCart}
+          notify={this.notify}
+          {...this.props}
+        />
+      }
+      </main>
     );
   }
 }

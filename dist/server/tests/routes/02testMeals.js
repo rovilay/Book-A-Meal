@@ -51,7 +51,8 @@ describe('Meals API routes', function (done) {
         expect(res.status).to.equal(201);
         expect(res.body.success).to.equal(true);
         expect(res.body.message).to.equal('Meal added successfully');
-        if (err) return err;
+        if (err) return done(err);
+        console.log(err);
         done();
       });
     });

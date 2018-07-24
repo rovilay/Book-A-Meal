@@ -166,12 +166,24 @@ var OrdersController = function () {
         if (check === true) {
           _index2.default.Meal.findAll({
             where: { id: orderMeals },
-            attributes: ['price']
-          }).then(function (meals) {
+            attributes: ['id', 'price']
+          }).then(function (resMeals) {
             // calculate order's total price
             var totPrice = 0;
-            meals.forEach(function (meal, index) {
-              totPrice += meal.price * orderPortion[index];
+            resMeals.forEach(function (resMeal) {
+              var meals = newOrder.meals;
+
+              var i = 0;
+              while (i < meals.length) {
+                var _meals$i = meals[i],
+                    id = _meals$i.id,
+                    portion = _meals$i.portion;
+
+                if (resMeal.id === id) {
+                  totPrice += resMeal.price * portion;
+                }
+                i++;
+              }
             });
             return totPrice;
           }).then(function (totPrice) {
@@ -196,7 +208,6 @@ var OrdersController = function () {
                 message: 'Order placed successfully!'
               });
             }).catch(function (err) {
-              // err = new Error('Error occurred while placing order!');
               err.status = 400;
               return next(err);
             });
@@ -225,7 +236,6 @@ var OrdersController = function () {
       var updatedMeals = updatedOrder.meals.map(function (meal) {
         return meal.id;
       }); // Get all meal id
-
       var updatedPortion = updatedOrder.meals.map(function (meal) {
         return meal.portion;
       }); // Get all meal portion
@@ -234,12 +244,24 @@ var OrdersController = function () {
         if (check === true) {
           _index2.default.Meal.findAll({ // find meal and get their price
             where: { id: updatedMeals },
-            attributes: ['price']
-          }).then(function (meals) {
+            attributes: ['id', 'price']
+          }).then(function (resMeals) {
             // calculate order's total price
             var totPrice = 0;
-            meals.forEach(function (meal, index) {
-              totPrice += meal.price * updatedPortion[index];
+            resMeals.forEach(function (resMeal) {
+              var meals = updatedOrder.meals;
+
+              var i = 0;
+              while (i < meals.length) {
+                var _meals$i2 = meals[i],
+                    id = _meals$i2.id,
+                    portion = _meals$i2.portion;
+
+                if (resMeal.id === id) {
+                  totPrice += resMeal.price * portion;
+                }
+                i++;
+              }
             });
             return totPrice;
           }).then(function (totPrice) {

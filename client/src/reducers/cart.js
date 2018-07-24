@@ -8,7 +8,7 @@ const cartReducer = (state = cartDefaultState, action) => {
         let isPresent = false;
         temp.map((meal) => {
           if (meal.id === action.meal.id) {
-            meal.portion += action.meal.portion;
+            meal.portion = action.meal.portion;
             isPresent = true;
           }
         });

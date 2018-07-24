@@ -18,7 +18,7 @@ const ModalComp = (props) => {
   return (
     <Modal
       isOpen={isOpen}
-      contentLabel= {contentLabel}
+      contentLabel={contentLabel}
       overlayClassName="overlay"
       className="modal"
     >

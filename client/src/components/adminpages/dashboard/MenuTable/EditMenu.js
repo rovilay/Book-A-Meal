@@ -41,7 +41,6 @@ const EditMenuTable = (props) => {
         const meals = [...new Set(editMenuMeals.concat(temp))]; // merge new meals with old meals,returns only unique values
         submitUpdate(menuDate, meals);
         setTimeout(() => {
-          console.log(serverRes.message);
         }, 3000);
         if (serverRes.message === 'Menus updated successfully') {
           hideModal();
@@ -65,10 +64,8 @@ const EditMenuTable = (props) => {
                   className="meal-check"
                   id={`${meal.id}-edit`}
                   onClick={() => {
-                    // const checkbox = document.getElementById(`${meal.id}-edit`);
                     editMenuMeal(meal.id);
-                    }
-                  }
+                  }}
                   value={meal.id}
                 />
                 {meal.title}
@@ -137,4 +134,3 @@ EditMenuTable.propTypes = {
 };
 
 export default EditMenuTable;
-
