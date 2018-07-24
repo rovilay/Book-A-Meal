@@ -19,6 +19,25 @@
   text-transform: capitalize;
   font-size: 30px;
   font-weight: 400;
+  text-align: center;
+}
+
+.address {
+  display: inline-block;
+  justify-content: center;
+  font-size: 14px
+}
+
+.address label {
+  align-self: center
+}
+
+.address input {
+  width: 60%;
+  height: 50px;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
 }
 
 @media screen and (min-width: 700px) {

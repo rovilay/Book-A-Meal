@@ -131,7 +131,7 @@ class Cart extends Component {
     const { cart, totPrice } = this.props;
     return (
       <section className="cartpage">
-        <div className="title" id="cart-title">
+        <div className="title merienda" id="cart-title">
           <div>
             <FontAwesome
               id="mobile-menu"

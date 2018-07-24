@@ -7,7 +7,7 @@ import '../../assets/css/mealCard.css';
 const Menu = (props) => {
   const { menu } = props;
   return (
-    <section className="menu">
+    <section id="menu" className="menu">
       {
         (menu.length > 0)
         &&

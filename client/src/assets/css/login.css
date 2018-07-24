@@ -77,12 +77,14 @@
   size: 3px;
 }
 
-form>p {
-  margin-top: 15px
+.login-form p {
+  margin-top: 15px;
+  /* display: flex; */
+  justify-content: space-between
 }
 
-form>p label {
-  font-size: .9em;
+.login-form p label {
+  font-size: 1.2em;
   font-weight: 400;
 }
 
@@ -92,6 +94,7 @@ form>p label {
 .form-card form input[type=password],
 .form-card form button {
   width: 100%;
+  height: 40px;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
