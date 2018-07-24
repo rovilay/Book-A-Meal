@@ -159,14 +159,16 @@ class AdminDashboard extends Component {
           />
           {
             (this.props.filteredMenus.length === 0)
-            ?
-              <p className="empty not-found">No menu found!</p>
-            :
-              <MenuTable
-                showMenuDetails={this.showMenuDetails}
-                editMenu={this.editMenu}
-                {...this.props}
-              />
+              ?
+                <p className="empty not-found">No menu found!</p>
+              :
+              (
+                <MenuTable
+                  showMenuDetails={this.showMenuDetails}
+                  editMenu={this.editMenu}
+                  {...this.props}
+                />
+              )
 
           }
         </div>

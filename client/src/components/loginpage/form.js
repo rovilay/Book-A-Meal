@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 
 const LoginForm = props => (
   <div className="card">
-    <div id="form-card" className="card-body" >
+    <div id="form-card" className="card-body">
       <div className="login-form-title" id="login-form-title">
         User Login
         <hr />

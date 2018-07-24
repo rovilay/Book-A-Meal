@@ -35,14 +35,16 @@ class IndexPage extends Component {
         {
           (menu.length > 0)
           &&
-          <div className="container menu-container">
-            <Menu
-              menu={menu}
-              addMealToCart={this.addMealToCart}
-              notify={this.notify}
-              {...this.props}
-            />
-          </div>
+          (
+            <div className="container menu-container">
+              <Menu
+                menu={menu}
+                addMealToCart={this.addMealToCart}
+                notify={this.notify}
+                {...this.props}
+              />
+            </div>
+          )
         }
       </div>
     );

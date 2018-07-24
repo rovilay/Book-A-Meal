@@ -182,9 +182,9 @@ class CustomerOrder extends Component {
           />
           {
             (filteredOrders.length === 0)
-            ?
-              <p className="empty not-found">No orders found!</p>
-            :
+              ?
+                <p className="empty not-found">No orders found!</p>
+              :
               (
                 <div>
                   <table>
@@ -203,11 +203,11 @@ class CustomerOrder extends Component {
                           const time = moment(date).format('HH:mm');
 
                           const item = {
-                              sn: ++i,
-                              orderId,
-                              date: moment(date).format('LL'),
-                              totalPrice,
-                            };
+                            sn: ++i,
+                            orderId,
+                            date: moment(date).format('LL'),
+                            totalPrice,
+                          };
 
                           const orderDetails = {
                             orderId,

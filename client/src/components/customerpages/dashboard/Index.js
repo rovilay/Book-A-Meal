@@ -14,6 +14,7 @@ class CustomerDashboard extends Component {
 
     this.notify = this.notify.bind(this);
   }
+
   componentWillMount() {
     const { history, token } = this.props;
     if (!token) {

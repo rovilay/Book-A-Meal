@@ -75,7 +75,7 @@ class UsersController {
               };
             }
 
-            const err = new Error('Password do not match!');
+            const err = new Error('Email or Password incorrect!');
             err.status = 400;
             throw err;
           })
@@ -95,7 +95,7 @@ class UsersController {
           .catch(err => next(err));
       })
       .catch((err) => {
-        err = new Error('User not found!');
+        err = new Error('Email or Password incorrect!');
         err.status = 404;
         return next(err);
       });

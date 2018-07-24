@@ -107,4 +107,3 @@ EditOrderTable.propTypes = {
 };
 
 export default EditOrderTable;
-
