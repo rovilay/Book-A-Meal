@@ -32,6 +32,7 @@ app.options('*', cors(corsOption));
 //   res.status(200).json({ message: 'Welcome to Book-A-Meal!' });
 // });
 
+app.get(express.static(path.join(__dirname, '/client/public')));
 // Swagger docs routes
 app.use('/api/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 
