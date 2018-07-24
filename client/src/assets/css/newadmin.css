@@ -112,3 +112,16 @@ background: #8e8d8d
       text-align: center
   }
 }
+
+.btn-3 {
+  float: left;
+  font-size: 0.5em;
+  padding: 1em 2em;
+  text-align: center;
+  border-radius: 0.5em;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+  margin-top: 7px;
+  margin-left: 4px;
+}

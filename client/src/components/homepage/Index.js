@@ -26,12 +26,14 @@ class IndexPage extends Component {
       <main>
         <section className="first-section">
           <div className="showcase">
-            <p>Meals that perfectly <br />fits your lifestyle</p>
-            <button
+            <p className="merienda"> Meals that perfectly <br />fits your lifestyle</p>
+            <a
+              role="button"
+              href="#menu"
               className="view-menu-btn"
             >
               View menu
-            </button>
+            </a>
           </div>
         </section>
         <section className="intro">

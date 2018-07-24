@@ -32,7 +32,7 @@ const EditOrderTable = (props) => {
         notify(orders.serverRes.message);
       }}
       >
-        <p>
+        <p className="address">
           <label htmlFor="address">
             Address:
           </label>
@@ -87,7 +87,7 @@ const EditOrderTable = (props) => {
             type="submit"
             name="orderbtn"
             id="order-btn"
-            className="update-btn btn-1"
+            className="btn-1 update-order-btn"
             disabled={meals.length <= 0}
           >
             Update order

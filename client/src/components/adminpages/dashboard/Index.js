@@ -133,45 +133,45 @@ class AdminDashboard extends Component {
   }
 
   render() {
+    const { firstName, lastName } = this.props.user;
     return (
       <div>
         <div className="welcome">
-          <img
-            src="https://res.cloudinary.com/dcqnswemi/image/upload/v1529142686/chef2.svg"
-            alt="chef-img"
-          />
-          <h3>
-            <b>Akinola Ogooluwa</b>
-          </h3>
+          <p>
+            welcome, {firstName} {lastName}
+          </p>
         </div>
-        <div className="setmenu-container">
-          <SetMenuCard
-            setNewMenuMeal={this.setNewMenuMeal}
-            submitNewMenu={this.submitNewMenu}
-            {...this.props}
-          />
-        </div>
-        <div className="table-container">
+        <section className="setmenu">
+          <div className="setmenu-container">
+            <SetMenuCard
+              setNewMenuMeal={this.setNewMenuMeal}
+              submitNewMenu={this.submitNewMenu}
+              {...this.props}
+            />
+          </div>
+        </section>
+        <section className="adminpage">
           <div className="menu-title">Menus List</div>
-          <FilterComp
-            {...this.props}
-            tableContent="Menus_List"
-          />
-          {
-            (this.props.filteredMenus.length === 0)
-              ?
-                <p className="empty not-found">No menu found!</p>
-              :
-              (
-                <MenuTable
-                  showMenuDetails={this.showMenuDetails}
-                  editMenu={this.editMenu}
-                  {...this.props}
-                />
-              )
-
-          }
-        </div>
+          <div className="table-container">
+            <FilterComp
+              {...this.props}
+              tableContent="Menus_List"
+            />
+            {
+              (this.props.filteredMenus.length === 0)
+                ?
+                  <p className="empty not-found">No menu found!</p>
+                :
+                  <div className="res-container">
+                    <MenuTable
+                      showMenuDetails={this.showMenuDetails}
+                      editMenu={this.editMenu}
+                      {...this.props}
+                    />
+                  </div>
+            }
+          </div>
+        </section>
         <ModalComp
           hideModal={this.hideModal}
           deleteRow={this.deleteRow}
@@ -202,7 +202,8 @@ AdminDashboard.propTypes = {
   emptyNewMenu: PropTypes.func.isRequired,
   modal: PropTypes.object.isRequired,
   filterAction: PropTypes.func.isRequired,
-  filteredMenus: PropTypes.array.isRequired
+  filteredMenus: PropTypes.array.isRequired,
+  user: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({

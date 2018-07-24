@@ -44,7 +44,7 @@ class CustomerDashboard extends Component {
     return (
       <div>
         <div className="welcome">
-          <p>
+          <p className="merienda">
             Welcome, {firstName} {lastName}
           </p>
         </div>

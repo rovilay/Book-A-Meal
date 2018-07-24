@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
+import FontAwesome from 'react-fontawesome';
 
 import OrderDetailsTable from '../customerpages/modalTables/orderDetails';
 import EditOrderTable from '../customerpages/modalTables/editOrder';
@@ -26,9 +27,12 @@ const ModalComp = (props) => {
         <button
           type="button"
           onClick={props.hideModal}
-          className="btn-col btn-1"
+          className=""
         >
-          close
+          <FontAwesome
+            name="times"
+            size="2x"
+          />
         </button>
       </div>
 

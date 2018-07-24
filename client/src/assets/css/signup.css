@@ -66,6 +66,7 @@
 .signup-card form p>input[type=password],
 .signup-card form p>select {
   width: 80%;
+  height: 50px;
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;

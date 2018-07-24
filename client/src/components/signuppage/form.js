@@ -100,7 +100,6 @@ const SignUpForm = props => (
           name="email"
           value={props.formValues.email}
           onChange={e => props.change(e)}
-          minLength="10"
           required
         />
         {

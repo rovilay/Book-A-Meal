@@ -15,7 +15,7 @@ const MealCheckBoxCard = (props) => {
             id={meal.id}
             onClick={() => {
               props.setNewMenuMeal(meal.id);
-              }
+            }
             }
             value={meal.id}
           />

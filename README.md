@@ -15,10 +15,11 @@ Book-A-Meal is an app designed to let you order meals from your favourite restur
 5. Caterer is able to see total amount made for a day
 
 # App Link
-View app at [Book-A-Meal](https://book-me-a-meal.herokuapp.com)
+View app at [Book-A-Meal](https://book-me-a-meal.herokuapp.com/)
 
 # API Documentation
 View on [SWAGGER](https://book-me-a-meal.herokuapp.com/api/v1/api-docs)
+
 
 # Languages & tools
 ## HTML

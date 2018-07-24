@@ -171,7 +171,7 @@ class CustomerOrder extends Component {
     const sortedOrders = filteredOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     return (
       <section className="cartpage orderpage">
-        <div className="title" id="">
+        <div className="title merienda" id="">
           Your Order History
         </div>
         <hr />
