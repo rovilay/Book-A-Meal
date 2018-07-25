@@ -199,8 +199,8 @@ class Cart extends Component {
               </button>
             </div>
           </form>
-          <ToastContainer />
         </div>
+        <ToastContainer />
         <div className={classname('empty not-found empty-cart', { hide: cart.length > 0 })}>Cart is Empty!</div>
       </section>
     );
