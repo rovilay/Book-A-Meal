@@ -32,6 +32,19 @@ const EditOrderTable = (props) => {
         notify(orders.serverRes.message);
       }}
       >
+        <p className="address">
+          <label htmlFor="address">
+            Address:
+          </label>
+          <input
+            type="text"
+            placeholder="Enter delivery address"
+            name="deliveryAddress"
+            id="delivery-address"
+            defaultValue={editOrder.deliveryAddress}
+            required
+          />
+        </p>
         <table>
           <TableHead tableHead={tableHead.editOrderTableHead} />
           <tbody>

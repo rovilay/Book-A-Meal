@@ -53,6 +53,13 @@
   color: #d27c41;
 }
 
+.menu-title {
+  text-align: center;
+  font-size: 30px;
+  font-weight: bold;
+  color: #d27c41;
+}
+
 .table-container .order-details {
   margin-bottom: 10px;
 }
@@ -106,7 +113,8 @@
   align-items: flex-end
 } */
 
-/* .cartpage form p>label {
+/*
+.cartpage form p>label {
   align-self: center
 } */
 
@@ -343,11 +351,12 @@ input[type=checkbox] {
   font-weight: bold
 }
 
-
-
 span#order-total-price {
   align-self: flex-start;
   margin-top: -10px;
+ 
+.modal table {
+  margin-top: 30px;
 }
 
 .modal .table-container form {
@@ -423,7 +432,6 @@ span#order-total-price {
 .modal .table-container p.address {
   width: 90%;
   padding: 0 40px
-
 }
 
 @media screen and (min-width: 700px) {
@@ -447,6 +455,13 @@ span#order-total-price {
   .cartpage .del-btn {
     width: 30%;
     background: rgb(218, 9, 9)
+  }
+
+  .ReactModalPortal {
+    z-index: 3;
+    height: auto;
+    overflow: scroll;
+    overscroll-behavior: smooth
   }
 
   .ReactModalPortal {
