@@ -1,6 +1,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
+import swal from 'sweetalert';
 
 import EditTableCol from './EditCol';
 
@@ -33,15 +34,26 @@ const ModalTableRow = (props) => {
         &&
         <td data-title="delete" className="delete">
           <button
-            className="btn-col btn-2"
-            onClick={() => {
-              // if (confirm('Are you sure you want to delete?')) {
-              //   deleteRow(id);
-              // }
-              deleteRow(id);
+            className="btn-col btn-2 danger"
+            onClick={(e) => {
+              e.preventDefault();
+              swal({
+                text: 'Are you sure you want to remove this meal?',
+                buttons: true,
+                dangerMode: true,
+              })
+                .then((confirmed) => {
+                  if (confirmed) {
+                    deleteRow(id);
+                  }
+                })
+                .catch(err => err);
             }}
           >
-            delete
+            <FontAwesome
+              name="trash"
+              size="2x"
+            />
           </button>
         </td>
       }
@@ -50,13 +62,13 @@ const ModalTableRow = (props) => {
         &&
         <td data-title="delete" className="mob-delete">
           <button
-            className="btn-2"
+            className="btn-2 danger"
             onClick={() => {
               deleteRow(id);
             }}
           >
             <FontAwesome
-              name="times"
+              name="trash"
               size="2x"
             />
           </button>

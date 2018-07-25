@@ -57,10 +57,12 @@ const ordersReducer = (state = ordersDefaultState, action) => {
       return (() => {
         const { deliveryAddress, orderedMeals } = state.editOrder;
         const temp = orderedMeals;
+        let { totalPrice } = state.editOrder;
         let res;
         temp.map((meal, i) => {
           if (meal.id === action.mealId) {
             temp.splice(i, 1);
+            totalPrice -= meal.price;
           }
           res = temp;
         });
@@ -68,7 +70,8 @@ const ordersReducer = (state = ordersDefaultState, action) => {
           ...state,
           editOrder: {
             deliveryAddress,
-            orderedMeals: [...res]
+            orderedMeals: [...res],
+            totalPrice
           }
         };
       })();

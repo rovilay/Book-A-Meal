@@ -6,6 +6,7 @@ import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
 import { NavLink } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
+import classname from 'classnames';
 
 import { delFromLs } from '../../helpers/Ls';
 import { emptyCart } from '../../actions/cart';
@@ -64,7 +65,7 @@ const Header = (props) => {
                   <FontAwesome
                     name="cart-plus"
                   />
-                  ({props.cart.length})
+                  <span className={classname('', { 'cart-count': props.cart.length > 0 })}>({props.cart.length})</span>
                 </NavLink>
               );
             }

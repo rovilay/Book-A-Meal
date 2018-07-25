@@ -40,6 +40,10 @@
   border-radius: 4px;
 }
 
+.cart-count {
+  color: red
+}
+
 @media screen and (min-width: 700px) {
   .welcome p {
     font-size: 50px;

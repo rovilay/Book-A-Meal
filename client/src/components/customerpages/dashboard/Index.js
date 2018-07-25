@@ -32,7 +32,7 @@ class CustomerDashboard extends Component {
    */
   notify() {
     toast.success('Meal added to cart!', {
-      position: toast.POSITION.BOTTOM_LEFT,
+      position: toast.POSITION.TOP_CENTER,
       className: 'toast',
       progressClassName: 'toast-progress'
     });

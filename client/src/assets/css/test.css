@@ -94,7 +94,7 @@ meal {
 .btn-1 {
   width: 100px;
   height: 30px;
-  color: white;
+  color: #ffffff;
   font-size: .6em !important;
   text-transform: uppercase;
   cursor: pointer;
@@ -106,9 +106,8 @@ meal {
 }
 
 .btn-1:hover {
-  border: 1px solid #cccccc;
-  background: transparent;
-  color: #000000;
+  /* border: 1px solid #cccccc; */
+  background: rgb(202, 124, 69);
 }
 
 
@@ -256,7 +255,7 @@ img {
   }
 
   .intro-container>h1 {
-    font-size: .7em;
+    font-size: 1.2em;
     line-height: 1.3
   }
 

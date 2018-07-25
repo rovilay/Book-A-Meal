@@ -61,8 +61,8 @@
 }
 
 .signup-card .link {
-  align-self: center;
-
+  display: block;
+  text-align: center
 }
 
 .signup-card form .full {

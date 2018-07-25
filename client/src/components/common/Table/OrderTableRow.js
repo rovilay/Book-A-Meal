@@ -64,7 +64,7 @@ const OrderTableRow = (props) => {
             }}
             href="#"
             role="button"
-            className="btn-col btn-2"
+            className="btn-col btn-2 yellow"
           >
             <FontAwesome
               name="edit"
@@ -78,10 +78,10 @@ const OrderTableRow = (props) => {
             }}
             href="#"
             role="button"
-            className="btn-col btn-2"
+            className="btn-col btn-2 danger"
           >
             <FontAwesome
-              name="times"
+              name="trash"
               size="2x"
             />
           </a>

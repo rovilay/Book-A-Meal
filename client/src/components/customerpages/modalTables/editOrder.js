@@ -77,12 +77,10 @@ const EditOrderTable = (props) => {
             }
           </tbody>
         </table>
-
+        <p id="order-total-price" className="orderTot">
+          Total Price(&#8358;): {totalPrice}
+        </p>
         <div className="order">
-          <span id="order-total-price" className="">
-            <br />
-            Total Price(&#8358;): {totalPrice}
-          </span>
           <button
             type="submit"
             name="orderbtn"

@@ -20,7 +20,6 @@ View app at [Book-A-Meal](https://book-me-a-meal.herokuapp.com/)
 # API Documentation
 View on [SWAGGER](https://book-me-a-meal.herokuapp.com/api/v1/api-docs)
 
-
 # Languages & tools
 ## HTML
 * For UI templating
