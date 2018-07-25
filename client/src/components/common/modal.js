@@ -25,6 +25,7 @@ const ModalComp = (props) => {
     >
       <div className="closeBtn">
         <button
+          type="button"
           onClick={props.hideModal}
           className=""
         >

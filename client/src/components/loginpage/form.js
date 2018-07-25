@@ -3,7 +3,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 const LoginForm = props => (
-
   <div id="form-card" className="form-card">
     <div className="login-form-title" id="login-form-title">
       User Login

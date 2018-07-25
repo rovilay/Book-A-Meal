@@ -169,7 +169,6 @@ class AdminDashboard extends Component {
                       {...this.props}
                     />
                   </div>
-
             }
           </div>
         </section>

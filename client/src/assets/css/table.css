@@ -107,6 +107,9 @@
 } */
 
 /* .cartpage form p>label {
+
+/*
+.cartpage form p>label {
   align-self: center
 } */
 
@@ -291,6 +294,11 @@ input[type=checkbox] {
   cursor: pointer;
 }
 
+.fa-2x {
+  font-size: 2.5em;
+  cursor: pointer;
+}
+
 .modal {
   position: relative;
   display: flex;
@@ -343,12 +351,14 @@ input[type=checkbox] {
   align-self: flex-start;
   font-weight: bold
 }
-
-
-
+  
 span#order-total-price {
   align-self: flex-start;
   margin-top: -10px;
+}
+
+.modal table {
+  margin-top: 30px;
 }
 
 .modal .table-container form {
@@ -424,7 +434,6 @@ span#order-total-price {
 .modal .table-container p.address {
   width: 90%;
   padding: 0 40px
-
 }
 
 @media screen and (min-width: 700px) {
