@@ -1,66 +1,107 @@
-.setmenu-container {
-    max-width: 800px;
-    margin: 0 auto;
-    padding: 1em;
-    overflow: hidden
+
+.setmenu {
+    height: auto;
+    background: #F3F5F9;
+    display: flex;
+    font-size: 6vw;
+    justify-content: center;
+    padding: 10px;
 }
 
-.welcome {
-    margin-top: 3.5rem;
-    background: url('../images/menu_img.jpg') no-repeat;
-}
-.welcome-admin {
-    max-width: 270px;
-    margin: 0 auto;
-    padding: 2em;
-    overflow: hidden;
-    text-align: justify;
-}
-
-.welcome img {
-    border-radius: 70%;
-    width: 150px;
-    height: 150px;
-}
 .admin-info {
     text-align: justify;
     color: #fff
 }
 
 
+.setmenu-container {
+    width: 100%;
+    margin: 0 auto;
+    padding: 1em;
+    overflow: hidden
+}
+
 /* Form */
-.setMenuCard {
+.setmenu .setMenuCard {
+    font-size: 16px;
+    width: 100%;
+    margin: auto;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: center; */
+    align-items: center;
     border: 1px solid #ccc;
-    padding: 1.4em;
     border-radius: 10px;
-    margin-left: 5%;
-    margin-right: 5%
 }
 
-.setMenuCard form p {
-    margin: 0
+.setMenuCard .title {
+    font-size: 22px;
+    font-weight: bold;
+    line-height: 60px;
+    text-align: center;
+    color: #DE7830
 }
 
-.setMenuCard form .full {
-    grid-column: 1 / 3;
+.setMenuCard form {
+    position: relative;
+    top: -10px;
+    align-self: flex-start;
+    /* border: 1px solid red; */
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    /* justify-content: flex-start; */
+    padding-bottom: 15px;
 }
 
-.setMenuCard label {
+.setMenuCard form .date {
+    justify-self: flex-start;
+    padding: 10px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+
+.setMenuCard form .checkbox-card,
+.edit-menu-meals .checkbox-card {
+    margin-top: 5px;
     display: inline-block;
-    min-width: 15em;
+    height: 160px;
+    overflow-y: auto
+}
+
+.setMenuCard form .checkbox-card p,
+.edit-menu-meals .checkbox-card p {
+    margin: auto;
+    padding: 5px;
+    padding-left: 10px;
+    padding-right: 10px;
+    border-bottom: 1px solid #cccccc;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+}
+
+/* .setMenuCard form .full {
+    grid-column: 1 / 3;
+} */
+
+.setMenuCard .date label {
+    justify-self: flex-end;
 }
 
 .setMenuCard form input[type=number],
 .setMenuCard form input[type=date]
 {
-    width: 30%;
+    width: 100%;
     padding: 12px;
     border: 1px solid #ccc;
     border-radius: 4px;
 }
 
 .addBtn {
-    width: 100%;
+    width: 80%;
     margin-top: 10px;
     padding: 10px;
     border: 0px;
@@ -80,13 +121,72 @@
 	background: #8e8d8d
 }
 
-.checkbox-card {
+@media screen and (min-width: 700px) {
+    .adminpage .table-container .res-container{
+        max-height: 70vh;
+        overflow: scroll;
+        /* margin: 20px */
+    }
+    .editmenu-modal-form {
+        /* max-height: 800px; */
+        overflow: scroll;
+    }
+    .setMenuCard form .checkbox-card,
+    .edit-menu-meals .checkbox-card {
+        margin: 5px;
+        height: 180px;
+        overflow-y: auto;
+        display: grid;
+        grid-template-columns: 1fr 1fr 1fr;
+        grid-template-rows: auto;
+    }
+
+    .setMenuCard form .checkbox-card p,
+    .edit-menu-meals .checkbox-card p {
+        font-size: 14px;
+        width: 100%;
+        border: 1px solid #cccccc;
+        display: flex;
+    }
+
+    .setMenuCard .title {
+        font-size: 30px
+    }
+}
+
+@media screen and (min-width: 1066px) {
+    .setmenu-container {
+        max-width: 800px;
+        margin: 0 auto;
+        padding: 1em;
+        overflow: hidden
+    }
+    .setMenuCard {
+        width: auto
+    }
+
+    .setMenuCard .title {
+        font-size: 3vw
+    }
+}
+
+.adminpage .table-container {
+    margin: 30px;
+}
+
+.adminpage .table-container .res-container{
+    max-height: 70vh;
+    overflow: scroll;
+    /* margin: 20px */
+}
+
+/* .checkbox-card {
     display: grid;
     overflow-y: scroll;
     height: 100px;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1em
-}
+} */
 
 /* .welcome {
     margin: auto;
@@ -96,7 +196,7 @@
 
 /* Small screens */
 
-@media(max-width:650px) {
+/* @media(max-width:650px) {
     .checkbox-card {
         display: inline-block;
     }
@@ -111,4 +211,4 @@
     .welcome {
         text-align: center
     }
-}
+} */

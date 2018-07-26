@@ -39,10 +39,12 @@
         "react/no-find-dom-node": 0,
         "react/forbid-prop-types": 0,
         "jsx-a11y/anchor-is-valid": 0,
+        "jsx-a11y/label-has-for": 0,
         "operator-linebreak": 0,
         "react/destructuring-assignment": 0,
         "react/button-has-type": 0,
-        "react/jsx-one-expression-per-line": 0
+        "react/jsx-one-expression-per-line": 0,
+        "react/no-access-state-in-setstate": 0
     },
     "plugins": [
         "react"

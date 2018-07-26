@@ -13,5 +13,4 @@ menuRouter.get('/api/v1/menus', adminOnly, menusController.getAllMenus);
 menuRouter.post('/api/v1/menus', adminOnly, validateMenu, menusController.postMenu);
 menuRouter.put('/api/v1/menus/:DD/:MM/:YYYY', adminOnly, validateParams, validateUpdateMenu, menusController.updateMenu);
 
-
 export default menuRouter;

@@ -1,6 +1,8 @@
 import React from 'react';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
+import FontAwesome from 'react-fontawesome';
+import swal from 'sweetalert';
 
 import TableCol from './TableCol';
 
@@ -32,11 +34,25 @@ const TableRow = (props) => {
       <td data-title="delete">
         <button
           className="btn-col btn-1 del-btn"
-          onClick={() => {
-            deleteRow(sn);
+          onClick={(e) => {
+            e.preventDefault();
+            swal({
+              text: 'Are you sure you want to remove this meal?',
+              buttons: true,
+              dangerMode: true,
+            })
+              .then((confirmed) => {
+                if (confirmed) {
+                  deleteRow(sn);
+                }
+              })
+              .catch(err => err);
           }}
         >
-          delete
+          <FontAwesome
+            name="trash"
+            size="2x"
+          />
         </button>
       </td>
     </tr>

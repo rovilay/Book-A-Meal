@@ -32,7 +32,7 @@ const EditOrderTable = (props) => {
         notify(orders.serverRes.message);
       }}
       >
-        <p>
+        <p className="address">
           <label htmlFor="address">
             Address:
           </label>
@@ -77,17 +77,15 @@ const EditOrderTable = (props) => {
             }
           </tbody>
         </table>
-
+        <p id="order-total-price" className="orderTot">
+          Total Price(&#8358;): {totalPrice}
+        </p>
         <div className="order">
-          <span id="order-total-price" className="">
-            <br />
-            Total Price(&#8358;): {totalPrice}
-          </span>
           <button
             type="submit"
             name="orderbtn"
             id="order-btn"
-            className="update-btn btn-1"
+            className="btn-1 update-order-btn"
             disabled={meals.length <= 0}
           >
             Update order

@@ -8,7 +8,7 @@ import moment from 'moment';
  */
 const filterify = (filter, objectToFilter) => {
   let filteredArr = [];
-  if (filter.by === 'date' && filter.date) {
+  if (objectToFilter.length > 0 && filter.by === 'date' && filter.date) {
     objectToFilter.map((val) => {
       if (val.postOn || val.createdAt) {
         const filterDate = moment(filter.date).format('LL');
@@ -20,7 +20,7 @@ const filterify = (filter, objectToFilter) => {
     });
   }
 
-  if (filter.by === 'month' && filter.month) {
+  if (objectToFilter.length > 0 && filter.by === 'month' && filter.month) {
     objectToFilter.map((val) => {
       if (val.createdAt) {
         const valDate = moment(val.createdAt).format('LL');
@@ -31,7 +31,7 @@ const filterify = (filter, objectToFilter) => {
     });
   }
 
-  if (filter.by === 'all') {
+  if (objectToFilter.length > 0 && filter.by === 'all') {
     filteredArr = [...objectToFilter];
   }
 

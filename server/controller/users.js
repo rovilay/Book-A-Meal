@@ -74,7 +74,6 @@ class UsersController {
                 lastName
               };
             }
-
             const err = new Error('Email or Password is incorrect!');
             err.status = 400;
             throw err;

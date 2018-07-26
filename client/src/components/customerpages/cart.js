@@ -9,6 +9,7 @@ import jwt from 'jsonwebtoken';
 import FontAwesome from 'react-fontawesome';
 import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
+import classname from 'classnames';
 
 import serverReq from '../../helpers/serverReq';
 import { getFromLs } from '../../helpers/Ls';
@@ -34,18 +35,18 @@ class Cart extends Component {
     this.deleteRow = this.deleteRow.bind(this);
   }
 
-  componentWillMount() {
-    const { cart, history } = this.props;
-    if (cart.length < 1) {
-      history.push('/dashboard');
-    }
-  }
+  // componentWillMount() {
+  //   const { cart, history } = this.props;
+  //   if (cart.length < 1) {
+  //     history.push('/dashboard');
+  //   }
+  // }
 
   componentDidMount() {
-    const { cart, history } = this.props;
-    if (cart && cart.length < 1) {
-      return history.push('/dashboard');
-    }
+    // const { cart, history } = this.props;
+    // if (cart && cart.length < 1) {
+    //   return history.push('/dashboard');
+    // }
 
     this.setTotPrice();
   }
@@ -124,14 +125,14 @@ class Cart extends Component {
   deleteRow(sn) {
     const id = sn - 1;
     this.props.deleteMealInCart(id);
-    this.notify('Meal deleted successfully!');
+    this.notify('Meal removed from cart!');
   }
 
   render() {
     const { cart, totPrice } = this.props;
     return (
       <section className="cartpage">
-        <div className="title" id="cart-title">
+        <div className="title merienda" id="cart-title">
           <div>
             <FontAwesome
               id="mobile-menu"
@@ -141,7 +142,7 @@ class Cart extends Component {
           <h1>Your Cart</h1>
         </div>
         <hr />
-        <div className="table-container">
+        <div className={classname('table-container', { hide: cart.length === 0 })}>
           <form onSubmit={this.onOrder}>
             <p>
               <label htmlFor="address">
@@ -198,8 +199,9 @@ class Cart extends Component {
               </button>
             </div>
           </form>
-          <ToastContainer />
         </div>
+        <ToastContainer />
+        <div className={classname('empty not-found empty-cart', { hide: cart.length > 0 })}>Cart is Empty!</div>
       </section>
     );
   }
