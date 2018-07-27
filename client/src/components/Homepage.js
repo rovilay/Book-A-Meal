@@ -4,11 +4,11 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 
-import { setDefaultNav } from '../../actions/navLinks';
-import getTodayMenu from '../../actions/menu';
-import Menu from '../common/Menu';
+import { setDefaultNav } from '../actions/navLinksAction';
+import getTodayMenu from '../actions/menuAction';
+import Menu from './common/Menu';
 
-class IndexPage extends Component {
+class HomePage extends Component {
   componentDidMount() {
     this.props.setDefaultNav();
     this.props.getTodayMenu();
@@ -78,7 +78,7 @@ class IndexPage extends Component {
   }
 }
 
-IndexPage.propTypes = {
+HomePage.propTypes = {
   menu: PropTypes.array.isRequired,
   getTodayMenu: PropTypes.func.isRequired,
   setDefaultNav: PropTypes.func.isRequired,
@@ -98,4 +98,4 @@ const mapDispatchToProps = dispatch => bindActionCreators(
   dispatch
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(IndexPage));
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(HomePage));

@@ -6,17 +6,17 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import Modal from '../Modal/Index';
 import navData from '../../../helpers/navData';
-import tableHead from '../../../helpers/tableHead';
+import tableHeadData from '../../../helpers/tableHeadData';
 import TableHead from '../../common/Table/TableHead';
 import OrderTableRow from '../../common/Table/OrderTableRow';
-import filterAction from '../../../actions/filter';
-import adminActions from '../../../actions/admin';
-import FilterComp from '../../common/Filter';
+import filterAction from '../../../actions/filterAction';
+import adminActions from '../../../actions/adminAction';
+import Filter from '../../common/Filter';
 
 class OrderHistory extends Component {
   constructor(props) {
@@ -75,7 +75,7 @@ class OrderHistory extends Component {
         </div>
         <hr />
         <div className="table-container">
-          <FilterComp
+          <Filter
             {...this.props}
             tableContent="order_history"
           />
@@ -87,7 +87,7 @@ class OrderHistory extends Component {
               (
                 <div>
                   <table>
-                    <TableHead tableHead={tableHead.orderHead} />
+                    <TableHead tableHeadData={tableHeadData.orderHead} />
                     <tbody>
                       {
                         sortedOrders.map((order, i) => {
@@ -154,7 +154,6 @@ class OrderHistory extends Component {
           notify={this.notify}
           {...this.props}
         />
-        <ToastContainer />
       </div>
 
     );

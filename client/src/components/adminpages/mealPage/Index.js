@@ -11,8 +11,8 @@ import 'react-toastify/dist/ReactToastify.css';
 import navData from '../../../helpers/navData';
 import MealForm from './MealForm';
 import MealTable from './MealTable/MealTable';
-import adminActions from '../../../actions/admin';
-import filterAction from '../../../actions/filter';
+import adminActions from '../../../actions/adminAction';
+import filterAction from '../../../actions/filterAction';
 import imageUploader from '../../../helpers/imageUploader';
 import FilterComp from '../../common/Filter';
 

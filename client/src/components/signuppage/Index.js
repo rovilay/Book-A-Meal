@@ -3,10 +3,10 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import setSuccessfulSignUpMsg from '../../actions/signup';
+import setSuccessfulSignUpMsg from '../../actions/signupAction';
 import sigupValidator from '../../helpers/signupValidator';
 import serverReq from '../../helpers/serverReq';
-import Form from './form';
+import SignUpForm from './Signupform';
 
 class SignUpPage extends Component {
   constructor(props) {
@@ -71,7 +71,7 @@ class SignUpPage extends Component {
     return (
       <section className="signuppage">
         <div className="signupform-container">
-          <Form
+          <SignUpForm
             formValues={this.state}
             submit={this.onSubmit}
             change={this.onChange}

@@ -1,4 +1,11 @@
 import serverReq from '../helpers/serverReq';
+import {
+  DEL_MEAL_EDIT_ORDER,
+  ORDER_SERVER_RES,
+  SET_CUSTOMER_ORDERS,
+  SET_EDIT_ORDER,
+  UPDATE_MEAL_PORTION
+} from './actiontypes';
 
 /**
  * Redux action that sets Customer orders in redux store
@@ -12,7 +19,7 @@ export const setCustomerOrders = ({
   grandTotalPrice,
   message
 }) => ({
-  type: 'SET_CUSTOMER_ORDERS',
+  type: SET_CUSTOMER_ORDERS,
   orders: {
     success,
     history,
@@ -28,7 +35,7 @@ export const setCustomerOrders = ({
  * @returns {Object} - returns object of action type and serverRes
  */
 export const orderServerRes = ({ success, message }) => ({
-  type: 'ORDER_SERVER_RES',
+  type: ORDER_SERVER_RES,
   serverRes: {
     success,
     message
@@ -47,7 +54,7 @@ export const setEditOrder = ({
   orderedMeals,
   totalPrice
 }) => ({
-  type: 'SET_EDIT_ORDER',
+  type: SET_EDIT_ORDER,
   editOrder: {
     orderId,
     deliveryAddress,
@@ -66,7 +73,7 @@ export const updateMealPortion = ({
   mealId,
   portion
 }) => ({
-  type: 'UPDATE_MEAL_PORTION',
+  type: UPDATE_MEAL_PORTION,
   meal: {
     mealId,
     portion
@@ -80,7 +87,7 @@ export const updateMealPortion = ({
  * @returns {Object} - returns object of action type and mealId
  */
 export const deleteMealInEditOrder = id => ({
-  type: 'DEL_MEAL_EDIT_ORDER',
+  type: DEL_MEAL_EDIT_ORDER,
   mealId: id
 });
 

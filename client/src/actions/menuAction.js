@@ -1,4 +1,6 @@
 import moment from 'moment';
+
+import { SET_TODAY_MENU } from './actiontypes';
 import serverReq from '../helpers/serverReq';
 
 /**
@@ -13,7 +15,7 @@ const setTodayMenu = ({
   Meals = []
 }) => (
   {
-    type: 'SET_TODAY_MENU',
+    type: SET_TODAY_MENU,
     menu: {
       message,
       gotMenu,
@@ -40,8 +42,7 @@ const getTodayMenu = () => (dispatch) => {
         dispatch(setTodayMenu({ success, Meals, message }));
       }
     })
-    .catch((err) => { console.log(err); });
+    .catch(err => err);
 };
 
 export default getTodayMenu;
-

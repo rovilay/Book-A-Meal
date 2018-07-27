@@ -1,19 +1,11 @@
 /* eslint class-methods-use-this: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
-import navData from '../../../helpers/navData';
-import Menu from '../../common/Menu';
+import navData from '../../helpers/navData';
+import Menu from '../common/Menu';
 
 class CustomerDashboard extends Component {
-  constructor(props) {
-    super(props);
-
-    this.notify = this.notify.bind(this);
-  }
-
   componentWillMount() {
     const { history, token } = this.props;
     if (!token) {
@@ -27,16 +19,6 @@ class CustomerDashboard extends Component {
     getTodayMenu();
   }
 
-  /**
-   * Notifies if meal is added to cart
-   */
-  notify() {
-    toast.success('Meal added to cart!', {
-      position: toast.POSITION.TOP_CENTER,
-      className: 'toast',
-      progressClassName: 'toast-progress'
-    });
-  }
 
   render() {
     const { user, todayMenu } = this.props;
@@ -51,11 +33,9 @@ class CustomerDashboard extends Component {
         <div>
           <Menu
             menu={todayMenu}
-            notify={this.notify}
             {...this.props}
           />
         </div>
-        <ToastContainer />
       </div>
     );
   }

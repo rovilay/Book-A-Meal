@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
+import { toast } from 'react-toastify';
 
 import '../../assets/css/mealCard.css';
 import isExpired from '../../helpers/isExpired';
@@ -9,7 +10,7 @@ class MealCard extends Component {
     super(props);
 
     this.onChange = this.onChange.bind(this);
-    this.onSubmit = this.onSubmit.bind(this);
+    this.addToCart = this.addToCart.bind(this);
   }
 
   onChange(e) {
@@ -17,20 +18,23 @@ class MealCard extends Component {
     this.setState({ [name]: parseInt(value.trim(), 10) });
   }
 
-  onSubmit() {
+  addToCart() {
     const {
       mealData,
       history,
-      notify,
       user,
       addMealToCart
     } = this.props;
 
     if (user && !isExpired(user.expire) && !user.admin) {
       addMealToCart({ ...mealData });
-      if (notify) {
-        notify();
-      }
+
+      /* notify */
+      toast.success('Meal added to cart!', {
+        position: toast.POSITION.TOP_LEFT,
+        className: 'toast',
+        progressClassName: 'toast-progress'
+      });
     } else {
       history.push('/login');
     }
@@ -46,7 +50,7 @@ class MealCard extends Component {
           {
             (!user.admin)
             &&
-            <button onClick={this.onSubmit}>Order</button>
+            <button onClick={this.addToCart}>Order</button>
           }
         </div>
 
@@ -58,21 +62,20 @@ class MealCard extends Component {
           <span className="meal-title">{mealData.title}</span>
           <span className="meal-price">&#8358;{mealData.price}</span>
           <div className="meal-desc">{mealData.description}</div>
-          <button className="mob-btn" onClick={this.onSubmit}>Order</button>
+          <button className="mob-btn" onClick={this.addToCart}>Order</button>
         </div>
       </div>
     );
   }
 }
 
-MealCard.defaultProps = {
-  notify: undefined,
-};
+// MealCard.defaultProps = {
+//   notify: undefined,
+// };
 
 MealCard.propTypes = {
   mealData: PropTypes.object.isRequired,
   history: PropTypes.object.isRequired,
-  notify: PropTypes.func,
   user: PropTypes.object.isRequired,
   addMealToCart: PropTypes.func.isRequired
 };

@@ -2,9 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import tableHead from '../../../helpers/tableHead';
-import TableHead from '../../common/Table/TableHead';
-import ModalTableRow from '../../common/Table/ModalTableRow';
+import tableHeadData from '../../../../helpers/tableHeadData';
+import TableHead from '../../../common/Table/TableHead';
+import ModalTableRow from '../../../common/Table/ModalTableRow';
 
 const EditOrderTable = (props) => {
   const {
@@ -46,7 +46,7 @@ const EditOrderTable = (props) => {
           />
         </p>
         <table>
-          <TableHead tableHead={tableHead.editOrderTableHead} />
+          <TableHead tableHeadData={tableHeadData.editOrderTableHead} />
           <tbody>
             {
               meals.map((meal, i) => {

@@ -1,9 +1,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import tableHead from '../../../helpers/tableHead';
-import TableHead from '../../common/Table/TableHead';
-import TableRow from '../../common/Table/ModalTableRow';
+import tableHeadData from '../../../../helpers/tableHeadData';
+import TableHead from '../../../common/Table/TableHead';
+import TableRow from '../../../common/Table/ModalTableRow';
 
 const OrderDetailsTable = (props) => {
   const { title, content } = props;
@@ -35,7 +35,7 @@ const OrderDetailsTable = (props) => {
         </p>
       </div>
       <table>
-        <TableHead tableHead={tableHead.orderDetailHead} />
+        <TableHead tableHeadData={tableHeadData.orderDetailHead} />
         <tbody>
           {
             orderMeals.map((meal, i) => {

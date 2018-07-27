@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 
 import isExpired from '../../helpers/isExpired';
 import { getFromLs } from '../../helpers/Ls';
-import { setDefaultNav, setNav } from '../../actions/navLinks';
+import { setDefaultNav, setNav } from '../../actions/navLinksAction';
 
 /**
  * @export {function} HOC function that returns a component if user is admin/caterer

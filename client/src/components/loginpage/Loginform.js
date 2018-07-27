@@ -12,7 +12,8 @@ const LoginForm = props => (
       id="login"
       className="login-form"
       onSubmit={(e) => {
-        props.logUserIn(e);
+        e.preventDefault();
+        props.logUserIn();
       }}
     >
       <p>
@@ -26,6 +27,7 @@ const LoginForm = props => (
           name="email"
           value={props.email}
           onChange={(e) => {
+            e.preventDefault();
             props.onChange(e);
           }}
           required
@@ -43,6 +45,7 @@ const LoginForm = props => (
           name="password"
           value={props.password}
           onChange={(e) => {
+            e.preventDefault();
             props.onChange(e);
           }}
           required

@@ -7,11 +7,11 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import jwt from 'jsonwebtoken';
-import { ToastContainer, toast } from 'react-toastify';
+import { toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
-import Modal from '../common/modal';
-import tableHead from '../../helpers/tableHead';
+import Modal from './modal/Index';
+import tableHeadData from '../../helpers/tableHeadData';
 import TableHead from '../common/Table/TableHead';
 import OrderTableRow from '../common/Table/OrderTableRow';
 import isExpired from '../../helpers/isExpired';
@@ -24,10 +24,10 @@ import {
   setEditOrder,
   deleteOrder,
   getOrders
-} from '../../actions/orders';
-import FilterComp from '../common/Filter';
-import filterAction from '../../actions/filter';
-import setModal from '../../actions/modal';
+} from '../../actions/ordersAction';
+import filterAction from '../../actions/filterAction';
+import setModal from '../../actions/modalAction';
+import Filter from '../common/Filter';
 
 class CustomerOrder extends Component {
   constructor(props) {
@@ -176,7 +176,7 @@ class CustomerOrder extends Component {
         </div>
         <hr />
         <div className="table-container">
-          <FilterComp
+          <Filter
             {...this.props}
             tableContent="customer_orders"
           />
@@ -188,7 +188,7 @@ class CustomerOrder extends Component {
               (
                 <div className="res-container">
                   <table>
-                    <TableHead tableHead={tableHead.orderHead} />
+                    <TableHead tableHeadData={tableHeadData.orderHead} />
                     <tbody>
                       {
                         sortedOrders.map((order, i) => {
@@ -260,7 +260,6 @@ class CustomerOrder extends Component {
           notify={this.notify}
           {...this.props}
         />
-        <ToastContainer />
       </section>
     );
   }

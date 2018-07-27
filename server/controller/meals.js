@@ -148,8 +148,9 @@ class MealsController {
         id: req.params.id,
       },
     })
-      .then(() =>
-        res.status(204).send('Delete successful!'))
+      .then(() => {
+        res.status(204).send('Delete successful!');
+      })
       .catch((err) => {
         err = new Error('Error occurred while deleting meal!');
         err.status = 400;
@@ -157,6 +158,5 @@ class MealsController {
       });
   }
 }
-
 
 export default MealsController;

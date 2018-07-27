@@ -1,7 +1,5 @@
 /*
   eslint class-methods-use-this:0,
-  eslint no-restricted-globals: 0,
-  eslint no-restricted-globals: 0,
   eslint no-alert: 0,
 */
 /* eslint no-restricted-globals: 0 */
@@ -13,12 +11,12 @@ import { ToastContainer, toast } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 
 import navData from '../../../helpers/navData';
-import { setNav } from '../../../actions/navLinks';
-import adminActions from '../../../actions/admin';
+import { setNav } from '../../../actions/navLinksAction';
+import adminActions from '../../../actions/adminAction';
 import MenuTable from './MenuTable/MenuTable';
 import SetMenuCard from './MenuCard/setMenu';
-import FilterComp from '../../common/Filter';
-import filterAction from '../../../actions/filter';
+import Filter from '../../common/Filter';
+import filterAction from '../../../actions/filterAction';
 import ModalComp from '../Modal/Index';
 
 class AdminDashboard extends Component {
@@ -153,7 +151,7 @@ class AdminDashboard extends Component {
         <section className="adminpage">
           <div className="menu-title">Menus List</div>
           <div className="table-container">
-            <FilterComp
+            <Filter
               {...this.props}
               tableContent="Menus_List"
             />

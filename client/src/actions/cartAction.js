@@ -1,10 +1,17 @@
+import {
+  ADD_MEAL_TO_CART,
+  UPDATE_CART_MEAL_PORTION,
+  DELETE_MEAL_IN_CART,
+  EMPTY_CART
+} from './actiontypes';
+
 export const addMealToCart = ({
   id,
   title,
   price: unitPrice,
   portion = 1
 }) => ({
-  type: 'ADD_MEAL_TO_CART',
+  type: ADD_MEAL_TO_CART,
   meal: {
     id,
     title,
@@ -14,16 +21,16 @@ export const addMealToCart = ({
 });
 
 export const updateCartMealPortion = ({ id, portion }) => ({
-  type: 'UPDATE_CART_MEAL_PORTION',
+  type: UPDATE_CART_MEAL_PORTION,
   mealId: id,
   newPortion: portion
 });
 
 export const deleteMealInCart = id => ({
-  type: 'DELETE_MEAL_IN_CART',
+  type: DELETE_MEAL_IN_CART,
   mealPos: id
 });
 
 export const emptyCart = () => ({
-  type: 'EMPTY_CART',
+  type: EMPTY_CART,
 });

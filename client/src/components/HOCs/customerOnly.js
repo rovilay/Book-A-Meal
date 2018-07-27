@@ -6,8 +6,8 @@ import PropTypes from 'prop-types';
 
 import isExpired from '../../helpers/isExpired';
 import { getFromLs } from '../../helpers/Ls';
-import { addMealToCart } from '../../actions/cart';
-import { setDefaultNav, setNav } from '../../actions/navLinks';
+import { addMealToCart } from '../../actions/cartAction';
+import { setDefaultNav, setNav } from '../../actions/navLinksAction';
 
 /**
  * @export {function} HOC function that returns a component if user is customer

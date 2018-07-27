@@ -1,4 +1,4 @@
-import filterify from '../helpers/filter';
+import filterify from '../helpers/filterify';
 
 const setDefaultAdminState = {
   meals: [],

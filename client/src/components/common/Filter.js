@@ -2,7 +2,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 
-import tableHead from '../../helpers/tableHead';
+import tableHeadData from '../../helpers/tableHeadData';
 
 class FilterComp extends Component {
   constructor(props) {
@@ -62,7 +62,7 @@ class FilterComp extends Component {
             >
               <option value="">select month</option>
               {
-                tableHead.MonthFilter.map((month, i) => (
+                tableHeadData.MonthFilter.map((month, i) => (
                   <option
                     key={i}
                     value={month}

@@ -2,9 +2,9 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import tableHead from '../../../../helpers/tableHead';
+import tableHeadData from '../../../../helpers/tableHeadData';
 import TableHead from '../../../common/Table/TableHead';
-import MealTableRow from './mealTableRow';
+import MealTableRow from './MealTableRow';
 
 const MealTable = (props) => {
   const { filteredMeals } = props;
@@ -12,7 +12,7 @@ const MealTable = (props) => {
   return (
     <div>
       <table>
-        <TableHead tableHead={tableHead.mealTableHead} />
+        <TableHead tableHeadData={tableHeadData.mealTableHead} />
         <tbody>
           {
             sortedMeals.map((meal, i) => {

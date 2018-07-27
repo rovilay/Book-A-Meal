@@ -1,3 +1,21 @@
+import {
+  ADD_MEAL_EDIT_MENU,
+  ADD_MEAL_NEW_MENU,
+  DELETE_MEAL_EDIT_MODAL,
+  DELETE_MEAL_EDIT_MENU,
+  EMPTY_NEW_MENU,
+  EMPTY_EDIT_MENU,
+  REMOVE_MEAL_NEW_MENU,
+  REMOVE_MEAL_FROM_EDIT,
+  RESET_SERVER_RES,
+  SET_ADMIN_MODAL,
+  SET_MENUS,
+  SET_ORDERS,
+  SET_MEALS,
+  SET_MEAL_FOR_EDIT,
+  SERVER_RES,
+  SET_DEFAULT
+} from './actiontypes';
 import serverReq from '../helpers/serverReq';
 
 /**
@@ -8,7 +26,7 @@ import serverReq from '../helpers/serverReq';
  */
 const addMealToNewMenu = mealId => (
   {
-    type: 'ADD_MEAL_NEW_MENU',
+    type: ADD_MEAL_NEW_MENU,
     mealId
   }
 );
@@ -21,7 +39,7 @@ const addMealToNewMenu = mealId => (
  */
 const removeMealFromNewMenu = mealId => (
   {
-    type: 'REMOVE_MEAL_NEW_MENU',
+    type: REMOVE_MEAL_NEW_MENU,
     mealId
   }
 );
@@ -33,7 +51,7 @@ const removeMealFromNewMenu = mealId => (
  */
 const emptyNewMenu = () => (
   {
-    type: 'EMPTY_NEW_MENU',
+    type: EMPTY_NEW_MENU,
   }
 );
 
@@ -45,7 +63,7 @@ const emptyNewMenu = () => (
  */
 const setMenus = menus => (
   {
-    type: 'SET_MENUS',
+    type: SET_MENUS,
     menus
   }
 );
@@ -58,7 +76,7 @@ const setMenus = menus => (
  */
 const setMealForEdit = mealId => (
   {
-    type: 'SET_MEAL_FOR_EDIT',
+    type: SET_MEAL_FOR_EDIT,
     mealId
   }
 );
@@ -70,13 +88,13 @@ const setMealForEdit = mealId => (
  */
 const removeMealFromEdit = () => (
   {
-    type: 'REMOVE_MEAL_FROM_EDIT',
+    type: REMOVE_MEAL_FROM_EDIT,
   }
 );
 
 const setDefault = () => (
   {
-    type: 'SET_DEFAULT',
+    type: SET_DEFAULT,
   }
 );
 
@@ -87,7 +105,7 @@ const setDefault = () => (
  * @return {Object} - returns action type and get meals response
  */
 const setMeals = meals => ({
-  type: 'SET_MEALS',
+  type: SET_MEALS,
   meals
 });
 
@@ -99,7 +117,7 @@ const setMeals = meals => ({
  * @return {Object} - returns action object with type 'SET_ORDERS' and orders properties
  */
 const setOrders = ({ grandTotalPrice, orders: history }) => ({
-  type: 'SET_ORDERS',
+  type: SET_ORDERS,
   orders: {
     grandTotalPrice,
     history
@@ -116,7 +134,7 @@ const serverRes = ({
   success,
   message
 }) => ({
-  type: 'SERVER_RES',
+  type: SERVER_RES,
   response: {
     success,
     message
@@ -130,7 +148,7 @@ const serverRes = ({
  * @return {Object} - returns action type and get meals response
  */
 const resetServerRes = () => ({
-  type: 'RESET_SERVER_RES',
+  type: RESET_SERVER_RES,
 });
 
 /**
@@ -154,7 +172,7 @@ const setModal = ({
   content = {}
 }) => (
   {
-    type: 'SET_ADMIN_MODAL',
+    type: SET_ADMIN_MODAL,
     modal: {
       isOpen,
       isEdit,
@@ -174,7 +192,7 @@ const setModal = ({
  * @returns {Object} returns action type 'ADD_MEAL_EDIT_MENU' and meal Id
  */
 const addMealInEditMenu = mealId => ({
-  type: 'ADD_MEAL_EDIT_MENU',
+  type: ADD_MEAL_EDIT_MENU,
   mealId
 });
 
@@ -185,7 +203,7 @@ const addMealInEditMenu = mealId => ({
  * @returns {Object} returns action type 'DELETE_MEAL_EDIT_MENU' and meal Id
  */
 const deleteMealInEditMenu = mealId => ({
-  type: 'DELETE_MEAL_EDIT_MENU',
+  type: DELETE_MEAL_EDIT_MENU,
   mealId
 });
 
@@ -195,7 +213,7 @@ const deleteMealInEditMenu = mealId => ({
  * @returns {Object} returns action type 'EMPTY_EDIT_MENU'
  */
 const emptyEditMenu = () => ({
-  type: 'EMPTY_EDIT_MENU'
+  type: EMPTY_EDIT_MENU
 });
 
 /**
@@ -205,7 +223,7 @@ const emptyEditMenu = () => ({
  * @returns {Object} returns action type 'DELETE_MEAL_EDIT_MODAL' and meal Id
  */
 const deleteMealInEditModal = mealId => ({
-  type: 'DELETE_MEAL_EDIT_MODAL',
+  type: DELETE_MEAL_EDIT_MODAL,
   mealId
 });
 
@@ -229,7 +247,7 @@ const getMeals = () => (dispatch) => {
         }, 2000);
       }
     })
-    .catch((err) => { console.log(err); });
+    .catch(err => err);
 };
 
 /**
@@ -249,7 +267,7 @@ const deleteMeal = mealId => (dispatch) => {
         // }, 2000);
       }
     })
-    .catch((err) => { console.log(err); });
+    .catch(err => err);
 };
 
 /**
@@ -291,7 +309,7 @@ const updateMeal = ({ mealId, data }) => (dispatch) => {
         }, 1000);
       }
     })
-    .catch((err) => { console.log(err); });
+    .catch(err => err);
 };
 
 /**
@@ -313,7 +331,7 @@ const getMenus = () => (dispatch) => {
         }, 1000);
       }
     })
-    .catch((err) => { console.log(err); });
+    .catch(err => err);
 };
 
 /**
@@ -337,7 +355,7 @@ const postMenu = ({ postOn, meals }) => (dispatch) => {
         dispatch(resetServerRes());
       }, 1000);
     })
-    .catch((err) => { console.log(err); });
+    .catch(err => err);
 };
 
 /**

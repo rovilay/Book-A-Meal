@@ -14,9 +14,9 @@ import classname from 'classnames';
 import serverReq from '../../helpers/serverReq';
 import { getFromLs } from '../../helpers/Ls';
 import isExpired from '../../helpers/isExpired';
-import { emptyCart, deleteMealInCart, addMealToCart } from '../../actions/cart';
-import { orderServerRes } from '../../actions/orders';
-import tableHead from '../../helpers/tableHead';
+import { emptyCart, deleteMealInCart, addMealToCart } from '../../actions/cartAction';
+import { orderServerRes } from '../../actions/ordersAction';
+import tableHeadData from '../../helpers/tableHeadData';
 import TableHead from '../common/Table/TableHead';
 import TableRow from '../common/Table/TableRow';
 import setCartTotalPrice from '../../actions/cartTotPr';
@@ -160,7 +160,7 @@ class Cart extends Component {
             </p>
             <div className="res-container">
               <table>
-                <TableHead tableHead={tableHead.cartTableHead} />
+                <TableHead tableHeadData={tableHeadData.cartTableHead} />
                 <tbody>
                   {
                     cart.map((meal, i) => {

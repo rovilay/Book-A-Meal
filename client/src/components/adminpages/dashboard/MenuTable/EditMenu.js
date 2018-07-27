@@ -4,7 +4,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import tableHead from '../../../../helpers/tableHead';
+import tableHeadData from '../../../../helpers/tableHeadData';
 import TableHead from '../../../common/Table/TableHead';
 import ModalTableRow from '../../../common/Table/ModalTableRow';
 
@@ -77,7 +77,7 @@ const EditMenuTable = (props) => {
           </div>
         </div>
         <table>
-          <TableHead tableHead={tableHead.editMenuHead} />
+          <TableHead tableHeadData={tableHeadData.editMenuHead} />
           <tbody className="modal-table-body">
             {
               content.meals.map((meal, i) => {

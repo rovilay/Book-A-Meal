@@ -2,7 +2,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import tableHead from '../../../../helpers/tableHead';
+import tableHeadData from '../../../../helpers/tableHeadData';
 import TableHead from '../../../common/Table/TableHead';
 import MenuTableRow from './MenuTableRow';
 
@@ -10,7 +10,7 @@ const MenuTable = (props) => {
   const sortedMenus = props.filteredMenus.sort((a, b) => new Date(b.postOn) - new Date(a.postOn));
   return (
     <table>
-      <TableHead tableHead={tableHead.menuTableHead} />
+      <TableHead tableHeadData={tableHeadData.menuTableHead} />
       <tbody>
         {
           sortedMenus.map((menu, i) => {

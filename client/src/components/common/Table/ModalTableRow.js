@@ -3,7 +3,7 @@ import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 import swal from 'sweetalert';
 
-import EditTableCol from './EditCol';
+import EditTableCol from './EditTableCol';
 
 const ModalTableRow = (props) => {
   const {
