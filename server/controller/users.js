@@ -1,8 +1,9 @@
 import jwt from 'jsonwebtoken';
 import bcrypt from 'bcryptjs';
-import db from '../../models/index';
+import dotenv from 'dotenv';
+import db from '../../models';
 
-require('dotenv').config();
+dotenv.config();
 /**
  * Handles user signup and log in operations
  * @exports

@@ -458,3 +458,16 @@ footer {
   padding: 10px 0;
 	position: fixed;
 }
+
+/* toast */
+.toast-success {
+  background: #61b750;
+  font-size: 14px;
+  color: #ffffff
+}
+
+.toast-danger {
+  background-color: rgb(240, 35, 35);
+  color: #ffffff;
+  font-size: 14px
+}

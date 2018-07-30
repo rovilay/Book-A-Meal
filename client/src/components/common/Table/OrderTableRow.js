@@ -1,6 +1,8 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
+import swal from 'sweetalert';
+import moment from 'moment';
 
 import TableCol from './TableCol';
 
@@ -10,8 +12,6 @@ const OrderTableRow = (props) => {
     item,
     onEditOrder,
     deleteOrder,
-    notify,
-    orders,
     showDetails
   } = props;
 
@@ -58,33 +58,54 @@ const OrderTableRow = (props) => {
               size="2x"
             />
           </a>
-          <a
-            onClick={() => {
-              onEditOrder(orderDetails);
-            }}
-            href="#"
-            role="button"
-            className="btn-col btn-2 yellow"
-          >
-            <FontAwesome
-              name="edit"
-              size="2x"
-            />
-          </a>
-          <a
-            onClick={() => {
-              deleteOrder(item.orderId);
-              notify(orders.serverRes.message);
-            }}
-            href="#"
-            role="button"
-            className="btn-col btn-2 danger"
-          >
-            <FontAwesome
-              name="trash"
-              size="2x"
-            />
-          </a>
+          {
+            // display only if order can still be edited
+            (moment(props.orderCreatedAt).add(15, 'm') > moment())
+            &&
+            <a
+              onClick={() => {
+                onEditOrder(orderDetails);
+              }}
+              href="#"
+              role="button"
+              className="btn-col btn-2 yellow"
+            >
+              <FontAwesome
+                name="edit"
+                size="2x"
+              />
+            </a>
+          }
+          {
+            // display only if order can still be canceled
+            (moment(props.orderCreatedAt).add(15, 'm') > moment())
+            &&
+            (
+              <a
+                onClick={() => {
+                  swal({
+                    text: 'Are you sure you want to delete this order?',
+                    buttons: true,
+                    dangerMode: true,
+                  })
+                    .then((confirmed) => {
+                      if (confirmed) {
+                        deleteOrder(item.orderId);
+                      }
+                    })
+                    .catch(err => err);
+                }}
+                href="#"
+                role="button"
+                className="btn-col btn-2 danger"
+              >
+                <FontAwesome
+                  name="trash"
+                  size="2x"
+                />
+              </a>
+            )
+          }
         </td>
       }
     </tr>
@@ -101,9 +122,8 @@ OrderTableRow.propTypes = {
   orderDetails: PropTypes.object.isRequired,
   onEditOrder: PropTypes.func,
   deleteOrder: PropTypes.func,
-  notify: PropTypes.func.isRequired,
   showDetails: PropTypes.func.isRequired,
-  orders: PropTypes.object.isRequired,
+  orderCreatedAt: PropTypes.string.isRequired
 };
 
 export default OrderTableRow;

@@ -59,5 +59,4 @@ class checkTime {
   }
 }
 
-
 export default checkTime;

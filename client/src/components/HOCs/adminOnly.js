@@ -3,10 +3,11 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import jwt from 'jsonwebtoken';
 
 import isExpired from '../../helpers/isExpired';
 import { getFromLs } from '../../helpers/Ls';
-import { setDefaultNav, setNav } from '../../actions/navLinks';
+import { setDefaultNav, setNav } from '../../actions/navLinksActions';
 
 /**
  * @export {function} HOC function that returns a component if user is admin/caterer
@@ -18,31 +19,34 @@ export default function (Comp) {
     constructor(props) {
       super(props);
       this.state = {
-        token: ''
+        token: '',
+        admin: undefined
       };
     }
 
     componentWillMount() {
       const { history } = this.props;
-      const { expire, admin } = this.props.user;
       const token = getFromLs('jwt');
+      const {
+        exp,
+        admin
+      } = jwt.decode(token);
 
-      if (!admin || !token) {
+      if (!token || !admin) {
         this.props.setDefaultNav();
         return history.push('/');
       }
 
-      if (isExpired(expire)) {
+      if (isExpired(exp)) {
         this.props.setDefaultNav();
         return history.push('/login');
       }
 
-      this.setState({ token });
+      this.setState({ token, admin });
     }
 
     render() {
-      const { token } = this.state;
-      const { admin } = this.props.user;
+      const { token, admin } = this.state;
       return (
         <div>
           {
@@ -57,14 +61,7 @@ export default function (Comp) {
     history: PropTypes.object.isRequired,
     setDefaultNav: PropTypes.func.isRequired,
     setNav: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired,
-    todayMenu: PropTypes.array.isRequired,
   };
-
-  const mapStateToProps = state => ({
-    user: state.login.user,
-    todayMenu: state.todayMenu.Meals
-  });
 
   const mapDispatchToProps = dispatch => bindActionCreators(
     {
@@ -74,5 +71,5 @@ export default function (Comp) {
     dispatch
   );
 
-  return connect(mapStateToProps, mapDispatchToProps)(withRouter(AdminOnly));
+  return connect('', mapDispatchToProps)(withRouter(AdminOnly));
 }

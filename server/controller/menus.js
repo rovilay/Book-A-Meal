@@ -1,5 +1,6 @@
 import db from '../../models/index';
 import checkMeal from '../helpers/checkMeal';
+import expire from '../helpers/expire';
 
 /**
  * Handles operations on menu routes
@@ -167,6 +168,13 @@ class MenusController {
           })
             .then((menu) => {
               if (menu !== null) {
+                // check if menu can still be updated
+                if (expire(date)) {
+                  const err = new Error('Can\'t modify menu anymore!');
+                  err.status = 405;
+                  throw err;
+                }
+
                 db.MenuMeal.destroy({
                   where: {
                     MenuId: menu.id,

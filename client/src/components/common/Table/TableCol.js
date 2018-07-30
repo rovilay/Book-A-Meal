@@ -48,6 +48,7 @@ TableCol.propTypes = {
   mealImage: PropTypes.string,
   itemId: PropTypes.string,
   changePortion: PropTypes.func
+  // updateCartMealPortion: PropTypes.func.isRequired
 };
 
 export default TableCol;

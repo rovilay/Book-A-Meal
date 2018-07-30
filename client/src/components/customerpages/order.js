@@ -7,27 +7,27 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import jwt from 'jsonwebtoken';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
-import Modal from '../common/modal';
-import tableHead from '../../helpers/tableHead';
+import Modal from './modal/Index';
+import tableHeadData from '../../helpers/tableHeadData';
 import TableHead from '../common/Table/TableHead';
 import OrderTableRow from '../common/Table/OrderTableRow';
 import isExpired from '../../helpers/isExpired';
+import navData from '../../helpers/navData';
 import { getFromLs } from '../../helpers/Ls';
+import filterify from '../../helpers/filterify';
+import summer from '../../helpers/summer';
 import {
-  setCustomerOrders,
   deleteMealInEditOrder,
-  updateMealPortion,
   updateOrder,
+  updateOrderedMealPortion,
   setEditOrder,
   deleteOrder,
   getOrders
-} from '../../actions/orders';
-import FilterComp from '../common/Filter';
-import filterAction from '../../actions/filter';
-import setModal from '../../actions/modal';
+} from '../../actions/ordersActions';
+import setFilter from '../../actions/filterActions';
+import { setModal } from '../../actions/modalActions';
+import Filter from '../common/Filter';
 
 class CustomerOrder extends Component {
   constructor(props) {
@@ -39,12 +39,12 @@ class CustomerOrder extends Component {
     this.deleteRow = this.deleteRow.bind(this);
     this.updatePortion = this.updatePortion.bind(this);
     this.getCustomerOrders = this.getCustomerOrders.bind(this);
-    this.notify = this.notify.bind(this);
   }
 
   componentDidMount() {
+    this.props.setNav(navData.customerNav);
     this.getCustomerOrders();
-    this.props.filterAction('customer_orders', { filter: 'all' });
+    this.props.setFilter({ filter: 'all' });
     this.hideModal();
   }
 
@@ -149,26 +149,19 @@ class CustomerOrder extends Component {
 
   /**
    * Updates meal portion,
-   * Calls the updateMealPortion action
+   * Calls the  action
    *
    * @param {string} mealId id of meal to update
    * @param {number} portion new portion of meal to update
    */
   updatePortion(mealId, portion) {
-    this.props.updateMealPortion({ mealId, portion });
-  }
-
-  notify(msg) {
-    toast(msg, {
-      position: toast.POSITION.TOP_CENTER,
-      className: 'toast',
-      progressClassName: 'toast-progress'
-    });
+    this.props.updateOrderedMealPortion({ mealId, portion });
   }
 
   render() {
-    const { grandTotalPrice, filteredOrders } = this.props.orders;
-    const sortedOrders = filteredOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const { orders } = this.props;
+    const grandTotalPrice = summer(orders, 'totalPrice');
+    const sortedOrders = orders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
     return (
       <section className="cartpage orderpage">
         <div className="title merienda" id="">
@@ -176,19 +169,19 @@ class CustomerOrder extends Component {
         </div>
         <hr />
         <div className="table-container">
-          <FilterComp
+          <Filter
             {...this.props}
             tableContent="customer_orders"
           />
           {
-            (filteredOrders.length === 0)
+            (orders.length === 0)
               ?
                 <p className="empty not-found">No orders found!</p>
               :
               (
                 <div className="res-container">
                   <table>
-                    <TableHead tableHead={tableHead.orderHead} />
+                    <TableHead tableHeadData={tableHeadData.orderHead} />
                     <tbody>
                       {
                         sortedOrders.map((order, i) => {
@@ -222,11 +215,11 @@ class CustomerOrder extends Component {
                             <OrderTableRow
                               key={i}
                               item={item}
+                              orderCreatedAt={order.createdAt}
                               sn={++i}
                               orderDetails={orderDetails}
                               onEditOrder={this.onEditOrder}
                               showDetails={this.showDetails}
-                              notify={this.notify}
                               {...this.props}
                             />
                           );
@@ -238,7 +231,7 @@ class CustomerOrder extends Component {
               )
             }
           {
-            (filteredOrders.length !== 0)
+            (orders.length !== 0)
             &&
             <div className="order">
               {
@@ -257,30 +250,28 @@ class CustomerOrder extends Component {
           hideModal={this.hideModal}
           deleteRow={this.deleteRow}
           updatePortion={this.updatePortion}
-          notify={this.notify}
           {...this.props}
         />
-        <ToastContainer />
       </section>
     );
   }
 }
 
 CustomerOrder.propTypes = {
-  orders: PropTypes.object.isRequired,
+  orders: PropTypes.array.isRequired,
   history: PropTypes.object.isRequired,
   setModal: PropTypes.func.isRequired,
   updateOrder: PropTypes.func.isRequired,
   deleteMealInEditOrder: PropTypes.func.isRequired,
-  updateMealPortion: PropTypes.func.isRequired,
-  setCustomerOrders: PropTypes.func.isRequired,
+  updateOrderedMealPortion: PropTypes.func.isRequired,
+  setNav: PropTypes.func.isRequired,
   getOrders: PropTypes.func.isRequired,
   setEditOrder: PropTypes.func.isRequired,
-  filterAction: PropTypes.func.isRequired,
+  setFilter: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
-  orders: state.orders,
+  orders: filterify(state.orders.history, state.filter),
   modal: state.modal,
   editOrder: state.orders.editOrder,
   userId: state.login.user.id
@@ -291,12 +282,11 @@ const mapDispatchToProps = dispatch => bindActionCreators(
     setModal,
     updateOrder,
     deleteMealInEditOrder,
-    updateMealPortion,
-    setCustomerOrders,
+    updateOrderedMealPortion,
     setEditOrder,
     deleteOrder,
     getOrders,
-    filterAction
+    setFilter,
   },
   dispatch
 );
