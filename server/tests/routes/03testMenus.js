@@ -29,7 +29,7 @@ describe('Menus API routes', (done) => {
   before((done) => {
     db.Meal.create( mealData[3]) // add meal to db
     .then(() => done())
-    .catch((err) => { 
+    .catch((err) => {
       done(err);
     });
   });
@@ -40,27 +40,81 @@ describe('Menus API routes', (done) => {
       .get('/api/v1/menus')
       .set('Authorization', `Bearer ${adminToken}`)
       .end((err, res) => {
-        if(err) return done(err);
+        const { pagination, message, success, menus } = res.body;
+        if (err) return done(err);
         expect(res.status).to.equal(200);
-        expect(res.body.success).to.equal(true);
-        expect(res.body.message).to.equal('Menus retrieved successfully');
-        res.body.menus.should.be.an('array');
-        res.body.menus.forEach(menu => {
+        expect(res.body).to.have.all.keys('success', 'message', 'pagination', 'menus');
+        expect(success).to.equal(true);
+        expect(message).to.equal('Menus retrieved successfully');
+        expect(menus).be.an('array');
+        expect(menus.length).to.be.at.most(10);
+        expect(menus.length).to.be.at.least(1);
+        expect(pagination).to.be.an('object');
+        expect(pagination).to.have.all.keys('limit', 'offset', 'numOfPages', 'curPage', 'count', 'nextOffset');
+        expect(pagination.offset).to.equal(0);
+        expect(pagination.limit).to.equal(10);
+        expect(pagination.count).to.equal(2);
+        expect(pagination.numOfPages).to.equal(1);
+        expect(pagination.curPage).to.equal(1);
+        expect(pagination.nextOffset).to.equal(10);
+        menus.forEach(menu => {
           menu.should.be.an('object');
-          menu.should.have.property('id');
-          menu.should.have.property('postOn');
-          menu.should.have.property('UserId');
-          menu.should.have.property('User');
-          menu.should.have.property('Meals');
-          menu.Meals.should.be.an('array');
+          expect(menu).to.have.all.keys('id', 'postOn', 'UserId', 'User', 'Meals', 'createdAt', 'updatedAt');
+          expect(menu.Meals).to.be.a('string');
         });
         done();
       });
     });
 
+    it('should return a menu for the post on date', (done) => {
+      chai.request(app.listen())
+      .get('/api/v1/menus?postOn=2018-05-16')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        const { pagination, message, success, menus } = res.body;
+        if(err) return done(err);
+        expect(res.status).to.equal(200);
+        expect(res.body).to.have.all.keys('success', 'message', 'pagination', 'menus');
+        expect(success).to.equal(true);
+        expect(message).to.equal('Menus retrieved successfully');
+        expect(menus).be.an('array');
+        expect(menus.length).to.equal(1);
+        expect(pagination).to.be.an('object');
+        expect(pagination).to.have.all.keys('limit', 'offset', 'numOfPages', 'curPage', 'count', 'nextOffset');
+        expect(pagination.offset).to.equal(0);
+        expect(pagination.limit).to.equal(10);
+        expect(pagination.count).to.equal(1);
+        expect(pagination.numOfPages).to.equal(1);
+        expect(pagination.curPage).to.equal(1);
+        expect(pagination.nextOffset).to.equal(10);
+        menus.forEach(menu => {
+          menu.should.be.an('object');
+          expect(menu).to.have.all.keys('id', 'postOn', 'UserId', 'User', 'Meals', 'createdAt', 'updatedAt');
+          expect(menu.Meals.length).to.equal(1);
+        });
+        done();
+      });
+    });
+
+    it('should return error is postOn date format is invalid', (done) => {
+      chai.request(app.listen())
+      .get('/api/v1/menus?postOn=06-07-2018')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        const { message, success } = res.body;
+        if(err) return done(err);
+
+        expect(res.status).to.equal(400);
+        expect(success).to.equal(false);
+        expect(message).to.equal('06-07-2018 is invalid!, date should be in "YYYY-MM-DD" format!');
+
+        done();
+      });
+    })
+
     it('should not allow customer get all menus', (done) => {
       chai.request(app.listen())
-      .get('/api/v1/menus')
+      .get('/api/v1/menus?postOn=2018-05-16')
       .set('Authorization', `Bearer ${customerToken}`)
       .end((err, res) => {
         if(err) return done(err);

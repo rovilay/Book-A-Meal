@@ -70,7 +70,7 @@ export function validateParams(req, res, next) {
     const year = req.params.YYYY;
     const date = `${year}-${month}-${day}`;
 
-    if (moment(date, 'YYYY-MM-DD', true).isValid() === false) {
+    if (!moment(date, 'YYYY-MM-DD', true).isValid()) {
       const err = new Error("'/DD/MM/YYYY' parameters is invalid!'");
       err.status = 400;
       return next(err);
@@ -79,4 +79,3 @@ export function validateParams(req, res, next) {
 
   return next();
 }
-

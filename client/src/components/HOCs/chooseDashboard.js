@@ -3,12 +3,13 @@ import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
 import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
+import jwt from 'jsonwebtoken';
 
 import isExpired from '../../helpers/isExpired';
 import { getFromLs } from '../../helpers/Ls';
-import getTodayMenu from '../../actions/menu';
-import { addMealToCart } from '../../actions/cart';
-import { setDefaultNav, setNav } from '../../actions/navLinks';
+import { getTodayMenu } from '../../actions/menuActions';
+import { addToCart } from '../../actions/cartActions';
+import { setDefaultNav, setNav } from '../../actions/navLinksActions';
 
 /**
  *
@@ -22,33 +23,39 @@ export default function (CompA, CompB) {
     constructor(props) {
       super(props);
       this.state = {
-        token: ''
+        token: '',
+        user: {},
+        admin: ''
       };
     }
 
     componentWillMount() {
       const { history } = this.props;
-      const { expire } = this.props.user;
       const token = getFromLs('jwt');
+      const user = getFromLs('user');
+      const {
+        exp,
+        admin
+      } = jwt.decode(token);
 
-      if (isExpired(expire)) {
+      if (isExpired(exp)) {
         this.props.setDefaultNav();
         return history.push('/login');
       }
 
-      this.setState({ token });
+      this.setState({ token, user, admin });
     }
 
     render() {
-      const { token } = this.state;
-      const { admin } = this.props.user;
+      const { token, user, admin } = this.state;
+
       return (
         <div>
           {
-            (admin) && <CompA {...this.props} token={token} />
+            (admin) && <CompA {...this.props} token={token} user={user} />
           }
           {
-            (!admin) && <CompB {...this.props} token={token} />
+            (admin !== '' && !admin) && <CompB {...this.props} token={token} user={user} />
           }
         </div>
       );
@@ -59,15 +66,12 @@ export default function (CompA, CompB) {
     history: PropTypes.object.isRequired,
     setDefaultNav: PropTypes.func.isRequired,
     setNav: PropTypes.func.isRequired,
-    user: PropTypes.object.isRequired,
     todayMenu: PropTypes.array.isRequired,
-    addMealToCart: PropTypes.func.isRequired,
-
   };
 
   const mapStateToProps = state => ({
-    user: state.login.user,
-    todayMenu: state.todayMenu.Meals
+    todayMenu: state.menu.todayMenu,
+    cart: state.cart.meals
   });
 
   const mapDispatchToProps = dispatch => bindActionCreators(
@@ -75,7 +79,7 @@ export default function (CompA, CompB) {
       setDefaultNav,
       getTodayMenu,
       setNav,
-      addMealToCart
+      addToCart
     },
     dispatch
   );

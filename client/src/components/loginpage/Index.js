@@ -4,12 +4,10 @@ import { bindActionCreators } from 'redux';
 import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
-import setSuccessfulSignUpMsg from '../../actions/signup';
-import { loginUser } from '../../actions/login';
-import Form from './form';
+import setSuccessfulSignUpMsg from '../../actions/signupActions';
+import { loginUser } from '../../actions/loginActions';
+import LoginForm from './Loginform';
 
 class LogInPage extends Component {
   constructor(props) {
@@ -21,7 +19,6 @@ class LogInPage extends Component {
 
     this.logUserIn = this.logUserIn.bind(this);
     this.onChange = this.onChange.bind(this);
-    this.notify = this.notify.bind(this);
   }
 
   componentDidMount() {
@@ -45,38 +42,19 @@ class LogInPage extends Component {
     this.setState({ [e.target.name]: e.target.value.trim() });
   }
 
-  notify(msg) {
-    toast(msg, {
-      position: toast.POSITION.TOP_CENTER,
-      className: 'toast',
-      progressClassName: 'toast-progress'
-    });
-  }
-
   /**
    * Logs user in on submit
    * @param {Object} e DOM event
    */
-  logUserIn(e) {
-    e.preventDefault();
+  logUserIn() {
     this.props.loginUser({ ...this.state });
-    if (this.props.user.isLogin) {
-      this.props.history.push('/dashboard');
-    }
-    setTimeout(() => {
-      if (this.props.user.isLogin) {
-        this.props.history.push('/dashboard');
-      } else if (!this.props.user.isLogin) {
-        setTimeout(this.notify(this.props.user.loginMessage), 200);
-      }
-    }, 500);
   }
 
   render() {
     return (
       <section id="loginpage" className="loginpage">
         <div className="loginform-container">
-          <Form
+          <LoginForm
             {...this.props}
             logUserIn={this.logUserIn}
             onChange={this.onChange}
@@ -90,7 +68,6 @@ class LogInPage extends Component {
             </Link>
           </p>
         </div>
-        <ToastContainer />
       </section>
     );
   }

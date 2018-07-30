@@ -8,6 +8,7 @@
     },
     "parserOptions": {
         "ecmaVersion": 2017,
+        "sourceType": "module",
         "ecmaFeatures": {
             "jsx": true
         }
@@ -18,6 +19,7 @@
         }],
         "linebreak-style": 0,
         "semi": 2,
+        "max-len": 0,
         "import/no-unresolved": "off",
         "import/extensions": "off",
         "class-methods-use-this": "error",
@@ -44,7 +46,8 @@
         "react/destructuring-assignment": 0,
         "react/button-has-type": 0,
         "react/jsx-one-expression-per-line": 0,
-        "react/no-access-state-in-setstate": 0
+        "react/no-access-state-in-setstate": 0,
+        "spaced-comment": 1
     },
     "plugins": [
         "react"

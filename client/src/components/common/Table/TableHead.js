@@ -5,14 +5,14 @@ const TableHead = props => (
   <thead>
     <tr>
       {
-        props.tableHead.map((title, i) => (<th key={i}>{title}</th>))
+        props.tableHeadData.map((title, i) => (<th key={i}>{title}</th>))
       }
     </tr>
   </thead>
 );
 
 TableHead.propTypes = {
-  tableHead: PropTypes.array.isRequired,
+  tableHeadData: PropTypes.array.isRequired,
 };
 
 export default TableHead;

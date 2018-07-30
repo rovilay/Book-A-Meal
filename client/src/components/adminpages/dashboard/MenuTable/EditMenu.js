@@ -3,8 +3,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import swal from 'sweetalert';
 
-import tableHead from '../../../../helpers/tableHead';
+import tableHeadData from '../../../../helpers/tableHeadData';
 import TableHead from '../../../common/Table/TableHead';
 import ModalTableRow from '../../../common/Table/ModalTableRow';
 
@@ -14,40 +15,48 @@ const EditMenuTable = (props) => {
     content,
     submitUpdate,
     editMenuMeals,
-    serverRes,
     hideModal
   } = props;
-  const sortedMeals = props.meals.sort((a, b) => a.title > b.title);
-  const temp = [];
+  const mealsNotInMenu = (() => {
+    const mealsInMenu = new Set(content.meals.map(meal => meal.id));
+    return props.meals.filter(meal => !mealsInMenu.has(meal.id));
+  })();
   const menuDate = moment(new Date(content.postOn)).format('DD/MM/YYYY');
-  const editMenuMeal = (mealId) => {
-    const checkbox = document.getElementById(`${mealId}-edit`);
+  const toggleMeal = (meal) => {
+    const checkbox = document.getElementById(`${meal.id}-edit`);
 
     if (checkbox.checked === true) {
-      props.addMealInEditMenu(mealId);
+      props.addMealInEditMenu(meal.id);
+      props.addMealInEditMenuModal(meal);
     } else if (checkbox.checked === false) {
-      props.deleteMealInEditMenu(mealId);
+      props.deleteMealInEditMenu(meal.id);
+      props.deleteMealInEditModal(meal.id);
     }
   };
   return (
     <div className="table-container">
       <h2 className="title">
-        {title}
+        {title} {menuDate}
       </h2>
 
       <hr />
       <form
         onSubmit={(e) => {
           e.preventDefault();
-          const meals = [...new Set(editMenuMeals.concat(temp))]; // merge new meals with old meals,returns only unique values
-          submitUpdate(menuDate, meals);
-          setTimeout(() => {
-          }, 3000);
-          if (serverRes.message === 'Menus updated successfully') {
-            hideModal();
-          }
+          swal({
+            text: 'Are you sure you want to update menu?',
+            buttons: true,
+            dangerMode: true,
+          })
+            .then((confirmed) => {
+              if (confirmed) {
+                const meals = [...editMenuMeals];
+                submitUpdate(menuDate, meals);
+                hideModal();
+              }
+            })
+            .catch(err => err);
         }}
-
         className="editmenu-modal-form"
       >
         <p className="big-little">
@@ -59,7 +68,7 @@ const EditMenuTable = (props) => {
           </h3>
           <hr />
           <div className="checkbox-card">
-            { sortedMeals.map(meal => (
+            { mealsNotInMenu.map(meal => (
               <p key={meal.id}>
                 <input
                   type="checkbox"
@@ -67,7 +76,7 @@ const EditMenuTable = (props) => {
                   className="meal-check"
                   id={`${meal.id}-edit`}
                   onClick={() => {
-                    editMenuMeal(meal.id);
+                    toggleMeal(meal);
                   }}
                   value={meal.id}
                 />
@@ -77,7 +86,7 @@ const EditMenuTable = (props) => {
           </div>
         </div>
         <table>
-          <TableHead tableHead={tableHead.editMenuHead} />
+          <TableHead tableHeadData={tableHeadData.editMenuHead} />
           <tbody className="modal-table-body">
             {
               content.meals.map((meal, i) => {
@@ -87,7 +96,6 @@ const EditMenuTable = (props) => {
                   price: unitPrice,
                   description
                 } = meal;
-                temp.push(id);
                 const item = {
                   sn: ++i,
                   Meal,
@@ -114,7 +122,7 @@ const EditMenuTable = (props) => {
             name="updateMenuBtn"
             id="menu-btn"
             className="update-btn btn-1"
-            disabled={temp.length <= 0}
+            disabled={editMenuMeals.length <= 0}
           >
             Update Menu
           </button>
@@ -127,13 +135,14 @@ const EditMenuTable = (props) => {
 EditMenuTable.propTypes = {
   title: PropTypes.string.isRequired,
   content: PropTypes.object.isRequired,
-  serverRes: PropTypes.object.isRequired,
   submitUpdate: PropTypes.func.isRequired,
   addMealInEditMenu: PropTypes.func.isRequired,
   deleteMealInEditMenu: PropTypes.func.isRequired,
   meals: PropTypes.array.isRequired,
   hideModal: PropTypes.func.isRequired,
-  editMenuMeals: PropTypes.array.isRequired
+  editMenuMeals: PropTypes.array.isRequired,
+  addMealInEditMenuModal: PropTypes.func.isRequired,
+  deleteMealInEditModal: PropTypes.func.isRequired
 };
 
 export default EditMenuTable;

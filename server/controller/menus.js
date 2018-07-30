@@ -1,5 +1,8 @@
 import db from '../../models/index';
 import checkMeal from '../helpers/checkMeal';
+import expire from '../helpers/expire';
+import paginate from '../helpers/paginate';
+
 
 /**
  * Handles operations on menu routes
@@ -19,7 +22,16 @@ class MenusController {
    * @memberof MenusController
    */
   static getAllMenus(req, res, next) {
-    db.Menu.findAll({
+    /* eslint prefer-const: 0 */
+    let { limit, offset, postOn } = req.query;
+    limit = Number(limit) || 10;
+    offset = Number(offset) || 0;
+    // postOn = (postOn) && moment(postOn).format('YYYY-MM-DD');
+
+    const where = (postOn) && { postOn };
+    const subQuery = (postOn) && false;
+
+    db.Menu.findAndCountAll({
       include: [{
         model: db.User,
         attributes: ['firstName', 'lastName'],
@@ -30,22 +42,41 @@ class MenusController {
           attributes: ['id'],
         }
       }],
+      where,
+      distinct: Boolean(!postOn),
+      subQuery,
+      offset,
+      limit
     })
-      .then((menus) => {
-        if (menus === null || menus.length === 0) {
+      .then((response) => {
+        const { count, rows: menus } = response;
+        if (menus.length < 1 || count === 0) {
           const err = new Error('No menu found!');
           err.status = 404;
           return next(err);
         }
 
+        // map menus to get url
+        let n = menus;
+        (!postOn)
+        &&
+        (
+          n = menus.map((menu) => {
+            const modMenu = menu.get({ plain: true });
+            modMenu.Meals = `/api/v1/menus?postOn=${modMenu.postOn}`;
+            return modMenu;
+          })
+        );
+
         return res.status(200).send({
           success: true,
           message: 'Menus retrieved successfully',
-          menus
+          pagination: paginate(limit, offset, count),
+          menus: n
         });
       })
       .catch((err) => {
-        err = new Error('Error occurred while getting all menus!');
+        err = err || new Error('Error occurred while getting all menus!');
         err.status = 400;
         return next(err);
       });
@@ -61,13 +92,14 @@ class MenusController {
    * @return {json} res.send
    * @memberof MenusController
    */
-  static getMenu(req, res, next) {
-    const day = req.params.DD;
-    const month = req.params.MM;
-    const year = req.params.YYYY;
+  static getMenuByDate(req, res, next) {
+    const { DD: day, MM: month, YYYY: year } = req.params;
+    let { limit, offset } = req.query;
     const date = `${year}-${month}-${day}`;
+    limit = Number(limit) || 10;
+    offset = Number(offset) || 0;
 
-    db.Menu.findAll({
+    db.Menu.findAndCountAll({
       include: [{
         model: db.User,
         attributes: ['firstName', 'lastName'],
@@ -79,11 +111,16 @@ class MenusController {
         },
       }],
       where: {
-        postOn: date,
+        postOn: date
       },
+      subQuery: false,
+      distinct: false,
+      offset,
+      limit
     })
-      .then((menu) => {
-        if (menu.length === 0) {
+      .then((response) => {
+        const { count, rows: menu } = response;
+        if (count === 0) {
           const err = new Error(`Could not get menu on date: ${date}`);
           err.status = 404;
           return next(err);
@@ -91,15 +128,17 @@ class MenusController {
         res.status(200).send({
           success: true,
           message: 'Menu retrieved successfully',
-          menu,
+          pagination: paginate(limit, offset, count),
+          menu
         });
       })
       .catch((err) => {
-        err = new Error('Error occurred while getting menu!');
+        err = err || new Error('Error occurred while getting menu!');
         err.status = 400;
         return next(err);
       });
   }
+
 
   /**
    * Posts menu for a specified date
@@ -154,10 +193,9 @@ class MenusController {
    */
   static updateMenu(req, res, next) {
     const updatedMenu = req.body;
-    const day = req.params.DD;
-    const month = req.params.MM;
-    const year = req.params.YYYY;
+    const { DD: day, MM: month, YYYY: year } = req.params;
     const date = `${year}-${month}-${day}`;
+
     checkMeal(updatedMenu.meals, next)
       .then((check) => {
         if (check === true) {
@@ -167,6 +205,13 @@ class MenusController {
           })
             .then((menu) => {
               if (menu !== null) {
+                // check if menu can still be updated
+                if (expire(date)) {
+                  const err = new Error('Can\'t modify menu anymore!');
+                  err.status = 405;
+                  throw err;
+                }
+
                 db.MenuMeal.destroy({
                   where: {
                     MenuId: menu.id,

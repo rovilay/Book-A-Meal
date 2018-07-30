@@ -1,6 +1,7 @@
 /* eslint jsx-a11y/no-static-element-interactions: 0 */
 /* eslint jsx-a11y/click-events-have-key-events: 0 */
 import React from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';
@@ -8,25 +9,25 @@ import { NavLink } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 import classname from 'classnames';
 
-import { delFromLs } from '../../helpers/Ls';
-import { emptyCart } from '../../actions/cart';
-import { setDefaultNav } from '../../actions/navLinks';
-import { logOutUser } from '../../actions/login';
+import { emptyCart } from '../../actions/cartActions';
+import { setDefaultNav } from '../../actions/navLinksActions';
+import { logOutUser } from '../../actions/loginActions';
 
 const Header = (props) => {
-  const { navLinks, history, dispatch } = props;
+  const {
+    navLinks,
+    history,
+  } = props;
 
   const onLogOut = () => {
-    delFromLs('jwt');
-    dispatch(emptyCart());
-    dispatch(setDefaultNav());
-    dispatch(logOutUser());
+    props.emptyCart();
+    props.setDefaultNav();
+    props.logOutUser();
     history.push('/');
   };
 
   const toggleHam = () => {
     const nav = document.getElementById('nav-menu');
-    // const mobileMenu = document.getElementById('mobile-menu');
     (nav.className === 'nav-menu')
       ?
       (
@@ -101,12 +102,24 @@ const Header = (props) => {
 Header.propTypes = {
   navLinks: PropTypes.array.isRequired,
   history: PropTypes.object.isRequired,
-  dispatch: PropTypes.func.isRequired,
+  emptyCart: PropTypes.func.isRequired,
+  setDefaultNav: PropTypes.func.isRequired,
+  logOutUser: PropTypes.func.isRequired,
+
 };
 
 const mapStateToProps = state => ({
   navLinks: state.navLinks,
-  cart: state.cart
+  cart: state.cart.meals
 });
 
-export default connect(mapStateToProps)(withRouter(Header));
+const mapDispatchToProps = dispatch => bindActionCreators(
+  {
+    emptyCart,
+    setDefaultNav,
+    logOutUser
+  },
+  dispatch
+);
+
+export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));

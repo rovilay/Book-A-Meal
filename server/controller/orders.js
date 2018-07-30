@@ -1,6 +1,9 @@
+/* eslint no-uneeded ternary: 0 */
 import UUID from 'uuid/v4';
 import db from '../../models/index';
 import checkMeal from '../helpers/checkMeal';
+import paginate from '../helpers/paginate';
+
 /**
  * Handles operations on Orders routes
  *
@@ -19,7 +22,11 @@ class OrdersController {
    * @memberof OrdersController
    */
   static getAllOrders(req, res, next) {
-    db.Order.findAll({
+    let { limit, offset } = req.query;
+    limit = Number(limit) || 10;
+    offset = Number(offset) || 0;
+
+    db.Order.findAndCountAll({
       include: [{
         model: db.User,
         attributes: ['firstName', 'lastName'],
@@ -30,25 +37,37 @@ class OrdersController {
           attributes: ['portion'],
         },
       }],
+      distinct: true,
+      limit,
+      offset
     })
-      .then((orders) => {
+      .then((response) => {
+        const { rows: orders, count } = response;
         if (orders.length < 1) {
           const err = new Error('No order found!');
           err.status = 400;
           return next(err);
         }
 
+        // map orders to get url
+        const n = orders.map((order) => {
+          const modOrder = order.get({ plain: true });
+          modOrder.Meals = `/api/v1/orders/${modOrder.UserId}?id=${modOrder.id}`;
+          return modOrder;
+        });
+
         db.Order.sum('totalPrice')
           .then(grandTotalPrice => res.status(200).send({
             success: true,
             message: 'Orders retrieved successfully!',
             grandTotalPrice,
-            orders
+            pagination: paginate(limit, offset, count),
+            orders: n
           }))
           .catch(err => next(err));
       })
       .catch((err) => {
-        err = new Error('Error occurred while getting orders!');
+        err = err || new Error('Error occurred while getting orders!');
         err.status = 400;
         return next(err);
       });
@@ -63,10 +82,17 @@ class OrdersController {
    * @return {json} res.send
    * @memberof OrdersController
    */
-  static getOrdersById(req, res, next) {
-    const [userId] = [req.params.userId];
+  static getOrdersByUserId(req, res, next) {
+    const { userId: UserId } = req.params;
+    const { id } = req.query;
+    let { limit, offset } = req.query;
+    limit = Number(limit) || 10;
+    offset = Number(offset) || 0;
 
-    db.Order.findAll({
+    const where = (id) ? { id } : { UserId };
+    const subQuery = (id) && false;
+
+    db.Order.findAndCountAll({
       include: [{
         model: db.User,
         attributes: ['firstName', 'lastName'],
@@ -77,28 +103,45 @@ class OrdersController {
           attributes: ['portion'],
         },
       }],
-      where: {
-        UserId: userId
-      }
+      where,
+      distinct: Boolean(!id), // setting distinct false if order id is present so as to read the count properly
+      subQuery,
+      limit,
+      offset
     })
-      .then((orders) => {
+      .then((response) => {
+        const { rows: orders, count } = response;
+
         if (orders.length < 1) {
           const err = new Error('No order found!');
           err.status = 404;
           return next(err);
         }
 
-        db.Order.sum('totalPrice', { where: { UserId: userId } })
+        // map orders to get url
+        let n = orders;
+        (!id)
+        &&
+        (
+          n = orders.map((order) => {
+            const modOrder = order.get({ plain: true });
+            modOrder.Meals = `/api/v1/orders/${modOrder.UserId}?id=${modOrder.id}`;
+            return modOrder;
+          })
+        );
+
+        db.Order.sum('totalPrice', { where })
           .then(grandTotalPrice => res.status(200).send({
             success: true,
             message: 'Orders retrieved successfully!',
             grandTotalPrice,
-            orders
+            pagination: paginate(limit, offset, count),
+            orders: n
           }))
           .catch(err => next(err));
       })
       .catch((err) => {
-        err = new Error('Error occurred while getting orders!');
+        err = err || new Error('Error occurred while getting orders!');
         err.status = 400;
         return next(err);
       });
@@ -183,14 +226,14 @@ class OrdersController {
    */
   static updateOrder(req, res, next) {
     const updatedOrder = req.body;
-    const updatedMeals = updatedOrder.meals.map(meal => meal.id); // Get all meal id
-    const updatedPortion = updatedOrder.meals.map(meal => meal.portion); // Get all meal portion
+    const updatedMealsId = updatedOrder.meals.map(meal => meal.id); // Get all meal id
+    const updatedMealsPortion = updatedOrder.meals.map(meal => meal.portion); // Get all meal portion
 
-    checkMeal(updatedMeals, next)
+    checkMeal(updatedMealsId, next)
       .then((check) => {
         if (check === true) {
           db.Meal.findAll({ // find meal and get their price
-            where: { id: updatedMeals },
+            where: { id: updatedMealsId },
             attributes: ['id', 'price']
           })
             .then((resMeals) => { // calculate order's total price
@@ -227,11 +270,11 @@ class OrdersController {
                 })
                 .then((update) => {
                   if (update) {
-                    updatedMeals.forEach((meal, index) => {
+                    updatedMealsId.forEach((meal, index) => {
                       db.OrderMeal.create({
                         OrderId: req.params.id,
                         MealId: meal,
-                        portion: updatedPortion[index],
+                        portion: updatedMealsPortion[index],
                       })
                         .catch((err) => {
                           err.status = 400;
@@ -241,6 +284,7 @@ class OrdersController {
                     res.status(200).send({
                       success: true,
                       message: 'Update successful',
+                      updatedOrder
                     });
                   }
                 })
@@ -278,16 +322,14 @@ class OrdersController {
         res.status(204).send({
           success: true,
           message: 'delete successful',
-
         });
       })
       .catch((err) => {
-        err = new Error('Error occurred while deleting order');
+        err = err || new Error('Error occurred while deleting order');
         err.status = 400;
         return next(err);
       });
   }
 }
-
 
 export default OrdersController;

@@ -1,9 +1,10 @@
 /* eslint react/no-unused-prop-types:0 */
 import React from 'react';
 import PropTypes from 'prop-types';
+import arraySort from 'array-sort';
 
 const MealCheckBoxCard = (props) => {
-  const sortedMeals = props.meals.sort((a, b) => a.title > b.title);
+  const sortedMeals = arraySort(props.meals, 'title');
   return (
     <div className="checkbox-card">
       { sortedMeals.map(meal => (

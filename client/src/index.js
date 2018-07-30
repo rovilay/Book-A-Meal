@@ -3,9 +3,11 @@
 import React from 'react';
 import ReactDOM from 'react-dom';
 import { Provider } from 'react-redux';
-import { PersistGate } from 'redux-persist/lib/integration/react';
+import { ToastContainer } from 'react-toastify';
+import 'react-toastify/dist/ReactToastify.css';
+// import { PersistGate } from 'redux-persist/lib/integration/react';
 
-import { persistor, store } from './store/configureStore';
+import store from './store/configureStore';
 import AppRouter from './routers/AppRouter';
 // import './assets/scss/style.scss';
 // import './assets/css/meal-option.css';
@@ -23,11 +25,20 @@ import './assets/css/customer.css';
 import './assets/css/table.css';
 import './assets/css/admin.css';
 
+// const jsx = (
+//   <Provider store={store}>
+//     <PersistGate loading={null} persistor={persistor}>
+//       <AppRouter />
+//     </PersistGate>
+//   </Provider>
+// );
+
 const jsx = (
   <Provider store={store}>
-    <PersistGate loading={null} persistor={persistor}>
+    <div>
       <AppRouter />
-    </PersistGate>
+      <ToastContainer />
+    </div>
   </Provider>
 );
 
