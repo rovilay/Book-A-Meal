@@ -183,14 +183,14 @@ class OrdersController {
    */
   static updateOrder(req, res, next) {
     const updatedOrder = req.body;
-    const updatedMeals = updatedOrder.meals.map(meal => meal.id); // Get all meal id
-    const updatedPortion = updatedOrder.meals.map(meal => meal.portion); // Get all meal portion
+    const updatedMealsId = updatedOrder.meals.map(meal => meal.id); // Get all meal id
+    const updatedMealsPortion = updatedOrder.meals.map(meal => meal.portion); // Get all meal portion
 
-    checkMeal(updatedMeals, next)
+    checkMeal(updatedMealsId, next)
       .then((check) => {
         if (check === true) {
           db.Meal.findAll({ // find meal and get their price
-            where: { id: updatedMeals },
+            where: { id: updatedMealsId },
             attributes: ['id', 'price']
           })
             .then((resMeals) => { // calculate order's total price
@@ -227,11 +227,11 @@ class OrdersController {
                 })
                 .then((update) => {
                   if (update) {
-                    updatedMeals.forEach((meal, index) => {
+                    updatedMealsId.forEach((meal, index) => {
                       db.OrderMeal.create({
                         OrderId: req.params.id,
                         MealId: meal,
-                        portion: updatedPortion[index],
+                        portion: updatedMealsPortion[index],
                       })
                         .catch((err) => {
                           err.status = 400;
@@ -241,6 +241,7 @@ class OrdersController {
                     res.status(200).send({
                       success: true,
                       message: 'Update successful',
+                      updatedOrder
                     });
                   }
                 })
@@ -278,7 +279,6 @@ class OrdersController {
         res.status(204).send({
           success: true,
           message: 'delete successful',
-
         });
       })
       .catch((err) => {

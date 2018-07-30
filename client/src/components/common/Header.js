@@ -9,9 +9,9 @@ import { NavLink } from 'react-router-dom';
 import FontAwesome from 'react-fontawesome';
 import classname from 'classnames';
 
-import { emptyCart } from '../../actions/cartAction';
-import { setDefaultNav } from '../../actions/navLinksAction';
-import { logOutUser } from '../../actions/loginAction';
+import { emptyCart } from '../../actions/cartActions';
+import { setDefaultNav } from '../../actions/navLinksActions';
+import { logOutUser } from '../../actions/loginActions';
 
 const Header = (props) => {
   const {
@@ -110,7 +110,7 @@ Header.propTypes = {
 
 const mapStateToProps = state => ({
   navLinks: state.navLinks,
-  cart: state.cart
+  cart: state.cart.meals
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(

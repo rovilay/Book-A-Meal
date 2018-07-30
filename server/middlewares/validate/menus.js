@@ -79,4 +79,3 @@ export function validateParams(req, res, next) {
 
   return next();
 }
-

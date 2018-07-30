@@ -37,7 +37,6 @@ const myErrorHandler = (err, req, res, next, env = process.env.NODE_ENV) => {
     success: false,
     message: err.message,
     error: err.errors
-
   });
 };
 

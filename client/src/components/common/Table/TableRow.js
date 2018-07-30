@@ -10,7 +10,7 @@ const TableRow = (props) => {
   const { item, sn, deleteRow } = props;
 
   const changePortion = (portion) => {
-    props.addMealToCart({ ...item, portion });
+    props.updateCartMealPortion({ ...item, portion });
   };
 
   return (
@@ -27,6 +27,7 @@ const TableRow = (props) => {
               itemId={item.id}
               key={i}
               changePortion={changePortion}
+              {...props}
             />)
         ))
       }
@@ -43,7 +44,7 @@ const TableRow = (props) => {
             })
               .then((confirmed) => {
                 if (confirmed) {
-                  deleteRow(sn);
+                  deleteRow(item);
                 }
               })
               .catch(err => err);
@@ -59,19 +60,16 @@ const TableRow = (props) => {
   );
 };
 
-TableRow.defaultProps = {
-  addMealToCart: undefined
-};
-
 TableRow.propTypes = {
   item: PropTypes.object.isRequired,
   sn: PropTypes.number.isRequired,
   deleteRow: PropTypes.func.isRequired,
-  addMealToCart: PropTypes.func
+  updateCartMealPortion: PropTypes.func.isRequired
 };
 
+
 const mapStateToProps = state => ({
-  cart: state.cart
+  cart: state.cart.meals
 });
 
 export default connect(mapStateToProps)(TableRow);

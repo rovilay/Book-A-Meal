@@ -15,12 +15,12 @@ class FilterComp extends Component {
   }
 
   render() {
-    const { tableContent, filterAction } = this.props;
+    const { setFilter } = this.props;
     return (
       <div className="filter">
         <form onSubmit={(e) => {
           e.preventDefault();
-          filterAction(tableContent, { ...this.state });
+          setFilter({ ...this.state });
         }}
         >
           <label htmlFor="filter" className="label">Filter By:</label>
@@ -82,8 +82,7 @@ class FilterComp extends Component {
 }
 
 FilterComp.propTypes = {
-  filterAction: PropTypes.func.isRequired,
-  tableContent: PropTypes.string.isRequired
+  setFilter: PropTypes.func.isRequired,
 };
 
 export default FilterComp;

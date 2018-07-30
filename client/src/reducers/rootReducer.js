@@ -1,28 +1,27 @@
 /* eslint function-paren-newline: 0 */
-
 import { combineReducers } from 'redux';
 
-import navLinksReducer from './navLinks';
-import signUpReducer from './signup';
-import loginReducer from './login';
-import menuReducer from './menu';
-import cartReducer from './cart';
-import cartTotPriceReducer from './cartTotPr';
-import ordersReducer from './orders';
-import modalReducer from './modal';
-import adminReducer from './admin';
+import navLinksReducer from './navLinksReducer';
+import signUpReducer from './signupReducer';
+import loginReducer from './loginReducer';
+import menuReducer from './menuReducer';
+import cartReducer from './cartReducer';
+import ordersReducer from './ordersReducer';
+import modalReducer from './modalReducer';
+import mealReducer from './mealReducer';
+import filterReducer from './filterReducer';
 
 const rootReducer = combineReducers(
   {
-    navLinks: navLinksReducer,
-    signUp: signUpReducer,
-    login: loginReducer,
-    todayMenu: menuReducer,
     cart: cartReducer,
-    cartTotalPrice: cartTotPriceReducer,
-    orders: ordersReducer,
+    filter: filterReducer,
+    login: loginReducer,
+    meal: mealReducer,
+    menu: menuReducer,
     modal: modalReducer,
-    admin: adminReducer
+    navLinks: navLinksReducer,
+    orders: ordersReducer,
+    signUp: signUpReducer
   }
 );
 

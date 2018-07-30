@@ -20,6 +20,7 @@
   "homepage": "https://github.com/rovilay/Book-A-Meal#readme",
   "dependencies": {
     "@types/redux-persist": "^4.3.1",
+    "array-sort": "^1.0.0",
     "axios": "^0.18.0",
     "babel-core": "^6.26.3",
     "babel-loader": "^7.1.5",
@@ -53,6 +54,7 @@
     "react-toastify": "^4.1.0",
     "redux": "^4.0.0",
     "redux-devtools-extension": "^2.13.5",
+    "redux-logger": "^3.0.6",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
     "resolve-url-loader": "^2.3.0",

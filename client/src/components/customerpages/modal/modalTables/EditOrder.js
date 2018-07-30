@@ -11,10 +11,8 @@ const EditOrderTable = (props) => {
     title,
     editOrder,
     updateOrder,
-    notify,
-    orders
   } = props;
-  const { orderId, orderedMeals: meals, totalPrice } = editOrder;
+  const { orderId, orderedMeals, totalPrice } = editOrder;
 
   return (
     <div className="table-container">
@@ -27,9 +25,8 @@ const EditOrderTable = (props) => {
       <form onSubmit={(e) => {
         e.preventDefault();
         const deliveryAddress = document.getElementById('delivery-address').value.trim();
-        const data = { deliveryAddress, meals };
+        const data = { deliveryAddress, meals: orderedMeals };
         updateOrder(orderId, data);
-        notify(orders.serverRes.message);
       }}
       >
         <p className="address">
@@ -49,7 +46,7 @@ const EditOrderTable = (props) => {
           <TableHead tableHeadData={tableHeadData.editOrderTableHead} />
           <tbody>
             {
-              meals.map((meal, i) => {
+              orderedMeals.map((meal, i) => {
                 const {
                   id,
                   title: Meal,
@@ -86,7 +83,7 @@ const EditOrderTable = (props) => {
             name="orderbtn"
             id="order-btn"
             className="btn-1 update-order-btn"
-            disabled={meals.length <= 0}
+            disabled={orderedMeals.length <= 0}
           >
             Update order
           </button>
@@ -100,8 +97,6 @@ EditOrderTable.propTypes = {
   title: PropTypes.string.isRequired,
   editOrder: PropTypes.object.isRequired,
   updateOrder: PropTypes.func.isRequired,
-  notify: PropTypes.func.isRequired,
-  orders: PropTypes.object.isRequired
 };
 
 export default EditOrderTable;

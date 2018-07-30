@@ -5,15 +5,25 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import swal from 'sweetalert';
+import { toast } from 'react-toastify';
 
 import navData from '../../../helpers/navData';
 import MealForm from './MealForm';
 import MealTable from './MealTable/MealTable';
-import adminActions from '../../../actions/adminAction';
-import filterAction from '../../../actions/filterAction';
+// import adminActions from '../../../actions/adminActions';
+import {
+  setMealForEdit,
+  postMeal,
+  updateMeal,
+  removeMealFromEdit,
+  getMeals,
+  deleteMeal
+} from '../../../actions/mealActions';
+import setFilter from '../../../actions/filterActions';
 import imageUploader from '../../../helpers/imageUploader';
+import notify from '../../../helpers/notify';
+import filterify from '../../../helpers/filterify';
 import FilterComp from '../../common/Filter';
 
 class MealPage extends Component {
@@ -43,7 +53,7 @@ class MealPage extends Component {
   componentDidMount() {
     this.props.setNav(navData.adminNav);
     this.props.getMeals();
-    this.props.filterAction('caterer_meals', { filter: 'all' });
+    this.props.setFilter({ filter: 'all' });
     this.closeEdit();
   }
 
@@ -54,19 +64,20 @@ class MealPage extends Component {
    * And close edit state
    */
   onUpdateMeal() {
-    const { updateMeal } = this.props;
     const data = this.getFormVal();
     const mealId = this.state.mealOnEditId;
-    const confirmed = confirm('Confirm Update!');
-
-    if (confirmed) {
-      updateMeal({ mealId, data });
-      setTimeout(() => {
-        this.notify(this.props.serverRes.message);
-        location.reload();
-      }, 200);
-    }
-    this.closeEdit();
+    swal({
+      text: 'Confirm Meal Update!',
+      buttons: true,
+      dangerMode: false,
+    })
+      .then((confirmed) => {
+        if (confirmed) {
+          this.props.updateMeal({ mealId, data });
+          this.closeEdit();
+        }
+      })
+      .catch(err => notify(err));
   }
 
   /**
@@ -76,21 +87,23 @@ class MealPage extends Component {
    * Clears form on success
    */
   onAddMeal() {
-    const { postMeal } = this.props;
     const data = this.getFormVal();
-    const confirmed = confirm('Confirm Add Meal!');
-    if (confirmed) {
-      postMeal(data);
-      setTimeout(() => {
-        if (this.props.serverRes.success) {
-          this.notify(this.props.serverRes.message);
-          this.clearForm();
-          location.reload();
-        } else {
-          this.notify(this.props.serverRes.message);
+    swal({
+      text: 'Confirm action!',
+      buttons: true,
+      dangerMode: false,
+    })
+      .then((confirmed) => {
+        if (confirmed) {
+          this.props.postMeal(data)
+            .then((success) => {
+              if (success) {
+                this.clearForm();
+              }
+            });
         }
-      }, 200);
-    }
+      })
+      .catch(err => notify(err));
   }
 
   /* eslint prefer-destructuring:0 */
@@ -269,8 +282,8 @@ class MealPage extends Component {
 
     return (
       <div>
-        <section className="form-section">
-          <div className="meal-container">
+        <section className="setMenu">
+          <div className="setMenu-container">
             <MealForm
               {...this.props}
               isEdit={isEdit}
@@ -294,7 +307,7 @@ class MealPage extends Component {
             tableContent="caterer_meals"
           />
           {
-            (this.props.filteredMeals.length === 0)
+            (this.props.meals.length === 0)
               ?
                 <p className="empty not-found">No meal found!</p>
               :
@@ -306,9 +319,6 @@ class MealPage extends Component {
                 />
           }
         </div>
-        <ToastContainer
-          {...this.props}
-        />
       </div>
     );
   }
@@ -323,22 +333,25 @@ MealPage.propTypes = {
   postMeal: PropTypes.func.isRequired,
   updateMeal: PropTypes.func.isRequired,
   deleteMeal: PropTypes.func.isRequired,
-  serverRes: PropTypes.object.isRequired,
-  filterAction: PropTypes.func.isRequired,
-  filteredMeals: PropTypes.array.isRequired
+  setFilter: PropTypes.func.isRequired,
+  meals: PropTypes.array.isRequired
 };
 
 const mapStateToProps = state => ({
-  meals: state.admin.meals,
-  filteredMeals: state.admin.filteredMeals,
-  mealOnEdit: state.admin.mealOnEdit,
-  serverRes: state.admin.serverRes,
+  meals: filterify(state.meal.meals, state.filter),
+  mealOnEdit: state.meal.mealOnEdit,
+  mealError: state.meal.error
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
-    ...adminActions,
-    filterAction
+    setMealForEdit,
+    postMeal,
+    updateMeal,
+    removeMealFromEdit,
+    getMeals,
+    deleteMeal,
+    setFilter
   },
   dispatch
 );

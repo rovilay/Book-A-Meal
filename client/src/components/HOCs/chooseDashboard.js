@@ -7,9 +7,9 @@ import jwt from 'jsonwebtoken';
 
 import isExpired from '../../helpers/isExpired';
 import { getFromLs } from '../../helpers/Ls';
-import getTodayMenu from '../../actions/menuAction';
-import { addMealToCart } from '../../actions/cartAction';
-import { setDefaultNav, setNav } from '../../actions/navLinksAction';
+import { getTodayMenu } from '../../actions/menuActions';
+import { addToCart } from '../../actions/cartActions';
+import { setDefaultNav, setNav } from '../../actions/navLinksActions';
 
 /**
  *
@@ -67,12 +67,11 @@ export default function (CompA, CompB) {
     setDefaultNav: PropTypes.func.isRequired,
     setNav: PropTypes.func.isRequired,
     todayMenu: PropTypes.array.isRequired,
-    addMealToCart: PropTypes.func.isRequired,
-
   };
 
   const mapStateToProps = state => ({
-    todayMenu: state.todayMenu.Meals
+    todayMenu: state.menu.todayMenu,
+    cart: state.cart.meals
   });
 
   const mapDispatchToProps = dispatch => bindActionCreators(
@@ -80,7 +79,7 @@ export default function (CompA, CompB) {
       setDefaultNav,
       getTodayMenu,
       setNav,
-      addMealToCart
+      addToCart
     },
     dispatch
   );

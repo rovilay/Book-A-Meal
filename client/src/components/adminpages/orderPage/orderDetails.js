@@ -1,5 +1,6 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import arraySort from 'array-sort';
 
 import tableHeadData from '../../../helpers/tableHeadData';
 import TableHead from '../../common/Table/TableHead';
@@ -8,13 +9,15 @@ import TableRow from '../../common/Table/ModalTableRow';
 const OrderDetailsTable = (props) => {
   const { title, content } = props;
   const {
-    meals: orderMeals,
+    meals,
     address,
     totalPrice,
     date,
     user,
     time
   } = content;
+
+  const orderedMeals = arraySort(meals, 'title');
   return (
     <div className="table-container">
       <h2 className="title">
@@ -40,7 +43,7 @@ const OrderDetailsTable = (props) => {
         <TableHead tableHeadData={tableHeadData.orderDetailHead} />
         <tbody className="modal-table-body">
           {
-            orderMeals.map((meal, i) => {
+            orderedMeals.map((meal, i) => {
               const {
                 id,
                 title: Meal,

@@ -1,3 +1,5 @@
+import { SET_SIGNUP_SUCCESS } from '../actions/actiontypes';
+
 const signUpReducersDefaultState = {
   signUpSuccess: {
     message: '',
@@ -7,7 +9,7 @@ const signUpReducersDefaultState = {
 
 const signUpReducer = (state = signUpReducersDefaultState, action) => {
   switch (action.type) {
-    case 'SET_SIGNUP_SUCCESS':
+    case SET_SIGNUP_SUCCESS:
       return {
         ...state,
         signUpSuccess: {
