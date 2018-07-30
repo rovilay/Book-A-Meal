@@ -3,7 +3,7 @@ import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import setSuccessfulSignUpMsg from '../../actions/signupAction';
+import setSuccessfulSignUpMsg from '../../actions/signupActions';
 import sigupValidator from '../../helpers/signupValidator';
 import serverReq from '../../helpers/serverReq';
 import SignUpForm from './Signupform';

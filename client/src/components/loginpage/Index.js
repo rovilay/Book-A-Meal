@@ -5,8 +5,8 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import setSuccessfulSignUpMsg from '../../actions/signupAction';
-import { loginUser } from '../../actions/loginAction';
+import setSuccessfulSignUpMsg from '../../actions/signupActions';
+import { loginUser } from '../../actions/loginActions';
 import LoginForm from './Loginform';
 
 class LogInPage extends Component {

@@ -1,18 +1,11 @@
 import jwt from 'jsonwebtoken';
-import { toast } from 'react-toastify';
 
 import { SET_USER_DATA, LOG_OUT_USER } from './actiontypes';
 import serverReq from '../helpers/serverReq';
 import { storeInLs, delFromLs } from '../helpers/Ls';
 import history from '../helpers/history';
+import notify from '../helpers/notify';
 
-const notify = (msg) => {
-  toast(msg, {
-    position: toast.POSITION.TOP_CENTER,
-    className: 'toast',
-    progressClassName: 'toast-progress'
-  });
-};
 
 /**
  * sets logged in user data to store
@@ -68,12 +61,17 @@ export const loginUser = ({ email, password }) => (dispatch) => {
       } = response.data;
       if (success) {
         storeInLs('jwt', token);
-        storeInLs('user', { firstName, lastName });
         const {
           id,
           admin,
           exp
         } = jwt.decode(token);
+        storeInLs('user', {
+          firstName,
+          lastName,
+          admin,
+          exp
+        });
         history.push('/dashboard');
         dispatch(setUserData({
           message,
@@ -91,7 +89,7 @@ export const loginUser = ({ email, password }) => (dispatch) => {
           message,
           success
         }));
-        notify(message);
+        notify(message, 'toast-danger');
       }
     })
     .catch(err => err);

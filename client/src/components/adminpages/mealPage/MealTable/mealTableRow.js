@@ -12,8 +12,6 @@ const MealTableRow = (props) => {
     item,
     editMeal,
     isEdit,
-    serverRes,
-    notify,
     deleteMeal
   } = props;
   const Meal = {
@@ -59,15 +57,6 @@ const MealTableRow = (props) => {
                 .then((confirmed) => {
                   if (confirmed) {
                     deleteMeal(item.mealId);
-                    setTimeout(() => {
-                      if (!serverRes.success && !serverRes.message) {
-                        notify('Meal was DELETED successfully!');
-                        location.reload();
-                      }
-                      if (serverRes.success === false) {
-                        notify(props.serverRes.message);
-                      }
-                    }, 200);
                   }
                 })
                 .catch(err => err);
@@ -93,9 +82,6 @@ MealTableRow.propTypes = {
   editMeal: PropTypes.func.isRequired,
   deleteMeal: PropTypes.func.isRequired,
   isEdit: PropTypes.bool.isRequired,
-  serverRes: PropTypes.object.isRequired,
-  notify: PropTypes.func.isRequired
-
 };
 
 export default MealTableRow;

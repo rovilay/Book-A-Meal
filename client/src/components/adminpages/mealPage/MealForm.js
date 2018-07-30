@@ -1,16 +1,28 @@
 /* eslint jsx-a11y/label-has-for: 0 */
-/* eslint no-alert: 0 */
 /* eslint no-restricted-globals: 0 */
 import React from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
+import swal from 'sweetalert';
+import '../../../assets/css/meal-option.css';
 
-const Mealform = props => (
+const Mealform = ({
+  mealOnEditId,
+  closeEdit,
+  updateMeal,
+  addMeal,
+  deleteMeal,
+  imageToUpload,
+  uploadedImageLink,
+  uploadImage,
+  isEdit,
+  disableBtn
+}) => (
   <div className="card">
     <div id="form-card" className="card-body">
       <div className="form-title" id="form-title">
         {
-          (props.isEdit)
+          (isEdit)
             ?
             'Edit Meal'
             :
@@ -24,10 +36,10 @@ const Mealform = props => (
         className="meal-form"
         onSubmit={(e) => {
           e.preventDefault();
-          if (props.isEdit) {
-            return props.updateMeal();
+          if (isEdit) {
+            return updateMeal();
           }
-          return props.addMeal(e);
+          return addMeal(e);
         }}
       >
 
@@ -78,26 +90,26 @@ const Mealform = props => (
             name="image"
             id="image"
             onChange={() => {
-              props.uploadImage();
+              uploadImage();
             }}
           />
         </p>
         {
-          (props.imageToUpload)
+          (imageToUpload)
           &&
           <div className="progress">
             <div id="progressBar" className="progressBar">0%</div>
           </div>
         }
         {
-          (props.uploadedImageLink)
+          (uploadedImageLink)
           &&
           <p>
-            <img src={props.uploadedImageLink} alt="name" />
+            <img src={uploadedImageLink} alt="name" />
           </p>
         }
         {
-          (!props.isEdit)
+          (!isEdit)
           &&
           (
             <p className="full">
@@ -106,7 +118,7 @@ const Mealform = props => (
                 name="addbtn"
                 id="add-btn"
                 className="add-btn btn-3"
-                disabled={props.disableBtn}
+                disabled={disableBtn}
               >
                 <FontAwesome
                   name="plus"
@@ -117,7 +129,7 @@ const Mealform = props => (
           )
         }
         {
-          (props.isEdit)
+          (isEdit)
           &&
           (
             <p>
@@ -126,7 +138,7 @@ const Mealform = props => (
                 name="updatebtn"
                 id="update-btn"
                 className="update-btn btn-3"
-                disabled={props.disableBtn}
+                disabled={disableBtn}
               >
                 <FontAwesome
                   name="arrow-circle-up"
@@ -141,22 +153,25 @@ const Mealform = props => (
                 className="delete-btn btn-3"
                 onClick={(e) => {
                   e.preventDefault();
-                  const confirmed = confirm('Are you sure you want to delete this meal?');
-                  if (confirmed) {
-                    props.deleteMeal(props.mealOnEditId);
-                    setTimeout(() => {
-                      if (!props.serverRes.success && !props.serverRes.message) {
-                        props.notify('Meal was DELETED successfully');
-                        props.closeEdit();
-                        location.reload();
+                  swal({
+                    text: 'Are you sure you want to delete this meal?',
+                    buttons: true,
+                    dangerMode: true,
+                  })
+                    .then((confirmed) => {
+                      if (confirmed) {
+                        deleteMeal(mealOnEditId)
+                          .then((errorRes) => {
+                            if (!errorRes) {
+                              closeEdit();
+                            }
+                          })
+                          .catch(err => err);
                       }
-                      if (props.serverRes.success === false) {
-                        props.notify(props.serverRes.message);
-                      }
-                    }, 200);
-                  }
+                    })
+                    .catch(err => err);
                 }}
-                disabled={props.disableBtn}
+                disabled={disableBtn}
               >
                 <FontAwesome
                   name="times"
@@ -171,9 +186,8 @@ const Mealform = props => (
                 className="back-btn btn-3"
                 onClick={(e) => {
                   e.preventDefault();
-                  props.closeEdit();
+                  closeEdit();
                 }}
-                // disabled={props.disableBtn}
               >
                 <FontAwesome
                   name="arrow-circle-left"
@@ -194,9 +208,7 @@ Mealform.propTypes = {
   updateMeal: PropTypes.func.isRequired,
   deleteMeal: PropTypes.func.isRequired,
   isEdit: PropTypes.bool.isRequired,
-  serverRes: PropTypes.object.isRequired,
   mealOnEditId: PropTypes.string.isRequired,
-  notify: PropTypes.func.isRequired,
   imageToUpload: PropTypes.string.isRequired,
   uploadedImageLink: PropTypes.string.isRequired,
   uploadImage: PropTypes.func.isRequired,

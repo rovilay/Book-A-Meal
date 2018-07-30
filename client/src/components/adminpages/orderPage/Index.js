@@ -6,16 +6,18 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
-import { toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
 
 import Modal from '../Modal/Index';
 import navData from '../../../helpers/navData';
 import tableHeadData from '../../../helpers/tableHeadData';
+import filterify from '../../../helpers/filterify';
 import TableHead from '../../common/Table/TableHead';
 import OrderTableRow from '../../common/Table/OrderTableRow';
-import filterAction from '../../../actions/filterAction';
-import adminActions from '../../../actions/adminAction';
+import setFilter from '../../../actions/filterActions';
+import { getAllOrders } from '../../../actions/ordersActions';
+import { setModal } from '../../../actions/modalActions';
+import { emptyEditMenu } from '../../../actions/menuActions';
+import summer from '../../../helpers/summer';
 import Filter from '../../common/Filter';
 
 class OrderHistory extends Component {
@@ -24,13 +26,12 @@ class OrderHistory extends Component {
 
     this.hideModal = this.hideModal.bind(this);
     this.showDetails = this.showDetails.bind(this);
-    this.notify = this.notify.bind(this);
   }
 
   componentDidMount() {
     this.props.setNav(navData.adminNav);
     this.props.getAllOrders();
-    this.props.filterAction('order_history', { filter: 'all' });
+    this.props.setFilter({ filter: 'all' });
     this.hideModal();
   }
 
@@ -57,17 +58,10 @@ class OrderHistory extends Component {
     });
   }
 
-  notify(msg) {
-    toast(msg, {
-      position: toast.POSITION.TOP_CENTER,
-      className: 'toast',
-      progressClassName: 'toast-progress'
-    });
-  }
-
   render() {
-    const { orders, filteredOrders } = this.props;
-    const sortedOrders = filteredOrders.sort((a, b) => new Date(b.createdAt) - new Date(a.createdAt));
+    const { orders } = this.props;
+    const grandTotalPrice = summer(orders, 'totalPrice');
+
     return (
       <div className="pull-down">
         <div className="title" id="menu-title">
@@ -80,7 +74,7 @@ class OrderHistory extends Component {
             tableContent="order_history"
           />
           {
-            (filteredOrders.length === 0)
+            (orders.length === 0)
               ?
                 <p className="empty not-found">No orders found!</p>
               :
@@ -90,7 +84,7 @@ class OrderHistory extends Component {
                     <TableHead tableHeadData={tableHeadData.orderHead} />
                     <tbody>
                       {
-                        sortedOrders.map((order, i) => {
+                        orders.map((order, i) => {
                           const {
                             id: orderId,
                             createdAt: date,
@@ -123,10 +117,10 @@ class OrderHistory extends Component {
                             <OrderTableRow
                               key={i}
                               item={item}
+                              orderCreatedAt={order.createdAt}
                               sn={++i}
                               orderDetails={orderDetails}
                               showDetails={this.showDetails}
-                              notify={this.notify}
                               {...this.props}
                             />
                           );
@@ -136,11 +130,11 @@ class OrderHistory extends Component {
                   </table>
 
                   {
-                    (orders.grandTotalPrice > 0)
+                    (grandTotalPrice > 0)
                     &&
                     (
                       <p>
-                        Grand Total (&#8358;): {orders.grandTotalPrice}
+                        Grand Total (&#8358;): {grandTotalPrice}
                       </p>
                     )
                   }
@@ -151,7 +145,6 @@ class OrderHistory extends Component {
         <Modal
           hideModal={this.hideModal}
           deleteRow={this.deleteRow}
-          notify={this.notify}
           {...this.props}
         />
       </div>
@@ -161,25 +154,25 @@ class OrderHistory extends Component {
 }
 
 OrderHistory.propTypes = {
-  orders: PropTypes.object.isRequired,
   setModal: PropTypes.func.isRequired,
   modal: PropTypes.object.isRequired,
   getAllOrders: PropTypes.func.isRequired,
-  filterAction: PropTypes.func.isRequired,
-  filteredOrders: PropTypes.array.isRequired,
+  setFilter: PropTypes.func.isRequired,
+  orders: PropTypes.array.isRequired,
   setNav: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => ({
-  orders: state.admin.orders,
-  filteredOrders: state.admin.filteredOrders,
-  modal: state.admin.modal,
+  orders: filterify(state.orders.history, state.filter),
+  modal: state.modal,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
-    ...adminActions,
-    filterAction
+    setModal,
+    emptyEditMenu,
+    getAllOrders,
+    setFilter
   },
   dispatch
 );

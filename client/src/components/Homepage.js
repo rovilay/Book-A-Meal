@@ -4,36 +4,35 @@ import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
 
-import { setDefaultNav } from '../actions/navLinksAction';
-import getTodayMenu from '../actions/menuAction';
+import { setDefaultNav } from '../actions/navLinksActions';
+import { getTodayMenu } from '../actions/menuActions';
+import { addToCart } from '../actions/cartActions';
 import Menu from './common/Menu';
 
 class HomePage extends Component {
   componentDidMount() {
     this.props.setDefaultNav();
     this.props.getTodayMenu();
-
-    this.addMealToCart = this.addMealToCart.bind(this);
-  }
-
-  addMealToCart() {
-    this.props.history.push('/login');
   }
 
   render() {
-    const { menu } = this.props;
+    const { todayMenu } = this.props;
     return (
       <main>
         <section className="first-section">
           <div className="showcase">
             <p className="merienda"> Meals that perfectly <br />fits your lifestyle</p>
-            <a
-              role="button"
-              href="#menu"
-              className="view-menu-btn"
-            >
-              View menu
-            </a>
+            {
+              (todayMenu.length !== 0)
+              &&
+              <a
+                role="button"
+                href="#menu"
+                className="view-menu-btn"
+              >
+                View menu
+              </a>
+            }
           </div>
         </section>
         <section className="intro">
@@ -64,10 +63,10 @@ class HomePage extends Component {
           </div>
         </section>
         {
-        (menu.length > 0)
+        (todayMenu.length > 0)
         &&
         <Menu
-          menu={menu}
+          menu={todayMenu}
           addMealToCart={this.addMealToCart}
           notify={this.notify}
           {...this.props}
@@ -79,7 +78,7 @@ class HomePage extends Component {
 }
 
 HomePage.propTypes = {
-  menu: PropTypes.array.isRequired,
+  todayMenu: PropTypes.array.isRequired,
   getTodayMenu: PropTypes.func.isRequired,
   setDefaultNav: PropTypes.func.isRequired,
   history: PropTypes.object.isRequired
@@ -87,13 +86,14 @@ HomePage.propTypes = {
 
 const mapStateToProps = state => ({
   user: state.login.user,
-  menu: state.todayMenu.Meals
+  todayMenu: state.menu.todayMenu,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
     setDefaultNav,
     getTodayMenu,
+    addToCart
   },
   dispatch
 );

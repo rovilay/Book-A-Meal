@@ -2,6 +2,7 @@
 
 import { createStore, applyMiddleware } from 'redux';
 import thunk from 'redux-thunk';
+// import { createLogger } from 'redux-logger';
 import { composeWithDevTools } from 'redux-devtools-extension';
 import { createBrowserHistory } from 'history';
 import { connectRouter, routerMiddleware } from 'connected-react-router';
@@ -20,14 +21,18 @@ const history = createBrowserHistory();
 // };
 
 // const persistedReducer = persistReducer(persistConfig, rootReducer);
+const middlewares = [routerMiddleware(history), thunk];
+// const reduxLogger = createLogger();
+
+// if (process.env.NODE_ENV === 'development') {
+//   middlewares.push(reduxLogger);
+// }
+
 
 const store = createStore(
   connectRouter(history)(rootReducer),
   composeWithDevTools(
-    applyMiddleware(
-      routerMiddleware(history),
-      thunk
-    )
+    applyMiddleware(...middlewares)
   )
 );
 
