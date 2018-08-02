@@ -34,7 +34,6 @@ describe('Users API routes', () => {
       .post('/api/v1/auth/signup')
       .send(newUser)
       .end((err, res) => {
-        console.log(res.body);
         expect(res.status).to.equal(201);
         res.body.should.have.property('success');
         res.body.should.have.property('message');

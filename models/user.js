@@ -1,7 +1,6 @@
 import bcrypt from 'bcryptjs';
 
-const hashPassword = user => bcrypt.hash(user.password, 10).then(hash =>
-  user.setDataValue('password', hash));
+const hashPassword = user => bcrypt.hash(user.password, 10).then(hash => user.setDataValue('password', hash));
 
 module.exports = (sequelize, DataTypes) => {
   const User = sequelize.define('User', {

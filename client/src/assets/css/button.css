@@ -1,0 +1,114 @@
+* {
+  box-sizing: border-box;
+  font-family: Roboto;
+}
+
+.btn {
+  width: 150px;
+  height: 42px;
+  background: #6EBD58;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+}
+
+.btn-2 {
+  border: none;
+  padding: 12px 16px;
+  cursor: pointer;
+  background: #6EBD58;
+  min-width: 150px;
+  text-align: center;
+  border-radius: 3px !important;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1px;
+  box-shadow: 0 0 0 transparent;
+  position: relative;
+  margin-bottom: 5px;
+  -webkit-transition: all .1s ease 0s;
+  -moz-transition: all .1s ease 0s;
+  -ms-transition: all .1s ease 0s;
+  -o-transition: all .1s ease 0s;
+  transition: all .1s ease 0s;
+  text-transform: uppercase
+}
+
+.btn-2:disabled {
+  background: #cccccc !important;
+ color: #ffffff !important
+}
+
+.filter .filter-btn {
+  padding: 9px !important;
+  color: #ffffff;
+  border: none;
+  cursor: pointer;
+  background: #6EBD58;
+  text-align: center;
+  border-radius: 3px !important;
+  font-weight: 600;
+  font-size: 14px;
+  letter-spacing: 1px;
+  box-shadow: 0 0 0 transparent;
+  position: relative;
+  -webkit-transition: all .1s ease 0s;
+  -moz-transition: all .1s ease 0s;
+  -ms-transition: all .1s ease 0s;
+  -o-transition: all .1s ease 0s;
+  transition: all .1s ease 0s;
+  text-transform: uppercase
+}
+
+
+
+.btn-text-2 {
+  font-family: Roboto;
+  font-style: normal;
+  /* background: rgb(245, 87, 60); */
+  color: #FFFFFF;
+  border: none;
+  border-radius:3px;
+  text-decoration: none;
+  font-size: 20px
+}
+
+/* Rectangle 3 */
+
+.btn-bg {
+  position: absolute;
+  left: 0%;
+  right: 0%;
+  top: 0%;
+  bottom: 0%;
+  background: #6EBD58;
+  box-shadow: 2px 2px 6px rgba(0, 0, 0, 0.25);
+  border-radius: 3px;
+}
+
+.order-btn {
+  width: 80%;
+}
+
+.order-btn:hover {
+  background: rgb(56, 134, 35)
+}
+
+.cartpage .btn-1:hover {
+  background: rgb(56, 134, 35);
+  color: #ffffff;
+  border: none;
+}
+
+
+.btn-1:disabled:hover {
+  color: white
+}
+
+.box-shadow {
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2)
+}
+
+
+@media screen and (min-width: 700px) {
+
+}

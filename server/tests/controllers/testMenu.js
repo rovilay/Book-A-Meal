@@ -30,7 +30,7 @@ describe('MenusController', () => {
     });
   });
 
-  describe('get menu', () => {
+  describe('getMenuByDate', () => {
     const req = mockReq({
       params: {
         DD: 32,
@@ -40,7 +40,7 @@ describe('MenusController', () => {
     });
 
     it('should return next on error', () => {
-      menusController.getMenu(req, res, next);
+      menusController.getMenuByDate(req, res, next);
       expect(next).to.have.been.called;
     });
   });

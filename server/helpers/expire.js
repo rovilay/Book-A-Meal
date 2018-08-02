@@ -9,7 +9,7 @@ import moment from 'moment';
 const isExpired = (dateToCompare) => {
   if (dateToCompare) {
     const now = moment().format('LL');
-    return now > moment(dateToCompare).format('LL');
+    return moment(now).isAfter(moment(dateToCompare).format('LL'));
   }
 };
 
