@@ -1,4 +1,5 @@
 import db from '../../models/index';
+import paginate from '../helpers/paginate';
 
 /**
  * Handles operations on Meal routes
@@ -18,17 +19,21 @@ class MealsController {
    * @memberof MealsController
    */
   static getAllMeals(req, res, next) {
-    db.Meal.findAll()
-      .then((meals) => {
-        if (meals === null || meals.length === 0) {
-          const err = new Error('No Meal found!');
-          err.status = 404;
-          throw err;
-        }
+    let { limit, offset } = req.query;
+    limit = Number(req.query.limit) || 10;
+    offset = Number(req.query.offset) || 0;
+
+    db.Meal.findAndCountAll({
+      limit,
+      offset
+    })
+      .then((response) => {
+        const { count, rows: meals } = response;
         res.status(200).send({
           success: true,
           message: 'Meals retrieved successfully',
-          meals,
+          pagination: paginate(limit, offset, count),
+          meals
         });
       })
       .catch(err => next(err));
