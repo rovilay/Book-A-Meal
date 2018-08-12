@@ -2,14 +2,14 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import tableHeadData from '../../../../helpers/tableHeadData';
+import { mealTableHead } from '../../../../helpers/tableHeadData';
 import TableHead from '../../../common/Table/TableHead';
 import MealTableRow from './MealTableRow';
 
 const MealTable = props => (
   <div>
     <table>
-      <TableHead tableHeadData={tableHeadData.mealTableHead} />
+      <TableHead tableHeadData={mealTableHead} />
       <tbody>
         {
           props.meals.map((meal, i) => {

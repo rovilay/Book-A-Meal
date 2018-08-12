@@ -20,13 +20,13 @@
   padding: 0.6rem;
 }
 
-.order {
+/* .order {
   margin-top: 0.7em
-}
+} */
 
-#order-total-price {
+/* #order-total-price {
   font-size: 1.0em;
-}
+} */
 
 /* buttons */
 
@@ -141,7 +141,7 @@ table tr:hover {
   background: rgba(97, 183, 80, 0.411)
 }
 
-.btn-2 {
+/* .btn-2 {
 	float: left;
 	font-size: 0.5em;
   padding: 1em 2em;
@@ -152,7 +152,7 @@ table tr:hover {
   display: block;
 	margin-top: 7px;
 	margin-left: 4px
-}
+} */
 
 .toast {
 	color: #ffffff;
@@ -178,12 +178,12 @@ input[type=checkbox] {
     /* max-width: 300px; */
   }
 
-  .btn-2 {
+  /* .btn-2 {
 		margin-top: 0.7em;
 		margin-bottom: 0em;
 		display: block;
 		float: none
-	}
+	} */
 }
 
 @media screen and (max-width: 390px) {
@@ -237,7 +237,7 @@ input[type=checkbox] {
 	opacity: 1;
 }
 
-.filter form {
+/* .filter form {
 	margin: 10px;
   display: inline-block
 }
@@ -309,6 +309,6 @@ input[type=checkbox] {
   .filter form button:focus {
     background-color: rgb(67, 143, 52)
   }
-}
+} */
 
 

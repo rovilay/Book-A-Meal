@@ -1,16 +1,29 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import ReactPaginate from 'react-paginate';
 
-import tableHeadData from '../../../../helpers/tableHeadData';
-import TableHead from '../../../common/Table/TableHead';
-import MenuTableRow from './MenuTableRow';
+import MenuAccordion from './MenuAccordion';
 
-const MenuTable = props => (
-  <table>
-    <TableHead tableHeadData={tableHeadData.menuTableHead} />
-    <tbody>
+const MenuTable = (props) => {
+  const { menus, pagination } = props;
+  const {
+    count,
+    numOfPages,
+    offset,
+    limit
+  } = pagination;
+
+  const handlePaginationClick = (data) => {
+    const currentPage = data.selected;
+    const newOffset = currentPage * limit;
+
+    props.getAllMenus({ limit, offset: newOffset });
+  };
+
+  return (
+    <div className="accordion-container">
       {
-        props.menus.map((menu, i) => {
+        menus.map((menu, i) => {
           const {
             id: menuId,
             postOn,
@@ -18,26 +31,48 @@ const MenuTable = props => (
             Meals
           } = menu;
           const item = {
-            sn: ++i,
+            sn: ++i + offset,
             menuId,
             postOn,
             createdBy: `${User.firstName} ${User.lastName}`,
             Meals
           };
-          return (<MenuTableRow
-            key={menuId}
-            item={item}
-            {...props}
-          />);
+          return (
+            <MenuAccordion
+              key={menuId}
+              item={item}
+              {...props}
+            />
+          );
         })
       }
-    </tbody>
-  </table>
-);
-
+      {
+      (count > 10)
+      &&
+      <div className="pagination-container">
+        <ReactPaginate
+          previousLabel="<<"
+          nextLabel=">>"
+          breakLabel={<a href="">...</a>}
+          breakClassName="break-me"
+          pageCount={numOfPages}
+          marginPagesDisplayed={2}
+          pageRangeDisplayed={5}
+          onPageChange={handlePaginationClick}
+          containerClassName="pagination"
+          subContainerClassName="pages pagination"
+          activeClassName="active"
+        />
+      </div>
+    }
+    </div>
+  );
+};
 
 MenuTable.propTypes = {
   menus: PropTypes.array.isRequired,
+  getAllMenus: PropTypes.func.isRequired,
+  pagination: PropTypes.object.isRequired
 };
 
 export default MenuTable;

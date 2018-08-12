@@ -12,6 +12,7 @@ import {
   UPDATE_ORDER_SUCCESS,
   SET_EDIT_ORDER,
   SET_ORDERS,
+  SET_ORDER_MEALS,
   UPDATE_ORDERED_MEAL_PORTION
 } from './actiontypes';
 
@@ -48,6 +49,27 @@ export const deleteOrderSuccess = orderId => (dispatch, getState) => {
     modifiedOrder: history.filter(order => order.id !== orderId)
   });
 };
+
+/**
+ *
+ * @param {array} orders orders
+ * @param {number} grandTotalPrice  total cost of orders
+ * @param {object} pagination  pagination data
+ */
+export const setOrders = ({
+  orders: history,
+  grandTotalPrice,
+  pagination
+}) => dispatch => (
+  dispatch({
+    type: SET_ORDERS,
+    orders: {
+      history,
+      grandTotalPrice,
+      pagination
+    }
+  })
+);
 
 /**
  *
@@ -124,16 +146,38 @@ export const deleteMealInEditOrder = mealId => (dispatch, getState) => {
  * Sends async server requests to get orders using the axios api
  *
  * @param  {string} userId - Id of user to get order
- * @return {Function} - dispatches an set customer order action to the redux store
- */
-export const getOrders = userId => (dispatch) => {
-  serverReq('get', `/api/v1/orders/${userId}`)
+ * @param  {number} limit - pagination limit
+ * @param  {number} offset - pagination offset
+//  * @return {Function} - dispatches an set customer order action to the redux store
+//  */
+// export const getOrders = (userId, { offset = 0, limit = 10 }) => (dispatch) => {
+//   serverReq('get', `/api/v1/orders/${userId}?limit=${limit}&offset=${offset}`)
+//     .then((res) => {
+//       if (res.data) {
+//         const {
+//           success
+//         } = res.data;
+
+//         // console.log(res.data);
+
+//         if (success) {
+//           dispatch(setOrders(res.data));
+//         }
+//       }
+//     })
+//     .catch(err => err);
+// };
+
+
+export const getOrders = (userId, { limit = 10, offset = 0 }) => dispatch => (
+  serverReq('get', `/api/v1/orders/${userId}?limit=${limit}&offset=${offset}`)
     .then((res) => {
       if (res.data) {
         const {
           success,
           orders: history,
-          grandTotalPrice
+          grandTotalPrice,
+          pagination
         } = res.data;
 
         if (success) {
@@ -141,27 +185,64 @@ export const getOrders = userId => (dispatch) => {
             type: SET_ORDERS,
             orders: {
               history,
-              grandTotalPrice
+              grandTotalPrice,
+              pagination
             }
           });
         }
+        return res.data;
       }
     })
-    .catch(err => err);
-};
+    .catch(err => err)
+);
+
+/**
+ * Sends async server requests to get order meals using the axios api
+ *
+ * @param  {string} userId - Id of user to get order
+ * @param  {number} limit - pagination limit
+ * @param  {number} offset - pagination offset
+ * @return {Function} - dispatches an set customer order action to the redux store
+ */
+export const getOrderMeals = (mealsUrl, { limit = 5, offset = 0 }) => dispatch => (
+  serverReq('get', `${mealsUrl}&limit=${limit}&offset=${offset}`)
+    .then((res) => {
+      if (res.data) {
+        const {
+          success,
+          orders,
+          pagination
+        } = res.data;
+
+        if (success) {
+          dispatch({
+            type: SET_ORDER_MEALS,
+            order: {
+              orderedMeals: orders[0].Meals,
+              orderedMealsPagination: pagination
+            }
+          });
+        }
+
+        return res.data;
+      }
+    })
+    .catch(err => err)
+);
 
 /**
  * Sends async server requests to get all orders using the axios api
  *
  * @return {Function} - function that dispatches setOrders and serverRes action to the redux store
  */
-export const getAllOrders = () => (dispatch) => {
-  serverReq('get', '/api/v1/orders')
+export const getAllOrders = ({ limit = 10, offset = 0 }) => (dispatch) => {
+  serverReq('get', `/api/v1/orders?limit=${limit}&offset=${offset}`)
     .then((response) => {
       if (response.data) {
         const {
           success,
           grandTotalPrice,
+          pagination,
           orders: history
         } = response.data;
 
@@ -170,7 +251,8 @@ export const getAllOrders = () => (dispatch) => {
             type: SET_ORDERS,
             orders: {
               history: arraySort(history, 'createdAt', { reverse: true }),
-              grandTotalPrice
+              grandTotalPrice,
+              pagination
             }
           });
         }
@@ -190,10 +272,9 @@ export const getAllOrders = () => (dispatch) => {
 export const updateOrder = (id, data) => (dispatch) => {
   serverReq('put', `/api/v1/orders/${id}`, data)
     .then((res) => {
-      const { success, message, updatedOrder } = res.data;
+      const { success, message } = res.data;
       if (success) {
         notify(message, 'toast-success');
-        console.log(updatedOrder);
         const { id: userId } = jwt.decode(getFromLs('jwt'));
         dispatch(getOrders(userId));
         dispatch(setModal({}));

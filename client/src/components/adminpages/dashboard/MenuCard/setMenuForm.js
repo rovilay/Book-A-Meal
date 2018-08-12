@@ -13,27 +13,29 @@ const SetMenuForm = props => (
       props.submitNewMenu();
     }}
   >
-    <p className="date">
+    <div className="date">
       <label htmlFor="date">Post on:</label>
-      <input
-        type="date"
-        placeholder="DD / MM / YYYY"
-        name="menu-date"
-        min={moment().format('YYYY-MM-DD')}
-        max={moment().add('2', 'd').format('YYYY-MM-DD')}
-        id="postOn"
-        required
-      />
-    </p>
+      <p className="input-div">
+        <input
+          type="date"
+          placeholder="DD / MM / YYYY"
+          name="menu-date"
+          min={moment().format('YYYY-MM-DD')}
+          max={moment().add('2', 'd').format('YYYY-MM-DD')}
+          id="postOn"
+          required
+        />
+      </p>
+    </div>
     <hr />
     <MealCheckBoxCard {...props} />
     <hr />
-    <p>
+    <p className="submit-btn">
       <button
         type="submit"
         name="addbtn"
         id="addbtn"
-        className="addBtn"
+        className="btn-2"
         disabled={props.newMenuMeals.length <= 0}
       >
         Add Menu

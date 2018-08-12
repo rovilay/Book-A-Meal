@@ -44,6 +44,7 @@ class MenusController {
       }],
       where,
       distinct: Boolean(!postOn),
+      order: [['postOn', 'DESC']],
       subQuery,
       offset,
       limit
@@ -96,7 +97,7 @@ class MenusController {
     const { DD: day, MM: month, YYYY: year } = req.params;
     let { limit, offset } = req.query;
     const date = `${year}-${month}-${day}`;
-    limit = Number(limit) || 10;
+    limit = Number(limit) || 5;
     offset = Number(offset) || 0;
 
     db.Menu.findAndCountAll({
@@ -198,7 +199,7 @@ class MenusController {
 
     checkMeal(updatedMenu.meals, next)
       .then((check) => {
-        if (check === true) {
+        if (check) {
           db.Menu.findOne({
             where: { postOn: date },
             attributes: ['id']
@@ -237,6 +238,50 @@ class MenusController {
               }
             })
             .catch(err => next(err));
+        }
+      });
+  }
+
+
+  static deleteMealInMenu(req, res, next) {
+    const { postOn } = req.query;
+    const { meals } = req.body;
+    checkMeal(meals, next)
+      .then((check) => {
+        if (check === true) {
+          db.Menu.findOne({
+            where: { postOn },
+            attributes: ['id']
+          })
+            .then((menu) => {
+              if (menu !== null) {
+                // check if menu can still be updated
+                if (expire(postOn)) {
+                  const err = new Error('Can\'t modify menu anymore!');
+                  err.status = 405;
+                  throw err;
+                }
+
+                meals.forEach((meal) => {
+                  db.MenuMeal.destroy({
+                    where: {
+                      MealId: meal,
+                    }
+                  })
+                    .catch(err => next(err));
+                });
+
+                res.status(200).send({
+                  success: true,
+                  message: 'Meal removed from menu succesfully!',
+                });
+              }
+            })
+            .catch((err) => {
+              err = new Error('Error occurred while deleting meal!');
+              err.status = 400;
+              return next(err);
+            });
         }
       });
   }

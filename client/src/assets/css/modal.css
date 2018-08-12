@@ -2,6 +2,8 @@
   outline: none;
   display: flex;
   justify-content: center;
+  max-height: 70vh;
+  overflow: auto;
 }
 
 .modal .order-details {
@@ -22,6 +24,7 @@
   display: flex;
   font-size: 25px;
   padding: 10px;
+  text-transform: uppercase;
   color: #c77f4d !important;
 }
 
@@ -36,6 +39,9 @@
   flex-direction: column
 }
 
+.modal .edit-order .address {
+  flex-direction: column;
+}
 .modal .edit-order .address label {
   /* border: 1px solid; */
   flex-basis: 15%;
@@ -95,12 +101,53 @@
   transition: all 0.5s ease;
 }
 
+.modal .row .row-item {
+  display: inline-flex;
+  justify-content: center;
+}
+
+.modal .row .row-item.meal-title {
+  display: inline-block !important;
+  flex-basis: 40%;
+  margin: auto;
+  text-align: center;
+  padding-top: 16px;
+
+}
+
 .modal .updateOrder-btn {
   color: #ffffff;
   margin: auto 20px;
 }
 
+.modal-pagination {
+  display: inline-flex;
+  width: 100%;
+}
 
+.modal .checkbox {
+  font-size: 1.3rem;
+  margin: 10px 5px;
+  cursor: pointer;
+  transition: all 0.5s ease;
+}
+
+.modal .checkbox:hover {
+  border: 1px solid #ffffff;
+  padding: 10px;
+  border-radius: 3px;
+  -webkit-box-shadow: 0px 5px 9px 1px rgba(189,185,189,0.51);
+  -moz-box-shadow: 0px 5px 9px 1px rgba(189,185,189,0.51);
+  box-shadow: 0px 2px 9px 1px rgba(185, 189, 186, 0.51);
+}
+
+.menu-updatebtn {
+  display: flex;
+  justify-content: center;
+  margin: auto;
+  padding: 20px 0;
+  width: 100%;
+}
 
 @media screen and (min-width: 700px) {
 
@@ -219,13 +266,14 @@
   }
 
   .modal .edit-order .address {
-    display: flex;
+    display: inline-flex;
     /* border: 1px solid; */
+    flex-direction: row;
     justify-content: flex-start;
     align-items: center;
     width: 90%;
     padding: 0 10px;
-    margin: auto;
+    margin: 20px auto;
   }
 
   .modal .edit-order .address label {
@@ -240,7 +288,7 @@
     /* border: 1px solid; */
     justify-content: space-between;
     align-items: center;
-    width: 100%
+    width: 100%;
   }
 
   .modal .edit-order .address .input-div {
@@ -263,7 +311,7 @@
     border: none;
     display: inline-flex;
     justify-content: flex-start;
-    padding: 0 5px;
+    padding: 0 14px;
     border-radius: 3px;
     text-align: start;
     outline: none

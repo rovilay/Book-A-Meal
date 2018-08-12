@@ -38,11 +38,11 @@ class Cart extends Component {
 
   componentDidMount() {
     const { cart, history } = this.props;
-    if (cart && cart.length < 1) {
+    const cartInLs = getFromLs('bookAMealCart');
+    const { meals: cartMeals } = cartInLs;
+    if ((cart && cart.length < 1) || (cartInLs && cartMeals.length < 1)) {
       return history.push('/dashboard');
     }
-
-    // this.setTotPrice();
   }
 
   componentDidUpdate() {

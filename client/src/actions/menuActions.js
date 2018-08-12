@@ -5,13 +5,15 @@ import notify from '../helpers/notify';
 import {
   SET_TODAY_MENU,
   SET_ALL_MENUS,
+  SET_MENU_MEALS,
   ADD_MEAL_TO_NEW_MENU,
   REMOVE_MEAL_FROM_NEW_MENU,
   DELETE_MEAL_IN_EDIT_MENU,
+  DELETE_MEAL_IN_MENU,
   EMPTY_NEW_MENU,
   ADD_MEAL_IN_EDIT_MENU,
   EMPTY_EDIT_MENU,
-  SET_MENU_FOR_EDIT
+  SET_MENU_FOR_EDIT,
 } from './actiontypes';
 import serverReq from '../helpers/serverReq';
 
@@ -81,7 +83,7 @@ export const addMealInEditMenu = mealId => (dispatch, getState) => {
 /**
  * delete meal in edit menu meal content on edit state
  *
- * @param {String} mealId Id of meal to add from modal in edit state
+ * @param {String} mealId Id of meal to delete from menu in edit state
  * @returns {Object} returns action type 'DELETE_MEAL_EDIT_MENU' and meal Id
  */
 export const deleteMealInEditMenu = mealId => (dispatch, getState) => {
@@ -89,6 +91,26 @@ export const deleteMealInEditMenu = mealId => (dispatch, getState) => {
   return dispatch({
     type: DELETE_MEAL_IN_EDIT_MENU,
     editMenu: [...editMenu.filter(mealid => mealid !== mealId)]
+  });
+};
+
+/**
+ * delete meal in menu
+ *
+ * @param {String} mealId Id of meal to delete from menu
+ * @returns {Object} returns action type 'DELETE_MEAL_IN_MENU' and meal Id
+ */
+export const deleteMealInMenu = mealId => (dispatch, getState) => {
+  const { meals, pagination } = getState().menu.menuMeals;
+  return dispatch({
+    type: DELETE_MEAL_IN_MENU,
+    menuMeals: {
+      meals: [...meals.filter(meal => meal.id !== mealId)],
+      pagination: {
+        ...pagination,
+        count: pagination.count - 1
+      }
+    }
   });
 };
 
@@ -131,21 +153,48 @@ export const getTodayMenu = () => (dispatch) => {
  *
  * @return {Function} - function that dispatches meals and serverRes action to the redux store
  */
-export const getAllMenus = () => (dispatch) => {
-  serverReq('get', '/api/v1/menus')
+export const getAllMenus = ({ limit = 10, offset = 0 }) => (dispatch) => {
+  serverReq('get', `/api/v1/menus?limit=${limit}&offset=${offset}`)
     .then((response) => {
       if (response.data) {
-        const { success, menus } = response.data;
+        const { success, menus, pagination } = response.data;
         if (success && menus) {
           dispatch({
             type: SET_ALL_MENUS,
-            menus: arraySort(menus, 'postOn', { reverse: true })
+            menus: arraySort(menus, 'postOn', { reverse: true }),
+            pagination
           });
         }
       }
     })
     .catch(err => err);
 };
+
+/**
+ *  * Sends async server requests to get a menu's meals using the axios api
+ *
+ * @param {string} mealUrl Url of meals for a menu
+ * @param {number} limit pagination limit
+ * @param {number} offset pagination offset
+ */
+export const getMenuMeals = (mealUrl, { limit = 5, offset = 0 }) => dispatch => (
+  serverReq('get', `${mealUrl}&limit=${limit}&offset=${offset}`)
+    .then((response) => {
+      if (response.data) {
+        const { success, menus, pagination } = response.data;
+        if (success && menus) {
+          dispatch({
+            type: SET_MENU_MEALS,
+            menuMeals: {
+              meals: arraySort(menus[0].Meals, 'title'),
+              pagination
+            }
+          });
+        }
+      }
+    })
+    .catch(err => err)
+);
 
 /**
  * Sends async server requests to post  new menu using the axios api
@@ -161,34 +210,71 @@ export const postMenu = ({ postOn, meals }) => (dispatch) => {
         const { success, message } = response.data;
         if (success) {
           dispatch(emptyNewMenu());
-          dispatch(getAllMenus());
-        }
-        notify(message);
-      }
-    })
-    .catch(err => err);
-};
-
-/**
- * Sends async server requests to update menu using the axios api
- *
- * @param {String} menuDate - date of menu to update {DD/MM/YYYY}
- * @param {Object} data - updated menu data
- * @return {Function} - function that dispatches serverRes action to the redux store
- */
-export const updateMenu = ({ menuDate, data }) => (dispatch) => {
-  serverReq('put', `/api/v1/menus/${menuDate}`, data)
-    .then((response) => {
-      if (response.data) {
-        const { success, message } = response.data;
-        if (success) {
-          dispatch(emptyEditMenu());
-          dispatch(getAllMenus());
+          dispatch(getAllMenus({}));
           return notify(message, 'toast-success');
         }
-
         notify(message, 'toast-danger');
       }
     })
     .catch(err => err);
 };
+
+/* eslint arrow-parens: 0 */
+/**
+ * Sends async server requests to update menu using the axios api
+ *
+ * @param {String} menuDate - date of menu to update {DD/MM/YYYY}
+ * @param {Array} meals - updated menu meals
+ * @return {Function} - function that dispatches serverRes action to the redux store
+ */
+export const updateMenu = ({
+  menuDate,
+  meals
+}) => dispatch => (
+  serverReq('put', `/api/v1/menus/${menuDate}`, { meals })
+    .then((response) => {
+      if (response.data) {
+        const { success, message } = response.data;
+        if (success) {
+          menuDate = menuDate.split('/').reverse().join('-');
+          dispatch(emptyEditMenu());
+          dispatch(getMenuMeals(`/api/v1/menus?postOn=${menuDate}`, {}));
+          notify(message, 'toast-success');
+        } else {
+          notify(message, 'toast-danger');
+        }
+
+        return response.data;
+      }
+    })
+    .catch(err => err)
+);
+
+/**
+ * Sends async server requests to remove meal from menu using the axios api
+ *
+ * @param {String} menuDate - date of menu to update {YYYY-MM-DD}
+ * @param {Array} meals - meals to remove
+ * @return {Function} - function that dispatches serverRes action to the redux store
+ */
+export const deleteMenuMeal = ({
+  menuDate,
+  meals,
+}) => dispatch => (
+  serverReq('delete', `/api/v1/menus?postOn=${menuDate}`, { meals })
+    .then((response) => {
+      if (response.data) {
+        const { success, message } = response.data;
+        if (success) {
+          dispatch(emptyEditMenu());
+          dispatch(getMenuMeals(`/api/v1/menus?postOn=${menuDate}`, {}));
+          notify(message, 'toast-success');
+        } else {
+          notify(message, 'toast-danger');
+        }
+
+        return response.data;
+      }
+    })
+    .catch(err => err)
+);

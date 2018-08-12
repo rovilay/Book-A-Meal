@@ -9,7 +9,13 @@ import {
 const setDefaultMealState = {
   meals: [],
   mealOnEdit: {},
-  error: ''
+  error: '',
+  pagination: {
+    limit: 12,
+    offset: 0,
+    count: 0,
+    numOfPages: 1
+  }
 };
 
 const mealReducer = (state = setDefaultMealState, action) => {
@@ -17,7 +23,8 @@ const mealReducer = (state = setDefaultMealState, action) => {
     case SET_MEALS:
       return {
         ...state,
-        meals: action.meals
+        meals: action.meals,
+        pagination: action.pagination
       };
     case SET_DEFAULT_MEAL_STATE:
       return {

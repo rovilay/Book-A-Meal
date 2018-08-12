@@ -54,8 +54,13 @@ export default function (CompA, CompB) {
           {
             (admin) && <CompA {...this.props} token={token} user={user} />
           }
+
           {
-            (admin !== '' && !admin) && <CompB {...this.props} token={token} user={user} />
+            (admin !== '' && !admin)
+            &&
+
+            <CompB {...this.props} token={token} user={user} />
+
           }
         </div>
       );
@@ -79,7 +84,7 @@ export default function (CompA, CompB) {
       setDefaultNav,
       getTodayMenu,
       setNav,
-      addToCart
+      addToCart,
     },
     dispatch
   );

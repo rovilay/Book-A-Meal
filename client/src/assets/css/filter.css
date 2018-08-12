@@ -8,7 +8,7 @@
 .filter form {
   display: inline-flex !important;
   margin: auto;
-  flex-direction: row !important;
+  flex-direction: column !important;
   justify-content: center;
   align-items: center;
   width: 80% !important;
@@ -24,13 +24,14 @@
 
 .filter button {
   flex-basis: 4%;
-
+  min-width: auto !important;
+  margin-top: 6px;
 }
 
 .filter .input-div {
   /* background: rgb(0, 162, 255); */
   flex-basis: 10%;
-  width: 100%;
+  width: auto;
   background: transparent !important;
   border: 1px solid #ccc;
   display: inline-flex;
@@ -38,6 +39,10 @@
   padding: 7px;
   margin: auto 5px;
   border-radius: 3px
+}
+
+.filter .input-div.inner-select {
+  flex-basis: 20%
 }
 
 .filter .input-div input,
@@ -49,7 +54,7 @@
 }
 
 .filter button {
-  flex-basis: 10%;
+  flex-basis: 5%;
   align-self: center
 }
 
@@ -59,5 +64,19 @@
     color: #000000;
     font-size: 20px;
     text-align: center
+  }
+
+  .filter form {
+    display: inline-flex !important;
+    margin: auto;
+    flex-direction: row !important;
+    justify-content: center;
+    align-items: center;
+    width: 80% !important;
+    padding: 5px 10px
+  }
+
+  .filter .input-div {
+    width: 100%
   }
 }

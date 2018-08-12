@@ -7,8 +7,17 @@
   align-items: center;
   padding: 10px 30px;
   min-width: 100%;
-  max-height: 70vh;
   overflow: scroll;
+}
+
+.admin-orderPage .container-test {
+  margin: auto;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 10px 30px;
+  max-width: 100%;
+  overflow-y: scroll;
 }
 
 .row {
@@ -31,6 +40,10 @@
   box-shadow: 0px 5px 9px 1px rgba(185, 189, 186, 0.51);
   border-color: #6EBD58
 }
+
+/* .modal .row {
+  width: 100%;
+} */
 
 .row.head {
   background: #6EBD58;
@@ -71,7 +84,7 @@
   outline: none
 }
 
-.input-div input {
+.container-test .input-div input {
   /* margin: auto */
   align-self: center;
   justify-self: center;
@@ -148,7 +161,8 @@
   flex-basis: 75%;
   width: 100%;
   background: transparent !important;
-  /* border: 1px solid #ccc; */
+  border: 1px solid #ccc;
+  height: 40px;
   display: inline-flex;
   justify-content: flex-start;
   padding: 10px;
@@ -156,11 +170,11 @@
 }
 
 .cartpage .address .input-div input {
-  border: 1px solid #cccccc;
+  /* border: 1px solid #cccccc; */
   width: 100%;
   padding: 0 5px;;
   font-size: 14px;
-  /* border: none; */
+  border: none;
   outline: none;
 
 }
@@ -170,7 +184,7 @@
 }
 
 .btn-3 .pencil:hover {
-  color: rgb(245, 223, 22)
+  color: #ffc107
 }
 
 .btn-3 .info-circle:hover {
@@ -193,7 +207,7 @@
 }
 
 .pagination li {
-  flex-basis: 10%;
+  /* flex-basis: 10%; */
   padding: 10px;
   border: 1px solid #ccc;
   cursor: pointer;
@@ -217,6 +231,7 @@
 
 
 @media screen and (min-width: 700px) {
+  .admin-orderPage .container-test,
   .container-test {
     max-width: 90%;
     display: flex;
@@ -251,6 +266,13 @@
     /* height: 50px; */
   }
 
+  .row-item.actions {
+    display: flex;
+    text-align: center;
+    justify-content: center;
+    align-items: center;
+  }
+
   .head {
     border: none !important;
     border-bottom: 2px solid #b4b2b2 !important;
@@ -274,5 +296,4 @@
 }
 
 @media screen and (min-width: 1080px) {
-
 }

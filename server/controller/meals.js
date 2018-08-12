@@ -25,7 +25,8 @@ class MealsController {
 
     db.Meal.findAndCountAll({
       limit,
-      offset
+      offset,
+      order: [['title']]
     })
       .then((response) => {
         const { count, rows: meals } = response;
@@ -95,7 +96,7 @@ class MealsController {
         });
       })
       .catch((err) => {
-        err = new Error('Error, Meal already exist!');
+        err = err || new Error('Error, Meal already exist!');
         err.status = 400;
         return next(err);
       });

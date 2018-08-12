@@ -1,9 +1,10 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 
-import tableHeadData from '../../../../helpers/tableHeadData';
+import { menuDetailHead } from '../../../../helpers/tableHeadData';
 import TableHead from '../../../common/Table/TableHead';
 import ModalTableRow from '../../../common/Table/ModalTableRow';
+
 
 const MenuDetailsTable = (props) => {
   const { title, content } = props;
@@ -17,7 +18,7 @@ const MenuDetailsTable = (props) => {
       </h2>
       <hr />
       <table>
-        <TableHead tableHeadData={tableHeadData.menuDetailHead} />
+        <TableHead tableHeadData={menuDetailHead} />
         <tbody>
           {
             menuDetails.map((meal, i) => {

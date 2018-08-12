@@ -2,13 +2,13 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
-// import classname from 'classnames';
+import classname from 'classnames';
 import swal from 'sweetalert';
+import moment from 'moment';
 
 const TableRow = ({
   item,
   deleteOrder,
-  // orderDetails,
   deleteRow,
   mealsUrl,
   actions,
@@ -17,7 +17,7 @@ const TableRow = ({
   mealId,
   updatePortion,
   orderedMealsLength,
-  // showId,
+  orderCreatedAt,
   showDetails
 }) => (
   <div className="row">
@@ -47,7 +47,7 @@ const TableRow = ({
             (
               <p
                 key={i}
-                className="row-item"
+                className={classname('row-item', { 'meal-title': key === 'Meal' || key === 'orderId' })}
               >
                 {item[key]}
               </p>
@@ -61,7 +61,7 @@ const TableRow = ({
       &&
       (
       <p
-        className="row-item"
+        className="row-item actions"
       >
 
         {
@@ -83,7 +83,8 @@ const TableRow = ({
           )
         }
         {
-          (actions.edit)
+          // show only if order can still be edited
+          (actions.edit && (moment(orderCreatedAt).add(15, 'm') > moment()))
           &&
           (
             <button
@@ -101,7 +102,7 @@ const TableRow = ({
           )
         }
         {
-          (actions.delete && !isEdit)
+          (actions.delete && !isEdit && (moment(orderCreatedAt).add(15, 'm') > moment()))
           &&
           (
             <button
@@ -170,7 +171,8 @@ TableRow.defaultProps = {
   showDetails: undefined,
   mealsUrl: undefined,
   orderedMealsLength: 1,
-  actions: undefined
+  actions: undefined,
+  orderCreatedAt: moment()
   // mealImage: undefined,
   // showId: false,
   // sn: undefined
@@ -184,7 +186,7 @@ TableRow.propTypes = {
   deleteOrder: PropTypes.func.isRequired,
   deleteRow: PropTypes.func,
   isEdit: PropTypes.bool,
-  // orderCreatedAt: PropTypes.string.isRequired,
+  orderCreatedAt: PropTypes.any,
   actions: PropTypes.object,
   mealId: PropTypes.string,
   updatePortion: PropTypes.func.isRequired,

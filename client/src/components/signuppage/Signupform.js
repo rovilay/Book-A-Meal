@@ -22,7 +22,7 @@ const SignUpForm = props => (
       )
     }
     <div className="form-title" id="signup-form-title">
-      SignUp
+      Sign Up
     </div>
     <hr />
     <form id="signup" className="signup-form" onSubmit={e => props.submit(e)}>
@@ -308,7 +308,7 @@ const SignUpForm = props => (
           type="submit"
           name="signupbtn"
           id="signupbtn"
-          className="signupbtn btn-1"
+          className="signupbtn btn-2"
           disabled={!props.formValues.isValid}
         >
           Sign Up

@@ -56,7 +56,7 @@ const LoginForm = props => (
         <button
           type="submit"
           id="loginbtn"
-          className="loginbtn"
+          className="loginbtn btn-2"
         >
           Login
         </button>

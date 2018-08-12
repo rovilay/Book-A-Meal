@@ -75,7 +75,7 @@ const TableRow = ({
       &&
       (
       <p
-        className="row-item"
+        className="row-item actions"
       >
 
         {

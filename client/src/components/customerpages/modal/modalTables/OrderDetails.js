@@ -1,80 +1,157 @@
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
+import ReactPaginate from 'react-paginate';
+import classname from 'classnames';
 
-import tableHeadData from '../../../../helpers/tableHeadData';
-import TableHead from '../../../common/Table/TableHead';
-import TableRow from '../../../common/Table/ModalTableRow';
+import { orderDetailHead } from '../../../../helpers/tableHeadData';
+import TableRow from '../../orders/Tablerow';
+
+// import { getOrders } from '../../../../actions/ordersActions';
 
 const OrderDetailsTable = (props) => {
-  const { title, content } = props;
   const {
-    meals: orderMeals,
-    address,
+    title,
+    content,
+    orderedMealsPagination,
+    getOrderMeals
+  } = props;
+
+  const {
+    id: orderId,
+    userId,
+    Meals: orderMeals,
+    deliveryAddress,
     totalPrice,
-    date,
-    time
+    createdAt,
   } = content;
+
+  const {
+    limit,
+    offset,
+    numOfPages,
+    count
+  } = orderedMealsPagination;
+
+    /**
+   * handles pagination changes
+   *
+   * @param {object} data data object from pagination component
+   */
+  const handlePaginationClick = (data) => {
+    const nextPage = data.selected;
+    const newOffset = nextPage * limit;
+    const mealsUrl = `/api/v1/orders/${userId}?${orderId}`;
+    getOrderMeals(mealsUrl, { limit, offset: newOffset });
+  };
+
   return (
-    <div className="table-container">
+    <div className="modal-container">
       <div className="order-details">
         <h2 className="title">
           {title}
         </h2>
         <hr />
         <p>
-          <span className="bold">Date:</span> {date}
+          <span className="bold">Date:</span> {moment(createdAt).format('LL')}
         </p>
         <p>
-          <span className="bold">Time:</span> {time}
+          <span className="bold">Time:</span> {moment(createdAt).format('HH:mm')}
         </p>
         <p>
-          <span className="bold">Address:</span> {address}
+          <span className="bold">Address:</span> {deliveryAddress}
         </p>
         <p>
-          <span className="bold">Total Price (&#8358;):</span> {totalPrice}
+          <span className="bold">Total Price: &#8358;</span> {totalPrice}
         </p>
       </div>
-      <table>
-        <TableHead tableHeadData={tableHeadData.orderDetailHead} />
-        <tbody>
+      {/* <ReactPaginate
+        previousLabel="<<"
+        nextLabel=">>"
+        breakLabel={<a href="">...</a>}
+        breakClassName="break-me"
+        pageCount={numOfPages}
+        marginPagesDisplayed={2}
+        pageRangeDisplayed={5}
+        onPageChange={handlePaginationClick}
+        containerClassName="pagination"
+        subContainerClassName="pages pagination"
+        activeClassName="active"
+      /> */}
+      <div className="container-test">
+        <div className="row head">
           {
-            orderMeals.map((meal, i) => {
-              const {
-                id,
-                title: Meal,
-                price: unitPrice,
-                OrderMeal
-              } = meal;
-              const { portion } = OrderMeal;
-              const price = unitPrice * portion;
-              const item = {
-                sn: ++i,
-                Meal,
-                unitPrice,
-                portion,
-                price
-              };
-
-              return (
-                <TableRow
+              orderDetailHead.map((head, i) => (
+                <p
                   key={i}
-                  item={item}
-                  sn={++i}
-                  id={id}
-                  {...props}
-                />
-              );
-            })
-          }
-        </tbody>
-      </table>
+                  className={classname('row-item', { 'meal-title': head === 'Meal' || head === 'orderId' })}
+                >
+                  {head}
+                </p>
+              ))
+            }
+        </div>
+        {
+          orderMeals.map((meal, i) => {
+            const {
+              id,
+              title: Meal,
+              price: unitPrice,
+              OrderMeal
+            } = meal;
+            const { portion } = OrderMeal;
+            const price = unitPrice * portion;
+            const item = {
+              sn: ++i + offset,
+              Meal,
+              unitPrice,
+              portion,
+              price
+            };
+
+            return (
+              <TableRow
+                key={i}
+                item={item}
+                id={id}
+                {...props}
+              />
+            );
+          })
+        }
+      </div>
+      {
+        // show only if meals or orderMeals present
+        (count > 5)
+        &&
+        <div className="modal-pagination">
+          <ReactPaginate
+            previousLabel="<<"
+            nextLabel=">>"
+            breakLabel={<a href="">...</a>}
+            breakClassName="break-me"
+            pageCount={numOfPages}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={handlePaginationClick}
+            containerClassName="pagination"
+            subContainerClassName="pages pagination"
+            activeClassName="active"
+          />
+        </div>
+      }
     </div>
   );
 };
 
 OrderDetailsTable.propTypes = {
   title: PropTypes.string.isRequired,
+  // content: PropTypes.object.isRequired,
+  // pagination: PropTypes.object.isRequired,
+  // modal: PropTypes.object.isRequired,
   content: PropTypes.object.isRequired,
+  getOrderMeals: PropTypes.func.isRequired,
+  orderedMealsPagination: PropTypes.object.isRequired
 };
 
 export default OrderDetailsTable;

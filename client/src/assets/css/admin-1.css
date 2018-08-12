@@ -9,7 +9,8 @@
   margin: auto;
 }
 
-.adminpage .pagination-container {
+.adminpage .pagination-container,
+.meal-page .pagination-container {
   display: flex;
   justify-content: center;
   align-items: center;
@@ -17,7 +18,6 @@
 }
 
 .adminpage .menu-meals {
-  border: 1px solid green;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -62,4 +62,18 @@
 .adminpage .menu-meals .meal-hide-add-btns .hide-meals-btn {
   margin: auto;
   color: #ffffff
+}
+
+.admin-orderPage {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: auto;
+  padding: 60px 0;
+}
+
+.admin-orderPage .row-item.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }

@@ -9,7 +9,7 @@ import moment from 'moment';
 import jwt from 'jsonwebtoken';
 
 import Modal from './modal/Index';
-import tableHeadData from '../../helpers/tableHeadData';
+import { orderHead } from '../../helpers/tableHeadData';
 import TableHead from '../common/Table/TableHead';
 import OrderTableRow from '../common/Table/OrderTableRow';
 import isExpired from '../../helpers/isExpired';
@@ -181,7 +181,7 @@ class CustomerOrder extends Component {
               (
                 <div className="res-container">
                   <table>
-                    <TableHead tableHeadData={tableHeadData.orderHead} />
+                    <TableHead tableHeadData={orderHead} />
                     <tbody>
                       {
                         sortedOrders.map((order, i) => {

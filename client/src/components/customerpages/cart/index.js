@@ -16,7 +16,7 @@ import {
   emptyCart,
   deleteMealInCart,
   addMealToCart,
-  updateCartMealPortion
+  updateCartMealPortion,
 } from '../../../actions/cartActions';
 import { postOrder } from '../../../actions/ordersActions';
 import { cartTableHead } from '../../../helpers/tableHeadData';
@@ -37,11 +37,10 @@ class Cart extends Component {
 
   componentDidMount() {
     const { cart, history } = this.props;
+
     if (cart && cart.length < 1) {
       return history.push('/dashboard');
     }
-
-    // this.setTotPrice();
   }
 
   componentDidUpdate() {
@@ -49,7 +48,6 @@ class Cart extends Component {
     if (cart && cart.length < 1) {
       return history.push('/dashboard');
     }
-    // this.setTotPrice();
   }
 
   onChange(e) {
@@ -111,7 +109,7 @@ class Cart extends Component {
         </div>
         <hr />
         <form onSubmit={this.onOrder}>
-          <p className="address">
+          <div className="address">
             <label htmlFor="address">
               Address:
             </label>
@@ -126,7 +124,7 @@ class Cart extends Component {
                 required
               />
             </div>
-          </p>
+          </div>
           <div className={classname('container-test', { hide: cart.length === 0 })}>
             <div className="row head">
               {
@@ -168,7 +166,7 @@ class Cart extends Component {
               name="orderbtn"
               id="order-btn"
               disabled={cart.length < 1}
-              className="btn-1 order-btn"
+              className="btn-2"
             >
             Place order
             </button>
@@ -186,7 +184,7 @@ Cart.propTypes = {
   history: PropTypes.object.isRequired,
   deleteMealInCart: PropTypes.func.isRequired,
   emptyCart: PropTypes.func.isRequired,
-  postOrder: PropTypes.func.isRequired
+  postOrder: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
@@ -200,7 +198,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
     deleteMealInCart,
     addMealToCart,
     postOrder,
-    updateCartMealPortion
+    updateCartMealPortion,
   },
   dispatch
 );

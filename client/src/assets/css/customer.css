@@ -22,15 +22,12 @@
   text-align: center;
 }
 
-.address {
+/* .address {
   display: inline-block;
   justify-content: center;
   font-size: 14px
 }
 
-.address label {
-  align-self: center
-}
 
 .address input {
   width: 60%;
@@ -38,7 +35,12 @@
   padding: 12px;
   border: 1px solid #ccc;
   border-radius: 4px;
-}
+} */
+
+/* .address label {
+  align-self: center;
+
+} */
 
 .cart-count {
   color: red

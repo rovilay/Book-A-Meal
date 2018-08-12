@@ -61,6 +61,7 @@ class CustomerOrder extends Component {
         const {
           Meals,
           id: orderId,
+          UserId,
           deliveryAddress,
         } = res.orders[0];
         const orderedMeals = [];
@@ -90,6 +91,7 @@ class CustomerOrder extends Component {
 
         this.props.setEditOrder({
           orderId,
+          UserId,
           deliveryAddress,
           orderedMeals,
           totalPrice
@@ -195,7 +197,7 @@ class CustomerOrder extends Component {
 
   render() {
     const { orders, pagination, grandTotalPrice } = this.props;
-    const { offset, numOfPages } = pagination;
+    const { offset, numOfPages, count } = pagination;
     // const grandTotalPrice = summer(orders, 'totalPrice');
 
     return (
@@ -209,20 +211,24 @@ class CustomerOrder extends Component {
             {...this.props}
             tableContent="customer_orders"
           />
-
-          <ReactPaginate
-            previousLabel="<<"
-            nextLabel=">>"
-            breakLabel={<a href="">...</a>}
-            breakClassName="break-me"
-            pageCount={numOfPages}
-            marginPagesDisplayed={2}
-            pageRangeDisplayed={5}
-            onPageChange={this.handlePaginationClick}
-            containerClassName="pagination"
-            subContainerClassName="pages pagination"
-            activeClassName="active"
-          />
+          {
+            // (count > 10 || orders.length < 1)
+            (count > 10)
+            &&
+            <ReactPaginate
+              previousLabel="<<"
+              nextLabel=">>"
+              breakLabel={<a href="">...</a>}
+              breakClassName="break-me"
+              pageCount={numOfPages}
+              marginPagesDisplayed={2}
+              pageRangeDisplayed={5}
+              onPageChange={this.handlePaginationClick}
+              containerClassName="pagination"
+              subContainerClassName="pages pagination"
+              activeClassName="active"
+            />
+          }
         </div>
         {
           (orders.length === 0)
@@ -247,7 +253,7 @@ class CustomerOrder extends Component {
                   orders.map((order, i) => {
                     const {
                       id: orderId,
-                      createdAt: date,
+                      createdAt,
                       totalPrice,
                       Meals: mealsUrl
                     } = order;
@@ -255,10 +261,9 @@ class CustomerOrder extends Component {
                     const item = {
                       sn: (++i + offset),
                       orderId,
-                      date: moment(date).format('LL'),
+                      date: moment(createdAt).format('LL'),
                       totalPrice,
                     };
-
                     return (
                       <TableRow
                         {...this.props}
@@ -269,6 +274,7 @@ class CustomerOrder extends Component {
                         mealsUrl={mealsUrl}
                         editOrder={this.onEditOrder}
                         updatePortion={this.updatePortion}
+                        orderCreatedAt={createdAt}
                         actions={{
                           delete: true,
                           info: true,
@@ -296,7 +302,7 @@ class CustomerOrder extends Component {
             }
           </div>
         }
-        {/* </div> */}
+
         <Modal
           hideModal={this.hideModal}
           deleteRow={this.deleteRow}
@@ -321,13 +327,15 @@ CustomerOrder.propTypes = {
   getOrderMeals: PropTypes.func.isRequired,
   setEditOrder: PropTypes.func.isRequired,
   setFilter: PropTypes.func.isRequired,
-  pagination: PropTypes.object.isRequired
+  pagination: PropTypes.object.isRequired,
+  orderedMealsPagination: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   orders: arraySort(filterify(state.orders.history, state.filter), 'createdAt'),
   grandTotalPrice: state.orders.grandTotalPrice,
   pagination: state.orders.pagination,
+  orderedMealsPagination: state.orders.orderedMealsPagination,
   modal: state.modal,
   editOrder: state.orders.editOrder,
   userId: state.login.user.id
