@@ -2,11 +2,11 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
-import classname from 'classnames';
 import swal from 'sweetalert';
 import moment from 'moment';
+import ReactTooltip from 'react-tooltip';
 
-const TableRow = ({
+const CustomerOrderTableRow = ({
   item,
   deleteOrder,
   deleteRow,
@@ -44,14 +44,26 @@ const TableRow = ({
           )
           :
           (
-            (
-              <p
-                key={i}
-                className={classname('row-item', { 'meal-title': key === 'Meal' || key === 'orderId' })}
-              >
-                {item[key]}
-              </p>
-            )
+            (key === 'orderId' || key === 'Meal')
+              ?
+              (
+                <p
+                  key={i}
+                  className="row-item meal-title"
+                  data-tip={item[key]}
+                >
+                  {item[key]}
+                </p>
+              )
+              :
+              (
+                <p
+                  key={i}
+                  className="row-item"
+                >
+                  {item[key]}
+                </p>
+              )
           )
       ))
     }
@@ -161,10 +173,12 @@ const TableRow = ({
       </p>
       )
     }
+
+    <ReactTooltip className="mytooltip" />
   </div>
 );
 
-TableRow.defaultProps = {
+CustomerOrderTableRow.defaultProps = {
   deleteRow: undefined,
   mealId: undefined,
   isEdit: false,
@@ -173,12 +187,9 @@ TableRow.defaultProps = {
   orderedMealsLength: 1,
   actions: undefined,
   orderCreatedAt: moment()
-  // mealImage: undefined,
-  // showId: false,
-  // sn: undefined
 };
 
-TableRow.propTypes = {
+CustomerOrderTableRow.propTypes = {
   item: PropTypes.object.isRequired,
   showDetails: PropTypes.func,
   mealsUrl: PropTypes.string,
@@ -191,8 +202,6 @@ TableRow.propTypes = {
   mealId: PropTypes.string,
   updatePortion: PropTypes.func.isRequired,
   orderedMealsLength: PropTypes.number
-  // showId: PropTypes.bool,
-  // sn: PropTypes.number
 };
 
-export default TableRow;
+export default CustomerOrderTableRow;

@@ -27,11 +27,11 @@ const UICtrl = (function () {
   // Public methods
   return {
 
-    getUISelectors: function () {
+    getUISelectors () {
       return UISelectors;
     },
 
-    getFormInputs: function () {
+    getFormInputs () {
       return {
         date: document.querySelector(UISelectors.date).value,
         meal: document.querySelector(UISelectors.meal).value,
@@ -39,14 +39,14 @@ const UICtrl = (function () {
 
     },
 
-    showAlert: function (tagid, msg, className) {
+    showAlert (tagid, msg, className) {
       const alert = document.querySelector(tagid);
 
       alert.className = className;
       alert.innerText = msg;
     },
 
-    clearAlert: function (id) {
+    clearAlert (id) {
       const alert = document.querySelector(id);
 
       setTimeout(function () {
@@ -56,27 +56,26 @@ const UICtrl = (function () {
     },
 
 
-    hideMealListHeader: function () {
+    hideMealListHeader () {
       document.querySelector(UISelectors.displayTitle).style.display = 'none';
     },
 
-    getCurrentDate: function() {
+    getCurrentDate() {
         let date = new Date();
         let day = date.getDay();
         let month = date.getMonth();
-        let year = date.getFullYear();  
+        let year = date.getFullYear();
 
         let newDate = new Date(`${year}-${month}-${day}`);
-        console.log(newDate)
         return newDate
       },
 
-    clearFormInput: function () {
+    clearFormInput () {
       document.querySelector(UISelectors.date).value = '';
       document.querySelector(UISelectors.meal).value = '';
     },
 
-    clearEditState: function () {
+    clearEditState () {
       // Change form Title
       document.querySelector(UISelectors.formTitle).innerText = 'Add Meal';
       // Change buttons state
@@ -87,7 +86,7 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.backBtn).style.display = 'none';
     },
 
-    showEditState: function () {
+    showEditState () {
       // Change form Title
       document.querySelector(UISelectors.formTitle).innerText = 'Edit Meal';
       // Change buttons state
@@ -97,7 +96,7 @@ const UICtrl = (function () {
       document.querySelector(UISelectors.backBtn).style.display = 'inline-block';
     },
   };
-})();
+}());
 
 
 // App Controller
@@ -107,10 +106,8 @@ const AppCtrl = (function (UICtrl) {
 
   // Load Event listeners
   const loadEventListeners = function () {
-
-
     // Toggle edit state
-    document.querySelector(UISelectors.mealCard).addEventListener('click', function (e) {
+    document.querySelector(UISelectors.mealCard).addEventListener('click', (e) => {
       if(e.target.classList.contains('fa-edit')) {
         if(document.querySelector(UISelectors.formTitle).innerText === 'Add Meal') {
           UICtrl.showEditState();
@@ -120,7 +117,7 @@ const AppCtrl = (function (UICtrl) {
       }
 
       e.preventDefault();
-    })
+    });
 
     // back btn events
     document.querySelector(UISelectors.backBtn).addEventListener('click', backBtnSubmit);
@@ -128,7 +125,6 @@ const AppCtrl = (function (UICtrl) {
 
 
   const backBtnSubmit = function (e) {
-
     UICtrl.clearEditState();
 
     UICtrl.clearFormInput();
@@ -139,7 +135,7 @@ const AppCtrl = (function (UICtrl) {
   // Public methods
   return {
 
-    init: function () {
+    init () {
       // Set Initial state
       UICtrl.clearEditState();
 
@@ -155,9 +151,7 @@ const AppCtrl = (function (UICtrl) {
 
     }
   };
-
-})(UICtrl);
-
+}(UICtrl));
 
 
 AppCtrl.init();

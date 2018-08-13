@@ -8,7 +8,6 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import arraySort from 'array-sort';
 import { bindActionCreators } from 'redux';
-// import ReactPaginate from 'react-paginate';
 import {
   Accordion,
 } from 'react-accessible-accordion';
@@ -29,7 +28,7 @@ import {
   addMealInEditMenuModal
 } from '../../../actions/modalActions';
 import MenuTable from './MenuTable/MenuTable';
-import SetMenuCard from './MenuCard/setMenu';
+import SetMenuCard from './MenuCard/SetMenu';
 import Filter from '../../common/Filter';
 import setFilter from '../../../actions/filterActions';
 import ModalComp from '../Modal/Index';

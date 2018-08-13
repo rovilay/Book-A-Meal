@@ -26,18 +26,15 @@ const AppRouter = () => (
     <div>
       <Header />
       <Switch>
-        <Route path="/" exact component={CheckLogin(HomePage)} />
-        <Route path="/signUp" exact component={SignUpPage} />
-        <Route path="/login" component={LogInPage} />
-        <Route
-          path="/dashboard"
-          component={chooseDashboard(AdminDashboard, CustomerDashboard)}
-        />
-        <Route path="/cart" exact component={customerOnly(Cart)} className="main" />
-        <Route path="/orders" exact component={customerOnly(CustomerOrder)} />
-        <Route path="/mealpage" exact component={adminOnly(MealPage)} />
-        <Route path="/orderHistory" exact component={adminOnly(OrderPage)} />
-        <Route component={NotFoundPage} />
+        <Route exact path="/" component={CheckLogin(HomePage)} />
+        <Route exact path="/signUp" component={SignUpPage} />
+        <Route exact path="/login" component={LogInPage} />
+        <Route exact path="/dashboard" component={chooseDashboard(AdminDashboard, CustomerDashboard)} />
+        <Route exact path="/cart" component={customerOnly(Cart)} className="main" />
+        <Route exact path="/orders" component={customerOnly(CustomerOrder)} />
+        <Route exact path="/mealpage" component={adminOnly(MealPage)} />
+        <Route exact path="/orderHistory" component={adminOnly(OrderPage)} />
+        <Route exact path="/*" component={NotFoundPage} />
       </Switch>
       <Footer />
     </div>

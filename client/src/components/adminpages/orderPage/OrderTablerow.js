@@ -2,9 +2,9 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
-import classname from 'classnames';
+import ReactTooltip from 'react-tooltip';
 
-const TableRow = ({
+const OrderTableRow = ({
   item,
   mealsUrl,
   actions,
@@ -13,12 +13,28 @@ const TableRow = ({
   <div className="row">
     {
       Object.keys(item).map((key, i) => (
-        <p
-          key={i}
-          className={classname('row-item', { 'meal-title': key === 'Meal' || key === 'orderId' })}
-        >
-          {item[key]}
-        </p>
+        (
+          (key === 'orderId' || key === 'Meal')
+            ?
+            (
+              <p
+                key={i}
+                className="row-item meal-title"
+                data-tip={item[key]}
+              >
+                {item[key]}
+              </p>
+            )
+            :
+            (
+              <p
+                key={i}
+                className="row-item"
+              >
+                {item[key]}
+              </p>
+            )
+        )
       ))
     }
 
@@ -51,20 +67,22 @@ const TableRow = ({
       </p>
       )
     }
+
+    <ReactTooltip className="mytooltip" />
   </div>
 );
 
-TableRow.defaultProps = {
+OrderTableRow.defaultProps = {
   showDetails: undefined,
   mealsUrl: undefined,
   actions: undefined,
 };
 
-TableRow.propTypes = {
+OrderTableRow.propTypes = {
   item: PropTypes.object.isRequired,
   showDetails: PropTypes.func,
   mealsUrl: PropTypes.string,
   actions: PropTypes.object
 };
 
-export default TableRow;
+export default OrderTableRow;

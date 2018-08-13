@@ -6,8 +6,7 @@ import {
   AccordionItemBody,
 } from 'react-accessible-accordion';
 
-import SetMenuForm from './setMenuForm';
-import '../../../../assets/css/newadmin.css';
+import SetMenuForm from './SetMenuForm';
 
 const SetMenuCard = props => (
   <AccordionItem>

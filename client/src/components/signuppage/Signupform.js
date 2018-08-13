@@ -3,7 +3,7 @@
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
+// import { connect } from 'react-redux';
 import classname from 'classnames';
 import validator from 'validator';
 
@@ -344,4 +344,4 @@ SignUpForm.propTypes = {
   change: PropTypes.func.isRequired,
 };
 
-export default connect()(SignUpForm);
+export default SignUpForm;

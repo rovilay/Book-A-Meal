@@ -12,12 +12,11 @@ import ReactPaginate from 'react-paginate';
 
 import Modal from '../modal/Index';
 import { orderHead } from '../../../helpers/tableHeadData';
-import TableRow from './Tablerow';
+import CustomerOrderTableRow from './CustomerOrderTablerow';
 import isExpired from '../../../helpers/isExpired';
 import navData from '../../../helpers/navData';
 import { getFromLs } from '../../../helpers/Ls';
 import filterify from '../../../helpers/filterify';
-// import summer from '../../../helpers/summer';
 import {
   deleteMealInEditOrder,
   updateOrder,
@@ -66,8 +65,6 @@ class CustomerOrder extends Component {
         } = res.orders[0];
         const orderedMeals = [];
         let totalPrice = 0;
-
-        // console.log('this is it', res.orders[0]);
 
         Meals.map((meal) => {
           const {
@@ -198,7 +195,6 @@ class CustomerOrder extends Component {
   render() {
     const { orders, pagination, grandTotalPrice } = this.props;
     const { offset, numOfPages, count } = pagination;
-    // const grandTotalPrice = summer(orders, 'totalPrice');
 
     return (
       <section className="cartpage orderpage">
@@ -212,7 +208,6 @@ class CustomerOrder extends Component {
             tableContent="customer_orders"
           />
           {
-            // (count > 10 || orders.length < 1)
             (count > 10)
             &&
             <ReactPaginate
@@ -265,7 +260,7 @@ class CustomerOrder extends Component {
                       totalPrice,
                     };
                     return (
-                      <TableRow
+                      <CustomerOrderTableRow
                         {...this.props}
                         key={i}
                         sn={++i}

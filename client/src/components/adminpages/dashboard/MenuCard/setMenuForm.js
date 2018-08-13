@@ -3,7 +3,7 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import MealCheckBoxCard from './mealCheckbox';
+import MealCheckBoxCard from './MealCheckbox';
 
 const SetMenuForm = props => (
   <form

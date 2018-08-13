@@ -38,7 +38,7 @@ export default function (CompA, CompB) {
         admin
       } = jwt.decode(token);
 
-      if (isExpired(exp)) {
+      if (token && isExpired(exp)) {
         this.props.setDefaultNav();
         return history.push('/login');
       }
@@ -72,11 +72,13 @@ export default function (CompA, CompB) {
     setDefaultNav: PropTypes.func.isRequired,
     setNav: PropTypes.func.isRequired,
     todayMenu: PropTypes.array.isRequired,
+    pagination: PropTypes.object.isRequired
   };
 
   const mapStateToProps = state => ({
     todayMenu: state.menu.todayMenu,
-    cart: state.cart.meals
+    cart: state.cart.meals,
+    pagination: state.menu.pagination
   });
 
   const mapDispatchToProps = dispatch => bindActionCreators(

@@ -12,7 +12,6 @@ const EditMenuTable = (props) => {
     editMenuMeals,
     hideModal,
     updateMenu
-    // menuMeals,
   } = props;
 
   const mealsNotInMenu = (() => {
@@ -26,12 +25,11 @@ const EditMenuTable = (props) => {
 
     if (checkbox.checked === true) {
       props.addMealInEditMenu(meal.id);
-      // props.addMealInEditMenuModal(meal);
     } else if (checkbox.checked === false) {
       props.deleteMealInEditMenu(meal.id);
-      // props.deleteMealInEditModal(meal.id);
     }
   };
+
   return (
     <div className="table-container">
       <h2 className="title">

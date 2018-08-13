@@ -28,12 +28,9 @@ class MenuAccordion extends Component {
    * @param {object} data data object from pagination component
    */
   handlePaginationClick(data) {
-    // const nextPage = data.selected + 1;
     const { Meals: mealUrl, } = this.props.item;
     const { limit } = this.props.menuMeals.pagination;
     const nextOffset = (data.selected) * limit;
-    // const url = `${mealUrl}&limit=${limit}&offset=${nextOffset}`;
-    console.log(mealUrl);
     this.props.getMenuMeals(mealUrl, { limit, offset: nextOffset })
       .then(() => {
         this.setState({ isInfo: true });
@@ -49,8 +46,6 @@ class MenuAccordion extends Component {
       menuMeals,
       getMenuMeals,
       editMenu,
-      // updateMenu,
-      // deleteMealInMenu,
       deleteMenuMeal
     } = this.props;
 
@@ -117,7 +112,7 @@ class MenuAccordion extends Component {
                 }
 
                 {
-                  (isInfo)
+                  (isInfo) // for moble views
                   &&
                   (
                   <div className="meal-hide-add-btns show-mobile">
@@ -155,7 +150,7 @@ class MenuAccordion extends Component {
                   )
                 }
                 {
-                  (isInfo)
+                  (isInfo) // for large screen
                   &&
                   (
                   <div className="meal-hide-add-btns hide-mobile">
@@ -187,6 +182,7 @@ class MenuAccordion extends Component {
                 }
 
                 {
+                  // menu meals
                   (meals.length > 0 && isInfo)
                   &&
                   <div className="meals">
@@ -209,11 +205,6 @@ class MenuAccordion extends Component {
                               className="btn-3 box-shadow"
                               onClick={(e) => {
                                 e.preventDefault();
-                                // (meals.length <= 1)
-                                //   ?
-                                //   swal({
-                                //     text: 'You a meal'
-                                //   })
 
                                 swal({
                                   text: 'Are you sure you want to remove this meal?',
@@ -222,11 +213,8 @@ class MenuAccordion extends Component {
                                 })
                                   .then((confirmed) => {
                                     if (confirmed) {
-                                      // deleteRow(item);
-
                                       const menuDate = item.postOn;
                                       const newMenuMeals = meals.filter(n => n.id === meal.id);
-                                      // get id of meals to delete
                                       const MenuMealsToDelete = newMenuMeals.map(menuMeal => menuMeal.id);
                                       deleteMenuMeal({ menuDate, meals: MenuMealsToDelete });
                                     }
@@ -281,9 +269,6 @@ MenuAccordion.propTypes = {
   getMenuMeals: PropTypes.func.isRequired,
   deleteMenuMeal: PropTypes.func.isRequired,
   menuMeals: PropTypes.object.isRequired,
-  // deleteMealInMenu: PropTypes.func.isRequired,
-  // getMeals: PropTypes.func.isRequired,
-  // updateMenu: PropTypes.func.isRequired,
 };
 
 export default MenuAccordion;

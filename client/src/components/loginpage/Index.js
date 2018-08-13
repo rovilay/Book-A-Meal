@@ -8,6 +8,7 @@ import PropTypes from 'prop-types';
 import setSuccessfulSignUpMsg from '../../actions/signupActions';
 import { loginUser } from '../../actions/loginActions';
 import LoginForm from './Loginform';
+import notify from '../../helpers/notify';
 
 class LogInPage extends Component {
   constructor(props) {
@@ -25,7 +26,7 @@ class LogInPage extends Component {
     setTimeout(
       () => {
         if (this.props.signUpSuccess.message) {
-          this.notify(this.props.signUpSuccess.message);
+          notify(this.props.signUpSuccess.message, 'toast-success');
           setTimeout(
             () => {
               this.props.setSuccessfulSignUpMsg('');

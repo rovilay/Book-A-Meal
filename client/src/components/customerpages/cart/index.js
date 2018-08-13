@@ -20,7 +20,7 @@ import {
 } from '../../../actions/cartActions';
 import { postOrder } from '../../../actions/ordersActions';
 import { cartTableHead } from '../../../helpers/tableHeadData';
-import TableRow from './Tablerow';
+import CartTableRow from './CartTablerow';
 
 class Cart extends Component {
   constructor(props) {
@@ -140,7 +140,7 @@ class Cart extends Component {
             </div>
             {
               cart.map((meal, i) => (
-                <TableRow
+                <CartTableRow
                   key={i}
                   item={meal}
                   deleteRow={this.deleteRow}

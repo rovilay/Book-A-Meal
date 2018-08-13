@@ -5,9 +5,7 @@ import ReactPaginate from 'react-paginate';
 import classname from 'classnames';
 
 import { orderDetailHead } from '../../../../helpers/tableHeadData';
-import TableRow from '../../orders/Tablerow';
-
-// import { getOrders } from '../../../../actions/ordersActions';
+import CustomerOrderTableRow from '../../orders/CustomerOrderTablerow';
 
 const OrderDetailsTable = (props) => {
   const {
@@ -65,19 +63,7 @@ const OrderDetailsTable = (props) => {
           <span className="bold">Total Price: &#8358;</span> {totalPrice}
         </p>
       </div>
-      {/* <ReactPaginate
-        previousLabel="<<"
-        nextLabel=">>"
-        breakLabel={<a href="">...</a>}
-        breakClassName="break-me"
-        pageCount={numOfPages}
-        marginPagesDisplayed={2}
-        pageRangeDisplayed={5}
-        onPageChange={handlePaginationClick}
-        containerClassName="pagination"
-        subContainerClassName="pages pagination"
-        activeClassName="active"
-      /> */}
+
       <div className="container-test">
         <div className="row head">
           {
@@ -110,7 +96,7 @@ const OrderDetailsTable = (props) => {
             };
 
             return (
-              <TableRow
+              <CustomerOrderTableRow
                 key={i}
                 item={item}
                 id={id}

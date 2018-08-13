@@ -9,7 +9,6 @@ const TableRow = ({
   item,
   deleteRow,
   actions,
-  mealImage,
   updateCartMealPortion,
   showId,
   sn
@@ -54,16 +53,6 @@ const TableRow = ({
                   className="row-item"
                 >
                   {item[key]}
-
-                  {
-                    (key === 'meal') // if meal add tooltip
-                    &&
-                    (
-                      <span key={i} className="tooltip">
-                        <img src={mealImage} alt={item.key} />
-                      </span>
-                    )
-                  }
                 </p>
               )
           )
@@ -115,7 +104,6 @@ const TableRow = ({
 
 TableRow.defaultProps = {
   deleteRow: undefined,
-  mealImage: undefined,
   updateCartMealPortion: undefined,
   showId: false,
   sn: undefined
@@ -126,7 +114,6 @@ TableRow.propTypes = {
   deleteRow: PropTypes.func,
   actions: PropTypes.object.isRequired,
   updateCartMealPortion: PropTypes.func,
-  mealImage: PropTypes.string,
   showId: PropTypes.bool,
   sn: PropTypes.number
 };

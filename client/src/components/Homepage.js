@@ -3,6 +3,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router';
+import ReactPaginate from 'react-paginate';
 
 import { setDefaultNav } from '../actions/navLinksActions';
 import { getTodayMenu } from '../actions/menuActions';
@@ -10,20 +11,45 @@ import { addToCart } from '../actions/cartActions';
 import Menu from './common/Menu';
 
 class HomePage extends Component {
+  constructor(props) {
+    super(props);
+
+    this.handlePaginationClick = this.handlePaginationClick.bind(this);
+  }
+
   componentDidMount() {
     this.props.setDefaultNav();
-    this.props.getTodayMenu();
+    this.props.getTodayMenu({});
+  }
+
+  /**
+   * handles pagination changes
+   *
+   * @param {object} data data object from pagination component
+   */
+  handlePaginationClick(data) {
+    const {
+      limit
+    } = this.props.pagination;
+
+    const nextOffset = (data.selected) * limit;
+    this.props.getTodayMenu({ limit, offset: nextOffset });
   }
 
   render() {
-    const { todayMenu } = this.props;
+    const { todayMenu, pagination } = this.props;
+    const {
+      count,
+      numOfPages,
+    } = pagination;
+
     return (
-      <main>
+      <main className="homepage">
         <section className="first-section">
           <div className="showcase">
             <p className="merienda"> Meals that perfectly fits your lifestyle</p>
             {
-              (todayMenu.length !== 0)
+              (todayMenu.length > 0)
               &&
               <a
                 role="button"
@@ -35,6 +61,7 @@ class HomePage extends Component {
             }
           </div>
         </section>
+
         <section className="intro">
           <div className="intro-container">
             <h1 className="color-1">Are you busy and hungry?</h1>
@@ -62,6 +89,7 @@ class HomePage extends Component {
             </p>
           </div>
         </section>
+
         {
         (todayMenu.length > 0)
         &&
@@ -72,6 +100,26 @@ class HomePage extends Component {
           {...this.props}
         />
       }
+
+        {
+            (count > 12)
+            &&
+            <div className="pagination-container">
+              <ReactPaginate
+                previousLabel="<<"
+                nextLabel=">>"
+                breakLabel={<a href="">...</a>}
+                breakClassName="break-me"
+                pageCount={numOfPages}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={this.handlePaginationClick}
+                containerClassName="pagination"
+                subContainerClassName="pages pagination"
+                activeClassName="active"
+              />
+            </div>
+      }
       </main>
     );
   }
@@ -81,19 +129,21 @@ HomePage.propTypes = {
   todayMenu: PropTypes.array.isRequired,
   getTodayMenu: PropTypes.func.isRequired,
   setDefaultNav: PropTypes.func.isRequired,
-  history: PropTypes.object.isRequired
+  history: PropTypes.object.isRequired,
+  pagination: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
   user: state.login.user,
   todayMenu: state.menu.todayMenu,
+  pagination: state.menu.pagination
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
     setDefaultNav,
     getTodayMenu,
-    addToCart
+    addToCart,
   },
   dispatch
 );

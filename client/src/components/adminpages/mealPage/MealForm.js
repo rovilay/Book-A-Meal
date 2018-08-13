@@ -9,7 +9,6 @@ import {
   AccordionItemBody,
 } from 'react-accessible-accordion';
 
-import '../../../assets/css/meal-option.css';
 
 const Mealform = ({
   closeEdit,

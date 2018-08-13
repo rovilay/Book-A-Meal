@@ -4,7 +4,6 @@ import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
 import sweetAlert from 'sweetalert';
 
-// import '../../assets/css/mealCard.css';
 import { getFromLs } from '../../helpers/Ls';
 
 const MealCard = (props) => {

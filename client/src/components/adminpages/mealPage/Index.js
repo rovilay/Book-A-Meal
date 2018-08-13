@@ -14,8 +14,6 @@ import {
 
 import navData from '../../../helpers/navData';
 import MealForm from './MealForm';
-// import MealTable from './MealTable/MealTable';
-// import adminActions from '../../../actions/adminActions';
 import {
   setMealForEdit,
   postMeal,
@@ -291,14 +289,13 @@ class MealPage extends Component {
   handlePaginationClick(data) {
     const { limit } = this.props.pagination;
     const nextOffset = (data.selected) * limit;
-    // const url = `${mealUrl}&limit=${limit}&offset=${nextOffset}`;
+
     this.props.getMeals({ limit, offset: nextOffset });
   }
 
   render() {
     const {
       isEdit,
-      // mealOnEditId,
       imageToUpload,
       disableBtn,
     } = this.state;
