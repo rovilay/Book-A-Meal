@@ -242,7 +242,16 @@ class MenusController {
       });
   }
 
-
+  /**
+   * Removes meals in a menu
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof MenusController
+   */
   static deleteMealInMenu(req, res, next) {
     const { postOn } = req.query;
     const { meals } = req.body;
@@ -273,13 +282,19 @@ class MenusController {
 
                 res.status(200).send({
                   success: true,
-                  message: 'Meal removed from menu succesfully!',
+                  message: 'Meal removed from menu successfully!',
                 });
+              }
+
+              if (menu === null) {
+                const err = new Error(`Menu for date: ${postOn}, not found!`);
+                err.status = 404;
+                throw err;
               }
             })
             .catch((err) => {
-              err = new Error('Error occurred while deleting meal!');
-              err.status = 400;
+              err = err || new Error('Error occurred while deleting meal!');
+              err.status = err.status || 400;
               return next(err);
             });
         }

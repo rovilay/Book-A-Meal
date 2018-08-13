@@ -275,5 +275,74 @@ describe('Menus API routes', (done) => {
       });
     });
   });
+
+  describe('DELETE /api/v1/menus', (done) => {
+    it('should not delete meal if customer', (done) => {
+      chai.request(app.listen())
+      .delete('/api/v1/menus?postOn=2020-05-18')
+      .set('Authorization', `Bearer ${customerToken}`)
+      .send({
+        meals: ['dea6b55b-a9d3-424c-8cfa-e6581185c4c8']
+      })
+      .end((err, res) => {
+        if(err) return done(err);
+        expect(res.status).to.equal(403);
+        expect(res.body.success).to.equal(false);
+        expect(res.body.message).to.equal('User not allowed!');
+        done();
+      });
+    });
+
+    it('should not delete meal if postOn is not in correct format (YYYY-MM-DD)', (done) => {
+      chai.request(app.listen())
+      .delete('/api/v1/menus?postOn=05-18-2020')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({
+        meals: ['dea6b55b-a9d3-424c-8cfa-e6581185c4c8']
+      })
+      .end((err, res) => {
+        if(err) return done(err);
+        expect(res.status).to.equal(400);
+        expect(res.body.success).to.equal(false);
+        expect(res.body.message).to.equal('05-18-2020 is invalid!, date should be in "YYYY-MM-DD" format!');
+        done();
+      });
+    });
+
+    it('should return error if meal not found', (done) => {
+      chai.request(app.listen())
+      .delete('/api/v1/menus?postOn=2010-05-13')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({
+        meals: ['dea6b55b-a9d3-424c-8cfa-e6581185c4c8']
+      })
+      .end((err, res) => {
+        if(err) return done(err);
+        console.log(res);
+        expect(res.status).to.equal(404);
+        expect(res.body.success).to.equal(false);
+        expect(res.body.message).to.equal('Menu for date: 2010-05-13, not found!');
+        done();
+      });
+    });
+
+    it('should delete meals in a menu only if admin', (done) => {
+      chai.request(app.listen())
+      .delete('/api/v1/menus?postOn=2020-05-18')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .send({
+        meals: [
+          'dea6b55b-a9d3-424c-8cfa-e6581185c4c8'
+        ]
+      })
+      .end((err, res) => {
+        if(err) return done(err);
+        expect(res.status).to.equal(200);
+        expect(res.body.success).to.equal(true);
+        expect(res.body.message).to.equal('Meal removed from menu successfully!');
+        done();
+      });
+    });
+  });
 });
 
