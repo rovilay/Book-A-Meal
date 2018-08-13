@@ -31,7 +31,7 @@ p {
   font-size: 18px;
   line-height: 25px;
   border-radius: 4px;
- 
+
 }
 
 .header a.logo  {
@@ -104,13 +104,13 @@ p {
   padding: 0.6rem;
 }
 
-order {
+/* order {
   margin-top: 0.7em
 }
 
 #order-total-price {
   font-size: 1.0em;
-}
+} */
 
 /* buttons */
 

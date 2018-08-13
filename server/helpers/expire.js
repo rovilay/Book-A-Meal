@@ -8,8 +8,8 @@ import moment from 'moment';
  */
 const isExpired = (dateToCompare) => {
   if (dateToCompare) {
-    const now = moment().format('LL');
-    return moment(now).isAfter(moment(dateToCompare).format('LL'));
+    const now = moment().format('YYYY-MM-DD');
+    return moment(now).isAfter(moment(dateToCompare, 'YYYY-MM-DD'));
   }
 };
 

@@ -6,18 +6,17 @@ import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
+import ReactPaginate from 'react-paginate';
 
 import Modal from '../Modal/Index';
 import navData from '../../../helpers/navData';
-import tableHeadData from '../../../helpers/tableHeadData';
+import { orderHead } from '../../../helpers/tableHeadData';
 import filterify from '../../../helpers/filterify';
-import TableHead from '../../common/Table/TableHead';
-import OrderTableRow from '../../common/Table/OrderTableRow';
+import TableRow from './Tablerow';
 import setFilter from '../../../actions/filterActions';
-import { getAllOrders } from '../../../actions/ordersActions';
+import { getAllOrders, getOrderMeals } from '../../../actions/ordersActions';
 import { setModal } from '../../../actions/modalActions';
 import { emptyEditMenu } from '../../../actions/menuActions';
-import summer from '../../../helpers/summer';
 import Filter from '../../common/Filter';
 
 class OrderHistory extends Component {
@@ -26,11 +25,12 @@ class OrderHistory extends Component {
 
     this.hideModal = this.hideModal.bind(this);
     this.showDetails = this.showDetails.bind(this);
+    this.handlePaginationClick = this.handlePaginationClick.bind(this);
   }
 
   componentDidMount() {
     this.props.setNav(navData.adminNav);
-    this.props.getAllOrders();
+    this.props.getAllOrders({});
     this.props.setFilter({ filter: 'all' });
     this.hideModal();
   }
@@ -46,109 +46,152 @@ class OrderHistory extends Component {
     });
   }
 
-  showDetails(orderDetails) {
-    this.props.setModal({
-      isOpen: true,
-      isInfo: false,
-      isEdit: false,
-      isOrderInfo: true,
-      close: false,
-      contentLabel: 'Order details',
-      content: { ...orderDetails }
-    });
+  showDetails(mealsUrl) {
+    this.props.getOrderMeals(mealsUrl, {})
+      .then((res) => {
+        this.props.setModal({
+          isOpen: true,
+          isInfo: false,
+          isEdit: false,
+          isOrderInfo: true,
+          close: false,
+          contentLabel: 'Order details',
+          content: { ...res.orders[0] },
+          pagination: { ...res.pagination }
+        });
+      });
+  }
+
+  /**
+   * handles pagination changes
+   *
+   * @param {object} data data object from pagination component
+   */
+  handlePaginationClick(data) {
+    const nextPage = data.selected;
+    const { limit } = this.props.pagination;
+    const nextOffset = nextPage * limit;
+
+    this.props.getAllOrders({ limit, offset: nextOffset });
   }
 
   render() {
-    const { orders } = this.props;
-    const grandTotalPrice = summer(orders, 'totalPrice');
+    const { orders, pagination, grandTotalPrice } = this.props;
+    // const grandTotalPrice = summer(orders, 'totalPrice');
+    const { offset, numOfPages, count } = pagination;
 
     return (
-      <div className="pull-down">
-        <div className="title" id="menu-title">
-          Order History
+      <div className="admin-orderPage">
+        <div className="welcome">
+          <p className="merienda">
+            Order History
+          </p>
         </div>
-        <hr />
+
         <div className="table-container">
           <Filter
             {...this.props}
             tableContent="order_history"
           />
-          {
-            (orders.length === 0)
-              ?
-                <p className="empty not-found">No orders found!</p>
-              :
-              (
-                <div>
-                  <table>
-                    <TableHead tableHeadData={tableHeadData.orderHead} />
-                    <tbody>
-                      {
-                        orders.map((order, i) => {
-                          const {
-                            id: orderId,
-                            createdAt: date,
-                            totalPrice,
-                            deliveryAddress: address,
-                            Meals: meals,
-                            User
-                          } = order;
 
-                          const time = moment(date).format('HH:mm');
+        </div>
 
-                          const item = {
-                            sn: ++i,
-                            orderId,
-                            date: moment(date).format('LL'),
-                            totalPrice,
-                          };
-
-                          const orderDetails = {
-                            orderId,
-                            meals,
-                            address,
-                            totalPrice,
-                            time,
-                            date: moment(date).format('LL'),
-                            user: `${User.firstName} ${User.lastName}`
-                          };
-
-                          return (
-                            <OrderTableRow
-                              key={i}
-                              item={item}
-                              orderCreatedAt={order.createdAt}
-                              sn={++i}
-                              orderDetails={orderDetails}
-                              showDetails={this.showDetails}
-                              {...this.props}
-                            />
-                          );
-                        })
-                      }
-                    </tbody>
-                  </table>
-
+        {
+          (orders.length === 0)
+            ?
+              <p className="empty not-found">No orders found!</p>
+            :
+            (
+              <div className="container-test">
+                <div className="row head">
                   {
-                    (grandTotalPrice > 0)
-                    &&
-                    (
-                      <p>
-                        Grand Total (&#8358;): {grandTotalPrice}
+                    orderHead.map((title, i) => (
+                      <p
+                        key={i}
+                        className="row-item"
+                      >
+                        {title}
                       </p>
-                    )
+                    ))
                   }
                 </div>
+                {
+                  orders.map((order, i) => {
+                    const {
+                      id: orderId,
+                      createdAt,
+                      totalPrice,
+                      Meals: mealsUrl
+                    } = order;
+
+                    const item = {
+                      sn: (++i + offset),
+                      orderId,
+                      date: moment(createdAt).format('LL'),
+                      totalPrice,
+                    };
+                    return (
+                      <TableRow
+                        {...this.props}
+                        key={i}
+                        sn={++i}
+                        item={item}
+                        showDetails={this.showDetails}
+                        mealsUrl={mealsUrl}
+                        editOrder={this.onEditOrder}
+                        updatePortion={this.updatePortion}
+                        orderCreatedAt={createdAt}
+                        actions={{
+                          delete: true,
+                          info: true,
+                          edit: true
+                        }}
+                      />
+                    );
+                  })
+                }
+              </div>
+            )
+        }
+        {
+          (orders.length !== 0)
+          &&
+          <div className="order">
+            {
+              (grandTotalPrice > 0)
+              &&
+              (
+                <p className="grandTot">
+                  Total Sales (&#8358;): {grandTotalPrice}
+                </p>
               )
-          }
-        </div>
+            }
+          </div>
+        }
+        {
+          (count > 10)
+          &&
+          <ReactPaginate
+            previousLabel="<<"
+            nextLabel=">>"
+            breakLabel={<a href="">...</a>}
+            breakClassName="break-me"
+            pageCount={numOfPages}
+            marginPagesDisplayed={2}
+            pageRangeDisplayed={5}
+            onPageChange={this.handlePaginationClick}
+            containerClassName="pagination"
+            subContainerClassName="pages pagination"
+            activeClassName="active"
+          />
+        }
+
         <Modal
           hideModal={this.hideModal}
           deleteRow={this.deleteRow}
           {...this.props}
         />
       </div>
-
     );
   }
 }
@@ -159,12 +202,18 @@ OrderHistory.propTypes = {
   getAllOrders: PropTypes.func.isRequired,
   setFilter: PropTypes.func.isRequired,
   orders: PropTypes.array.isRequired,
-  setNav: PropTypes.func.isRequired
+  setNav: PropTypes.func.isRequired,
+  pagination: PropTypes.object.isRequired,
+  grandTotalPrice: PropTypes.number.isRequired,
+  getOrderMeals: PropTypes.func.isRequired,
 };
 
 const mapStateToProps = state => ({
   orders: filterify(state.orders.history, state.filter),
   modal: state.modal,
+  pagination: state.orders.pagination,
+  grandTotalPrice: state.orders.grandTotalPrice,
+  orderedMealsPagination: state.orders.orderedMealsPagination
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
@@ -172,7 +221,8 @@ const mapDispatchToProps = dispatch => bindActionCreators(
     setModal,
     emptyEditMenu,
     getAllOrders,
-    setFilter
+    setFilter,
+    getOrderMeals
   },
   dispatch
 );

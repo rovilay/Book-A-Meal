@@ -3,13 +3,28 @@ import {
   DELETE_ORDER_SUCCESS,
   SET_EDIT_ORDER,
   SET_ORDERS,
-  UPDATE_ORDERED_MEAL_PORTION
+  UPDATE_ORDERED_MEAL_PORTION,
+  SET_ORDER_MEALS
 } from '../actions/actiontypes';
 
 const ordersDefaultState = {
   grandTotalPrice: 0,
   history: [],
+  orderMeals: [],
   editOrder: {},
+  orderedMeals: [],
+  orderedMealsPagination: {
+    limit: 5,
+    offset: 0,
+    numOfPages: 1,
+    count: 0
+  },
+  pagination: {
+    limit: 10,
+    offset: 0,
+    numOfPages: 1,
+    count: 0
+  }
 };
 
 const ordersReducer = (state = ordersDefaultState, action) => {
@@ -18,6 +33,11 @@ const ordersReducer = (state = ordersDefaultState, action) => {
       return {
         ...state,
         ...action.orders
+      };
+    case SET_ORDER_MEALS:
+      return {
+        ...state,
+        ...action.order
       };
     case SET_EDIT_ORDER:
       return {

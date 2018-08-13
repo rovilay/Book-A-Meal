@@ -16,6 +16,7 @@ import {
  * @param {Boolean} close close modal
  * @param {Object} content modal content;
  * @param {String} contentLabel modal label
+ * @param {object} pagination modal pagination
  * @returns {Object} action types and modal properties
  */
 export const setModal = ({
@@ -26,7 +27,8 @@ export const setModal = ({
   isOrderInfo = false,
   close = true,
   content = {},
-  contentLabel = ''
+  contentLabel = '',
+  pagination
 }) => (
   {
     type: SET_MODAL,
@@ -38,7 +40,8 @@ export const setModal = ({
       isSetMenu,
       close,
       contentLabel,
-      content
+      content,
+      pagination
     }
   }
 );

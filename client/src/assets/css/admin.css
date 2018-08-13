@@ -123,7 +123,7 @@
 
 @media screen and (min-width: 700px) {
     .adminpage .table-container .res-container{
-        max-height: 70vh;
+        /* max-height: 70vh; */
         overflow: scroll;
         /* margin: 20px */
     }
@@ -175,7 +175,7 @@
 }
 
 .adminpage .table-container .res-container{
-    max-height: 70vh;
+    /* max-height: 70vh; */
     overflow: scroll;
     /* margin: 20px */
 }

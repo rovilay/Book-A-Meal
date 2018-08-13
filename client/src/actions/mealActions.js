@@ -19,9 +19,10 @@ import {
 export const setMealForEdit = mealId => (
   (dispatch, getState) => {
     const { meals } = getState().meal;
+    const tempMeals = [...meals];
     return dispatch({
       type: SET_MEAL_FOR_EDIT,
-      mealForEdit: meals.filter(meal => meal.id === mealId)[0]
+      mealForEdit: { ...tempMeals.filter(meal => meal.id === mealId)[0] }
     });
   }
 );
@@ -53,15 +54,16 @@ export const setDefaultMealState = () => (
  *
  * @return {Function} - function that dispatches meals and serverRes action to the redux store
  */
-export const getMeals = () => (dispatch) => {
-  serverReq('get', '/api/v1/meals')
+export const getMeals = ({ limit = 12, offset = 0 }) => (dispatch) => {
+  serverReq('get', `/api/v1/meals?limit=${limit}&offset=${offset}`)
     .then((response) => {
       if (response.data) {
-        const { success, meals } = response.data;
+        const { success, meals, pagination } = response.data;
         if (success) {
           dispatch({
             type: SET_MEALS,
-            meals: arraySort(meals, 'title')
+            meals: arraySort(meals, 'title'),
+            pagination
           });
         }
       }
@@ -75,11 +77,26 @@ export const getMeals = () => (dispatch) => {
  * @param {String} mealId - Id of neal to delete
  * @return {Function} - function that dispatches meals and serverRes action to the redux store
  */
-export const deleteMeal = mealId => (dispatch) => {
+export const deleteMeal = mealId => (dispatch, getState) => {
   return serverReq('delete', `/api/v1/meals/${mealId}`)
     .then((response) => {
       if (response.status === 204) {
-        dispatch(getMeals());
+        const { meals: oldMeals, pagination } = getState().meal;
+        // dispatch(getMeals({}));
+
+        const newMeals = oldMeals.filter(meal => meal.id !== mealId);
+        pagination.count -= 1;
+
+        // get meals if current meal state is empty
+        if (newMeals.length === 0) {
+          return dispatch(getMeals({}));
+        }
+
+        dispatch({
+          type: SET_MEALS,
+          meals: arraySort(newMeals, 'title'),
+          pagination
+        });
         notify('Meal was successfully Deleted!', 'toast-success');
       } else if (response.data.message) {
         dispatch({
@@ -107,19 +124,33 @@ export const deleteMeal = mealId => (dispatch) => {
  * @return {Function} - function that dispatches serverRes action to the redux store
  */
 /* eslint arrow-body-style:0 */
-export const postMeal = data => (dispatch) => {
+export const postMeal = data => (dispatch, getState) => {
   return serverReq('post', '/api/v1/meals', data)
     .then((response) => {
       if (response.data) {
-        const { success, message } = response.data;
+        const { success, message, meal } = response.data;
+
         if (success) {
-          dispatch(getMeals());
+          const { meals, pagination } = getState().meal;
+          const tempMeals = [...meals];
+
+          // remove last meal
+          tempMeals.pop();
+
+          // add new meal
+          tempMeals.unshift(meal);
+
+          dispatch({
+            type: SET_MEALS,
+            meals: arraySort(tempMeals, 'title'),
+            pagination
+          });
+
           notify(message, 'toast-success');
-        } else {
-          notify(message, 'toast-danger');
+          return success;
         }
 
-        return success;
+        notify(message, 'toast-danger');
       }
     })
     .catch(err => notify(err));
@@ -132,18 +163,38 @@ export const postMeal = data => (dispatch) => {
  * @param {Object} data - data of meal to update
  * @return {Function} - function that dispatches serverRes action to the redux store
  */
-export const updateMeal = ({ mealId, data }) => (dispatch) => {
+export const updateMeal = ({ mealId, data }) => (dispatch, getState) => (
   serverReq('put', `/api/v1/meals/${mealId}`, data)
     .then((response) => {
       if (response.data) {
         const { success, message } = response.data;
         if (success) {
-          dispatch(getMeals());
+          const { meals, pagination } = getState().meal;
+          let tempMeals = [...meals];
+
+          tempMeals = tempMeals.map((meal) => {
+            if (meal.id === mealId) {
+              return {
+                ...meal,
+                ...data
+              };
+            }
+            return meal;
+          });
+
+          dispatch({
+            type: SET_MEALS,
+            meals: arraySort(tempMeals, 'title'),
+            pagination
+          });
+
           notify(message, 'toast-success');
         } else {
           notify(message, 'toast-danger');
         }
+
+        return response.data;
       }
     })
-    .catch(err => notify(err));
-};
+    .catch(err => notify(err))
+);

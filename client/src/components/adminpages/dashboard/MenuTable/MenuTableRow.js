@@ -39,8 +39,8 @@ const MenuTableRow = (props) => {
             />
           </a>
           {
-            (moment(moment().format('LL'), 'MMMM DD, YYYY').isSameOrBefore(item.postOn))
-            &&
+            // (moment(moment().format('LL'), 'MMMM DD, YYYY').isSameOrBefore(item.postOn))
+            // &&
             <a
               onClick={() => {
                 const { menuId, postOn, Meals: meals } = item;

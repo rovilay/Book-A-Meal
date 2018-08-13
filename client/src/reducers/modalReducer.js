@@ -11,7 +11,12 @@ const modalDefaultState = {
   isSetMenu: false,
   close: true,
   content: {},
-  contentLabel: ''
+  contentLabel: '',
+  pagination: {
+    limit: 10,
+    offset: 0,
+    numOfPages: 1
+  }
 };
 
 const modalReducer = (state = modalDefaultState, action) => {

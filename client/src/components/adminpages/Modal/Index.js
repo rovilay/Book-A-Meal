@@ -1,6 +1,7 @@
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import Modal from 'react-modal';
+import FontAwesome from 'react-fontawesome';
 
 import MenuDetailsTable from '../dashboard/MenuTable/MenuDetails';
 import EditMenuTable from '../dashboard/MenuTable/EditMenu';
@@ -33,9 +34,12 @@ class ModalComp extends Component {
         <div className="closeBtn">
           <button
             onClick={hideModal}
-            className="btn-col btn-1"
+            className=""
           >
-            close
+            <FontAwesome
+              name="times"
+              size="2x"
+            />
           </button>
         </div>
         {

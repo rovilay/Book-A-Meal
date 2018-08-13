@@ -17,13 +17,20 @@ import AppRouter from './routers/AppRouter';
 // import './assets/css/newadmin.css';
 // import './assets/css/newtable.css';
 // import './assets/css/mealCard.css';
+
+
+import './assets/css/button.css';
 import './assets/css/test.css';
 import './assets/css/header.css';
 import './assets/css/login.css';
 import './assets/css/try.css';
 import './assets/css/customer.css';
 import './assets/css/table.css';
-import './assets/css/admin.css';
+import './assets/css/modal.css';
+import './assets/css/admin-1.css';
+import './assets/css/filter.css';
+import './assets/css/row.css';
+import './assets/css/newMenu.css';
 
 // const jsx = (
 //   <Provider store={store}>

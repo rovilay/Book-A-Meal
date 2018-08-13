@@ -2,7 +2,8 @@ import {
   ADD_MEAL_TO_CART,
   UPDATE_CART_MEAL_PORTION,
   DELETE_MEAL_IN_CART,
-  EMPTY_CART
+  EMPTY_CART,
+  SET_CART_FROM_LS
 } from '../actions/actiontypes';
 
 const cartDefaultState = {
@@ -30,6 +31,11 @@ const cartReducer = (state = cartDefaultState, action) => {
       return {
         ...state,
         ...action.updatedCart
+      };
+    case SET_CART_FROM_LS:
+      return {
+        ...state,
+        ...action.cart
       };
     default:
       return state;

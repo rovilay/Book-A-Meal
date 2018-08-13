@@ -21,14 +21,14 @@ class HomePage extends Component {
       <main>
         <section className="first-section">
           <div className="showcase">
-            <p className="merienda"> Meals that perfectly <br />fits your lifestyle</p>
+            <p className="merienda"> Meals that perfectly fits your lifestyle</p>
             {
               (todayMenu.length !== 0)
               &&
               <a
                 role="button"
                 href="#menu"
-                className="view-menu-btn"
+                className="view-menu-btn btn-2"
               >
                 View menu
               </a>
@@ -44,15 +44,15 @@ class HomePage extends Component {
             </p>
             <p className="buttons">
               <button
-                className="btn-1"
+                className="btn-2"
                 onClick={() => {
                   this.props.history.push('/login');
                 }}
               >
-                Login
+                Log in
               </button>
               <button
-                className="btn-1"
+                className="btn-2"
                 onClick={() => {
                   this.props.history.push('/signup');
                 }}

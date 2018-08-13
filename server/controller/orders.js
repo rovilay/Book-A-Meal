@@ -39,6 +39,7 @@ class OrdersController {
       }],
       distinct: true,
       limit,
+      order: [['createdAt', 'DESC']],
       offset
     })
       .then((response) => {

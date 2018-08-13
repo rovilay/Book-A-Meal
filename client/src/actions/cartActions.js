@@ -8,8 +8,9 @@ import {
   ADD_MEAL_TO_CART,
   UPDATE_CART_MEAL_PORTION,
   DELETE_MEAL_IN_CART,
-  EMPTY_CART
+  EMPTY_CART,
 } from './actiontypes';
+
 
 export const addMealToCart = ({
   id,
@@ -26,23 +27,26 @@ export const addMealToCart = ({
 
     if (meals.length === 0 || newMeals.length === meals.length) {
       totalPrice += unitPrice * portion;
+      const cart = {
+        meals: [
+          ...newMeals,
+          {
+            id,
+            title,
+            unitPrice,
+            portion,
+            price: unitPrice * portion
+          }
+        ],
+        totalPrice
+      };
+
       dispatch({
         type: ADD_MEAL_TO_CART,
-        cart: {
-          meals: [
-            ...newMeals,
-            {
-              id,
-              title,
-              unitPrice,
-              portion,
-              price: unitPrice * portion
-            }
-          ],
-          totalPrice
-        }
+        cart,
       });
 
+      // storeInLs('bookAMealCart', cart);
       return notify('Meal added to cart', 'toast-success', 'bottom-left');
     }
     if (newMeals.length !== meals.length) {
@@ -54,21 +58,27 @@ export const addMealToCart = ({
 export const updateCartMealPortion = ({ id, portion }) => (
   (dispatch, getState) => {
     const { meals } = getState().cart;
+    const newMeals = [...meals];
     let totalPrice = 0;
-    meals.map((meal) => {
+    newMeals.map((meal) => {
       if (meal.id === id) {
         meal.portion = portion;
         meal.price = portion * meal.unitPrice;
       }
       totalPrice += meal.price;
     });
-    return dispatch({
+
+    const updatedCart = {
+      meals: newMeals,
+      totalPrice
+    };
+
+    dispatch({
       type: UPDATE_CART_MEAL_PORTION,
-      updatedCart: {
-        meals,
-        totalPrice
-      }
+      updatedCart
     });
+
+    // storeInLs('bookAMealCart', updatedCart);
   }
 );
 
@@ -82,13 +92,18 @@ export const deleteMealInCart = ({ id, price }) => (
 
     if (meals.length === 0 || newMeals.length !== meals.length) {
       totalPrice -= price;
-      return dispatch({
+
+      const modifiedCart = {
+        meals: newMeals,
+        totalPrice
+      };
+
+      dispatch({
         type: DELETE_MEAL_IN_CART,
-        modifiedCart: {
-          meals: newMeals,
-          totalPrice
-        }
+        modifiedCart
       });
+
+      // storeInLs('bookAMealCart', modifiedCart);
     }
   }
 );
@@ -108,3 +123,15 @@ export const addToCart = mealData => (dispatch) => {
 export const emptyCart = () => ({
   type: EMPTY_CART,
 });
+
+// export const setCartFromLs = () => (dispatch, getState) => {
+//   const { meals } = getState().cart;
+//   if (meals.length < 1) {
+//     // const cart = getFromLs('bookAMealCart');
+//     // console.log(cart);
+//     dispatch({
+//       type: SET_CART_FROM_LS,
+//       cart
+//     });
+//   }
+// };

@@ -13,7 +13,7 @@ const ModalComp = (props) => {
     isInfo,
     isEdit,
     content,
-    contentLabel
+    contentLabel,
   } = props.modal;
 
   return (
@@ -27,7 +27,7 @@ const ModalComp = (props) => {
         <button
           type="button"
           onClick={props.hideModal}
-          className=""
+          className="modal-btn"
         >
           <FontAwesome
             name="times"
