@@ -2,19 +2,19 @@
 import validator from 'validator';
 
 const loginValidator = ({ email, password }) => {
-  let valid;
+  let inValid;
 
-  (email && validator.isEmail(email)) ? valid = '' : valid = 'email is invalid';
+  (email && validator.isEmail(email)) ? inValid = '' : inValid = 'email is invalid';
 
-  if (valid === '' && !password) {
-    valid = 'password field is empty';
+  if (inValid === '' && !password) {
+    inValid = 'password field is empty';
   }
 
-  if (valid === '') {
+  if (inValid === '') {
     return 'Login';
   }
 
-  return valid;
+  return inValid;
 };
 
 export default loginValidator;

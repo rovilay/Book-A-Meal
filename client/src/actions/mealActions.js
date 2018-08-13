@@ -133,9 +133,10 @@ export const postMeal = data => (dispatch, getState) => {
         if (success) {
           const { meals, pagination } = getState().meal;
           const tempMeals = [...meals];
-
-          // remove last meal
-          tempMeals.pop();
+          if (tempMeals.length >= 12) {
+            // remove last meal
+            tempMeals.pop();
+          }
 
           // add new meal
           tempMeals.unshift(meal);

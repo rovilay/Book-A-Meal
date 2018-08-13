@@ -1,11 +1,11 @@
+import moment from 'moment';
 import React from 'react';
 import PropTypes from 'prop-types';
 import classname from 'classnames';
 import ReactPaginate from 'react-paginate';
-import moment from 'moment';
 
 import { orderDetailHead } from '../../../helpers/tableHeadData';
-import TableRow from './Tablerow';
+import AdminOrderTableRow from './OrderTablerow';
 
 const OrderDetailsTable = (props) => {
   const {
@@ -44,16 +44,6 @@ const OrderDetailsTable = (props) => {
     getOrderMeals(mealsUrl, { limit, offset: newOffset });
   };
 
-  // const {
-  //   meals,
-  //   address,
-  //   totalPrice,
-  //   date,
-  //   user,
-  //   time
-  // } = content;
-
-  // const orderedMeals = arraySort(meals, 'title');
   return (
     <div className="table-container">
       <div className="order-details">
@@ -110,7 +100,7 @@ const OrderDetailsTable = (props) => {
             };
 
             return (
-              <TableRow
+              <AdminOrderTableRow
                 key={i}
                 item={item}
                 id={id}

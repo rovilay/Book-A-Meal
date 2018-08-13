@@ -1,496 +1,332 @@
-/* *, body {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: 'merienda', 'roboto', 'Times New roman'
+@import url('https://fonts.googleapis.com/css?family=Roboto|Satisfy|Average+Sans');
+
+*, body, html {
+	margin: 0;
+	padding: 0;
+	border: 0;
+	font-size: 100%;
+	font: inherit;
+  vertical-align: baseline;
+  font-family: 'Roboto', sans-serif;
+  scroll-behavior: smooth
 }
 
-body {
-  display: flex
+.merienda {
+  font-family: 'Merienda'
 }
 
 .color-1 {
-  color: #ec730a;
+  color: #DE7830
 }
 
 .color-2 {
-  color: #1c9c0b
+  color: rgb(0, 128, 0)
 }
 
-.main-body {
-  display: grid;
-  grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 20% 70% 10%;
-  grid-template-areas:
-    "header header header header"
-    "content content content content"
-    "footer footer footer footer"
-
-}
-.header {
-  grid-area: header;
-  padding: 10px
-}
-
-.footer {
-  grid-area: footer;
-  display: grid;
-  text-align: center;
-  position: fixed;
-  padding: 20px 0;
-  left: 0;
-  bottom: 0;
-  width: 100vw;
-  color: #ffffff;
-  background: #292C34;
-}
-
-.main-body>div {
-  grid-area: content;
-  width: 100vw;
-}
-
-.main {
-  display: grid;
-  grid-template-columns: 11% 26% 26% 26% 11%;
-  grid-template-rows: auto;
-  grid-template-areas:
-    "container1 container1 container1 container1 container1"
-    "container2 container2 container2 container2 container2"
-    "container3 container3 container3 container3 container3";
-  margin-bottom: 3em;
-}
-
-.main .welc-showcase {
-  grid-area: container1;
-  background-image: url('https://res.cloudinary.com/dcqnswemi/image/upload/v1532201043/bg-img.jpg');
-  min-height: 100vh;
-  width: 100%;
-
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.main .welc-showcase .showcase {
-  height: 100vh;
-  width: auto;
+header {
   display: flex;
-  flex-direction: column;
+  align-items: center;
+}
+
+meal {
+  margin: auto;
+}
+
+.first-section {
+  height: 50vh;
+  /* margin-bottom: 30px; */
+  padding: 30px;
+  color: white;
+  background:
+  linear-gradient(
+    rgba(0, 0, 0, 0.45),
+    rgba(0, 0, 0, 0.75)
+  ),
+    url('https://res.cloudinary.com/dcqnswemi/image/upload/v1532201043/bg-img.jpg') center #333 no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+  color: white;
+  text-shadow: 0px 0px 5px #000;
+  display: flex;
   justify-content: center;
   align-items: center;
-  color: white;
-  font-size: 68px;
-  background-color: rgba(0, 0, 0, .7);
-  margin: auto;
-  opacity: .9;
-  text-transform: uppercase;
+}
+
+.showcase {
+  font-weight: bold;
+  font-size: 7vw;
+  padding: 20px;
+  display: inline-flex;
+  flex-direction: column;
+  /* overflow: hidden; */
+  height: auto;
+  justify-content: center;
+  align-items: center;
+}
+
+.showcase>p {
   text-align: center
 }
 
-.main .welc-showcase .showcase>p {
-  margin: 5px;
-}
 
-.main .showcase1 {
-  grid-area: container2;
+.intro {
+  height: auto;
+  padding: 30px;
   background: #F3F5F9;
-  min-height: 50vh;
-  width: 100%;
-
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
   display: flex;
-  justify-content: center;
-  align-items: center;
-
+  font-size: 6vw;
+  justify-content: center
 }
 
-.main .showcase1 .intro-container {
-  margin: 10px;
+.intro .intro-container {
   text-align: center;
-  line-height: 45px;
-  padding: 10px 10px 0 0;
-}
-
-.main .showcase1 .intro-container>h1 {
-  font-size: 44px;
-  line-height: 60px;
-}
-
-.main .showcase1 .intro-container .buttons {
+  height: auto;
   display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
+  line-height: 1.3;
+
 }
 
-.view-menu {
-  background: transparent;
-  width: 200px;
-  height: 50px;
-  color: white;
-  font-size: 18px;
+.intro-container>h1 {
+  font-weight: bold;
+  font-size: .8em;
   text-transform: uppercase;
-  transition: background .5s ease-in-out;
-  cursor: pointer;
-  border-radius: 10px;
-  outline: none
+  color: rgb(202, 124, 69);
 }
 
-.view-menu:hover {
-  background: #1c9c0b;
-  border: none
+
+.intro-container>p {
+ font-size: .6em;
+ margin: auto;
+ display: flex;
+ justify-content: space-around;
+ align-items: center;
+ font-weight: 100px;
+ line-height: 1.5;
 }
+
+.intro-container p.buttons {
+  display: inline-flex;
+  width: 80%;
+  justify-content: center;
+  margin: 10px auto
+}
+
 
 .btn-1 {
-  width: 200px;
-  height: 50px;
-  color: white;
-  font-size: 18px;
+  border: none;
+  padding: 12px 16px;
+  color: #ffffff;
+  text-align: center;
   text-transform: uppercase;
   cursor: pointer;
   border-radius: 10px;
-  background: #1c9c0b;
-  transition: background .5s ease-in-out;
-  margin: 0.5em;
+  background: #61b750;
+  letter-spacing: 1px;
+  border-radius: 3px !important;
+  font-weight: 600;
+  margin: auto 10px;
+  /* transition: background .5s ease-in-out; */
+  /* margin: 0.5em; */
+  -webkit-transition: all .1s ease 0s;
+  -moz-transition: all .1s ease 0s;
+  -ms-transition: all .1s ease 0s;
+  -o-transition: all .1s ease 0s;
+  transition: all .1s ease 0s;
+  text-transform: uppercase;
   outline: none
 }
 
 .btn-1:hover {
-  border: 1px solid #cccccc;
-  background: transparent;
-  color: #000000;
+  box-shadow: 0 2px 2px 0 rgba(0,0,0,0.14), 0 1px 5px 0 rgba(0,0,0,0.12), 0 3px 1px -2px rgba(0,0,0,0.2);
+  background: rgb(56, 134, 35)
 }
 
-.main .menu {
-  grid-area: container3;
-  background: #ffffff;
-  min-height: 70vh;
-  width: 100vw;
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
+.meal-page {
   display: flex;
-  flex-direction: row;
+  flex-direction: column;
+  align-content: stretch
 }
 
-.main .menu .container {
-  /* border: 1px solid blue;
-  margin: auto;
-  order: 2;
-  display: grid;
-  grid-template-columns: repeat(5, 20%);
-  grid-template-rows: auto;
-  grid-template-areas:
-    ". title title  title . "
-    "menu-container menu-container menu-container menu-container menu-container";
-  line-height: 45px;
+.meal-page .title {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  color: #DE7830;
+  text-transform: uppercase;
+  font-size: 40px;
+  font-weight: 800;
+  width: 100%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0;
+  padding: 20px 0;
+  text-align: center
 }
 
 
-.main .menu .container .title {
-  grid-area: title;
-  font-size: 44px;
+.menu {
+  font-size: 5vw;
+}
+
+.menu .title {
+  font-size: 1.5em;
   font-weight: bold;
   line-height: 60px;
   margin: 30px 0;
-  align-self: center;
-}
-
-
-.main .menu .container .menu-container {
-  grid-area: menu-container;
-  align-self: center;
-  margin: auto;
-  display: grid;
-  max-height: 60vh;
-  overflow-y: scroll;
-  grid-template-columns: repeat(3, minmax(300px, 30%));
-  grid-template-rows: auto;
-  justify-content: space-around;
-  width: 100%;
-  grid-row-gap: 0px;
-  justify-items: center;
-
+  text-align: center;
+  color: rgb(202, 124, 69);
+  text-transform: uppercase;
 }
 
 .menu-container {
-  margin: auto;
   display: grid;
-  max-width: 90%;
-  max-height: 600px;
-  overflow-y: scroll;
-  grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
-  grid-template-rows: 30% 30% 30%;
-  justify-content: space-between;
-  grid-row-gap: 20px;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  grid-gap: 30px;
+  height: auto;
+  overflow: auto;
+}
+
+.menu-container:last-child {
+  margin-bottom: 100px
+}
+
+.view-menu-btn {
+  font-size: .3em;
+  text-align: center;
+  text-decoration: none;
+}
+
+
+.menu-container .mealCard-container {
+  /* border: 1px solid green; */
+  position: relative;
+  height: auto;
+  margin: auto;
   padding: 10px;
-}
-
-@media only screen and (max-device-width: 1066px) {
-  .welc-showcase {
-      background-attachment: scroll;
-  }
-}
-
-@media screen and (max-width: 900px) {
-  .main .welc-showcase .showcase,
-  .main .menu .container .title {
-    font-size: 8vw;
-  }
-} */
-
-* {
-  box-sizing: border-box;
-  margin: 0;
-  padding: 0;
-  font-family: merienda
-}
-
-html, body {
-  display: flex;
-  width: 100vw;
-}
-
-.color-1 {
-  color: #ec730a;
-}
-
-.color-2 {
-  color: #1c9c0b
-}
-
-.main-body {
-  display: block;
-  flex-direction: column;
-  justify-content: flex-start
-  /* grid-template-columns: repeat(4, 1fr);
-  grid-template-rows: 20% 70% 10%;
-  grid-template-areas:
-    "header header header header"
-    "content content content content"
-    "footer footer footer footer" */
-
-}
-.header {
-  grid-area: header;
-  padding: 10px;
-  background-color: #292C34;
-  /* overflow: hidden; */
-  position: fixed;
-  display: flex;
-  justify-content: space-between;
-  width: 100%;
-  z-index: 1;
-}
-
-.footer {
-  grid-area: footer;
-  display: grid;
-  text-align: center;
-  position: fixed;
-  padding: 20px 0;
-  color: #ffffff;
-  background: #292C34;
-  grid-area: footer;
-  left: 0;
-  bottom: 0;
-  width: 100%;
-}
-
-.hoc {
-  width: 100vw
-}
-
-.main {
-  display: grid;
-  grid-template-columns: 11% 26% 26% 26% 11%;
-  grid-template-rows: auto;
-  grid-template-areas:
-    "container1 container1 container1 container1 container1"
-    "container2 container2 container2 container2 container2"
-    "container3 container3 container3 container3 container3"
-}
-
-.main-body {
-  grid-area: content
-}
-
-.main .welc-showcase {
-  grid-area: container1;
-  background-image: url('https://res.cloudinary.com/dcqnswemi/image/upload/v1532201043/bg-img.jpg');
-
-  min-height: 100vh;
-  width: 100%;
-  /* Create the parallax scrolling effect */
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-}
-
-.main .welc-showcase .showcase {
-  height: 100vh;
-  /* width: auto; */
-  display: flex;
-  flex-direction: column;
-  justify-content: center;
-  align-items: center;
-  color: white;
-  font-size: 68px;
-  background-color: rgba(0, 0, 0, .7);
-  margin: auto;
-  opacity: .9;
-  text-transform: uppercase;
-  text-align: center
-}
-
-.main .welc-showcase .showcase>p {
-  margin: 5px;
-}
-
-.main .showcase1 {
-  grid-area: container2;
-  background: #F3F5F9;
-  min-height: 50vh;
-  width: 100%;
-  /* Create the parallax scrolling effect */
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  justify-content: center;
-  align-items: center;
-
-}
-
-.main .showcase1 .intro-container {
-  margin: 10px;
-  text-align: center;
-  line-height: 45px;
-  padding: 10px 10px 0 0;
-}
-
-.main .showcase1 .intro-container>h1 {
-  font-size: 44px;
-  line-height: 60px;
-}
-
-.main .showcase1 .intro-container .buttons {
-  display: flex;
-  flex-direction: row;
-  justify-content: space-evenly;
-  align-items: center;
-}
-
-.view-menu {
-  background: transparent;
-  width: 200px;
-  height: 50px;
-  color: white;
-  font-size: 18px;
-  text-transform: uppercase;
-  transition: background .5s ease-in-out;
   cursor: pointer;
-  border-radius: 10px;
-  outline: none
-}
-
-.view-menu:hover {
-  background: #1c9c0b;
-  border: none
-}
-
-.main .menu {
-  grid-area: container3;
-  /* border: 1px solid #ccc; */
-  background: #ffffff;
-  min-height: 70vh;
-  width: 100%;
-  /* Create the parallax scrolling effect */
-  background-attachment: fixed;
-  background-position: center;
-  background-repeat: no-repeat;
-  background-size: cover;
-  display: flex;
-  flex-direction: row;
-}
-
-.main .menu .container {
-  /* border: 1px solid blue; */
-  margin: auto;
-  order: 2;
-  display: grid;
-  grid-template-columns: repeat(5, 20%);
-  grid-template-rows: auto;
+  grid-template-columns: 100%;
+  /* grid-template-rows: 80% 20%; */
   grid-template-areas:
-    ". title title  title . "
-    "menu-container menu-container menu-container menu-container menu-container";
-  text-align: center;
-  line-height: 45px;
+    "meal-image"
+    "meal-label";
+  border-radius: 5px 5px 0px 0px;
+  text-transform: capitalize
 }
 
-.main .menu .container .title {
-  grid-area: title;
-  font-size: 44px;
-  font-weight: bold;
-  line-height: 60px;
-  margin: 30px 0;
-  color: #ec730a;
-  align-self: center;
-}
-
-.btn-1 {
-  width: 200px;
-  height: 50px;
-  color: white;
-  font-size: 18px;
-  text-transform: uppercase;
-  cursor: pointer;
-  border-radius: 10px;
-  background: #1c9c0b;
-  transition: background .5s ease-in-out;
-  margin: 0.5em;
-  outline: none
-}
-
-.btn-1:hover {
-  border: 1px solid #cccccc;
-  background: transparent;
-  color: #000000;
-}
-
-
-.main .menu .container .menu-container {
-  grid-area: menu-container;
-  align-self: center;
-  margin: auto;
-  display: grid;
-  max-height: 60vh;
-  overflow-y: scroll;
-  grid-template-columns: repeat(3, minmax(300px, 30%));
-
-  grid-template-rows: auto;
-  justify-content: space-around;
+img {
   width: 100%;
-  grid-row-gap: 40px;
-  justify-items: center;
-  /* border: 1px solid red */
+  height: 243.2px;
+  border-radius: 5px 5px 0px 0px;
+}
+
+.menu-container .mealCard-container .overlay1 {
+  position: absolute;
+  background: #000000;
+  width: 92%;
+
+  color: white;
+  top: 34%;
+  margin: auto;
+  left: 11px;
+  display: inline-block;
+  text-align: center;
+  text-transform: uppercase;
+  padding: 3px 0;
+  font-size: 16px;
+  opacity: 0.7;
+}
+
+.intro-container>p.buttons {
+  display: inline-flex;
+  flex-direction: column;
+  justify-content: space-around
 }
 
 
-/* Container */
+  .menu-container .mealCard-container .overlay1 {
+    width: 92%;
+    top: 34%;
+  };
+
+  .first-section {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    height: 60vh;
+  }
+
+  .showcase>p {
+    max-width: 900px;
+    line-height: 1.4em;
+  }
+
+  .intro {
+    font-size: 4vw;
+    height: auto;
+    justify-content: center
+  }
+
+  .intro-container {
+    width: 80%;
+    padding: 35px;
+    flex-direction: column;
+  }
+
+  .intro-container>h1 {
+    font-size: 1.2em;
+    line-height: 1.3
+  }
+
+  .intro-container>p {
+    padding: 20px;
+    margin: 10px;
+    font-size: .5em;
+  }
+
+  .btn-1 {
+    background: #61b750;
+    width: 150px;
+    height: 50px;
+  }
+
+  .menu .title {
+    font-size: 1.9em;
+    padding: 20px 0;
+  }
+
+  .view-menu-btn {
+    background-color: #4CAF50;
+    border: none;
+    color: white;
+    width: auto;
+    height: auto;
+    padding: 15px 32px;
+    text-align: center;
+    text-decoration: none;
+    display: inline-block;
+    font-size: 16px;
+    margin: 20px 2px;
+    cursor: pointer;
+  }
+
+  .view-menu-btn:hover {
+    background: #1c9c0b;
+    border: none
+  }
+
+  .menu-container {
+    max-width: 960px;
+    margin: 0 auto 30px;
+  }
+
+  /* Container */
 .menu-container .mealCard-container {
   position: relative;
   width: 262px;
   height: 304px;
   display: grid;
+  margin: 10px auto;
   grid-template-columns: 100%;
   grid-template-rows: 80% 20%;
   grid-template-areas:
@@ -507,9 +343,10 @@ html, body {
 /* meal */
 .menu-container .mealCard-container .meal-img {
   grid-area: meal-image;
-
   width: 100%;
   height: 100%;
+  position: relative;
+  object-fit: cover;
   border-radius: 5px 5px 0 0
 }
 
@@ -517,8 +354,11 @@ html, body {
 /* overlay */
 .menu-container .mealCard-container .overlay {
   grid-area: meal-image;
+  position: absolute;
+  top: 0;
   height: 100%;
   width: 100%;
+  padding: 10px;
   position: absolute;
   opacity: 0;
   /* transition: .5s ease; */
@@ -527,6 +367,10 @@ html, body {
   flex-direction: column;
   justify-content: center
 }
+
+.menu-container .mealCard-container .mobile-overlay {
+  /* display: none; */
+ }
 
 .menu-container .mealCard-container:hover .overlay {
   display: flex;
@@ -537,33 +381,17 @@ html, body {
  color:  #ffffff;
  height: 60%;
  font-size: 15px;
+ text-align: justify;
+ word-wrap: break-word;
+ word-break: break-all;
  order: 1;
  align-self: center;
 }
 
-.menu-container .mealCard-container .overlay>button {
-  order: 2;
-  align-self: center;
-  width: 105px;
-  height: 20%;
-  border: 0px;
-  border-radius: 5px;
-  background: #2CD479;
-  color: #ffffff;
-  font-size: 18px;
-  cursor: pointer;
-  outline: none
-}
-
-.overlay>button:hover {
-  background: rgb(12, 180, 88)
-}
-
-
 /* Label */
 .menu-container .mealCard-container .meal-label {
   grid-area: meal-label;
-  width: 100%;
+  /* border: 1px solid red; */
   height: 100%;
   display: flex;
   flex-direction: row;
@@ -573,6 +401,15 @@ html, body {
   background: #ffffff;
   padding: 0 0 5px 8px;
   box-shadow: 1px 1px 5px 1px #cccccc;
+}
+
+.menu-container .mealCard-container .mobile-label {
+  display: none;
+}
+
+.menu-container .mealCard-container .meal-label>button {
+  order: 2;
+  margin: auto !important
 }
 
 .meal-label .meal-title, .meal-label .meal-price {
@@ -590,19 +427,133 @@ html, body {
 .meal-label .meal-price {
   width: 87px;
   font-size: 17px;
-  color: rgb(67, 143, 52);
+  color: #000000
+}
+
+.homepage,
+.customer-page{
+ height: auto;
+ margin-bottom: 100px;
+}
+
+.homepage .pagination-container,
+.customer-page .pagination-container {
+  display: flex;
+}
+
+/* not found page */
+.not-found-page-container {
+  display: flex;
+  background: #ffffff;
+  justify-content: center;
+  align-items: center;
+  height: 100vh;
+}
+
+.not-found-page-container .not-found-page {
+  width: 100%;
+  margin: auto;
+  text-align: center;
+  font-size: 20px;
+}
+
+.not-found-page-container .not-found-page>h1 {
+  color: #4CAF50;
+  font-size: 30vw;
+}
+
+.not-found-page-container .not-found-page>a {
+  color: #4CAF50;
+  text-decoration: none;
+}
+
+.not-found-page-container .not-found-page>a:hover {
+  color: #DE7830;
+  text-decoration: none;
 }
 
 
-@media only screen and (max-device-width: 1066px) {
-  .welc-showcase {
-      background-attachment: scroll;
+@media screen and (min-width: 700px) {
+  .intro-container>p.buttons {
+    display: inline-flex;
+    flex-direction: row !important;
+    justify-content: space-around
+  }
+
+  .not-found-page-container .not-found-page {
+    font-size: 30px;
+  }
+
+  .not-found-page-container .not-found-page>h1 {
+    font-size: 300px;
+  }
+
+  .menu .title {
+    font-size: 1.2em
   }
 }
 
-@media screen and (max-width: 900px) {
-  .main .welc-showcase .showcase,
-  .main .menu .container .title {
-    font-size: 8vw;
+@media (min-width: 1066px) {
+  .first-section {
+      background-attachment: fixed;
+      height: 100vh;
+  }
+
+  .first-section .showcase {
+    font-size: 89px
+  }
+
+
+  .menu .title {
+    font-size: 0.9em
   }
 }
+
+.toast {
+  font-size: 14px;
+  background: #4CAF50;
+  color: #ffffff;
+}
+
+.empty {
+  margin: auto;
+  margin-top: 100px;
+  font-size: 4vmax;
+  color: #d3d3d3;
+  font-weight: bold;
+  text-align: center;
+}
+
+.not-found {
+  margin: 100px auto;
+}
+
+/* footer */
+footer {
+  display: grid;
+	text-align: center;
+	background: #292C34;
+	color: #ffffff;
+	width: 100%;
+  bottom: 0;
+  padding: 10px 0;
+	position: fixed;
+}
+
+/* toast */
+.toast-success {
+  background: #61b750;
+  font-size: 14px;
+  color: #ffffff
+}
+
+.toast-danger {
+  background-color: rgb(240, 35, 35);
+  color: #ffffff;
+  font-size: 14px
+}
+
+
+
+
+

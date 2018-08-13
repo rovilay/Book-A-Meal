@@ -1,10 +1,10 @@
 /*   eslint class-methods-use-this:0, */
 /* eslint no-alert: 0 */
 /* eslint no-restricted-globals: 0 */
+import { bindActionCreators } from 'redux';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import sweetAlert from 'sweetalert';
 import { toast } from 'react-toastify';
 import ReactPaginate from 'react-paginate';
@@ -14,8 +14,6 @@ import {
 
 import navData from '../../../helpers/navData';
 import MealForm from './MealForm';
-// import MealTable from './MealTable/MealTable';
-// import adminActions from '../../../actions/adminActions';
 import {
   setMealForEdit,
   postMeal,
@@ -291,14 +289,13 @@ class MealPage extends Component {
   handlePaginationClick(data) {
     const { limit } = this.props.pagination;
     const nextOffset = (data.selected) * limit;
-    // const url = `${mealUrl}&limit=${limit}&offset=${nextOffset}`;
+
     this.props.getMeals({ limit, offset: nextOffset });
   }
 
   render() {
     const {
       isEdit,
-      // mealOnEditId,
       imageToUpload,
       disableBtn,
     } = this.state;

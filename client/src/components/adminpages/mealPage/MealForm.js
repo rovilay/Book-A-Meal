@@ -1,15 +1,14 @@
 /* eslint jsx-a11y/label-has-for: 0 */
 /* eslint no-restricted-globals: 0 */
-import React from 'react';
-import PropTypes from 'prop-types';
-import FontAwesome from 'react-fontawesome';
 import {
   AccordionItem,
   AccordionItemTitle,
   AccordionItemBody,
 } from 'react-accessible-accordion';
+import React from 'react';
+import PropTypes from 'prop-types';
+import FontAwesome from 'react-fontawesome';
 
-import '../../../assets/css/meal-option.css';
 
 const Mealform = ({
   closeEdit,
