@@ -1,0 +1,54 @@
+/* Cart */
+export const ADD_MEAL_TO_CART = 'ADD_MEAL_TO_CART';
+export const DELETE_MEAL_IN_CART = 'DELETE_MEAL_IN_CART';
+export const EMPTY_CART = 'EMPTY_CART';
+export const UPDATE_CART_MEAL_PORTION = 'UPDATE_CART_MEAL_PORTION';
+// export const SET_CART_FROM_LS = 'SET_CART_FROM_LS';
+
+/* Filter */
+export const SET_FILTER = 'SET_FILTER';
+
+/* Login */
+export const LOG_OUT_USER = 'LOG_OUT_USER';
+export const SET_USER_DATA = 'SET_USER_DATA';
+
+/* Meals */
+export const MEAL_ERROR = 'MEAL_ERROR';
+export const SET_DEFAULT_MEAL_STATE = 'SET_DEFAULT_MEAL_STATE';
+export const SET_MEALS = 'SET_MEALS';
+export const SET_MEAL_FOR_EDIT = 'SET_MEAL_FOR_EDIT';
+export const REMOVE_MEAL_FROM_EDIT = 'REMOVE_MEAL_FROM_EDIT';
+
+/* Menu */
+export const ADD_MEAL_TO_NEW_MENU = 'ADD_MEAL_TO_NEW_MENU';
+export const ADD_MEAL_IN_EDIT_MENU = 'ADD_MEAL_IN_EDIT_MENU';
+export const DELETE_MEAL_IN_EDIT_MENU = 'DELETE_MEAL_IN_EDIT_MENU';
+export const DELETE_MEAL_IN_MENU = 'DELETE_MEAL_IN_MENU';
+export const EMPTY_NEW_MENU = 'EMPTY_NEW_MENU';
+export const EMPTY_EDIT_MENU = 'EMPTY_EDIT_MENU';
+export const REMOVE_MEAL_FROM_NEW_MENU = 'REMOVE_MEAL_FROM_NEW_MENU';
+export const SET_ALL_MENUS = 'SET_ALL_MENUS';
+export const SET_MENU_MEALS = 'SET_MENU_MEALS';
+export const SET_MENU_FOR_EDIT = 'SET_MENU_FOR_EDIT';
+export const SET_TODAY_MENU = 'SET_TODAY_MENU';
+
+/* Modal */
+export const SET_MODAL = 'SET_MODAL';
+export const ADD_MEAL_IN_EDIT_MENU_MODAL = 'ADD_MEAL_IN_EDIT_MENU_MODAL';
+export const DELETE_MEAL_IN_EDIT_MODAL = 'DELETE_MEAL_IN_EDIT_MODAL';
+
+/* Navigation Links */
+export const SET_DEFAULT_NAV = 'SET_DEFAULT_NAV';
+export const SET_NAV_BAR = 'SET_NAV_BAR';
+
+/* Orders */
+export const DELETE_MEAL_IN_EDIT_ORDER = 'DELETE_MEAL_IN_EDIT_ORDER';
+export const DELETE_ORDER_SUCCESS = 'DELETE_ORDER_SUCCESS';
+export const UPDATE_ORDER_SUCCESS = 'UPDATE_ORDER_SUCCESS';
+export const SET_EDIT_ORDER = 'SET_EDIT_ORDER';
+export const SET_ORDERS = 'SET_ORDERS';
+export const SET_ORDER_MEALS = 'SET_ORDER_MEALS';
+export const UPDATE_ORDERED_MEAL_PORTION = 'UPDATE_MEAL_PORTION';
+
+/* Signup */
+export const SET_SIGNUP_SUCCESS = 'SET_SIGNUP_SUCCESS';

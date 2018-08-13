@@ -6,7 +6,7 @@ dotenv.config();
 /**
  * Gets image file and uploads to cloudinary
  *
- * @param {string} id - id of the DOM element that holdes the image
+ * @param {string} id - id of the DOM element that holds the image
  * @returns {Promise} returns a promise which inturn returns the image cloudinary link
  */
 const imageUploader = (id) => {

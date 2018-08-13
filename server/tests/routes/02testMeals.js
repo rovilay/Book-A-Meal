@@ -37,7 +37,7 @@ describe('Meals API routes', (done) => {
           expect(res.body.success).to.equal(true);
           expect(res.body.message).to.equal('Meal added successfully');
           if (err) return done(err);
-          console.log(err);
+
           done();
         });
     });
@@ -85,7 +85,7 @@ describe('Meals API routes', (done) => {
         expect(res.status).to.equal(200);
         expect(res.body.success).to.equal(true);
         expect(res.body.message).to.equal('Meals retrieved successfully');
-        res.body.should.have.property('meals');
+        res.body.should.have.property('meals').that.is.an('array');
         res.body.meals.should.be.an('array');
         res.body.meals.forEach(meal => {
           meal.should.be.an('object');
@@ -116,6 +116,61 @@ describe('Meals API routes', (done) => {
         done();
       });
     });
+
+    it('should not return more than the specified limit in query', (done) => {
+      chai.request(app.listen())
+      .get('/api/v1/meals?limit=5&offset=0')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        const { pagination, message, success, meals } = res.body;
+        if(err) return done(err);
+        expect(res.status).to.equal(200);
+        expect(success).to.equal(true);
+        expect(message).to.equal('Meals retrieved successfully');
+        res.body.should.have.property('meals').that.is.an('array');
+        expect(meals.length).to.be.at.most(5);
+        expect(meals.length).to.be.at.least(1);
+        res.body.should.have.property('pagination').and.should.be.an('object');
+        expect(pagination).to.have.all.keys('limit', 'offset', 'numOfPages', 'curPage', 'count', 'nextOffset');
+        expect(pagination.offset).to.equal(0);
+        expect(pagination.limit).to.equal(5);
+        expect(pagination.count).to.equal(3);
+        expect(pagination.numOfPages).to.equal(1);
+        expect(pagination.curPage).to.equal(1);
+        expect(pagination.nextOffset).to.equal(5);
+        meals.forEach(meal => {
+          meal.should.be.an('object');
+          meal.should.have.property('id');
+          meal.should.have.property('title');
+          meal.should.have.property('description');
+          meal.should.have.property('price');
+          meal.should.have.property('image');
+          meal.should.have.property('UserId');
+          meal.title.should.be.a('string');
+          meal.description.should.be.a('string');
+          meal.image.should.be.a('string');
+          meal.price.should.be.a('number');
+        });
+
+        done();
+      });
+    })
+
+    it('should not return error is limit and offset are in invlid format', (done) => {
+      chai.request(app.listen())
+      .get('/api/v1/meals?limit=cbcb&offset=bcncb')
+      .set('Authorization', `Bearer ${adminToken}`)
+      .end((err, res) => {
+        const { message, success } = res.body;
+        if(err) return done(err);
+
+        expect(res.status).to.equal(400);
+        expect(success).to.equal(false);
+        expect(message).to.equal('limit or offset query must be a number!');
+
+        done();
+      });
+    })
   });
 
   describe('GET /api/v1/meals/:id', (done) => {

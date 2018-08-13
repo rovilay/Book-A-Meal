@@ -32,24 +32,26 @@ describe('Orders API routes', (done) => {
       .get('/api/v1/orders')
       .set('Authorization', `Bearer ${adminToken}`)
       .end((err, res) => {
+        const { pagination, message, success, orders } = res.body;
         if(err) return done(err);
         expect(res.status).to.equal(200);
-        expect(res.body.success).to.equal(true);
-        expect(res.body.message).to.equal('Orders retrieved successfully!');
-        res.body.should.have.property('grandTotalPrice');
-        res.body.should.have.property('orders');
-        expect(res.body.orders).to.be.an('array');
-        res.body.orders.forEach(order => {
+        expect(res.body).to.have.all.keys('success', 'message', 'pagination', 'orders', 'grandTotalPrice');
+        expect(success).to.equal(true);
+        expect(message).to.equal('Orders retrieved successfully!');
+        expect(orders).be.an('array');
+        expect(orders.length).to.equal(2);
+        expect(pagination).to.be.an('object');
+        expect(pagination).to.have.all.keys('limit', 'offset', 'numOfPages', 'curPage', 'count', 'nextOffset');
+        expect(pagination.offset).to.equal(0);
+        expect(pagination.limit).to.equal(10);
+        expect(pagination.count).to.equal(2);
+        expect(pagination.numOfPages).to.equal(1);
+        expect(pagination.curPage).to.equal(1);
+        expect(pagination.nextOffset).to.equal(10);
+        orders.forEach(order => {
           order.should.be.an('object');
-          order.should.have.property('id');
-          order.should.have.property('UserId');
-          order.should.have.property('deliveryAddress');
-          order.should.have.property('totalPrice');
-          order.should.have.property('User');
-          order.should.have.property('Meals');
-          order.Meals.should.be.an('array');
-          order.Meals[0].OrderMeal.should.have.property('portion');
-          order.Meals[0].OrderMeal.portion.should.be.a('number');
+          expect(order).to.have.all.keys('id', 'deliveryAddress', 'UserId', 'User', 'totalPrice', 'Meals', 'createdAt', 'updatedAt');
+          expect(order.Meals).to.be.a('string');
         });
         done();
       });
@@ -100,7 +102,7 @@ describe('Orders API routes', (done) => {
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(403);
-        expect(res.body.message).to.equal('Only customers are allowed to perform this operation!'); 
+        expect(res.body.message).to.equal('Only customers are allowed to perform this operation!');
 
         done();
       });
@@ -125,8 +127,8 @@ describe('Orders API routes', (done) => {
 
         if(moment().hour() >= 7 && moment().hour() <= 18) {
           expect(res.status).to.equal(400);
-          expect(res.body.message).to.equal('meal entry is not correct'); 
-          
+          expect(res.body.message).to.equal('meal entry is not correct');
+
         } else {
           expect(res.status).to.equal(403);
           expect(res.body.success).to.equal(false);
@@ -155,7 +157,7 @@ describe('Orders API routes', (done) => {
         if(err) return done(err);
         if(moment().hour() >= 7 && moment().hour() <= 18) {
           expect(res.status).to.equal(404);
-          expect(res.body.message).to.equal('meal with id: 32947007-da1b-4bc1-ad3a-8cc106dee9fb, not found!'); 
+          expect(res.body.message).to.equal('meal with id: 32947007-da1b-4bc1-ad3a-8cc106dee9fb, not found!');
         } else {
           expect(res.status).to.equal(403);
           expect(res.body.success).to.equal(false);
@@ -182,19 +184,62 @@ describe('Orders API routes', (done) => {
         expect(res.body.orders).to.be.an('array');
         res.body.orders.forEach(order => {
           order.should.be.an('object');
-          order.should.have.property('id');
-          order.should.have.property('UserId');
-          order.should.have.property('deliveryAddress');
-          order.should.have.property('totalPrice');
-          order.should.have.property('User');
-          order.should.have.property('Meals');
-          order.Meals.should.be.an('array');
+          expect(order).to.have.all.keys('id', 'deliveryAddress', 'UserId', 'User', 'totalPrice', 'Meals', 'createdAt', 'updatedAt');
+          expect(order.Meals).to.be.an('string')
+        });
+        done();
+      });
+    });
+
+    it('should return all orders placed by specified user', (done) => {
+      chai.request(app.listen())
+      .get('/api/v1/orders/618ef639-4729-4256-bdf4-54ff2e6a61d9?id=702a5034-8ea5-4251-a14c-9c59c01244a4&limit=2')
+      .set('Authorization', `Bearer ${customerToken}`)
+      .end((err, res) => {
+        const { success, message, pagination, orders, grandTotalPrice } = res.body;
+        if(err) return done(err);
+        expect(res.status).to.equal(200);
+        expect(res.body).to.have.all.keys('success', 'message', 'pagination', 'orders', 'grandTotalPrice');
+        expect(success).to.equal(true);
+        expect(message).to.equal('Orders retrieved successfully!');
+        expect(orders).to.be.an('array');
+        expect(orders.length).to.equal(1);
+        expect(pagination).to.be.an('object');
+        expect(pagination).to.have.all.keys('limit', 'offset', 'numOfPages', 'curPage', 'count', 'nextOffset');
+        expect(pagination.offset).to.equal(0);
+        expect(pagination.limit).to.equal(2);
+        expect(pagination.count).to.equal(2);
+        expect(pagination.numOfPages).to.equal(1);
+        expect(pagination.curPage).to.equal(1);
+        expect(pagination.nextOffset).to.equal(2);
+        orders.forEach(order => {
+          order.should.be.an('object');
+          expect(order).to.have.all.keys('id', 'deliveryAddress', 'UserId', 'User', 'totalPrice', 'Meals', 'createdAt', 'updatedAt');
+          expect(order.Meals).to.be.an('array')
           order.Meals[0].OrderMeal.should.have.property('portion');
           order.Meals[0].OrderMeal.portion.should.be.a('number');
         });
         done();
       });
     });
+
+
+    it('should return error if query id is invalid', (done) => {
+      chai.request(app.listen())
+      .get('/api/v1/orders/618ef639-4729-4256-bdf4-54ff2e6a61d9?id=8ea5-42tttt51-a14c-9c59c01244a4')
+      .set('Authorization', `Bearer ${customerToken}`)
+      .end((err, res) => {
+        const { message, success } = res.body;
+        if(err) return done(err);
+
+        expect(res.status).to.equal(400);
+        expect(success).to.equal(false);
+        expect(message).to.equal('8ea5-42tttt51-a14c-9c59c01244a4 is not in a valid format!');
+
+        done();
+      });
+    });
+
 
     it('should allow admin get all orders by specified customer id', (done) => {
       chai.request(app.listen())
@@ -245,7 +290,7 @@ describe('Orders API routes', (done) => {
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(403);
-        expect(res.body.message).to.equal('Only customers are allowed to perform this operation!'); 
+        expect(res.body.message).to.equal('Only customers are allowed to perform this operation!');
 
         done();
       });
@@ -267,7 +312,7 @@ describe('Orders API routes', (done) => {
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(400);
-        expect(res.body.message).to.equal('meal entry is not correct'); 
+        expect(res.body.message).to.equal('meal entry is not correct');
 
         done();
       });
@@ -289,7 +334,7 @@ describe('Orders API routes', (done) => {
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(404);
-        expect(res.body.message).to.equal('meal with id: 32947007-da1b-4bc1-ad3a-8cc106dee9fb, not found!'); 
+        expect(res.body.message).to.equal('meal with id: 32947007-da1b-4bc1-ad3a-8cc106dee9fb, not found!');
 
         done();
       });
@@ -337,7 +382,7 @@ describe('Orders API routes', (done) => {
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(403);
-        expect(res.body.message).to.equal('Only customers are allowed to perform this operation!'); 
+        expect(res.body.message).to.equal('Only customers are allowed to perform this operation!');
 
         done();
       });

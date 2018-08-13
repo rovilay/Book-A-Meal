@@ -1,24 +1,36 @@
 /*
   eslint class-methods-use-this:0,
-  eslint no-restricted-globals: 0,
-  eslint no-restricted-globals: 0,
   eslint no-alert: 0,
 */
 /* eslint no-restricted-globals: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
+import arraySort from 'array-sort';
 import { bindActionCreators } from 'redux';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import {
+  Accordion,
+} from 'react-accessible-accordion';
 
 import navData from '../../../helpers/navData';
-import { setNav } from '../../../actions/navLinks';
-import adminActions from '../../../actions/admin';
+import filterify from '../../../helpers/filterify';
+import { setNav } from '../../../actions/navLinksActions';
+import {
+  getTodayMenu, getAllMenus, postMenu,
+  updateMenu, addMealToNewMenu, removeMealFromNewMenu,
+  emptyNewMenu, emptyEditMenu, addMealInEditMenu,
+  deleteMealInEditMenu, setMenuForEdit, getMenuMeals,
+  deleteMealInMenu, deleteMenuMeal
+} from '../../../actions/menuActions';
+import { getMeals } from '../../../actions/mealActions';
+import {
+  setModal, deleteMealInEditModal,
+  addMealInEditMenuModal
+} from '../../../actions/modalActions';
 import MenuTable from './MenuTable/MenuTable';
-import SetMenuCard from './MenuCard/setMenu';
-import FilterComp from '../../common/Filter';
-import filterAction from '../../../actions/filter';
+import SetMenuCard from './MenuCard/SetMenu';
+import Filter from '../../common/Filter';
+import setFilter from '../../../actions/filterActions';
 import ModalComp from '../Modal/Index';
 
 class AdminDashboard extends Component {
@@ -33,25 +45,20 @@ class AdminDashboard extends Component {
     this.deleteRow = this.deleteRow.bind(this);
     this.onSubmitUpdate = this.onSubmitUpdate.bind(this);
     this.unCheckAll = this.unCheckAll.bind(this);
-    this.notify = this.notify.bind(this);
+    this.getMenus = this.getMenus.bind(this);
+    this.handlePaginationClick = this.handlePaginationClick.bind(this);
   }
 
   componentDidMount() {
     this.props.setNav(navData.adminNavDefault);
-    this.props.getMeals();
-    this.props.getMenus();
-    this.props.filterAction('menus_list', { filter: 'all' });
+    this.props.getMeals({});
+    this.props.getAllMenus({});
+    this.props.setFilter({ filter: 'all' });
     this.hideModal();
   }
 
   onSubmitUpdate(menuDate, meals) {
-    const { updateMenu } = this.props;
-    const data = { meals };
-    updateMenu({ menuDate, data });
-    setTimeout(() => {
-      this.notify(this.props.serverRes.message);
-      location.reload();
-    }, 200);
+    this.props.updateMenu({ menuDate, meals });
   }
 
   setNewMenuMeal(mealId) {
@@ -68,29 +75,17 @@ class AdminDashboard extends Component {
     }
   }
 
-  unCheckAll(mealIdArr) {
-    mealIdArr.forEach((mealId) => {
-      const checkbox = document.getElementById(mealId);
-      checkbox.checked = false;
-    });
-  }
-
-  submitNewMenu() {
-    const meals = [...this.props.newMenuMeals];
-    const date = document.getElementById('postOn').value;
-    const postOn = date.split('/').reverse().join('-');
-    this.props.postMenu({ postOn, meals });
-    location.reload();
-    setTimeout(() => {
-      this.notify(this.props.serverRes.message);
-    }, 200);
-  }
-
-  notify(msg) {
-    toast(msg, {
-      position: toast.POSITION.TOP_CENTER,
-      className: 'toast',
-      progressClassName: 'toast-progress'
+  /**
+   * gets menus
+   * @param {number} limit pagination limit
+   * @param {number} offset pagination offset
+   * @param {string} menuUrl menu meals url to get meals for a menu
+   */
+  getMenus({ limit, offset, menuUrl }) {
+    this.props.getAllMenus({
+      limit,
+      offset,
+      menuUrl
     });
   }
 
@@ -117,58 +112,92 @@ class AdminDashboard extends Component {
   }
 
   editMenu({ menuId, postOn, meals }) {
+    getMeals({});
     this.props.setModal({
       isOpen: true,
       isInfo: false,
       isEdit: true,
       close: false,
-      contentLabel: 'Edit Menu',
+      contentLabel: 'Add Meals',
       content: { menuId, postOn, meals }
     });
+    this.props.setMenuForEdit(meals);
     this.props.emptyNewMenu();
   }
 
   deleteRow(id) {
     this.props.deleteMealInEditModal(id);
+    this.props.deleteMealInEditMenu(id);
+  }
+
+  unCheckAll(mealIdArr) {
+    mealIdArr.forEach((mealId) => {
+      const checkbox = document.getElementById(mealId);
+      checkbox.checked = false;
+    });
+  }
+
+  submitNewMenu() {
+    const meals = [...this.props.newMenuMeals];
+    const date = document.getElementById('postOn').value;
+    const postOn = date.split('/').reverse().join('-');
+    this.props.postMenu({ postOn, meals });
+  }
+
+
+  /**
+   * handles pagination changes
+   *
+   * @param {object} data data object from pagination component
+   */
+  handlePaginationClick(data) {
+    // const nextPage = data.selected + 1;
+    const { limit } = this.props.pagination;
+    const offset = (data.selected) * limit;
+    this.getMenus({ limit, offset });
   }
 
   render() {
-    const { firstName, lastName } = this.props.user;
+    const { user } = this.props;
+    const { firstName, lastName } = user;
     return (
       <div>
         <div className="welcome">
-          <p>
+          <p className="merienda">
             welcome, {firstName} {lastName}
           </p>
         </div>
         <section className="setmenu">
-          <div className="setmenu-container">
-            <SetMenuCard
-              setNewMenuMeal={this.setNewMenuMeal}
-              submitNewMenu={this.submitNewMenu}
-              {...this.props}
-            />
-          </div>
+          <Accordion>
+            <div className="setmenu-container">
+              <SetMenuCard
+                setNewMenuMeal={this.setNewMenuMeal}
+                submitNewMenu={this.submitNewMenu}
+                {...this.props}
+              />
+            </div>
+          </Accordion>
         </section>
+        {/* <MenuAccordion /> */}
         <section className="adminpage">
           <div className="menu-title">Menus List</div>
-          <div className="table-container">
-            <FilterComp
+          <div className="container">
+            <Filter
               {...this.props}
               tableContent="Menus_List"
             />
             {
-              (this.props.filteredMenus.length === 0)
+              (this.props.menus.length === 0)
                 ?
                   <p className="empty not-found">No menu found!</p>
                 :
-                  <div className="res-container">
+                  <Accordion>
                     <MenuTable
                       showMenuDetails={this.showMenuDetails}
                       editMenu={this.editMenu}
                       {...this.props}
                     />
-                  </div>
+                  </Accordion>
             }
           </div>
         </section>
@@ -176,11 +205,9 @@ class AdminDashboard extends Component {
           hideModal={this.hideModal}
           deleteRow={this.deleteRow}
           submitUpdate={this.onSubmitUpdate}
-          notify={this.notify}
           setNewMenuMeal={this.setNewMenuMeal}
           {...this.props}
         />
-        <ToastContainer />
       </div>
     );
   }
@@ -189,38 +216,59 @@ class AdminDashboard extends Component {
 AdminDashboard.propTypes = {
   setNav: PropTypes.func.isRequired,
   getMeals: PropTypes.func.isRequired,
+  getAllMenus: PropTypes.func.isRequired,
   meals: PropTypes.array.isRequired,
   addMealToNewMenu: PropTypes.func.isRequired,
   removeMealFromNewMenu: PropTypes.func.isRequired,
-  getMenus: PropTypes.func.isRequired,
   postMenu: PropTypes.func.isRequired,
   newMenuMeals: PropTypes.array.isRequired,
-  serverRes: PropTypes.object.isRequired,
   setModal: PropTypes.func.isRequired,
   deleteMealInEditModal: PropTypes.func.isRequired,
   updateMenu: PropTypes.func.isRequired,
+  setMenuForEdit: PropTypes.func.isRequired,
   emptyNewMenu: PropTypes.func.isRequired,
   modal: PropTypes.object.isRequired,
-  filterAction: PropTypes.func.isRequired,
-  filteredMenus: PropTypes.array.isRequired,
-  user: PropTypes.object.isRequired
+  user: PropTypes.object.isRequired,
+  menus: PropTypes.array.isRequired,
+  setFilter: PropTypes.func.isRequired,
+  deleteMealInEditMenu: PropTypes.func.isRequired,
+  pagination: PropTypes.object.isRequired
 };
 
 const mapStateToProps = state => ({
-  meals: state.admin.meals,
-  newMenuMeals: state.admin.setMenuMeals,
-  menus: state.admin.menus,
-  filteredMenus: state.admin.filteredMenus,
-  serverRes: state.admin.serverRes,
-  modal: state.admin.modal,
-  editMenuMeals: state.admin.editMenuMeals
+  meals: arraySort(state.meal.meals, 'title'),
+  newMenuMeals: state.menu.newMenu,
+  menus: filterify(state.menu.allMenus, state.filter),
+  menuMeals: state.menu.menuMeals,
+  pagination: state.menu.pagination,
+  menuMealsPagination: state.menu.menuMealsPagination,
+  modal: state.modal,
+  editMenuMeals: state.menu.editMenu,
+  mealPagination: state.meal.pagination,
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
     setNav,
-    ...adminActions,
-    filterAction
+    setModal,
+    getMeals,
+    emptyNewMenu,
+    getAllMenus,
+    getTodayMenu,
+    updateMenu,
+    postMenu,
+    emptyEditMenu,
+    addMealToNewMenu,
+    removeMealFromNewMenu,
+    setMenuForEdit,
+    deleteMealInEditMenu,
+    deleteMealInMenu,
+    deleteMealInEditModal,
+    addMealInEditMenu,
+    addMealInEditMenuModal,
+    getMenuMeals,
+    setFilter,
+    deleteMenuMeal
   },
   dispatch
 );

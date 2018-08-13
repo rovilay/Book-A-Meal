@@ -1,0 +1,388 @@
+Global
+.warning {
+color: #ffc107;
+}
+
+.danger {
+color: #dc3543;
+}
+
+.secondary {
+color: #6c757d
+}
+
+.primary {
+color: #ff8619
+}
+
+.meal-page .setMeal-container {
+  margin: 0 auto;
+  padding: 1em;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  text-transform: uppercase;
+  font-weight: 800;
+  transition: all 0.5s ease-in-out;
+}
+
+.meal-page .accordion__title {
+  background: #6EBD58;
+  color: white;
+}
+
+.meal-page .accordion__title>h3 {
+  margin: auto 10px;
+  padding: 4px;
+  padding: 0 15px;
+  margin: 5px;
+  /* border: 1px solid; */
+}
+/* .meal-container {
+  max-width: 800px;
+  margin: 0 auto;
+  padding: 1em;
+  overflow: hidden;
+
+}
+
+section .meal-container {
+  padding-top: 0;
+} */
+
+/* .form-section {
+  margin-top: 3.5rem;
+  background: url('https://res.cloudinary.com/dcqnswemi/image/upload/v1529298213/mealsbg.jpg') no-repeat;
+  padding: 10px
+} */
+
+.card {
+  width: 80%;
+  border: 0.5px solid #ccc;
+  border-radius: 10px;
+  padding: 1.4em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 20px;
+  background: white
+}
+
+/* form */
+
+/* .card .form-title
+{
+  color: #61b750;
+  text-transform: capitalize;
+  font-size: 40px;
+  font-weight: 800;
+  text-align: center
+} */
+
+.table-title
+{
+  color: #DE7830;
+  text-transform: uppercase;
+  font-size: 40px;
+  font-weight: 800;
+  width: 80%;
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  margin: 40px 0;
+  padding: 20px 0;
+  text-align: center
+}
+
+.container .display-title {
+  color: #000;
+  text-transform: capitalize;
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 10px
+}
+
+.card .meal-option-form {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  grid-gap: 1.3em;
+}
+
+.card .meal-option-form .full {
+grid-column: 1 / 3;
+}
+
+/* .card form input[type=text],
+.card form input[type=date],
+.card form input[type=number] {
+  width: 100%;
+  padding: 12px;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  background: transparent
+}
+
+.card form input[type=text]:hover, .card form input[type=text]:focus, .card form input[type=date]:focus,
+.card form input[type=date]:hover {
+  background: white;
+  color: black
+} */
+
+.meal-form .btn-3 {
+  background: transparent;
+  font-size: 1em;
+  padding: 1em 2em;
+  text-align: center;
+  border-radius: 0.5em;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+  margin-top: 7px;
+  text-transform: capitalize
+}
+
+.meal-form .btn-3[disabled] {
+  border-color: #b6b8b6;
+  color: #b6b8b6;
+}
+
+.meal-form .btn-3:hover, .meal-form .btn-3:focus {
+  transition: background-color 0.5s ease-out
+}
+
+.meal-form .btn-3[disabled]:hover,
+.meal-form .btn-3[disabled]:focus {
+  background-color: #b6b8b6
+}
+
+.meal-form .add-btn {
+width: 100%;
+border: 1px solid #61b750;
+color: #61b750;
+font-weight: bold;
+}
+
+.meal-form .update-btn {
+border: 1px solid #ffc107;
+display: inline-block;
+width: 33%;
+float: left;
+color: #ffc107;
+font-weight: bold;
+}
+
+
+.meal-form .delete-btn {
+border: 1px solid #dc3543;
+display: inline-block;
+width: 33%;
+margin-left: 10px;
+color: #dc3543;
+font-weight: bold;
+}
+
+.meal-form .back-btn {
+border: 1px solid #6c757d;
+display: inline-block;
+width: 25%;
+color: #6c757d;
+font-weight: bold;
+}
+
+.meal-form .add-btn:hover, .meal-form .add-btn:focus {
+border: none;
+background: #61b750;
+color: #fff
+}
+
+.meal-form .update-btn:hover, .meal-form .update-btn:focus {
+border: none;
+background: #ffc107;
+color: #fff
+}
+
+.meal-form .delete-btn:hover, .meal-form .delete-btn:focus {
+border: none;
+background: #dc3543;
+color: #fff
+}
+
+
+label {
+  display: block;
+  color: #000;
+  text-transform: capitalize;
+  font-size: 1.5em;
+  font-weight: 500;
+  line-height: 1.8em
+}
+
+/* Progress Bar */
+.progress {
+  width: 25%;
+  background-color: #6c757d;
+  display: inline-flex;
+  justify-content: flex-start;
+}
+
+.progressBar {
+  width: 1%;
+  align-self: flex-start;
+  text-align: center;
+  color: #ffffff;
+  height: 20px;
+  background-color: #61b750
+}
+
+/* Meal List */
+
+/* .meal-card .card {
+  width: 70%;
+  border: 0.5px solid #ccc;
+  border-radius: 10px;
+  padding: 1.4em;
+  margin-left: auto;
+  margin-right: auto;
+  margin-top: 10px;
+  display: block;
+  background: transparent
+} */
+
+.container .display-title {
+  color: #ff8619;
+  text-transform: capitalize;
+  font-size: 30px;
+  font-weight: 600;
+  text-align: center;
+  margin-top: 30px
+}
+
+.meal-name {
+font-size: 20px;
+text-transform: capitalize;
+float: left;
+}
+
+
+.meal-card .icons {
+ float: right;
+}
+
+.meal-card button {
+  text-decoration: none;
+}
+
+.meal-card .icons .edit {
+  color: #61b750;
+  display: inline-block;
+}
+
+.meal_card .icons .trash {
+  color: #dc3543;
+  display: inline-block;
+}
+
+.meal-page .setMeal {
+  margin: auto;
+  width: 100%;
+  padding: 10px;
+  /* border: 1px solid blue; */
+}
+
+.card-body>form .input-div {
+    /* margin: auto */
+    align-self: center;
+    justify-self: center;
+    border: none;
+    border: 1px solid #ccc;
+    padding: 0 0px;
+    font-size: 14px;
+    border-radius: 3px;
+    outline: none;
+    text-align: center;
+    /* border: 1px solid red; */
+}
+
+.card-body>form .input-div {
+  height: 40px;
+  display: inline-flex;
+  justify-content: space-around;
+  align-items: center;
+  width: 100%;
+  padding: 12px !important;
+}
+
+/* .card-body>form .input-div.desc {
+  height: 70px !important;
+} */
+
+.card-body>form .input-div>input,
+.card-body>form .input-div>textarea {
+  width: 100%;
+  outline: none
+}
+
+
+
+.card-body>form .input-div.desc {
+  height: auto !important;
+}
+
+.card-body>form .input-div.desc>input {
+  height: 60px !important;
+}
+
+.card-body>form .input-div>input:focus {
+  border: 0px;
+  border-bottom: 2px solid #6EBD58;
+  border: none
+}
+
+.card-body>form div {
+  margin: 10px auto;
+}
+
+.card-body>form .buttons {
+  /* border: 1px solid yellow; */
+  width: 100%;
+  display: inline-flex;
+  flex-direction: column;
+  margin: 20px auto;
+  justify-content: center;
+  align-items: center
+}
+
+.card-body>form .edit-buttons {
+  /* border: 1px solid yellow; */
+  justify-content: space-between;
+  align-items: center
+}
+
+.card-body>form .back-btn {
+  background: #6c757d;
+  color: #fff
+}
+
+.card-body>form .back-btn:hover, .card-body>form .back-btn:focus {
+  background: #2b3d4c;
+  color: #fff
+  }
+
+.card-body>form .uploadedImage {
+  width: 50%;
+  margin: auto;
+}
+
+@media screen and (min-width: 700px) {
+  .meal-page .accordion__body {
+    width: auto !important
+  }
+
+  .meal-page .card {
+    min-width: 700px
+  }
+
+  .card-body>form .buttons {
+    flex-direction: row;
+  }
+}

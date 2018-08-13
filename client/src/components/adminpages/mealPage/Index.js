@@ -5,23 +5,36 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import { bindActionCreators } from 'redux';
-import { ToastContainer, toast } from 'react-toastify';
-import 'react-toastify/dist/ReactToastify.css';
+import sweetAlert from 'sweetalert';
+import { toast } from 'react-toastify';
+import ReactPaginate from 'react-paginate';
+import {
+  Accordion,
+} from 'react-accessible-accordion';
 
 import navData from '../../../helpers/navData';
 import MealForm from './MealForm';
-import MealTable from './MealTable/MealTable';
-import adminActions from '../../../actions/admin';
-import filterAction from '../../../actions/filter';
+import {
+  setMealForEdit,
+  postMeal,
+  updateMeal,
+  removeMealFromEdit,
+  getMeals,
+  deleteMeal
+} from '../../../actions/mealActions';
+import setFilter from '../../../actions/filterActions';
 import imageUploader from '../../../helpers/imageUploader';
+import notify from '../../../helpers/notify';
+import filterify from '../../../helpers/filterify';
+import toggleAccordion from '../../../helpers/toggleClassNames';
 import FilterComp from '../../common/Filter';
+import MealCard from '../../common/MealCard';
 
 class MealPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
       isEdit: false,
-      mealOnEditId: '',
       imageToUpload: '',
       uploadedImageLink: '',
       disableBtn: false
@@ -38,13 +51,13 @@ class MealPage extends Component {
     this.showUploadBar = this.showUploadBar.bind(this);
     this.uploadImage = this.uploadImage.bind(this);
     this.checkFileSize = this.checkFileSize.bind(this);
+    this.handlePaginationClick = this.handlePaginationClick.bind(this);
   }
 
   componentDidMount() {
     this.props.setNav(navData.adminNav);
-    this.props.getMeals();
-    this.props.filterAction('caterer_meals', { filter: 'all' });
-    this.closeEdit();
+    this.props.getMeals({ limit: 12 });
+    this.props.setFilter({ filter: 'all' });
   }
 
   /**
@@ -53,20 +66,24 @@ class MealPage extends Component {
    * Calls the updateMeal action
    * And close edit state
    */
-  onUpdateMeal() {
-    const { updateMeal } = this.props;
+  onUpdateMeal(mealOnEditId) {
     const data = this.getFormVal();
-    const mealId = this.state.mealOnEditId;
-    const confirmed = confirm('Confirm Update!');
-
-    if (confirmed) {
-      updateMeal({ mealId, data });
-      setTimeout(() => {
-        this.notify(this.props.serverRes.message);
-        location.reload();
-      }, 200);
-    }
-    this.closeEdit();
+    sweetAlert({
+      text: 'Confirm Meal Update!',
+      buttons: true,
+      dangerMode: false,
+    })
+      .then((confirmed) => {
+        if (confirmed) {
+          this.props.updateMeal({ mealId: mealOnEditId, data })
+            .then((res) => {
+              if (res.success) {
+                this.closeEdit();
+              }
+            });
+        }
+      })
+      .catch(err => notify(err));
   }
 
   /**
@@ -76,21 +93,24 @@ class MealPage extends Component {
    * Clears form on success
    */
   onAddMeal() {
-    const { postMeal } = this.props;
     const data = this.getFormVal();
-    const confirmed = confirm('Confirm Add Meal!');
-    if (confirmed) {
-      postMeal(data);
-      setTimeout(() => {
-        if (this.props.serverRes.success) {
-          this.notify(this.props.serverRes.message);
-          this.clearForm();
-          location.reload();
-        } else {
-          this.notify(this.props.serverRes.message);
+    // console.log(data);
+    sweetAlert({
+      text: 'Confirm action!',
+      buttons: true,
+      dangerMode: false,
+    })
+      .then((confirmed) => {
+        if (confirmed) {
+          this.props.postMeal(data)
+            .then((success) => {
+              if (success) {
+                toggleAccordion('.accordion__body', 'accordion__body', 'true');
+              }
+            });
         }
-      }, 200);
-    }
+      })
+      .catch(err => notify(err));
   }
 
   /* eslint prefer-destructuring:0 */
@@ -169,15 +189,15 @@ class MealPage extends Component {
    */
   editMeal(mealId) {
     this.setState({ isEdit: true });
-    this.props.setMealForEdit(mealId);
 
-    setTimeout(() => {
-      this.fillForm();
-    }, 200);
+    this.props.setMealForEdit(mealId);
 
     // scroll to top
     document.body.scrollTop = '100px';
     document.documentElement.scrollTop = '100px';
+
+    // open accordion
+    toggleAccordion('.accordion__body', 'accordion__body', 'false');
   }
 
   /**
@@ -188,13 +208,16 @@ class MealPage extends Component {
   closeEdit() {
     this.setState({
       isEdit: false,
-      mealOnEditId: '',
       imageToUpload: '',
       disableBtn: false,
       uploadedImageLink: ''
     });
-    this.clearForm();
+    // this.clearForm();
     this.props.removeMealFromEdit();
+
+
+    // close accordion
+    toggleAccordion('.accordion__body', 'accordion__body accordion__body--hidden', 'true');
   }
 
   /**
@@ -222,7 +245,6 @@ class MealPage extends Component {
     mealName.value = this.props.mealOnEdit.title;
     price.value = this.props.mealOnEdit.price;
     dsc.value = this.props.mealOnEdit.description;
-    this.setState({ mealOnEditId: this.props.mealOnEdit.id });
   }
 
   /**
@@ -259,56 +281,99 @@ class MealPage extends Component {
     return false; // if no file
   }
 
+  /**
+   * handles pagination changes
+   *
+   * @param {object} data data object from pagination component
+   */
+  handlePaginationClick(data) {
+    const { limit } = this.props.pagination;
+    const nextOffset = (data.selected) * limit;
+
+    this.props.getMeals({ limit, offset: nextOffset });
+  }
+
   render() {
     const {
       isEdit,
-      mealOnEditId,
       imageToUpload,
-      disableBtn
+      disableBtn,
     } = this.state;
 
+    const { numOfPages, count } = this.props.pagination;
+
     return (
-      <div>
-        <section className="form-section">
-          <div className="meal-container">
-            <MealForm
-              {...this.props}
-              isEdit={isEdit}
-              closeEdit={this.closeEdit}
-              addMeal={this.onAddMeal}
-              updateMeal={this.onUpdateMeal}
-              mealOnEditId={mealOnEditId}
-              imageToUpload={imageToUpload}
-              notify={this.notify}
-              showUploadBar={this.showUploadBar}
-              uploadImage={this.uploadImage}
-              uploadedImageLink={this.state.uploadedImageLink}
-              disableBtn={disableBtn}
-            />
-          </div>
+      <div className="meal-page">
+        <div className="welcome merienda">
+          <p className="merienda">
+            Manage Meals
+          </p>
+        </div>
+        <section className="setMeal">
+          <Accordion>
+            <div className="setMeal-container">
+              <MealForm
+                {...this.props}
+                isEdit={isEdit}
+                closeEdit={this.closeEdit}
+                addMeal={this.onAddMeal}
+                updateMeal={this.onUpdateMeal}
+                imageToUpload={imageToUpload}
+                notify={this.notify}
+                showUploadBar={this.showUploadBar}
+                uploadImage={this.uploadImage}
+                uploadedImageLink={this.state.uploadedImageLink}
+                disableBtn={disableBtn}
+              />
+            </div>
+          </Accordion>
         </section>
-        <div className="table-container">
-          <div className="table-title">Meal Options</div>
+        <div className="">
+          <div className="title">Meals</div>
           <FilterComp
             {...this.props}
             tableContent="caterer_meals"
           />
           {
-            (this.props.filteredMeals.length === 0)
+            (this.props.meals.length === 0)
               ?
                 <p className="empty not-found">No meal found!</p>
               :
-                <MealTable
-                  {...this.props}
-                  isEdit={isEdit}
-                  editMeal={this.editMeal}
-                  notify={this.notify}
-                />
+
+                <div className="menu-container">
+                  {
+                    this.props.meals.map(meal => (
+                      <MealCard
+                        key={meal.id}
+                        mealData={meal}
+                        {...this.props}
+                        editMeal={this.editMeal}
+                      />
+                    ))
+                  }
+                </div>
+          }
+
+          {
+            (count > 12)
+            &&
+            <div className="pagination-container">
+              <ReactPaginate
+                previousLabel="<<"
+                nextLabel=">>"
+                breakLabel={<a href="">...</a>}
+                breakClassName="break-me"
+                pageCount={numOfPages}
+                marginPagesDisplayed={2}
+                pageRangeDisplayed={5}
+                onPageChange={this.handlePaginationClick}
+                containerClassName="pagination"
+                subContainerClassName="pages pagination"
+                activeClassName="active"
+              />
+            </div>
           }
         </div>
-        <ToastContainer
-          {...this.props}
-        />
       </div>
     );
   }
@@ -323,22 +388,29 @@ MealPage.propTypes = {
   postMeal: PropTypes.func.isRequired,
   updateMeal: PropTypes.func.isRequired,
   deleteMeal: PropTypes.func.isRequired,
-  serverRes: PropTypes.object.isRequired,
-  filterAction: PropTypes.func.isRequired,
-  filteredMeals: PropTypes.array.isRequired
+  setFilter: PropTypes.func.isRequired,
+  meals: PropTypes.array.isRequired,
+  pagination: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
-  meals: state.admin.meals,
-  filteredMeals: state.admin.filteredMeals,
-  mealOnEdit: state.admin.mealOnEdit,
-  serverRes: state.admin.serverRes,
-});
+const mapStateToProps = state => (
+  {
+    meals: filterify(state.meal.meals, state.filter),
+    mealOnEdit: state.meal.mealOnEdit,
+    pagination: state.meal.pagination,
+    mealError: state.meal.error
+  }
+);
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
-    ...adminActions,
-    filterAction
+    setMealForEdit,
+    postMeal,
+    updateMeal,
+    removeMealFromEdit,
+    getMeals,
+    deleteMeal,
+    setFilter
   },
   dispatch
 );

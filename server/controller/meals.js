@@ -1,4 +1,5 @@
 import db from '../../models/index';
+import paginate from '../helpers/paginate';
 
 /**
  * Handles operations on Meal routes
@@ -18,17 +19,22 @@ class MealsController {
    * @memberof MealsController
    */
   static getAllMeals(req, res, next) {
-    db.Meal.findAll()
-      .then((meals) => {
-        if (meals === null || meals.length === 0) {
-          const err = new Error('No Meal found!');
-          err.status = 404;
-          throw err;
-        }
+    let { limit, offset } = req.query;
+    limit = Number(req.query.limit) || 10;
+    offset = Number(req.query.offset) || 0;
+
+    db.Meal.findAndCountAll({
+      limit,
+      offset,
+      order: [['title']]
+    })
+      .then((response) => {
+        const { count, rows: meals } = response;
         res.status(200).send({
           success: true,
           message: 'Meals retrieved successfully',
-          meals,
+          pagination: paginate(limit, offset, count),
+          meals
         });
       })
       .catch(err => next(err));
@@ -90,7 +96,7 @@ class MealsController {
         });
       })
       .catch((err) => {
-        err = new Error('Error, Meal already exist!');
+        err = err || new Error('Error, Meal already exist!');
         err.status = 400;
         return next(err);
       });
@@ -148,8 +154,9 @@ class MealsController {
         id: req.params.id,
       },
     })
-      .then(() =>
-        res.status(204).send('Delete successful!'))
+      .then(() => {
+        res.status(204).send('Delete successful!');
+      })
       .catch((err) => {
         err = new Error('Error occurred while deleting meal!');
         err.status = 400;
@@ -157,6 +164,5 @@ class MealsController {
       });
   }
 }
-
 
 export default MealsController;

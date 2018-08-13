@@ -3,5 +3,5 @@
   "emmet.includeLanguages": {
     "javascript": "html"
   },
-  "files.autoSave": "afterDelay"
+  "files.autoSave": "onFocusChange"
 }
