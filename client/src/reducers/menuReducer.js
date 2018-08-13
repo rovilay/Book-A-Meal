@@ -39,7 +39,9 @@ const menuReducer = (state = setDefaultMenuState, action) => {
     case SET_TODAY_MENU:
       return {
         ...state,
-        todayMenu: action.menu
+        todayMenu: action.meals,
+        pagination: action.pagination
+
       };
     case ADD_MEAL_TO_NEW_MENU:
       return {

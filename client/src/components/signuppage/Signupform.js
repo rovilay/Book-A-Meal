@@ -1,11 +1,10 @@
 /* eslint jsx-a11y/label-has-for:0 */
 /* eslint react/destructuring-assignment: 0 */
+import validator from 'validator';
 import React from 'react';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
-import { connect } from 'react-redux';
 import classname from 'classnames';
-import validator from 'validator';
 
 const SignUpForm = props => (
   <div className="signup-card">
@@ -344,4 +343,4 @@ SignUpForm.propTypes = {
   change: PropTypes.func.isRequired,
 };
 
-export default connect()(SignUpForm);
+export default SignUpForm;

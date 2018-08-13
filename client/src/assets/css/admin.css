@@ -1,214 +1,219 @@
-
-.setmenu {
-    height: auto;
-    background: #F3F5F9;
-    display: flex;
-    font-size: 6vw;
-    justify-content: center;
-    padding: 10px;
-}
-
-.admin-info {
-    text-align: justify;
-    color: #fff
-}
-
-
 .setmenu-container {
-    width: 100%;
-    margin: 0 auto;
-    padding: 1em;
-    overflow: hidden
+  margin: 0 auto;
+  padding: 1em;
+  overflow: hidden;
+  display: flex;
+  justify-content: center;
+  text-transform: uppercase;
+  font-weight: 800;
+  transition: all 0.5s ease-in-out
 }
 
-/* Form */
-.setmenu .setMenuCard {
-    font-size: 16px;
-    width: 100%;
-    margin: auto;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: center; */
-    align-items: center;
-    border: 1px solid #ccc;
-    border-radius: 10px;
-}
-
-.setMenuCard .title {
-    font-size: 22px;
-    font-weight: bold;
-    line-height: 60px;
-    text-align: center;
-    color: #DE7830
+.setMenuCard {
+  display: flex;
+  flex-direction: column;
+  height: auto;
+  border-radius: 5px;
+  justify-content: space-evenly;
+  align-items: center;
+  padding: 20px;
+  margin: 10px auto;
 }
 
 .setMenuCard form {
-    position: relative;
-    top: -10px;
-    align-self: flex-start;
-    /* border: 1px solid red; */
-    width: 100%;
-    display: flex;
-    flex-direction: column;
-    /* justify-content: flex-start; */
-    padding-bottom: 15px;
+  width: 100%;
 }
 
-.setMenuCard form .date {
-    justify-self: flex-start;
-    padding: 10px;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+.setMenuCard form>.date {
+  display: flex;
+  /* border: 1px solid blue; */
+  justify-content: flex-start;
 }
 
 
-.setMenuCard form .checkbox-card,
-.edit-menu-meals .checkbox-card {
-    margin-top: 5px;
-    display: inline-block;
-    height: 160px;
-    overflow-y: auto
+.setMenuCard form>.date label {
+  flex-basis: 33%;
+  text-transform: capitalize;
+  font-size: 1em;
+  font-weight: 600;
+  padding: 5px;
 }
 
-.setMenuCard form .checkbox-card p,
-.edit-menu-meals .checkbox-card p {
-    margin: auto;
-    padding: 5px;
-    padding-left: 10px;
-    padding-right: 10px;
-    border-bottom: 1px solid #cccccc;
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
+.setMenuCard form>.date>.input-div {
+  flex-basis: 70%;
+  width: 100%;
+  border-radius: 3px;
+  border: 1px solid #cccccc;
+  padding: 5px 10px;
+  margin: auto;
+  margin-bottom: 30px;
 }
 
-/* .setMenuCard form .full {
-    grid-column: 1 / 3;
-} */
-
-.setMenuCard .date label {
-    justify-self: flex-end;
-}
-
-.setMenuCard form input[type=number],
-.setMenuCard form input[type=date]
-{
-    width: 100%;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-}
-
-.addBtn {
-    width: 80%;
-    margin-top: 10px;
-    padding: 10px;
-    border: 0px;
-    border-radius: 4px;
-    background: #61b750;
-    color: snow;
-    font-size: 20px;
-    cursor: pointer;
-}
-.addBtn:hover {
-    background: #ff8619;
-    color: snow;
-    transition: background-color 0.05s ease-out
+.setMenuCard form>.date>.input-div input {
+  outline: none
 }
 
 .addBtn:disabled, .addBtn:disabled:hover {
-	background: #8e8d8d
+background: #8e8d8d
 }
 
-@media screen and (min-width: 700px) {
-    .adminpage .table-container .res-container{
-        /* max-height: 70vh; */
-        overflow: scroll;
-        /* margin: 20px */
-    }
-    .editmenu-modal-form {
-        /* max-height: 800px; */
-        overflow: scroll;
-    }
-    .setMenuCard form .checkbox-card,
-    .edit-menu-meals .checkbox-card {
-        margin: 5px;
-        height: 180px;
-        overflow-y: auto;
-        display: grid;
-        grid-template-columns: 1fr 1fr 1fr;
-        grid-template-rows: auto;
-    }
-
-    .setMenuCard form .checkbox-card p,
-    .edit-menu-meals .checkbox-card p {
-        font-size: 14px;
-        width: 100%;
-        border: 1px solid #cccccc;
-        display: flex;
-    }
-
-    .setMenuCard .title {
-        font-size: 30px
-    }
+.checkbox-card {
+  display: inline-flex;
+  flex-direction: column;
+  overflow-y: scroll;
+  height: auto;
+  /* border: 1px solid blue; */
+  width: 100%;
+  padding: 10px;
 }
 
-@media screen and (min-width: 1066px) {
-    .setmenu-container {
-        max-width: 800px;
-        margin: 0 auto;
-        padding: 1em;
-        overflow: hidden
-    }
-    .setMenuCard {
-        width: auto
-    }
+.checkbox-card>p {
+  display: inline-flex;
+  justify-content: space-between;
+  width: 100%;
+  padding: 10px;
+  margin: 5px 0;
+  align-items: center;
+  border: 1px solid #cccccc;
+  border-radius: 3px;
+  cursor: pointer;
+}
 
-    .setMenuCard .title {
-        font-size: 3vw
-    }
+.checkbox-card>p:hover {
+  border: 0px;
+  -webkit-box-shadow: 0px 2px 9px 1px rgba(189,185,189,0.51);
+  -moz-box-shadow: 0px 2px 9px 1px rgba(189,185,189,0.51);
+  box-shadow: 0px 2px 9px 1px rgba(185, 189, 186, 0.51);
+}
+
+.setmenu-form>p.submit-btn {
+  align-self: center;
+  margin: 20px auto;
+  padding: 10px 0;
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+  align-items: center
+}
+
+.mealsCheckbox>.pagination-container {
+  display: inline-flex;
+  width: 100%;
+  justify-content: center;
+  margin: auto !important;
+}
+
+
+.welcome {
+    text-align: center
+}
+
+
+.btn-3 {
+  float: left;
+  font-size: 0.5em;
+  padding: 1em 2em;
+  text-align: center;
+  border-radius: 0.5em;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+  margin-top: 7px;
+  margin-left: 4px;
 }
 
 .adminpage .table-container {
-    margin: 30px;
+  display: flex !important;
+  justify-content: center;
+  align-items: center
 }
 
-.adminpage .table-container .res-container{
-    /* max-height: 70vh; */
-    overflow: scroll;
-    /* margin: 20px */
+.adminpage .res-container {
+  height: auto !important;
+  margin: auto;
 }
 
-/* .checkbox-card {
+.adminpage .pagination-container,
+.meal-page .pagination-container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  margin: 50px auto;
+}
+
+.adminpage .menu-meals {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  transition: all 0.5s ease;
+}
+.adminpage .menu-meals .meals {
+  /* border: 1px solid pink; */
+  height: auto;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-content: center;
+}
+
+.adminpage .menu-meals .meals .meal {
+  /* border: 1px solid purple; */
+  height: auto;
+  width: 100%;
+  margin: 5px 0;
+  padding: 10px;
+  display: flex;
+  justify-content: space-between;
+  align-content: center;
+  font-size: 1rem
+}
+
+.adminpage .menu-meals .meal-hide-add-btns {
+  /* border: 1px solid; */
+  display: inline-flex;
+  justify-content: center;
+  align-items: center;
+  width: 100%;
+  margin: 10px 0;
+  transition: all 0.5s ease-in-out;
+  animation: fadein 0.35s ease-in;
+}
+
+.adminpage .menu-meals .meal-hide-add-btns .add-meals-btn,
+.adminpage .menu-meals .meal-hide-add-btns .hide-meals-btn {
+  margin: auto;
+  color: #ffffff
+}
+
+.admin-orderPage {
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  margin: auto;
+  padding: 60px 0;
+}
+
+.admin-orderPage .row-item.actions {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+@media screen and (min-width: 700px) {
+  .setmenu-form  {
+    width: 800px;
+  }
+
+  .checkbox-card {
     display: grid;
-    overflow-y: scroll;
-    height: 100px;
     grid-template-columns: 1fr 1fr 1fr;
     grid-gap: 1em
-} */
+  }
 
-/* .welcome {
-    margin: auto;
-    background: url('../images/menu_img.jpg') no-repeat;
-} */
-
-
-/* Small screens */
-
-/* @media(max-width:650px) {
-    .checkbox-card {
-        display: inline-block;
-    }
-    .card form button,
-    .card form input[type=number],
-    .card form input[type=date]
-    {
-        width: 100%;
-        padding: 12px;
-    }
-
-    .welcome {
-        text-align: center
-    }
-} */
+  .setMenuCard form>.date label {
+    flex-basis: 20%;
+  }
+}

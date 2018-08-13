@@ -1,4 +1,3 @@
-/* eslint function-paren-newline: 0 */
 import { combineReducers } from 'redux';
 
 import navLinksReducer from './navLinksReducer';

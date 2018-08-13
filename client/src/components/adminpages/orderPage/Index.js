@@ -1,8 +1,8 @@
 /* eslint class-methods-use-this:0 */
 /* eslint max-len:0 */
+import { bindActionCreators } from 'redux';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
-import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
@@ -12,7 +12,7 @@ import Modal from '../Modal/Index';
 import navData from '../../../helpers/navData';
 import { orderHead } from '../../../helpers/tableHeadData';
 import filterify from '../../../helpers/filterify';
-import TableRow from './Tablerow';
+import AdminOrderTableRow from './OrderTablerow';
 import setFilter from '../../../actions/filterActions';
 import { getAllOrders, getOrderMeals } from '../../../actions/ordersActions';
 import { setModal } from '../../../actions/modalActions';
@@ -131,7 +131,7 @@ class OrderHistory extends Component {
                       totalPrice,
                     };
                     return (
-                      <TableRow
+                      <AdminOrderTableRow
                         {...this.props}
                         key={i}
                         sn={++i}

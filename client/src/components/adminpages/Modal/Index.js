@@ -3,7 +3,6 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import FontAwesome from 'react-fontawesome';
 
-import MenuDetailsTable from '../dashboard/MenuTable/MenuDetails';
 import EditMenuTable from '../dashboard/MenuTable/EditMenu';
 import OrderDetailsTable from '../orderPage/orderDetails';
 
@@ -17,7 +16,6 @@ class ModalComp extends Component {
     const { hideModal, modal } = this.props;
     const {
       isOpen,
-      isInfo,
       isEdit,
       isOrderInfo,
       content,
@@ -42,18 +40,6 @@ class ModalComp extends Component {
             />
           </button>
         </div>
-        {
-          (isInfo && content)
-          &&
-          (
-            <MenuDetailsTable
-              title={contentLabel}
-              content={content}
-              {...this.props}
-            />
-          )
-        }
-
         {
           (isEdit)
           &&

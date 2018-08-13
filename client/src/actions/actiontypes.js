@@ -3,7 +3,7 @@ export const ADD_MEAL_TO_CART = 'ADD_MEAL_TO_CART';
 export const DELETE_MEAL_IN_CART = 'DELETE_MEAL_IN_CART';
 export const EMPTY_CART = 'EMPTY_CART';
 export const UPDATE_CART_MEAL_PORTION = 'UPDATE_CART_MEAL_PORTION';
-// export const SET_CART_FROM_LS = 'SET_CART_FROM_LS';
+
 
 /* Filter */
 export const SET_FILTER = 'SET_FILTER';

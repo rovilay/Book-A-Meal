@@ -471,30 +471,6 @@ span#order-total-price {
   .modal .table-container {
     margin: 0px;
   }
-
-  /* .filterr form {
-    width: 90%;
-    display: flex;
-    flex-direction: row !important;
-    justify-content: center;
-    align-items: center;
-  } */
-
-  /* .filterr form input,
-  .filterr form select,
-  .filterr form input[type=date],
-  .filterr form button {
-    margin-left: 5px;
-    margin-top: 5px;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    outline-color:#ff8619
-  } */
-
-  /* .filterr form select {
-    height: 50px;
-  } */
 }
 
 @media screen and (min-width: 1066px) {
@@ -541,21 +517,6 @@ span#order-total-price {
   .modal .table-container tr .delete {
     display: flex
   }
-/*
-
-
-  .filterr form input,
-  .filterr form select,
-  .filterr form input[type=date],
-  .filterr form button {
-    margin-left: 5px;
-    margin-top: 5px;
-    padding: 12px;
-    border: 1px solid #ccc;
-    border-radius: 4px;
-    outline-color:#ff8619
-  } */
-
 }
 
 .meal-btn[disabled],
@@ -569,37 +530,9 @@ span#order-total-price {
 	position: relative;
 }
 
-.meal-Image .tooltip {
-	visibility: hidden;
-	width: 200px;
-	height: 200px;
-	background-color: #555;
-	color: #fff;
-	text-align: center;
-	border-radius: 6px;
-	position: absolute;
-	z-index: 1;
-	top: 80%;
-	left: 30%;
-	margin-left: -60px;
-	opacity: 0;
-	transition: opacity 0.3s;
-}
-
-.meal-Image .tooltip::before {
-	content: "";
-	position: absolute;
-	bottom: 100%;
-	left: 50%;
-	margin-left: -5px;
-	border-width: 5px;
-	border-style: solid;
-	border-color: #555 transparent transparent transparent;
-}
-
-.meal-Image:hover .tooltip {
-	visibility: visible;
-	opacity: 1;
+.mytooltip {
+  background: #61B750 !important;
+  color: #ffffff !important;
 }
 
 .cartpage .table-container form {
