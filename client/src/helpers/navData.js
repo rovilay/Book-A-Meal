@@ -1,6 +1,6 @@
 const adminNavDefault = [
   {
-    title: 'Add Meal',
+    title: 'Manage Meal',
     link: '/mealpage'
   },
   {

@@ -4,7 +4,7 @@ import Modal from 'react-modal';
 import FontAwesome from 'react-fontawesome';
 
 import EditMenuTable from '../dashboard/MenuTable/EditMenu';
-import OrderDetailsTable from '../orderPage/orderDetails';
+import OrderDetailsTable from '../orderPage/OrderDetails';
 
 Modal.setAppElement('#root');
 class ModalComp extends Component {

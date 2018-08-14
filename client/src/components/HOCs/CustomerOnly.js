@@ -1,7 +1,7 @@
-import { bindActionCreators } from 'redux';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router-dom';
+import { bindActionCreators } from 'redux';
 import PropTypes from 'prop-types';
 import jwt from 'jsonwebtoken';
 

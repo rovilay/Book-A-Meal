@@ -1,9 +1,8 @@
 /* eslint no-nested-ternary: 0 */
-import swal from 'sweetalert';
 import React from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
-// import classname from 'classnames';
+import swal from 'sweetalert';
 
 const TableRow = ({
   item,

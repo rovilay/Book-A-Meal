@@ -1,10 +1,11 @@
+import React from 'react';
+import FontAwesome from 'react-fontawesome';
 import {
   AccordionItem,
   AccordionItemTitle,
   AccordionItemBody,
 } from 'react-accessible-accordion';
-import React from 'react';
-import FontAwesome from 'react-fontawesome';
+
 
 import SetMenuForm from './SetMenuForm';
 

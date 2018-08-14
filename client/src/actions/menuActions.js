@@ -192,7 +192,6 @@ export const getTodayMenu = ({ limit = 12, offset = 0 }) => (dispatch) => {
             pagination
           });
         }
-      }
     })
     .catch(err => err);
 };
