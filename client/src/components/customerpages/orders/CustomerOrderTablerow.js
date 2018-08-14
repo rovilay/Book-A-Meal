@@ -1,8 +1,8 @@
 /* eslint no-nested-ternary: 0 */
-import swal from 'sweetalert';
 import React from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
+import swal from 'sweetalert';
 import moment from 'moment';
 import ReactTooltip from 'react-tooltip';
 

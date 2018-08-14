@@ -1,7 +1,7 @@
 /* eslint jsx-a11y/label-has-for:0 */
 /* eslint class-methods-use-this:0 */
-import { bindActionCreators } from 'redux';
 import React, { Component } from 'react';
+import { bindActionCreators } from 'redux';
 import { connect } from 'react-redux';
 import { withRouter } from 'react-router';
 import PropTypes from 'prop-types';

@@ -1,7 +1,7 @@
 /* eslint jsx-a11y/label-has-for: 0 */
-import moment from 'moment';
 import React from 'react';
 import PropTypes from 'prop-types';
+import moment from 'moment';
 
 import MealCheckBoxCard from './MealCheckbox';
 

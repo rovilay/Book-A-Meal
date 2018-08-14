@@ -1,8 +1,8 @@
 /* eslint class-methods-use-this:0 */
 /* eslint max-len:0 */
-import { bindActionCreators } from 'redux';
 import React, { Component } from 'react';
 import { connect } from 'react-redux';
+import { bindActionCreators } from 'redux';
 import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';

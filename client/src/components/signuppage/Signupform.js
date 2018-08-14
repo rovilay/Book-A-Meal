@@ -1,9 +1,10 @@
 /* eslint jsx-a11y/label-has-for:0 */
 /* eslint react/destructuring-assignment: 0 */
-import validator from 'validator';
 import React from 'react';
+import validator from 'validator';
 import PropTypes from 'prop-types';
 import { Link, Redirect } from 'react-router-dom';
+// import { connect } from 'react-redux';
 import classname from 'classnames';
 
 const SignUpForm = props => (
