@@ -41,10 +41,6 @@ module.exports = {
     ]
   },
   plugins: [
-    // new HtmlWebpackPlugin({
-    //   template: './src/index.html',
-    //   filename: 'index.html'
-    // }),
     new DotEnv(),
     new webpack.NoEmitOnErrorsPlugin(),
     new webpack.optimize.OccurrenceOrderPlugin()

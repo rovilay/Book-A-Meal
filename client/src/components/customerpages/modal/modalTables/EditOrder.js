@@ -5,7 +5,7 @@ import ReactPaginate from 'react-paginate';
 import classname from 'classnames';
 
 import { editOrderTableHead } from '../../../../helpers/tableHeadData';
-import TableRow from '../../orders/Tablerow';
+import CustomerOrderTableRow from '../../orders/CustomerOrderTablerow';
 
 const EditOrderTable = (props) => {
   const {
@@ -120,7 +120,7 @@ const EditOrderTable = (props) => {
               };
 
               return (
-                <TableRow
+                <CustomerOrderTableRow
                   key={id}
                   item={item}
                   mealId={id}

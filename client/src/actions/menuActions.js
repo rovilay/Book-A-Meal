@@ -125,30 +125,6 @@ export const emptyEditMenu = () => ({
 
 
 /**
- * Sends async server requests to get today's menu using the axios api
- *
- * @return {Function} - function that dispatches the action to the redux store
- */
-export const getTodayMenu = () => (dispatch) => {
-  const [DD, MM, YYYY] = moment().format('DD-MM-YYYY').split('-');
-  serverReq('get', `/api/v1/menus/${DD}/${MM}/${YYYY}`)
-    .then((response) => {
-      if (response.data) {
-        const { success, menu } = response.data;
-        let Meals = [];
-        if (success && menu) {
-          Meals = [...menu[0].Meals];
-        }
-        dispatch({
-          type: SET_TODAY_MENU,
-          menu: arraySort(Meals, 'title')
-        });
-      }
-    })
-    .catch(err => err);
-};
-
-/**
  * Sends async server requests to get all menus using the axios api
  *
  * @return {Function} - function that dispatches meals and serverRes action to the redux store
@@ -195,6 +171,30 @@ export const getMenuMeals = (mealUrl, { limit = 5, offset = 0 }) => dispatch => 
     })
     .catch(err => err)
 );
+
+/**
+ * Sends async server requests to get today's menu using the axios api
+ *
+ * @return {Function} - function that dispatches the action to the redux store
+ */
+export const getTodayMenu = ({ limit = 12, offset = 0 }) => (dispatch) => {
+  const [DD, MM, YYYY] = moment().format('DD-MM-YYYY').split('-');
+  serverReq('get', `/api/v1/menus/${DD}/${MM}/${YYYY}?limit=${limit}&offset=${offset}`)
+    .then((response) => {
+      if (response.data) {
+        const { success, menu, pagination } = response.data;
+        let Meals = [];
+        if (success && menu) {
+          Meals = [...menu[0].Meals];
+          dispatch({
+            type: SET_TODAY_MENU,
+            meals: arraySort(Meals, 'title'),
+            pagination
+          });
+        }
+    })
+    .catch(err => err);
+};
 
 /**
  * Sends async server requests to post  new menu using the axios api

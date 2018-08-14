@@ -1,8 +1,8 @@
 /* eslint jsx-a11y/label-has-for:0 */
 /* eslint max-len:0 */
+import moment from 'moment';
 import React from 'react';
 import PropTypes from 'prop-types';
-import moment from 'moment';
 import swal from 'sweetalert';
 
 const EditMenuTable = (props) => {
@@ -12,7 +12,6 @@ const EditMenuTable = (props) => {
     editMenuMeals,
     hideModal,
     updateMenu
-    // menuMeals,
   } = props;
 
   const mealsNotInMenu = (() => {
@@ -26,12 +25,11 @@ const EditMenuTable = (props) => {
 
     if (checkbox.checked === true) {
       props.addMealInEditMenu(meal.id);
-      // props.addMealInEditMenuModal(meal);
     } else if (checkbox.checked === false) {
       props.deleteMealInEditMenu(meal.id);
-      // props.deleteMealInEditModal(meal.id);
     }
   };
+
   return (
     <div className="table-container">
       <h2 className="title">

@@ -2,7 +2,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 
 import MealCard from './MealCard';
-import '../../assets/css/mealCard.css';
 
 const Menu = (props) => {
   const { menu } = props;
@@ -40,6 +39,7 @@ const Menu = (props) => {
 
 Menu.propTypes = {
   menu: PropTypes.array.isRequired,
+  // todayMenuPagination: PropTypes.object.isRequired,
 };
 
 export default Menu;

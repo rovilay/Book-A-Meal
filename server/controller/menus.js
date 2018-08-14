@@ -243,7 +243,7 @@ class MenusController {
   }
 
   /**
-   * Removes meals in a menu
+   * Removes meals in menu
    *
    * @static
    * @param  {object} req - Request object
