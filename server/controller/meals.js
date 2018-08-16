@@ -19,20 +19,22 @@ class MealsController {
    * @memberof MealsController
    */
   static getAllMeals(req, res, next) {
+    const { id: UserId } = req.user;
     let { limit, offset } = req.query;
-    limit = Number(req.query.limit) || 10;
-    offset = Number(req.query.offset) || 0;
+    limit = Math.ceil(limit) || 10;
+    offset = Math.ceil(offset) || 0;
 
     db.Meal.findAndCountAll({
       limit,
       offset,
-      order: [['title']]
+      order: [['title']],
+      where: { UserId }
     })
       .then((response) => {
         const { count, rows: meals } = response;
         res.status(200).send({
           success: true,
-          message: 'Meals retrieved successfully',
+          message: 'Meals retrieved successfully!',
           pagination: paginate(limit, offset, count),
           meals
         });
@@ -41,7 +43,7 @@ class MealsController {
   }
 
   /**
-   * Gets a single meal based on id
+   * Gets a single meal based on meal id
    *
    * @static
    * @param  {object} req - Request object
@@ -51,9 +53,13 @@ class MealsController {
    * @memberof MealsController
    */
   static getMeal(req, res, next) {
-    db.Meal.findById(req.params.id)
+    const { id: UserId } = req.user;
+    const { mealId } = req.params;
+    db.Meal.findById(mealId, {
+      where: { UserId }
+    })
       .then((meal) => {
-        if (meal === null) {
+        if (meal === null || meal.UserId !== UserId) {
           const err = new Error('Meal not found!');
           err.status = 404;
           return next(err);
@@ -61,7 +67,7 @@ class MealsController {
 
         return res.status(200).send({
           success: true,
-          message: 'Meal retrieved successfully',
+          message: 'Meal retrieved successfully!',
           meal,
         });
       })
@@ -91,13 +97,13 @@ class MealsController {
       .then((meal) => {
         res.status(201).send({
           success: true,
-          message: 'Meal added successfully',
+          message: 'Meal added successfully!',
           meal,
         });
       })
       .catch((err) => {
-        err = err || new Error('Error, Meal already exist!');
-        err.status = 400;
+        err = new Error('Error, Meal already exist!');
+        err.status = 409;
         return next(err);
       });
   }
@@ -113,22 +119,30 @@ class MealsController {
    * @memberof MealsController
    */
   static updateMeal(req, res, next) {
+    const { id: UserId } = req.user;
+    const { mealId } = req.params;
     const updatedMeal = req.body;
     updatedMeal.title = updatedMeal.title.toUpperCase();
     updatedMeal.UserId = req.user.id;
 
     db.Meal.update(updatedMeal, {
       where: {
-        id: req.params.id,
+        id: mealId,
+        UserId
       },
     })
       .then((update) => {
-        if (update) {
+        // update is an array of a single 0 or 1: [0] or [1]
+        if (update[0]) {
           res.status(200).send({
             success: true,
             message: 'Update successful!',
             updatedMeal,
           });
+        } else {
+          const err = new Error('Meal not found!');
+          err.status = 404;
+          return next(err);
         }
       })
       .catch((err) => {
@@ -149,13 +163,22 @@ class MealsController {
    * @memberof MealsController
    */
   static deleteMeal(req, res, next) {
+    const { id: UserId } = req.user;
+    const { mealId } = req.params;
     db.Meal.destroy({
       where: {
-        id: req.params.id,
+        id: mealId,
+        UserId,
+        deletedAt: new Date('2100')
       },
     })
-      .then(() => {
-        res.status(204).send('Delete successful!');
+      .then((deleted) => {
+        if (deleted) {
+          return res.status(204).send('Delete successful!');
+        }
+        const err = new Error('Meal not found!');
+        err.status = 404;
+        return next(err);
       })
       .catch((err) => {
         err = new Error('Error occurred while deleting meal!');

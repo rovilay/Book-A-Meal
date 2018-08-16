@@ -1,32 +1,96 @@
-const mealData = [
+export const unOwnedMeal = {
+  title: 'Eba and gbegiri',
+  description: 'Its traditional',
+  price: 500,
+  image: 'https://img.com'
+};
+
+export const admin1Meals = [
   {
-    title: 'Plantain and Egg',
+    title: 'PLANTAIN AND EGG',
     description: 'So delicious',
     price: 500,
     image: 'https://img.com'
   },
   {
-    title: 'Sharwama',
+    title: 'SHARWAMA',
     description: 'So delicious',
     price: 900,
     image: 'https://img.com'
   },
   {
-    id: '4b62aed4-2610-4340-97ae-c27a8136c2ff',
     title: 'YAM AND EGG',
     description: 'So delicious',
     price: 650,
     image: 'https://img.com',
-    UserId: 'daf7db8c-b32a-4e69-9e2b-8aa7a3b076a0'
   },
   {
-    id: 'dea6b55b-a9d3-424c-8cfa-e6581185c4c8',
     title: 'RICE AND BEANS',
     description: 'So delicious',
     price: 400,
     image: 'https://img.com',
-    UserId: 'daf7db8c-b32a-4e69-9e2b-8aa7a3b076a0',
+  },
+  {
+    title: 'POTATO',
+    description: 'so delicious',
+    price: 600,
+    image: 'https://img.com',
+  },
+  {
+    title: 'CHOCOLATE CAKE',
+    description: 'so delicious',
+    price: 900,
+    image: 'https://img.com',
+  },
+  {
+    title: 'SPAGHETTI',
+    description: 'so delicious',
+    price: 800,
+    image: 'https://img.com',
   }
 ];
 
-export default mealData;
+export const admin2Meals = [
+  {
+    title: 'PANCAKES',
+    description: 'so delicious',
+    price: 1400,
+    image: 'https://img.com',
+  },
+  {
+    title: 'COCONUT RICE',
+    description: 'so delicious',
+    price: 800,
+    image: 'https://img.com',
+  },
+  {
+    title: 'SUGARCANE',
+    description: 'so delicious',
+    price: 600,
+    image: 'https://img.com',
+  },
+  {
+    title: 'JOLLOF RICE',
+    description: 'so delicious',
+    price: 800,
+    image: 'https://img.com',
+  },
+  {
+    title: 'SALAD',
+    description: 'so delicious',
+    price: 500,
+    image: 'https://img.com',
+  },
+  {
+    title: 'YAM AND EGG',
+    description: 'so delicious',
+    price: 650,
+    image: 'https://img.com',
+  },
+  {
+    title: 'SPAGHETTI',
+    description: 'so delicious',
+    price: 800,
+    image: 'https://img.com',
+  }
+];

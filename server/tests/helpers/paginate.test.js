@@ -10,7 +10,7 @@ const limit = 2;
 let offset = 4;
 const count = dummyArr.length
 
-describe('Paginate helper', (done) => {
+describe('Paginate helper', () => {
   it('should return an pagination info', (done) => {
     const pagination = paginate(limit, offset, count);
     expect(pagination).to.have.all.keys('limit', 'offset', 'numOfPages', 'curPage', 'count', 'nextOffset');

@@ -1,4 +1,4 @@
-import chai from 'chai';
+import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import { mockReq, mockRes } from 'sinon-express-mock';
@@ -7,9 +7,6 @@ import mealsController from '../../controller/meals';
 
 chai.use(chaiHttp);
 chai.use(sinonChai);
-
-const should = chai.should();
-const expect = chai.expect;
 
 describe('MealsController', () => {
   const next = sinon.spy();
@@ -21,7 +18,7 @@ describe('MealsController', () => {
         title: 'beans'
       },
       user: {
-        id: 'asdfgh'
+        id: '7a5d6838-569b-4fb5-955c-356ad7089645'
       }
     });
 
@@ -41,7 +38,7 @@ describe('MealsController', () => {
         title: 'rice'
       },
       user: {
-        id: 'asdfgh'
+        id: '7a5d6838-569b-4fb5-955c-356ad7089645'
       }
     });
 
@@ -54,7 +51,10 @@ describe('MealsController', () => {
   describe('delete meal', () => {
     const req = mockReq({
       params: {
-        id: 'qwertyuio'
+        mealId: '7a5d6838-569b-4fb5-955c-356ad7089645'
+      },
+      user: {
+        id: '7a5d6838-569b-4fb5-955c-356ad7089645'
       }
     });
 

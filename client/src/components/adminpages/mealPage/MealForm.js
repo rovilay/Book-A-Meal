@@ -18,6 +18,7 @@ const Mealform = ({
   uploadedImageLink,
   uploadImage,
   mealOnEdit,
+  handleChange,
   isEdit,
   disableBtn
 }) => (
@@ -59,9 +60,13 @@ const Mealform = ({
                 <input
                   type="text"
                   placeholder="Enter meal name"
-                  name="meal-name"
+                  name="title"
                   id="meal-name"
-                  defaultValue={mealOnEdit.title || ''}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    handleChange(e);
+                  }}
+                  value={mealOnEdit.title || ''}
                   required
                 />
               </p>
@@ -79,7 +84,11 @@ const Mealform = ({
                   id="price"
                   min="0"
                   max="1000000"
-                  defaultValue={mealOnEdit.price || ''}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    handleChange(e);
+                  }}
+                  value={mealOnEdit.price || ''}
                   required
                 />
               </p>
@@ -93,10 +102,14 @@ const Mealform = ({
                 <input
                   type="text"
                   placeholder="Enter meal description"
-                  name="dsc"
+                  name="description"
                   maxLength="60"
                   id="dsc"
-                  defaultValue={mealOnEdit.description || ''}
+                  onChange={(e) => {
+                    e.preventDefault();
+                    handleChange(e);
+                  }}
+                  value={mealOnEdit.description || ''}
                   required
                 />
               </p>
@@ -111,7 +124,7 @@ const Mealform = ({
                   type="file"
                   placeholder="Enter img link"
                   name="image"
-                  id="image"
+                  id="meal-image"
                   defaultValue={mealOnEdit.image || ''}
                   onChange={() => {
                     uploadImage();
@@ -204,6 +217,7 @@ const Mealform = ({
 Mealform.propTypes = {
   closeEdit: PropTypes.func.isRequired,
   addMeal: PropTypes.func.isRequired,
+  handleChange: PropTypes.func.isRequired,
   updateMeal: PropTypes.func.isRequired,
   isEdit: PropTypes.bool.isRequired,
   imageToUpload: PropTypes.string.isRequired,

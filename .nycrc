@@ -13,7 +13,6 @@
     "server/middlewares/checktime.js",
     "**/tests/**",
     "server/app.js",
-    "server/controller/orders.js",
     "config/**",
     "UI"
   ],

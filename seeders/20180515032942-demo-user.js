@@ -1,4 +1,6 @@
 const moment = require('moment');
+// const UUID = require('uuid/v4');
+const bcrypt = require('bcryptjs');
 
 module.exports = {
   up: queryInterface => queryInterface.bulkInsert('Users', [
@@ -7,8 +9,22 @@ module.exports = {
       firstName: 'John',
       lastName: 'Palmer',
       email: 'john@gmail.com',
-      password: '$2y$10$0A7bjWxAz3DoXfhBR4AffuWYFF53jfJt5IXrd96f9H3GeCBJapaga',
+      password: bcrypt.hashSync('1234567', 10),
       address: '1 john street',
+      Phone: '0909090909',
+      city: 'ikeja',
+      state: 'lagos',
+      admin: true,
+      createdAt: moment().format(),
+      updatedAt: moment().format()
+    },
+    {
+      id: 'bb736d9c-4d44-4445-b895-018728f15f3a',
+      firstName: 'deolu',
+      lastName: 'Akinola',
+      email: 'deoluAkinola@gmail.com',
+      password: bcrypt.hashSync('1234567', 10),
+      address: 'isuti rd',
       Phone: '0909090909',
       city: 'ikeja',
       state: 'lagos',
@@ -21,8 +37,22 @@ module.exports = {
       firstName: 'Rose',
       lastName: 'Palmer',
       email: 'rose@gmail.com',
-      password: '$2y$10$DHqeeJLD.Oa0/u.tVRAH9.P5eQirDWaG334coeEUzpaPpoHpVyQje',
+      password: bcrypt.hashSync('1234567', 10),
       address: '1 john street',
+      Phone: '0909090909',
+      city: 'ikeja',
+      state: 'lagos',
+      admin: false,
+      createdAt: moment().format(),
+      updatedAt: moment().format()
+    },
+    {
+      id: '00a9914a-b32a-4314-bad4-867bd1240c5a',
+      firstName: 'esther',
+      lastName: 'Akinola',
+      email: 'estherAkinola@gmail.com',
+      password: bcrypt.hashSync('1234567', 10),
+      address: 'isuti road',
       Phone: '0909090909',
       city: 'ikeja',
       state: 'lagos',

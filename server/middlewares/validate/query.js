@@ -15,26 +15,21 @@ import validator from 'validator';
  */
 export default function validateQuery(req, res, next) {
   const {
-    postOn,
+    // postOn,
     limit,
     offset,
-    id
+    // id
   } = req.query;
 
-  if ((limit && isNaN(limit)) || (offset && isNaN(offset))) {
-    const err = new Error('limit or offset query must be a number!');
+  // check if not a number or check for negative numbers
+  if ((limit && isNaN(limit)) || (limit && Math.ceil(limit) < 1)) {
+    const err = new Error('limit must be a number and greater than 0!');
     err.status = 400;
     return next(err);
   }
 
-  if (postOn && !moment(postOn, 'YYYY-MM-DD', true).isValid()) {
-    const err = new Error(`${postOn} is invalid!, date should be in "YYYY-MM-DD" format!`);
-    err.status = 400;
-    return next(err);
-  }
-
-  if (id && !validator.isUUID(id, 4)) {
-    const err = new Error(`${id} is not in a valid format!`);
+  if ((offset && isNaN(offset)) || (offset && Math.ceil(offset) < 0)) {
+    const err = new Error('Offset query must be a number and not be less than 0!');
     err.status = 400;
     return next(err);
   }

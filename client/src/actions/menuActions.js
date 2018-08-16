@@ -1,4 +1,4 @@
-import moment from 'moment';
+// import moment from 'moment';
 import arraySort from 'array-sort';
 
 import notify from '../helpers/notify';
@@ -19,7 +19,7 @@ import serverReq from '../helpers/serverReq';
 
 /**
  * Sets a menu for edit
- * @param {Array} menuMeals meeals of menu want to edit
+ * @param {Array} menuMeals meals of menu want to edit
  */
 export const setMenuForEdit = menuMeals => dispatch => dispatch({
   type: SET_MENU_FOR_EDIT,
@@ -149,21 +149,34 @@ export const getAllMenus = ({ limit = 10, offset = 0 }) => (dispatch) => {
 /**
  *  * Sends async server requests to get a menu's meals using the axios api
  *
- * @param {string} mealUrl Url of meals for a menu
+ * @param {string} mealUrl Url of meals for the menu
  * @param {number} limit pagination limit
  * @param {number} offset pagination offset
  */
 export const getMenuMeals = (mealUrl, { limit = 5, offset = 0 }) => dispatch => (
-  serverReq('get', `${mealUrl}&limit=${limit}&offset=${offset}`)
+  serverReq('get', `${mealUrl}?limit=${limit}&offset=${offset}`)
     .then((response) => {
       if (response.data) {
-        const { success, menus, pagination } = response.data;
-        if (success && menus) {
+        const { success, menu, pagination } = response.data;
+        if (success && menu) {
           dispatch({
             type: SET_MENU_MEALS,
             menuMeals: {
-              meals: arraySort(menus[0].Meals, 'title'),
+              meals: arraySort(menu[0].Meals, 'title'),
               pagination
+            }
+          });
+        } else {
+          dispatch({
+            type: SET_MENU_MEALS,
+            menuMeals: {
+              meals: [],
+              pagination: {
+                limit: 5,
+                offset: 0,
+                count: 0,
+                numOfPages: 1
+              }
             }
           });
         }
@@ -178,8 +191,7 @@ export const getMenuMeals = (mealUrl, { limit = 5, offset = 0 }) => dispatch => 
  * @return {Function} - function that dispatches the action to the redux store
  */
 export const getTodayMenu = ({ limit = 12, offset = 0 }) => (dispatch) => {
-  const [DD, MM, YYYY] = moment().format('DD-MM-YYYY').split('-');
-  serverReq('get', `/api/v1/menus/${DD}/${MM}/${YYYY}?limit=${limit}&offset=${offset}`)
+  serverReq('get', `/api/v1/menus/today?limit=${limit}&offset=${offset}`)
     .then((response) => {
       if (response.data) {
         const { success, menu, pagination } = response.data;
@@ -192,6 +204,7 @@ export const getTodayMenu = ({ limit = 12, offset = 0 }) => (dispatch) => {
             pagination
           });
         }
+      }
     })
     .catch(err => err);
 };
@@ -203,42 +216,44 @@ export const getTodayMenu = ({ limit = 12, offset = 0 }) => (dispatch) => {
  * @param {Array} meals - Array of meal Ids
  * @return {Function} - function that dispatches serverRes action to the redux store
  */
-export const postMenu = ({ postOn, meals }) => (dispatch) => {
+export const postMenu = ({ postOn, meals }) => (dispatch) => (
   serverReq('post', '/api/v1/menus', { postOn, meals })
     .then((response) => {
       if (response.data) {
         const { success, message } = response.data;
         if (success) {
-          dispatch(emptyNewMenu());
+          // dispatch(emptyNewMenu());
           dispatch(getAllMenus({}));
-          return notify(message, 'toast-success');
+          notify(message, 'toast-success');
+        } else {
+          notify(message, 'toast-danger');
         }
-        notify(message, 'toast-danger');
+
+        return success;
       }
     })
-    .catch(err => err);
-};
+    .catch(err => err)
+);
 
 /* eslint arrow-parens: 0 */
 /**
  * Sends async server requests to update menu using the axios api
  *
- * @param {String} menuDate - date of menu to update {DD/MM/YYYY}
+ * @param {String} menuId - id of menu to update meals
  * @param {Array} meals - updated menu meals
  * @return {Function} - function that dispatches serverRes action to the redux store
  */
 export const updateMenu = ({
-  menuDate,
+  menuId,
   meals
 }) => dispatch => (
-  serverReq('put', `/api/v1/menus/${menuDate}`, { meals })
+  serverReq('post', `/api/v1/menus/${menuId}/meals`, { meals })
     .then((response) => {
       if (response.data) {
         const { success, message } = response.data;
         if (success) {
-          menuDate = menuDate.split('/').reverse().join('-');
           dispatch(emptyEditMenu());
-          dispatch(getMenuMeals(`/api/v1/menus?postOn=${menuDate}`, {}));
+          dispatch(getMenuMeals(`/api/v1/menus/${menuId}/meals`, {}));
           notify(message, 'toast-success');
         } else {
           notify(message, 'toast-danger');
@@ -253,21 +268,21 @@ export const updateMenu = ({
 /**
  * Sends async server requests to remove meal from menu using the axios api
  *
- * @param {String} menuDate - date of menu to update {YYYY-MM-DD}
+ * @param {String} mealUrl - id of menu to delete meal from
  * @param {Array} meals - meals to remove
  * @return {Function} - function that dispatches serverRes action to the redux store
  */
 export const deleteMenuMeal = ({
-  menuDate,
+  mealUrl,
   meals,
 }) => dispatch => (
-  serverReq('delete', `/api/v1/menus?postOn=${menuDate}`, { meals })
+  serverReq('delete', mealUrl, { meals })
     .then((response) => {
       if (response.data) {
         const { success, message } = response.data;
         if (success) {
           dispatch(emptyEditMenu());
-          dispatch(getMenuMeals(`/api/v1/menus?postOn=${menuDate}`, {}));
+          dispatch(getMenuMeals(mealUrl, {}));
           notify(message, 'toast-success');
         } else {
           notify(message, 'toast-danger');

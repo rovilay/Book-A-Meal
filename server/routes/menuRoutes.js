@@ -5,18 +5,19 @@ import authorize from '../middlewares/authenticate';
 import validateQuery from '../middlewares/validate/query';
 import {
   validateMenu,
-  validateUpdateMenu,
+  validateAddMealToMenu,
   validateParams,
 } from '../middlewares/validate/menus';
 
 const menuRouter = express.Router();
 
-menuRouter.get('/api/v1/menus/:DD/:MM/:YYYY', menusController.getMenuByDate);
+menuRouter.get('/api/v1/menus/today', validateQuery, menusController.getTodayMenu);
 
 menuRouter.use('/api/v1/menus', authorize);
 menuRouter.get('/api/v1/menus', adminOnly, validateQuery, menusController.getAllMenus);
-menuRouter.post('/api/v1/menus', adminOnly, validateMenu, menusController.postMenu);
-menuRouter.put('/api/v1/menus/:DD/:MM/:YYYY', adminOnly, validateQuery, validateParams, validateUpdateMenu, menusController.updateMenu);
-menuRouter.delete('/api/v1/menus', adminOnly, validateQuery, menusController.deleteMealInMenu);
+menuRouter.get('/api/v1/menus/:menuId/meals', adminOnly, validateParams, validateQuery, menusController.getMenuMeals);
+menuRouter.post('/api/v1/menus', adminOnly, validateMenu, validateAddMealToMenu, menusController.postMenu);
+menuRouter.post('/api/v1/menus/:menuId/meals', adminOnly, validateParams, validateAddMealToMenu, menusController.addMealToMenu);
+menuRouter.delete('/api/v1/menus/:menuId/meals', adminOnly, validateParams, menusController.deleteMealInMenu);
 
 export default menuRouter;

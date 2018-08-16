@@ -11,7 +11,7 @@ chai.use(sinonChai);
 const should = chai.should();
 const expect = chai.expect;
 
-describe('CheckMeals helper', (done) => {
+describe('CheckMeals helper', () => {
     const next = sinon.spy();
     const res = mockRes();
     const req = mockReq({
@@ -21,7 +21,7 @@ describe('CheckMeals helper', (done) => {
     });
 
     it('should return next on err', () => {
-      checkMeal(req.body.meals, next);
+      checkMeal(req.body.meals, undefined, next);
       next();
       expect(next).to.have.been.called;
     });

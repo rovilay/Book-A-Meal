@@ -1,4 +1,5 @@
 import moment from 'moment';
+import validator from 'validator';
 
 /**
  * Validates sent menu inputs
@@ -12,28 +13,34 @@ import moment from 'moment';
  */
 export function validateMenu(req, res, next) {
   const keys = ['postOn', 'meals'];
-
+  const today = moment().format('YYYY-MM-DD');
+  let err;
   keys.forEach((key) => {
     // check if undefined or empty
     if (req.body[`${key}`] === undefined || req.body[`${key}`] === '') {
-      const err = new Error(`${key} field is empty`);
+      err = new Error(`${key} field is empty!`);
       err.status = 400;
       return next(err);
     }
   });
 
-  if (moment(req.body.postOn, 'YYYY-MM-DD', true).isValid() === false) {
-    const err = new Error('postOn input is invalid');
+  if (!moment(req.body.postOn, 'YYYY-MM-DD', true).isValid()) {
+    err = new Error(`${req.body.postOn} is invalid or in wrong format.`);
     err.status = 400;
     return next(err);
   }
 
+  if (moment(req.body.postOn, 'YYYY-MM-DD').isBefore(today)) {
+    err = new Error(`you can't post menu on this date: ${req.body.postOn} anymore!`);
+    err.status = 400;
+    return next(err);
+  }
 
   return next();
 }
 
 /**
- * Validate menu update inputs
+ * Validate add meal to menu;
  *
  * @export validateUpdateMenu
  * @param  {object} req - Request object
@@ -42,10 +49,10 @@ export function validateMenu(req, res, next) {
  * middleware)
  * @return {object} next
  */
-export function validateUpdateMenu(req, res, next) {
+export function validateAddMealToMenu(req, res, next) {
   const key = 'meals';
-  if (req.body[`${key}`] === undefined || req.body[`${key}`] === '') {
-    const err = new Error(`${key} field is empty`);
+  if (req.body[`${key}`] === undefined || req.body[`${key}`] === '' || req.body[`${key}`].length === 0) {
+    const err = new Error(`${key} field is empty!`);
     err.status = 400;
     return next(err);
   }
@@ -54,7 +61,7 @@ export function validateUpdateMenu(req, res, next) {
 }
 
 /**
- * Validate date on request parameters(../:DD/:MM/:YYYY)
+ * Validate menuId on request parameters(../:date)
  *
  * @export validateParams
  * @param  {object} req - Request object
@@ -64,17 +71,11 @@ export function validateUpdateMenu(req, res, next) {
  * @return {object} next
  */
 export function validateParams(req, res, next) {
-  if (req.params.DD && req.params.MM && req.params.YYYY) {
-    const day = req.params.DD;
-    const month = req.params.MM;
-    const year = req.params.YYYY;
-    const date = `${year}-${month}-${day}`;
-
-    if (!moment(date, 'YYYY-MM-DD', true).isValid()) {
-      const err = new Error("'/DD/MM/YYYY' parameters is invalid!'");
-      err.status = 400;
-      return next(err);
-    }
+  const { menuId } = req.params;
+  if (!validator.isUUID(menuId, 4)) {
+    const err = new Error('menuId is incorrect!');
+    err.status = 400;
+    return next(err);
   }
 
   return next();

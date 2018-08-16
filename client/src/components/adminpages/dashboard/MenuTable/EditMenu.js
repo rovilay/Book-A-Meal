@@ -1,6 +1,5 @@
 /* eslint jsx-a11y/label-has-for:0 */
 /* eslint max-len:0 */
-import moment from 'moment';
 import React from 'react';
 import PropTypes from 'prop-types';
 import swal from 'sweetalert';
@@ -19,7 +18,7 @@ const EditMenuTable = (props) => {
     return props.meals.filter(meal => !mealsInMenu.has(meal.id));
   })();
 
-  const menuDate = moment(new Date(content.postOn)).format('DD/MM/YYYY');
+  const { menuId } = content;
   const toggleMeal = (meal) => {
     const checkbox = document.getElementById(`${meal.id}-edit`);
 
@@ -43,13 +42,12 @@ const EditMenuTable = (props) => {
           swal({
             text: 'Are you sure you want to update menu?',
             buttons: true,
-            dangerMode: true,
+            dangerMode: false,
           })
             .then((confirmed) => {
               if (confirmed) {
                 const meals = [...editMenuMeals];
-                // console.log(meals)
-                updateMenu({ menuDate, meals });
+                updateMenu({ menuId, meals });
                 hideModal();
               }
             })
@@ -59,36 +57,46 @@ const EditMenuTable = (props) => {
       >
         <div className="edit-menu-meals">
           <hr />
-          <div className="checkbox-card">
-            { mealsNotInMenu.map(meal => (
-              <p key={meal.id} className="checkbox">
-                <input
-                  type="checkbox"
-                  name="meal-check"
-                  className="meal-check"
-                  id={`${meal.id}-edit`}
-                  onClick={() => {
-                    toggleMeal(meal);
-                  }}
-                  value={meal.id}
-                />
-                {meal.title}
-              </p>
-            ))}
-          </div>
+          {
+            (mealsNotInMenu.length > 0)
+              ?
+                <div className="checkbox-card">
+                  {mealsNotInMenu.map(meal => (
+                    <p key={meal.id} className="checkbox">
+                      <input
+                        type="checkbox"
+                        name="meal-check"
+                        className="meal-check"
+                        id={`${meal.id}-edit`}
+                        onClick={() => {
+                          toggleMeal(meal);
+                        }}
+                        value={meal.id}
+                      />
+                      {meal.title}
+                    </p>
+                  ))}
+                </div>
+              :
+                <div className="empty not-found">No meal to add!</div>
+          }
         </div>
 
-        <div className="menu-updatebtn">
-          <button
-            type="submit"
-            name="updateMenuBtn"
-            id="menu-btn"
-            className="btn-2"
-            disabled={editMenuMeals.length <= 0}
-          >
-            Update Menu
-          </button>
-        </div>
+        {
+          (mealsNotInMenu.length > 0)
+          &&
+          <div className="menu-updatebtn">
+            <button
+              type="submit"
+              name="updateMenuBtn"
+              id="menu-btn"
+              className="btn-2"
+              disabled={editMenuMeals.length <= 0}
+            >
+              Update Menu
+            </button>
+          </div>
+        }
       </form>
     </div>
   );

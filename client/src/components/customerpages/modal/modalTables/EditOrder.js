@@ -76,19 +76,7 @@ const EditOrderTable = (props) => {
           </div>
 
         </div>
-        <ReactPaginate
-          previousLabel="<<"
-          nextLabel=">>"
-          breakLabel={<a href="">...</a>}
-          breakClassName="break-me"
-          pageCount={numOfPages}
-          marginPagesDisplayed={2}
-          pageRangeDisplayed={5}
-          onPageChange={handlePaginationClick}
-          containerClassName="pagination"
-          subContainerClassName="pages pagination"
-          activeClassName="active"
-        />
+
         <div className="container-test">
           <div className="row head">
             {
@@ -107,14 +95,14 @@ const EditOrderTable = (props) => {
               const {
                 id,
                 title: Meal,
-                unitPrice,
+                cost,
                 portion,
                 price
               } = meal;
               const item = {
                 sn: ++i + offset,
                 Meal,
-                unitPrice,
+                cost,
                 portion,
                 price
               };
@@ -125,6 +113,7 @@ const EditOrderTable = (props) => {
                   item={item}
                   mealId={id}
                   {...props}
+                  orderedMealsLength={orderedMeals.length}
                   actions={{
                     edit: false,
                     info: false,

@@ -17,6 +17,7 @@ export const MEAL_ERROR = 'MEAL_ERROR';
 export const SET_DEFAULT_MEAL_STATE = 'SET_DEFAULT_MEAL_STATE';
 export const SET_MEALS = 'SET_MEALS';
 export const SET_MEAL_FOR_EDIT = 'SET_MEAL_FOR_EDIT';
+export const UPDATE_MEAL_ON_EDIT = 'UPDATE_MEAL_ON_EDIT';
 export const REMOVE_MEAL_FROM_EDIT = 'REMOVE_MEAL_FROM_EDIT';
 
 /* Menu */

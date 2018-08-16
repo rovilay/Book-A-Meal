@@ -6,9 +6,9 @@
  */
 const paginate = (limit, offset, count) => {
   // convert all params to number
-  limit = Number(limit);
-  offset = Number(offset);
-  count = Number(count);
+  limit = Math.ceil(limit);
+  offset = Math.ceil(offset);
+  count = Math.ceil(count);
   let numOfPages = 0;
   let curPage = 0;
   let nextOffset = 0;

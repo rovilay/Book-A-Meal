@@ -2,6 +2,7 @@ import {
   SET_MEAL_FOR_EDIT,
   REMOVE_MEAL_FROM_EDIT,
   SET_MEALS,
+  UPDATE_MEAL_ON_EDIT,
   SET_DEFAULT_MEAL_STATE,
   MEAL_ERROR
 } from '../actions/actiontypes';
@@ -39,6 +40,11 @@ const mealReducer = (state = setDefaultMealState, action) => {
       return {
         ...state,
         error: action.error
+      };
+    case UPDATE_MEAL_ON_EDIT:
+      return {
+        ...state,
+        mealOnEdit: action.updatedMeal
       };
     case REMOVE_MEAL_FROM_EDIT:
       return {

@@ -33,17 +33,21 @@ export default function (CompA, CompB) {
       const { history } = this.props;
       const token = getFromLs('jwt');
       const user = getFromLs('user');
-      const {
-        exp,
-        admin
-      } = jwt.decode(token);
+      if (token) {
+        const {
+          exp,
+          admin
+        } = jwt.decode(token);
 
-      if (token && isExpired(exp)) {
-        this.props.setDefaultNav();
-        return history.push('/login');
+        if (isExpired(exp)) {
+          this.props.setDefaultNav();
+          return history.push('/login');
+        }
+
+        this.setState({ token, user, admin });
+      } else {
+        history.push('/login');
       }
-
-      this.setState({ token, user, admin });
     }
 
     render() {

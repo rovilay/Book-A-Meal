@@ -34,12 +34,13 @@
   font-size: 1.0rem;
   text-transform: uppercase;
   font-weight: bolder;
-  /* margin: 0 5px; */
+  margin: 0 5px;
 }
 
 .menu-details p span:last-child {
   flex-basis: 70%;
   font-size: 1.0rem;
+  text-transform: capitalize;
 }
 
 .menu-meals {

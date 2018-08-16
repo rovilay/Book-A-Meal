@@ -7,7 +7,6 @@ import { withRouter } from 'react-router-dom';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 import jwt from 'jsonwebtoken';
-import arraySort from 'array-sort';
 import ReactPaginate from 'react-paginate';
 
 import Modal from '../modal/Index';
@@ -62,7 +61,7 @@ class CustomerOrder extends Component {
           id: orderId,
           UserId,
           deliveryAddress,
-        } = res.orders[0];
+        } = res.order[0];
         const orderedMeals = [];
         let totalPrice = 0;
 
@@ -70,17 +69,16 @@ class CustomerOrder extends Component {
           const {
             id,
             title,
-            price: unitPrice,
             OrderMeal
           } = meal;
-          const { portion } = OrderMeal;
-          const price = unitPrice * portion;
+          const { portion, cost } = OrderMeal;
+          const price = cost * portion;
           totalPrice += price;
 
           orderedMeals.push({
             id,
             title,
-            unitPrice,
+            cost,
             portion,
             price
           });
@@ -100,7 +98,7 @@ class CustomerOrder extends Component {
           isInfo: false,
           close: false,
           contentLabel: 'Edit Order',
-          content: { ...res.orders[0] },
+          content: { ...res.order[0] },
           pagination: { ...res.pagination }
         });
       });
@@ -157,7 +155,7 @@ class CustomerOrder extends Component {
           isOrderInfo: false,
           close: false,
           contentLabel: 'Order details',
-          content: { ...res.orders[0] },
+          content: { ...res.order[0] },
           pagination: { ...res.pagination }
         });
       });
@@ -327,7 +325,7 @@ CustomerOrder.propTypes = {
 };
 
 const mapStateToProps = state => ({
-  orders: arraySort(filterify(state.orders.history, state.filter), 'createdAt'),
+  orders: filterify(state.orders.history, state.filter),
   grandTotalPrice: state.orders.grandTotalPrice,
   pagination: state.orders.pagination,
   orderedMealsPagination: state.orders.orderedMealsPagination,

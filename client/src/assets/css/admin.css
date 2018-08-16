@@ -128,6 +128,8 @@ background: #8e8d8d
   align-items: center
 }
 
+
+
 .adminpage .res-container {
   height: auto !important;
   margin: auto;
@@ -201,6 +203,8 @@ background: #8e8d8d
   justify-content: center;
   align-items: center;
 }
+
+
 
 @media screen and (min-width: 700px) {
   .setmenu-form  {

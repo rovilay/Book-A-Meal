@@ -32,6 +32,7 @@ import SetMenuCard from './MenuCard/SetMenu';
 import Filter from '../../common/Filter';
 import setFilter from '../../../actions/filterActions';
 import ModalComp from '../Modal/Index';
+import toggleAccordion from '../../../helpers/toggleAccordion';
 
 class AdminDashboard extends Component {
   constructor(props) {
@@ -42,7 +43,7 @@ class AdminDashboard extends Component {
     this.showMenuDetails = this.showMenuDetails.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.editMenu = this.editMenu.bind(this);
-    this.deleteRow = this.deleteRow.bind(this);
+    // this.deleteRow = this.deleteRow.bind(this);
     this.onSubmitUpdate = this.onSubmitUpdate.bind(this);
     this.unCheckAll = this.unCheckAll.bind(this);
     this.getMenus = this.getMenus.bind(this);
@@ -50,7 +51,7 @@ class AdminDashboard extends Component {
   }
 
   componentDidMount() {
-    this.props.setNav(navData.adminNavDefault);
+    this.props.setNav(navData.adminNav);
     this.props.getMeals({});
     this.props.getAllMenus({});
     this.props.setFilter({ filter: 'all' });
@@ -112,7 +113,6 @@ class AdminDashboard extends Component {
   }
 
   editMenu({ menuId, postOn, meals }) {
-    getMeals({});
     this.props.setModal({
       isOpen: true,
       isInfo: false,
@@ -125,10 +125,10 @@ class AdminDashboard extends Component {
     this.props.emptyNewMenu();
   }
 
-  deleteRow(id) {
-    this.props.deleteMealInEditModal(id);
-    this.props.deleteMealInEditMenu(id);
-  }
+  // deleteRow(id) {
+  //   this.props.deleteMealInEditModal(id);
+  //   this.props.deleteMealInEditMenu(id);
+  // }
 
   unCheckAll(mealIdArr) {
     mealIdArr.forEach((mealId) => {
@@ -141,7 +141,14 @@ class AdminDashboard extends Component {
     const meals = [...this.props.newMenuMeals];
     const date = document.getElementById('postOn').value;
     const postOn = date.split('/').reverse().join('-');
-    this.props.postMenu({ postOn, meals });
+    this.props.postMenu({ postOn, meals })
+      .then((success) => {
+        if (success) {
+          this.unCheckAll([...this.props.newMenuMeals]);
+          this.props.emptyNewMenu();
+          toggleAccordion('.accordion__body', 'accordion__body  accordion__body--hidden', 'true'); // close accordion
+        }
+      });
   }
 
 
@@ -164,7 +171,7 @@ class AdminDashboard extends Component {
       <div>
         <div className="welcome">
           <p className="merienda">
-            welcome, {firstName} {lastName}
+            welcome {firstName} {lastName}
           </p>
         </div>
         <section className="setmenu">
@@ -178,7 +185,7 @@ class AdminDashboard extends Component {
             </div>
           </Accordion>
         </section>
-        {/* <MenuAccordion /> */}
+
         <section className="adminpage">
           <div className="menu-title">Menus List</div>
           <div className="container">
@@ -203,7 +210,7 @@ class AdminDashboard extends Component {
         </section>
         <ModalComp
           hideModal={this.hideModal}
-          deleteRow={this.deleteRow}
+          // deleteRow={this.deleteRow}
           submitUpdate={this.onSubmitUpdate}
           setNewMenuMeal={this.setNewMenuMeal}
           {...this.props}

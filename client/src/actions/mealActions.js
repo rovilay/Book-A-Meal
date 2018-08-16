@@ -6,6 +6,7 @@ import {
   SET_MEAL_FOR_EDIT,
   REMOVE_MEAL_FROM_EDIT,
   SET_MEALS,
+  UPDATE_MEAL_ON_EDIT,
   SET_DEFAULT_MEAL_STATE,
   MEAL_ERROR
 } from './actiontypes';
@@ -48,6 +49,24 @@ export const setDefaultMealState = () => (
     type: SET_DEFAULT_MEAL_STATE,
   }
 );
+
+/**
+ * Updates a meal on edit
+ * @param {Object} update - the updated property and it's value
+ * @return {Object} - returns an object that consist of properties type 'UPDATE_MEAL_ON_EDIT'
+ */
+export const updateMealOnEdit = update => (dispatch, getState) => {
+  const { mealOnEdit } = getState().meal;
+  const tempMeal = { ...mealOnEdit };
+
+  return dispatch({
+    type: UPDATE_MEAL_ON_EDIT,
+    updatedMeal: {
+      ...tempMeal,
+      ...update
+    }
+  });
+};
 
 /**
  * Sends async server requests to get all meals using the axios api
@@ -134,8 +153,10 @@ export const postMeal = data => (dispatch, getState) => {
           const { meals, pagination } = getState().meal;
           const tempMeals = [...meals];
 
-          // remove last meal
-          tempMeals.pop();
+          if (tempMeals.length >= 12) {
+            // remove last meal
+            tempMeals.pop();
+          }
 
           // add new meal
           tempMeals.unshift(meal);
