@@ -32,7 +32,7 @@ class OrdersController {
         attributes: ['firstName', 'lastName'],
       }, {
         model: db.Meal,
-        attributes: ['id', 'title', 'price'],
+        attributes: ['id', 'title', 'price', 'UserId'],
         through: {
           attributes: ['portion'],
         },
@@ -99,7 +99,7 @@ class OrdersController {
         attributes: ['firstName', 'lastName'],
       }, {
         model: db.Meal,
-        attributes: ['id', 'title', 'price'],
+        attributes: ['id', 'title', 'price', 'UserId'],
         through: {
           attributes: ['portion'],
         },
