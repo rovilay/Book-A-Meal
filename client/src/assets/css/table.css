@@ -305,8 +305,6 @@ input[type=checkbox] {
 }
 
 .modal .table-container {
-  /* display: flex; */
-  /* flex-direction: column; */
   width: 100%;
   overflow: scroll;
   min-height: auto;
@@ -327,6 +325,20 @@ input[type=checkbox] {
 .modal .table-container p {
   display: flex;
   justify-content: space-between;
+  text-transform: capitalize;
+  margin: 10px 0;
+}
+
+.modal .table-container p>span {
+  margin-right: 10px;
+}
+
+.modal .table-container .total-cost {
+  display: inline-flex !important;
+  justify-content: flex-end !important;
+  width: 100%;
+  font-size: 20px !important;
+  margin: 10px auto;
 }
 
 .modal .table-container p .bold {
@@ -337,7 +349,7 @@ input[type=checkbox] {
 span#order-total-price {
   align-self: flex-start;
   margin-top: -10px;
-} */
+}
 
 .modal table {
   margin-top: 30px;
@@ -367,55 +379,6 @@ span#order-total-price {
 	background-color: rgba(0,0,0,0.7);
 }
 
-/*
-.filterr {
-  margin-top: 30px;
-  padding: 10px;
-  width: 100%;
-  display: flex;
-  justify-content: center;
-  align-items: center
-} */
-
-/*
-.filterr form {
-  width: 90%;
-  display: flex;
-  flex-direction: column;
-  justify-content: space-between;
-  align-items: center;
-}
-
-
-.filterr form .label {
-  font-size: 20px
-} */
-
-/*
-.filterr form input,
-.filterr form select,
-.filterr form input[type=date],
-.filterr form button {
-  margin-left: 5px;
-  margin-top: 5px;
-  padding: 8px;
-  border: 1px solid #ccc;
-  border-radius: 4px;
-  outline-color:#ff8619
-} */
-
-/*
-.filterr form button {
-  width: auto;
-  color: #ffffff;
-  background-color: #61b750;
-  cursor: pointer;
-}
-
-.filterr form button:hover,
-.filterr form button:focus {
-  background-color: rgb(67, 143, 52)
-} */
 
 .modal .table-container .address {
   display: inline-flex;
@@ -426,16 +389,19 @@ span#order-total-price {
 }
 
 @media screen and (min-width: 700px) {
-  /* .filterr form input,
-  .filterr form select,
-  .filterr form input[type=date],
-  .filterr form button {
-    padding: 12px
-  } */
+  .modal .table-container p {
+    display: flex;
+    justify-content: space-between;
+    text-transform: capitalize
+  }
 
-  /* form #order-total-price {
-    font-size: 28px
-  } */
+  .modal .table-container .total-cost {
+    display: inline-flex !important;
+    justify-content: flex-end !important;
+    width: 100%;
+    font-size: 30px;
+    margin: 10px auto;
+  }
 
   .cartpage .title {
     height: 50vh;
@@ -504,8 +470,6 @@ span#order-total-price {
   }
 
   .modal .table-container form>p label {
-
-    /* margin-top: -40px; */
     margin: 0 8px;
     font-size: 1.2rem
   }
@@ -536,21 +500,17 @@ span#order-total-price {
 }
 
 .cartpage .table-container form {
-  /* border: 2px solid blue; */
   width: 100%;
   display: flex;
-  /* border: 1px solid yellow; */
   flex-direction: column;
 }
 
 .cartpage .table-container .res-container {
   margin-top: 20px;
   max-height: 60vh !important ;
-  /* border: 2px solid blue; */
 }
 
 .cartpage .table-container form p{
-  /* border: 1px green solid; */
   grid-area: address !important;
   display: flex;
   margin: auto 30px !important;
@@ -575,7 +535,6 @@ span#order-total-price {
 
 .cartpage .table-container form .order {
   display: flex;
-  /* border: 1px yellowgreen solid; */
   flex-direction: column;
   justify-content: center;
   padding-left: 60px;

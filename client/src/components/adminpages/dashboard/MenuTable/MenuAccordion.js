@@ -213,10 +213,9 @@ class MenuAccordion extends Component {
                                 })
                                   .then((confirmed) => {
                                     if (confirmed) {
-                                      const menuDate = item.postOn;
                                       const newMenuMeals = meals.filter(n => n.id === meal.id);
                                       const MenuMealsToDelete = newMenuMeals.map(menuMeal => menuMeal.id);
-                                      deleteMenuMeal({ menuDate, meals: MenuMealsToDelete });
+                                      deleteMenuMeal({ mealUrl, meals: MenuMealsToDelete });
                                     }
                                   })
                                   .catch(err => err);
@@ -233,6 +232,14 @@ class MenuAccordion extends Component {
                       ))
                     }
                   </div>
+                }
+
+                {
+                  (meals.length < 1 && isInfo)
+                  &&
+                  <span className="empty not-found">
+                      Your meals are not in this menu
+                  </span>
                 }
               </div>
               {

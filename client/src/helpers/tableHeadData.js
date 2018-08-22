@@ -1,7 +1,7 @@
 export const cartTableHead = ['S/N', 'Meal', 'Unit Price', 'Portion', 'Price', 'Actions'];
-export const editOrderTableHead = ['S/N', 'Meal', 'Unit Price', 'Portion', 'Price', 'Actions'];
+export const editOrderTableHead = ['S/N', 'Meal', 'Unit Cost', 'Portion', 'Cost', 'Actions'];
 export const orderHead = ['S/N', 'OrderId', 'Date', 'Total Cost', 'Actions'];
-export const orderDetailHead = ['S/N', 'Meal', 'Unit Price', 'Portion', 'Cost'];
+export const orderDetailHead = ['S/N', 'Meal', 'Unit Cost', 'Portion', 'Cost'];
 export const menuTableHead = ['S/N', 'Menu Id', 'Post On', 'Created By', 'Actions'];
 export const mealTableHead = ['S/N', 'Meal', 'Unit Price', 'Description', 'Created On', 'Actions'];
 export const menuDetailHead = ['S/N', 'Meal Id', 'Meal', 'Unit Price', 'Description'];

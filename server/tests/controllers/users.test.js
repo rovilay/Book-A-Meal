@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import { mockReq, mockRes } from 'sinon-express-mock';
 import sinonChai from 'sinon-chai';
-import menusController from '../../controller/menus';
+import usersController from '../../controller/users';
 
 chai.use(chaiHttp);
 chai.use(sinonChai);
@@ -11,36 +11,41 @@ chai.use(sinonChai);
 const should = chai.should();
 const expect = chai.expect;
 
-describe('MenusController', () => {
+describe('UsersController', () => {
   const next = sinon.spy();
   const res = mockRes();
 
-  describe('creat menu', () => {
+  describe('sign up users', () => {
     const req = mockReq({
-      body: {},
-      user: {
-        id: 'asdfgh'
+      body: {
+        email: 'lern@yahoo.com',
+        Phone: '090234567',
+        password: null,
+        firstName: null,
+        lastName: null,
+        address: null,
+        city: null,
+        state: null,
+        admin: null
       }
     });
 
-    it('should return next on error', () => {
-      menusController.postMenu(req, res, next);
+    it('should return next', () => {
+      usersController.signup(req, res, next);
       next();
       expect(next).to.have.been.called;
     });
   });
 
-  describe('getMenuByDate', () => {
+  describe('Login User', () => {
     const req = mockReq({
-      params: {
-        DD: 32,
-        MM: 5,
-        YYYY: 2018
+      body: {
+        email: 'loren@gmail.com'
       }
     });
 
     it('should return next on error', () => {
-      menusController.getMenuByDate(req, res, next);
+      usersController.login(req, res, next);
       expect(next).to.have.been.called;
     });
   });

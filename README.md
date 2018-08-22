@@ -14,22 +14,19 @@ Book-A-Meal is an app designed to let you order meals from your favourite restur
 * [Installation](#installation)
 * [Testing](#testing)
 
-
-
 # Features
 1. User can view menu for the day without an account
 2. User is able to signin and signup as a caterer or customer
 3. Customer is able to see menu for the day
 4. Customer is able to place orders
 5. Customer is able to cancel order after 15 mins of placing the order
-6. Customer is able to view order history
+6. Customer is able to view their order history
 7. Caterer is able to set menu for a specific day or 2 days ahead
 8. Caterer can edit or modify menu on or before the "post on" date
 9. Caterer is able to create meal
-10. Caterer is able to edit or remove meal
-11. Caterer is able to see order history
-12. Caterer is able to see total sale for a day
-
+10. Caterer (Admin) is able to edit or remove meal
+11. Caterer (Admin) is able to see their order history
+12. Caterer (Admin) is able to see their total sale for a day
 
 # App Link
 View app at [Book-A-Meal](https://book-me-a-meal.herokuapp.com/)
@@ -39,52 +36,39 @@ View on [SWAGGER](https://book-me-a-meal.herokuapp.com/api/v1/api-docs)
 
 
 # Technologies & Tools
-## HTML
-* For UI templating
-
-## SCSS
-* For styling UI templates
+* HTML - For UI templating
+* SCSS - For styling UI templates
 * [Font Awesome](https://fontawesome.com/) for icons
-
-## [Node js](https://nodejs.org/en/)
-* Run time environment
-
-## [NPM](https://www.npmjs.com/)
-* Dependency Manager
-
-## [Express](https://expressjs.com/)
-* Web application framework
-
-## [React js](https://reactjs.org/)
-* For interactive, responsive and dynamic UI
-
-## [Webpack](https://webpack.js.org/)
-* Module bundler
-
-## Tracker
+* [Node js](https://nodejs.org/en/) - Run time environment
+* [NPM](https://www.npmjs.com/) - Dependency Manager
+* [Express](https://expressjs.com/) - Web application framework
+* [React js](https://reactjs.org/) - For interactive, responsive and dynamic UI
+* [Webpack](https://webpack.js.org/) - Module bundler
+* [Eslint](https://eslint.org/) - code linter
+* [Babel](http://babeljs.io/) - compiler
 * [Pivotal Tracker](https://www.pivotaltracker.com/n/projects/2165680) for tracking project tasks
-
-## other supporting tools
-* [Eslint](https://eslint.org/) code linter
-* [Babel](http://babeljs.io/) compiler
-
-## Test tools
 * [Mocha](https://mochajs.org/) - testing framework
 * [Chai](http://www.chaijs.com/) - assertion library for node
 * [Istabul nyc](https://istanbul.js.org/) - test coverage generator
 
 # Installation
-* Git clone this repo
-* Run ```npm install```
-* Run ```npm build```
-* Run ```start``
-* Navigate to ```localhost:9000``` in your browser to view app
+* Install [Node js](https://nodejs.org/en/) and [PostgreSQL](https://www.postgresql.org/)
+* Git clone this [repo](https://github.com/rovilay/Book-A-Meal.git)
+* Install ```sequelize-cli``` globally on your local machine
+* Navigate to the directory
+* Run ```npm install``` to install dependencies
+* Run ```sequelize db:migrate``` to migrate database to ```postgres```
 
-### Development
+#### Development
 * Run ```npm start:dev``` in development
 * * Navigate to ```localhost:9000``` in your browser to view app
 
-# Testing
+#### Production
+* Run ```npm build```
+* Run ```start```
+* Navigate to ```localhost:9000``` in your browser to view app
+
+#### Testing
 * Run ```npm run test```
 
 
@@ -93,15 +77,16 @@ View on [SWAGGER](https://book-me-a-meal.herokuapp.com/api/v1/api-docs)
   * Still in developement
 
 # Contributing
-This app is open to suggestions and contribution. To contirbute follow the steps below:
+This app is open to suggestions and contribution. To contribute follow the steps below:
 * Fork this project and clone locally
 * Work on the project and create a branch for each separate work
+* Ensure to test your contribution
 * Ensure to write good commit messages
 * When done push to your origin repo
 * Create a Pull request
 
 # Authors
-* **Akinola Ogooluwa**
+* **Ogooluwa Akinola**
 
 # Acknowledgments
 * [Andela](https://andela.com/)

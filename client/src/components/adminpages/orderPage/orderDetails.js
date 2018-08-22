@@ -17,11 +17,9 @@ const OrderDetailsTable = (props) => {
 
   const {
     id: orderId,
-    userId,
     User,
     Meals: orderMeals,
     deliveryAddress,
-    totalPrice,
     createdAt: date
   } = content;
 
@@ -32,6 +30,8 @@ const OrderDetailsTable = (props) => {
     count
   } = orderedMealsPagination;
 
+  let totalCost = 0;
+
   /**
    * handles pagination changes
    *
@@ -40,7 +40,7 @@ const OrderDetailsTable = (props) => {
   const handlePaginationClick = (data) => {
     const nextPage = data.selected;
     const newOffset = nextPage * limit;
-    const mealsUrl = `/api/v1/orders/${userId}?${orderId}`;
+    const mealsUrl = `/api/v1/orders/${orderId}/meals`;
     getOrderMeals(mealsUrl, { limit, offset: newOffset });
   };
 
@@ -63,9 +63,6 @@ const OrderDetailsTable = (props) => {
         <p>
           <span className="bold">Address:</span> {deliveryAddress}
         </p>
-        <p>
-          <span className="bold">Total Price:</span> &#8358;{totalPrice}
-        </p>
       </div>
 
       <div className="container-test">
@@ -86,19 +83,18 @@ const OrderDetailsTable = (props) => {
             const {
               id,
               title: Meal,
-              price: unitPrice,
               OrderMeal
             } = meal;
-            const { portion } = OrderMeal;
-            const price = unitPrice * portion;
+            const { portion, cost: UnitCost } = OrderMeal;
+            const cost = UnitCost * portion;
+            totalCost += cost;
             const item = {
               sn: ++i + offset,
               Meal,
-              unitPrice,
+              UnitCost,
               portion,
-              price
+              cost
             };
-
             return (
               <AdminOrderTableRow
                 key={i}
@@ -109,6 +105,9 @@ const OrderDetailsTable = (props) => {
             );
           })
         }
+      </div>
+      <div className="total-cost">
+        <span className="bold">Total Cost: </span> &#8358;{totalCost}
       </div>
       {
         // show only if meals or orderMeals present

@@ -1,8 +1,9 @@
+import moment from 'moment';
+
 import db from '../../models/index';
 import checkMeal from '../helpers/checkMeal';
 import expire from '../helpers/expire';
 import paginate from '../helpers/paginate';
-
 
 /**
  * Handles operations on menu routes
@@ -23,29 +24,25 @@ class MenusController {
    */
   static getAllMenus(req, res, next) {
     /* eslint prefer-const: 0 */
-    let { limit, offset, postOn } = req.query;
-    limit = Number(limit) || 10;
-    offset = Number(offset) || 0;
-    // postOn = (postOn) && moment(postOn).format('YYYY-MM-DD');
-
-    const where = (postOn) && { postOn };
-    const subQuery = (postOn) && false;
+    // const { id: UserId } = req.user;
+    let { limit, offset } = req.query;
+    limit = Math.ceil(limit) || 10;
+    offset = Math.ceil(offset) || 0;
 
     db.Menu.findAndCountAll({
       include: [{
         model: db.User,
         attributes: ['firstName', 'lastName'],
-      }, {
-        model: db.Meal,
-        attributes: ['id', 'title', 'price', 'description', 'image'],
-        through: {
-          attributes: ['id'],
-        }
-      }],
-      where,
-      distinct: Boolean(!postOn),
+      },
+      // {
+      //   model: db.Meal,
+      //   where: { UserId },
+      //   through: {
+      //     attributes: ['id'],
+      //   },
+      // }
+      ],
       order: [['postOn', 'DESC']],
-      subQuery,
       offset,
       limit
     })
@@ -58,22 +55,17 @@ class MenusController {
         }
 
         // map menus to get url
-        let n = menus;
-        (!postOn)
-        &&
-        (
-          n = menus.map((menu) => {
-            const modMenu = menu.get({ plain: true });
-            modMenu.Meals = `/api/v1/menus?postOn=${modMenu.postOn}`;
-            return modMenu;
-          })
-        );
+        const menusWithMealUrl = menus.map((menu) => {
+          const modMenu = menu.get({ plain: true });
+          modMenu.Meals = `/api/v1/menus/${modMenu.id}/meals`;
+          return modMenu;
+        });
 
         return res.status(200).send({
           success: true,
           message: 'Menus retrieved successfully',
           pagination: paginate(limit, offset, count),
-          menus: n
+          menus: menusWithMealUrl
         });
       })
       .catch((err) => {
@@ -84,7 +76,7 @@ class MenusController {
   }
 
   /**
-   * Gets a menu based on "post On" date
+   * Gets meals of a menu
    *
    * @static
    * @param  {object} req - Request object
@@ -93,13 +85,74 @@ class MenusController {
    * @return {json} res.send
    * @memberof MenusController
    */
-  static getMenuByDate(req, res, next) {
-    const { DD: day, MM: month, YYYY: year } = req.params;
-    let { limit, offset } = req.query;
-    const date = `${year}-${month}-${day}`;
-    limit = Number(limit) || 5;
-    offset = Number(offset) || 0;
+  static getMenuMeals(req, res, next) {
+    const { menuId } = req.params;
+    const { id: UserId } = req.user;
 
+    /* eslint prefer-destructuring: 0 */
+
+    let { limit, offset } = req.query;
+    limit = Math.ceil(limit) || 10;
+    offset = Math.ceil(offset) || 0;
+
+    db.Menu.findAndCountAll({
+      include: [{
+        model: db.User,
+        attributes: ['firstName', 'lastName'],
+      }, {
+        model: db.Meal,
+        attributes: ['id', 'title', 'price', 'image', 'description'],
+        where: { UserId },
+        through: {
+          attributes: ['id'],
+        },
+      }],
+      where: {
+        id: menuId
+      },
+      subQuery: false,
+      offset,
+      limit
+    })
+      .then((response) => {
+        const { count, rows: menu } = response;
+        if (count < 1) {
+          const errMsg = 'Your meals are not in this menu';
+          const err = new Error(errMsg);
+          err.status = 404;
+          return next(err);
+        }
+
+        res.status(200).send({
+          success: true,
+          message: 'Menu retrieved successfully!',
+          pagination: paginate(limit, offset, count),
+          menu
+        });
+      })
+      .catch((err) => {
+        err = err || new Error('Error occurred while getting menu!');
+        err.status = 400;
+        return next(err);
+      });
+  }
+
+  /**
+   * Gets menu for the current day
+   *
+   * @static
+   * @param  {object} req - Request object
+   * @param  {object} res - Response object
+   * @param {function} next - next object (for error handling)
+   * @return {json} res.send
+   * @memberof MenusController
+   */
+  static getTodayMenu(req, res, next) {
+    const today = moment().format('YYYY-MM-DD');
+
+    let { limit, offset } = req.query;
+    limit = Math.ceil(limit) || 10;
+    offset = Math.ceil(offset) || 0;
     db.Menu.findAndCountAll({
       include: [{
         model: db.User,
@@ -112,23 +165,24 @@ class MenusController {
         },
       }],
       where: {
-        postOn: date
+        postOn: today
       },
       subQuery: false,
-      distinct: false,
       offset,
       limit
     })
       .then((response) => {
         const { count, rows: menu } = response;
-        if (count === 0) {
-          const err = new Error(`Could not get menu on date: ${date}`);
+        if (count < 1) {
+          const errMsg = `Menu on date: ${today} not found!`;
+          const err = new Error(errMsg);
           err.status = 404;
           return next(err);
         }
+
         res.status(200).send({
           success: true,
-          message: 'Menu retrieved successfully',
+          message: 'Menu retrieved successfully!',
           pagination: paginate(limit, offset, count),
           menu
         });
@@ -142,7 +196,7 @@ class MenusController {
 
 
   /**
-   * Posts menu for a specified date
+   * Creates menu
    *
    * @static
    * @param  {object} req - Request object
@@ -153,20 +207,27 @@ class MenusController {
    */
   static postMenu(req, res, next) {
     const newMenu = req.body;
-    checkMeal(newMenu.meals, next)
+    const { meals, postOn } = newMenu;
+    const { id: UserId } = req.user;
+    checkMeal(meals, UserId, next)
       .then((check) => {
         if (check) {
           db.Menu.findOrCreate({
-            where: { postOn: newMenu.postOn },
-            defaults: { UserId: req.user.id }
+            where: { postOn },
+            defaults: { UserId }
           })
             .then((menu) => {
               if (menu[1] === true) {
-                menu[0].addMeals(newMenu.meals)
+                menu[0].addMeals(meals, {
+                  through: {
+                    mealOwner: UserId
+                  }
+                })
                   .then(() => {
                     res.status(201).send({
                       success: true,
                       message: 'Menu posted successfully!',
+                      menu: menu[0]
                     });
                   })
                   .catch(err => next(err));
@@ -183,7 +244,7 @@ class MenusController {
 
 
   /**
-   * Updates Menu  by date
+   * Adds meal to existing Menu
    *
    * @static
    * @param  {object} req - Request object
@@ -192,47 +253,50 @@ class MenusController {
    * @return {json} res.send
    * @memberof MenusController
    */
-  static updateMenu(req, res, next) {
-    const updatedMenu = req.body;
-    const { DD: day, MM: month, YYYY: year } = req.params;
-    const date = `${year}-${month}-${day}`;
+  static addMealToMenu(req, res, next) {
+    const { meals: newMeals } = req.body;
+    const { id: UserId } = req.user;
+    const { menuId } = req.params;
 
-    checkMeal(updatedMenu.meals, next)
-      .then((check) => {
-        if (check) {
+    checkMeal(newMeals, UserId, next)
+      .then((checked) => {
+        if (checked) {
           db.Menu.findOne({
-            where: { postOn: date },
-            attributes: ['id']
+            where: { id: menuId },
+            attributes: ['id', 'postOn']
           })
             .then((menu) => {
               if (menu !== null) {
                 // check if menu can still be updated
-                if (expire(date)) {
+                if (expire(menu.postOn)) {
                   const err = new Error('Can\'t modify menu anymore!');
                   err.status = 405;
                   throw err;
                 }
 
-                db.MenuMeal.destroy({
+                db.MenuMeal.destroy({ // remove only the caterer's meals
                   where: {
                     MenuId: menu.id,
+                    MealId: newMeals,
+                    mealOwner: UserId
                   }
                 });
 
-                updatedMenu.meals.forEach((meal) => {
+                newMeals.forEach((mealId) => {
                   db.MenuMeal.create({
                     MenuId: menu.id,
-                    MealId: meal
+                    MealId: mealId,
+                    mealOwner: UserId
                   })
                     .catch(err => next(err));
                 });
 
                 res.status(200).send({
                   success: true,
-                  message: 'Menu updated successfully!',
+                  message: 'Meals added to menu successfully!',
                 });
               } else {
-                const err = new Error(`Menu for date: ${date}, not found!`);
+                const err = new Error('Menu not found!');
                 err.status = 404;
                 throw err;
               }
@@ -243,7 +307,7 @@ class MenusController {
   }
 
   /**
-   * Removes meals in menu
+   * Removes meals in a menu
    *
    * @static
    * @param  {object} req - Request object
@@ -253,32 +317,34 @@ class MenusController {
    * @memberof MenusController
    */
   static deleteMealInMenu(req, res, next) {
-    const { postOn } = req.query;
     const { meals } = req.body;
-    checkMeal(meals, next)
+    const { menuId } = req.params;
+    const { id: UserId } = req.user;
+
+    checkMeal(meals, UserId, next)
       .then((check) => {
         if (check === true) {
           db.Menu.findOne({
-            where: { postOn },
-            attributes: ['id']
+            where: { id: menuId },
+            attributes: ['id', 'postOn']
           })
             .then((menu) => {
               if (menu !== null) {
                 // check if menu can still be updated
-                if (expire(postOn)) {
+                if (expire(menu.postOn)) {
                   const err = new Error('Can\'t modify menu anymore!');
                   err.status = 405;
                   throw err;
                 }
 
-                meals.forEach((meal) => {
-                  db.MenuMeal.destroy({
-                    where: {
-                      MealId: meal,
-                    }
-                  })
-                    .catch(err => next(err));
-                });
+                db.MenuMeal.destroy({
+                  where: {
+                    MenuId: menuId,
+                    MealId: meals,
+                    mealOwner: UserId
+                  }
+                })
+                  .catch(err => next(err));
 
                 res.status(200).send({
                   success: true,
@@ -287,7 +353,7 @@ class MenusController {
               }
 
               if (menu === null) {
-                const err = new Error(`Menu for date: ${postOn}, not found!`);
+                const err = new Error('Menu not found!');
                 err.status = 404;
                 throw err;
               }

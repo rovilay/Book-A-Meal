@@ -104,7 +104,7 @@ export const updateOrderedMealPortion = ({
   orderedMeals.map((meal) => {
     if (meal.id === mealId) {
       meal.portion = portion;
-      meal.price = portion * meal.unitPrice;
+      meal.price = portion * meal.cost;
     }
     totalPrice += meal.price;
   });
@@ -142,35 +142,8 @@ export const deleteMealInEditOrder = mealId => (dispatch, getState) => {
   });
 };
 
-/**
- * Sends async server requests to get orders using the axios api
- *
- * @param  {string} userId - Id of user to get order
- * @param  {number} limit - pagination limit
- * @param  {number} offset - pagination offset
-//  * @return {Function} - dispatches an set customer order action to the redux store
-//  */
-// export const getOrders = (userId, { offset = 0, limit = 10 }) => (dispatch) => {
-//   serverReq('get', `/api/v1/orders/${userId}?limit=${limit}&offset=${offset}`)
-//     .then((res) => {
-//       if (res.data) {
-//         const {
-//           success
-//         } = res.data;
-
-//         // console.log(res.data);
-
-//         if (success) {
-//           dispatch(setOrders(res.data));
-//         }
-//       }
-//     })
-//     .catch(err => err);
-// };
-
-
-export const getOrders = (userId, { limit = 10, offset = 0 }) => dispatch => (
-  serverReq('get', `/api/v1/orders/${userId}?limit=${limit}&offset=${offset}`)
+export const getOrders = ({ limit = 10, offset = 0 }) => dispatch => (
+  serverReq('get', `/api/v1/orders?limit=${limit}&offset=${offset}`)
     .then((res) => {
       if (res.data) {
         const {
@@ -205,12 +178,12 @@ export const getOrders = (userId, { limit = 10, offset = 0 }) => dispatch => (
  * @return {Function} - dispatches an set customer order action to the redux store
  */
 export const getOrderMeals = (mealsUrl, { limit = 5, offset = 0 }) => dispatch => (
-  serverReq('get', `${mealsUrl}&limit=${limit}&offset=${offset}`)
+  serverReq('get', `${mealsUrl}?limit=${limit}&offset=${offset}`)
     .then((res) => {
       if (res.data) {
         const {
           success,
-          orders,
+          order,
           pagination
         } = res.data;
 
@@ -218,7 +191,7 @@ export const getOrderMeals = (mealsUrl, { limit = 5, offset = 0 }) => dispatch =
           dispatch({
             type: SET_ORDER_MEALS,
             order: {
-              orderedMeals: orders[0].Meals,
+              orderedMeals: order[0].Meals,
               orderedMealsPagination: pagination
             }
           });
@@ -276,7 +249,7 @@ export const updateOrder = (id, data) => (dispatch) => {
       if (success) {
         notify(message, 'toast-success');
         const { id: userId } = jwt.decode(getFromLs('jwt'));
-        dispatch(getOrders(userId));
+        dispatch(getOrders({}));
         dispatch(setModal({}));
       } else {
         notify(message, 'toast-danger');

@@ -1,7 +1,0 @@
-{
-  "git.ignoreLimitWarning": true,
-  "emmet.includeLanguages": {
-    "javascript": "html"
-  },
-  "files.autoSave": "onFocusChange"
-}

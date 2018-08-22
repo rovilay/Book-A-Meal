@@ -23,22 +23,29 @@ class OrdersController {
    */
   static getAllOrders(req, res, next) {
     let { limit, offset } = req.query;
-    limit = Number(limit) || 10;
-    offset = Number(offset) || 0;
+    const { id: UserId, admin } = req.user;
+
+    limit = Math.ceil(limit) || 10;
+    offset = Math.ceil(offset) || 0;
 
     db.Order.findAndCountAll({
       include: [{
         model: db.User,
         attributes: ['firstName', 'lastName'],
-      }, {
+      },
+      {
         model: db.Meal,
-        attributes: ['id', 'title', 'price', 'UserId'],
+        attributes: ['UserId'],
+        where: (admin) && { UserId },
+        paranoid: true,
         through: {
-          attributes: ['portion'],
+          attributes: ['portion', 'cost'],
         },
-      }],
+      }
+      ],
       distinct: true,
       limit,
+      where: (!admin) && { UserId },
       order: [['createdAt', 'DESC']],
       offset
     })
@@ -46,25 +53,39 @@ class OrdersController {
         const { rows: orders, count } = response;
         if (orders.length < 1) {
           const err = new Error('No order found!');
-          err.status = 400;
+          err.status = 404;
           return next(err);
         }
 
         // map orders to get url
-        const n = orders.map((order) => {
-          const modOrder = order.get({ plain: true });
-          modOrder.Meals = `/api/v1/orders/${modOrder.UserId}?id=${modOrder.id}`;
-          return modOrder;
+        let adminGrandTotalPrice = 0;
+        const ordersWithMealUrl = orders.map((order) => {
+          let totalPrice = 0;
+          const modifiedOrder = order.get({ plain: true });
+          const { Meals } = modifiedOrder;
+
+          Meals.map((meal) => { // map through order  meals to get total price;
+            const { portion, cost } = meal.OrderMeal;
+            totalPrice += (portion * cost);
+            adminGrandTotalPrice += (portion * cost);
+          });
+
+          // modifiedOrder.totalPrice = newToT;
+          modifiedOrder.totalPrice = totalPrice;
+          modifiedOrder.Meals = `/api/v1/orders/${modifiedOrder.id}/meals`;
+          return modifiedOrder;
         });
 
-        db.Order.sum('totalPrice')
-          .then(grandTotalPrice => res.status(200).send({
-            success: true,
-            message: 'Orders retrieved successfully!',
-            grandTotalPrice,
-            pagination: paginate(limit, offset, count),
-            orders: n
-          }))
+        db.Order.sum('totalPrice', { where: (!admin) && { UserId } })
+          .then((grandTotalPrice) => {
+            res.status(200).send({
+              success: true,
+              message: 'Orders retrieved successfully!',
+              grandTotalPrice: (admin) ? adminGrandTotalPrice : grandTotalPrice,
+              pagination: paginate(limit, offset, count),
+              orders: ordersWithMealUrl
+            });
+          })
           .catch(err => next(err));
       })
       .catch((err) => {
@@ -75,7 +96,7 @@ class OrdersController {
   }
 
   /**
-   * Gets orders based on user id
+   * Gets orders meals
    * @static
    * @param  {object} req - Request object
    * @param  {object} res - Response object
@@ -83,15 +104,12 @@ class OrdersController {
    * @return {json} res.send
    * @memberof OrdersController
    */
-  static getOrdersByUserId(req, res, next) {
-    const { userId: UserId } = req.params;
-    const { id } = req.query;
+  static getOrderMeals(req, res, next) {
+    const { orderId } = req.params;
+    const { id: UserId, admin } = req.user;
     let { limit, offset } = req.query;
-    limit = Number(limit) || 10;
-    offset = Number(offset) || 0;
-
-    const where = (id) ? { id } : { UserId };
-    const subQuery = (id) && false;
+    limit = Math.ceil(limit) || 10;
+    offset = Math.ceil(offset) || 0;
 
     db.Order.findAndCountAll({
       include: [{
@@ -99,45 +117,34 @@ class OrdersController {
         attributes: ['firstName', 'lastName'],
       }, {
         model: db.Meal,
-        attributes: ['id', 'title', 'price', 'UserId'],
+        attributes: ['id', 'title'],
+        where: (admin) && { UserId },
+        paranoid: true,
         through: {
-          attributes: ['portion'],
+          attributes: ['portion', 'cost', [db.sequelize.literal('SUM(portion * cost)', 'result')]],
         },
       }],
-      where,
-      distinct: Boolean(!id), // setting distinct false if order id is present so as to read the count properly
-      subQuery,
+      where: { id: orderId },
+      // subQuery,
       limit,
       offset
     })
       .then((response) => {
-        const { rows: orders, count } = response;
+        const { rows: order, count } = response;
 
-        if (orders.length < 1) {
-          const err = new Error('No order found!');
+        if (order.length < 1) {
+          const err = new Error('Order not found!');
           err.status = 404;
           return next(err);
         }
 
-        // map orders to get url
-        let n = orders;
-        (!id)
-        &&
-        (
-          n = orders.map((order) => {
-            const modOrder = order.get({ plain: true });
-            modOrder.Meals = `/api/v1/orders/${modOrder.UserId}?id=${modOrder.id}`;
-            return modOrder;
-          })
-        );
-
-        db.Order.sum('totalPrice', { where })
+        db.Order.sum('totalPrice', { where: (!admin) && { UserId } })
           .then(grandTotalPrice => res.status(200).send({
             success: true,
-            message: 'Orders retrieved successfully!',
+            message: 'Order retrieved successfully!',
             grandTotalPrice,
             pagination: paginate(limit, offset, count),
-            orders: n
+            order
           }))
           .catch(err => next(err));
       })
@@ -160,11 +167,13 @@ class OrdersController {
    */
   static postOrder(req, res, next) {
     const newOrder = req.body;
+    const { id: UserId } = req.user;
     const orderMeals = newOrder.meals.map(meal => meal.id); // Get all meal id
     const orderPortion = newOrder.meals.map(meal => meal.portion); // Get all meal portion
-    checkMeal(orderMeals, next)
-      .then((check) => {
-        if (check === true) {
+    const orderMealsCost = newOrder.meals.map(meal => meal.price); // Get all meal cost
+    checkMeal(orderMeals, undefined, next)
+      .then((checked) => {
+        if (checked) {
           db.Meal.findAll({
             where: { id: orderMeals },
             attributes: ['id', 'price']
@@ -175,9 +184,9 @@ class OrdersController {
                 const { meals } = newOrder;
                 let i = 0;
                 while (i < meals.length) {
-                  const { id, portion } = meals[i];
+                  const { id, portion, price: cost } = meals[i];
                   if (resMeal.id === id) {
-                    totPrice += (resMeal.price * portion);
+                    totPrice += (cost * portion);
                   }
                   i++;
                 }
@@ -187,7 +196,7 @@ class OrdersController {
             .then((totPrice) => {
               db.Order.create({ // Add order to db
                 id: UUID.v4(),
-                UserId: req.user.id,
+                UserId,
                 deliveryAddress: newOrder.deliveryAddress,
                 totalPrice: totPrice
               })
@@ -196,6 +205,7 @@ class OrdersController {
                     order.addMeal(meal, {
                       through: {
                         portion: orderPortion[index],
+                        cost: orderMealsCost[index]
                       }
                     })
                       .catch(err => next(err));
@@ -203,6 +213,7 @@ class OrdersController {
                   res.status(201).send({
                     success: true,
                     message: 'Order placed successfully!',
+                    order
                   });
                 })
                 .catch((err) => {
@@ -226,13 +237,16 @@ class OrdersController {
    * @memberof OrdersController
    */
   static updateOrder(req, res, next) {
+    const { orderId } = req.params;
     const updatedOrder = req.body;
+    const { id: UserId } = req.user;
     const updatedMealsId = updatedOrder.meals.map(meal => meal.id); // Get all meal id
     const updatedMealsPortion = updatedOrder.meals.map(meal => meal.portion); // Get all meal portion
+    const updatedMealsCost = updatedOrder.meals.map(meal => meal.price); // Get all meal cost
 
-    checkMeal(updatedMealsId, next)
-      .then((check) => {
-        if (check === true) {
+    checkMeal(updatedMealsId, undefined, next)
+      .then((checked) => {
+        if (checked) {
           db.Meal.findAll({ // find meal and get their price
             where: { id: updatedMealsId },
             attributes: ['id', 'price']
@@ -243,9 +257,9 @@ class OrdersController {
                 const { meals } = updatedOrder;
                 let i = 0;
                 while (i < meals.length) {
-                  const { id, portion } = meals[i];
+                  const { id, portion, price: cost } = meals[i];
                   if (resMeal.id === id) {
-                    totPrice += (resMeal.price * portion);
+                    totPrice += (cost * portion);
                   }
                   i++;
                 }
@@ -258,24 +272,32 @@ class OrdersController {
                 totalPrice: totPrice,
               }, {
                 where: {
-                  id: req.params.id,
+                  id: orderId,
+                  UserId
                 },
               })
                 .then((update) => {
-                  db.OrderMeal.destroy({
-                    where: {
-                      OrderId: req.params.id,
-                    },
-                  });
-                  return update;
+                  if (update[0]) {
+                    db.OrderMeal.destroy({
+                      where: {
+                        OrderId: orderId,
+                      },
+                    });
+
+                    return update;
+                  }
+                  const err = new Error('Order not found!');
+                  err.status = 404;
+                  return next(err);
                 })
                 .then((update) => {
                   if (update) {
-                    updatedMealsId.forEach((meal, index) => {
+                    updatedMealsId.forEach((mealId, index) => {
                       db.OrderMeal.create({
-                        OrderId: req.params.id,
-                        MealId: meal,
+                        OrderId: orderId,
+                        MealId: mealId,
                         portion: updatedMealsPortion[index],
+                        cost: updatedMealsCost[index]
                       })
                         .catch((err) => {
                           err.status = 400;
@@ -284,8 +306,8 @@ class OrdersController {
                     });
                     res.status(200).send({
                       success: true,
-                      message: 'Update successful',
-                      updatedOrder
+                      message: 'Update successful!',
+                      updatedOrder,
                     });
                   }
                 })
@@ -309,21 +331,31 @@ class OrdersController {
    * @memberof OrdersController
    */
   static deleteOrder(req, res, next) {
+    const { orderId } = req.params;
+    const { id: UserId } = req.user;
     db.Order.destroy({
       where: {
-        id: req.params.id,
+        id: orderId,
+        UserId
       },
     })
-      .then(() => {
-        db.OrderMeal.destroy({
-          where: {
-            OrderId: req.params.id,
-          },
-        });
-        res.status(204).send({
-          success: true,
-          message: 'delete successful',
-        });
+      .then((destroyed) => {
+        if (destroyed) {
+          db.OrderMeal.destroy({
+            where: {
+              OrderId: orderId,
+            },
+          });
+
+          res.status(204).send({
+            success: true,
+            message: 'delete successful',
+          });
+        } else {
+          const err = new Error('Order not found!');
+          err.status = 404;
+          return next(err);
+        }
       })
       .catch((err) => {
         err = err || new Error('Error occurred while deleting order');

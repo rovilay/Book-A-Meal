@@ -1,4 +1,4 @@
-import chai from 'chai';
+import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import { mockReq, mockRes } from 'sinon-express-mock';
@@ -8,9 +8,6 @@ import getToken from '../../helpers/gettokens';
 
 chai.use(chaiHttp);
 chai.use(sinonChai);
-
-const should = chai.should();
-const expect = chai.expect;
 
 const user = {
   id: '618ef639-4729-4256-bdf4-54ff2e6a61d9',
@@ -29,7 +26,7 @@ describe('Authenticate middleware', () => {
       authorization: `Bearer ${token}`
     }
   });
-  
+
   const wrongReqHeader = mockReq({
     headers: {
       authorization: `${token}`
@@ -67,14 +64,14 @@ describe('Authenticate middleware', () => {
     authenticate(wrongReqHeader2, res, next);
     next.should.have.been.called;
   });
-  
+
   it('should return status 403 if token undefined', () => {
     authenticate(emptyReqHeader, res, next);
-    res.status.should.be.calledWith(403);
+    res.status.should.be.calledWith(400);
     res.json.should.be.calledWith({
       success: false,
-      message: 'Token is undefined or invalid!'
+      message: 'Token is required!'
     });
   });
-  
+
 });

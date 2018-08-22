@@ -35,7 +35,7 @@ class SignUpPage extends Component {
 
   onChange(e) {
     const { name, value } = e.target;
-    this.setState({ [name]: value.trim() });
+    this.setState({ [name]: value });
     this.setState({ isValid: sigupValidator({ ...this.state }) });
   }
 

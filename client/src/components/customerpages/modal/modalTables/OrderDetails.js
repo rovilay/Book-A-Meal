@@ -17,7 +17,6 @@ const OrderDetailsTable = (props) => {
 
   const {
     id: orderId,
-    userId,
     Meals: orderMeals,
     deliveryAddress,
     totalPrice,
@@ -39,7 +38,7 @@ const OrderDetailsTable = (props) => {
   const handlePaginationClick = (data) => {
     const nextPage = data.selected;
     const newOffset = nextPage * limit;
-    const mealsUrl = `/api/v1/orders/${userId}?${orderId}`;
+    const mealsUrl = `/api/v1/orders/${orderId}/meals`;
     getOrderMeals(mealsUrl, { limit, offset: newOffset });
   };
 
@@ -82,17 +81,16 @@ const OrderDetailsTable = (props) => {
             const {
               id,
               title: Meal,
-              price: unitPrice,
               OrderMeal
             } = meal;
-            const { portion } = OrderMeal;
-            const price = unitPrice * portion;
+            const { portion, cost: unitCost } = OrderMeal;
+            const cost = unitCost * portion;
             const item = {
               sn: ++i + offset,
               Meal,
-              unitPrice,
+              unitCost,
               portion,
-              price
+              cost
             };
 
             return (
@@ -132,9 +130,6 @@ const OrderDetailsTable = (props) => {
 
 OrderDetailsTable.propTypes = {
   title: PropTypes.string.isRequired,
-  // content: PropTypes.object.isRequired,
-  // pagination: PropTypes.object.isRequired,
-  // modal: PropTypes.object.isRequired,
   content: PropTypes.object.isRequired,
   getOrderMeals: PropTypes.func.isRequired,
   orderedMealsPagination: PropTypes.object.isRequired

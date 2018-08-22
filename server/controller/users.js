@@ -21,7 +21,7 @@ class UsersController {
    * @memberof UsersController
    */
   static signup(req, res, next) {
-    // req.body.email = req.body.email.toLowerCase();
+    req.body.email = req.body.email.toLowerCase();
 
     db.User.create(req.body)
       .then(() => {
@@ -76,7 +76,7 @@ class UsersController {
               };
             }
             const err = new Error('Email or Password is incorrect!');
-            err.status = 400;
+            err.status = 401;
             throw err;
           })
           .then(() => {
@@ -96,7 +96,7 @@ class UsersController {
       })
       .catch((err) => {
         err = new Error('Email or Password is incorrect!');
-        err.status = 404;
+        err.status = 401;
         return next(err);
       });
   }

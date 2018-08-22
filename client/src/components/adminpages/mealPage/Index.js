@@ -6,7 +6,6 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import sweetAlert from 'sweetalert';
-import { toast } from 'react-toastify';
 import ReactPaginate from 'react-paginate';
 import {
   Accordion,
@@ -18,6 +17,7 @@ import {
   setMealForEdit,
   postMeal,
   updateMeal,
+  updateMealOnEdit,
   removeMealFromEdit,
   getMeals,
   deleteMeal
@@ -26,7 +26,7 @@ import setFilter from '../../../actions/filterActions';
 import imageUploader from '../../../helpers/imageUploader';
 import notify from '../../../helpers/notify';
 import filterify from '../../../helpers/filterify';
-import toggleAccordion from '../../../helpers/toggleClassNames';
+import toggleAccordion from '../../../helpers/toggleAccordion';
 import FilterComp from '../../common/Filter';
 import MealCard from '../../common/MealCard';
 
@@ -37,12 +37,12 @@ class MealPage extends Component {
       isEdit: false,
       imageToUpload: '',
       uploadedImageLink: '',
-      disableBtn: false
+      disableBtn: false,
     };
 
     this.editMeal = this.editMeal.bind(this);
+    this.handleChange = this.handleChange.bind(this);
     this.closeEdit = this.closeEdit.bind(this);
-    this.notify = this.notify.bind(this);
     this.fillForm = this.fillForm.bind(this);
     this.clearForm = this.clearForm.bind(this);
     this.getFormVal = this.getFormVal.bind(this);
@@ -60,6 +60,11 @@ class MealPage extends Component {
     this.props.setFilter({ filter: 'all' });
   }
 
+  componentWillUnmount() {
+    this.setState({ isEdit: false });
+    this.props.removeMealFromEdit();
+  }
+
   /**
    * Updates Meal
    *
@@ -67,7 +72,7 @@ class MealPage extends Component {
    * And close edit state
    */
   onUpdateMeal(mealOnEditId) {
-    const data = this.getFormVal();
+    const data = { ...this.props.mealOnEdit };
     sweetAlert({
       text: 'Confirm Meal Update!',
       buttons: true,
@@ -105,7 +110,10 @@ class MealPage extends Component {
           this.props.postMeal(data)
             .then((success) => {
               if (success) {
-                toggleAccordion('.accordion__body', 'accordion__body', 'true');
+                // close accordion
+                toggleAccordion('.accordion__body', 'accordion__body  accordion__body--hidden', 'true');
+                // this.clearForm();
+                this.closeEdit();
               }
             });
         }
@@ -142,17 +150,24 @@ class MealPage extends Component {
   }
 
   /**
+   * changes meal form value;
+   */
+  handleChange(e) {
+    const { name, value } = e.target;
+    this.props.updateMealOnEdit({ [name]: value });
+  }
+
+  /**
    * Shows upload progress bar if image is present
    */
   showUploadBar() {
     if (this.checkFileSize()) {
-      const imageFile = document.getElementById('image').files[0];
+      const imageFile = document.getElementById('meal-image').files[0];
       this.setState({ imageToUpload: imageFile.name });
     } else {
       this.setState({ imageToUpload: '' });
     }
   }
-
 
   /**
    * Uploads image to cloudinary
@@ -161,11 +176,12 @@ class MealPage extends Component {
     this.showUploadBar();
     setTimeout(() => {
       if (this.state.imageToUpload) {
-        const url = imageUploader('image');
+        const url = imageUploader('meal-image');
         if (url) {
           url
             .then((res) => {
               if (typeof (res) === 'string') {
+                (this.state.isEdit) && this.props.updateMealOnEdit({ image: res });
                 return this.setState({
                   uploadedImageLink: res,
                   disableBtn: false
@@ -188,8 +204,8 @@ class MealPage extends Component {
    *
    */
   editMeal(mealId) {
+    // const { meals } = this.props;
     this.setState({ isEdit: true });
-
     this.props.setMealForEdit(mealId);
 
     // scroll to top
@@ -212,7 +228,7 @@ class MealPage extends Component {
       disableBtn: false,
       uploadedImageLink: ''
     });
-    // this.clearForm();
+
     this.props.removeMealFromEdit();
 
 
@@ -220,18 +236,6 @@ class MealPage extends Component {
     toggleAccordion('.accordion__body', 'accordion__body accordion__body--hidden', 'true');
   }
 
-  /**
-   * Notifies message using toast module
-   *
-   * @param {*} msg message to notify
-   */
-  notify(msg) {
-    toast(msg, {
-      position: toast.POSITION.TOP_CENTER,
-      className: 'toast',
-      progressClassName: 'toast-progress'
-    });
-  }
 
   /**
    * Fills form on edit state with info of meal on Edit,
@@ -254,7 +258,7 @@ class MealPage extends Component {
     const mealName = document.getElementById('meal-name');
     const price = document.getElementById('price');
     const dsc = document.getElementById('dsc');
-    const image = document.getElementById('image');
+    const image = document.getElementById('meal-image');
 
     mealName.value = '';
     price.value = '';
@@ -267,10 +271,10 @@ class MealPage extends Component {
    * And disables button if file is proper size
    */
   checkFileSize() {
-    const file = document.getElementById('image');
+    const file = document.getElementById('meal-image');
     if (file.files[0]) {
       if (file.files[0].size > 1500000) {
-        this.notify('File must not exceed 1.5mb');
+        notify('File must not exceed 1.5mb', 'toast-danger');
         file.value = '';
         return false;
       }
@@ -319,6 +323,7 @@ class MealPage extends Component {
                 addMeal={this.onAddMeal}
                 updateMeal={this.onUpdateMeal}
                 imageToUpload={imageToUpload}
+                handleChange={this.handleChange}
                 notify={this.notify}
                 showUploadBar={this.showUploadBar}
                 uploadImage={this.uploadImage}
@@ -390,7 +395,8 @@ MealPage.propTypes = {
   deleteMeal: PropTypes.func.isRequired,
   setFilter: PropTypes.func.isRequired,
   meals: PropTypes.array.isRequired,
-  pagination: PropTypes.object.isRequired
+  pagination: PropTypes.object.isRequired,
+  updateMealOnEdit: PropTypes.func.isRequired
 };
 
 const mapStateToProps = state => (
@@ -410,6 +416,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
     removeMealFromEdit,
     getMeals,
     deleteMeal,
+    updateMealOnEdit,
     setFilter
   },
   dispatch

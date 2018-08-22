@@ -56,7 +56,7 @@ class OrderHistory extends Component {
           isOrderInfo: true,
           close: false,
           contentLabel: 'Order details',
-          content: { ...res.orders[0] },
+          content: { ...res.order[0] },
           pagination: { ...res.pagination }
         });
       });
@@ -162,7 +162,7 @@ class OrderHistory extends Component {
               &&
               (
                 <p className="grandTot">
-                  Total Sales (&#8358;): {grandTotalPrice}
+                  Total Sales: &#8358;{grandTotalPrice}
                 </p>
               )
             }

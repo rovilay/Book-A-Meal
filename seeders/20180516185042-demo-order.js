@@ -6,13 +6,13 @@ module.exports = {
       id: '702a5034-8ea5-4251-a14c-9c59c01244a4',
       UserId: '618ef639-4729-4256-bdf4-54ff2e6a61d9',
       deliveryAddress: '147 isuti rd',
-      totalPrice: 1400,
+      totalPrice: 2200,
       createdAt: moment().format(),
       updatedAt: moment().format()
     },
     {
       id: '3dde5a6b-7555-4a82-bd17-550e4e7ddb7c',
-      UserId: '618ef639-4729-4256-bdf4-54ff2e6a61d9',
+      UserId: '00a9914a-b32a-4314-bad4-867bd1240c5a',
       deliveryAddress: '50 isuti rd',
       totalPrice: 3000,
       createdAt: moment().format(),

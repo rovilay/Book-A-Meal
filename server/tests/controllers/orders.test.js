@@ -21,13 +21,14 @@ describe('OrdersController', () => {
         deliveryAddress: null,
         meals: [
           {
-            id: 'qwertyuio',
+            id: '7a5d6838-569b-4fb5-955c-356ad7089645',
+            price: 300,
             portion: 5
           }
         ]
       },
       user: {
-        id: 'asdfgh'
+        id: '7a5d6838-569b-4fb5-955c-356ad7089645'
       }
     });
 
@@ -43,18 +44,19 @@ describe('OrdersController', () => {
   describe('update order', () => {
     const req = mockReq({
       params: {
-        id: 'qwertyu'
+        id: '7a5d6838-569b-4fb5-955c-356ad7089645'
       },
       body: {
         meals: [
           {
-            id: 'qwertyuio',
+            id: '7a5d6838-569b-4fb5-955c-356ad7089645',
+            price: 300,
             portion: 5
           }
         ]
       },
       user: {
-        id: 'asdfgh'
+        id: '7a5d6838-569b-4fb5-955c-356ad7089645'
       }
     });
 
@@ -67,7 +69,10 @@ describe('OrdersController', () => {
   describe('delete order', () => {
     const req = mockReq({
       params: {
-        id: 'qwertyuio'
+        orderId: '7a5d6838-569b-4fb5-955c-356ad7089645'
+      },
+      user: {
+        id: '7a5d6838-569b-4fb5-955c-356ad7089645'
       }
     });
 

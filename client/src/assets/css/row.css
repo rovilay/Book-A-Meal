@@ -283,8 +283,7 @@
 
   .head .row-item {
     white-space: pre-wrap !important;
-    /* padding: 18px; */
-    overflow-y: scroll !important;
+    /* overflow-y: scroll !important; */
     align-content: center;
     text-align: center;
   }

@@ -15,7 +15,7 @@ function validatemeal(req, res, next) {
   keys.forEach((key) => {
     // check if undefined or empty
     if (req.body[`${key}`] === undefined || req.body[`${key}`] === '') {
-      const err = new Error(`${key} field is empty`);
+      const err = new Error(`${key} field is empty!`);
       err.status = 400;
       return next(err);
     }

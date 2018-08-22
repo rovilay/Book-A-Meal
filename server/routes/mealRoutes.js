@@ -9,9 +9,9 @@ const mealRouter = express.Router();
 
 mealRouter.use('/api/v1/meals', authorize);
 mealRouter.get('/api/v1/meals', adminOnly, validateQuery, mealController.getAllMeals);
-mealRouter.get('/api/v1/meals/:id', adminOnly, mealController.getMeal);
-mealRouter.delete('/api/v1/meals/:id', adminOnly, mealController.deleteMeal);
+mealRouter.get('/api/v1/meals/:mealId', adminOnly, mealController.getMeal);
+mealRouter.delete('/api/v1/meals/:mealId', adminOnly, mealController.deleteMeal);
 mealRouter.post('/api/v1/meals', adminOnly, validateMeal, mealController.addMeal);
-mealRouter.put('/api/v1/meals/:id', adminOnly, validateMeal, mealController.updateMeal);
+mealRouter.put('/api/v1/meals/:mealId', adminOnly, validateMeal, mealController.updateMeal);
 
 export default mealRouter;

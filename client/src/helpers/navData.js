@@ -1,22 +1,11 @@
-const adminNavDefault = [
-  {
-    title: 'Manage Meal',
-    link: '/mealpage'
-  },
-  {
-    title: 'Orders',
-    link: '/orderHistory'
-  },
-  {
-    title: 'Log Out',
-    link: '/'
-  }
-];
-
 const adminNav = [
   {
-    title: 'Set Menu',
+    title: 'Manage Menus',
     link: '/dashboard'
+  },
+  {
+    title: 'Manage Meals',
+    link: '/mealpage'
   },
   {
     title: 'Orders',
@@ -50,8 +39,7 @@ const customerNav = [
 
 const navData = {
   customerNav,
-  adminNav,
-  adminNavDefault
+  adminNav
 };
 
 export default navData;

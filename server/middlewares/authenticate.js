@@ -20,7 +20,7 @@ function verifyToken(req, res, next) {
     // verify token
     jwt.verify(token, process.env.SECRET, (err, userData) => {
       if (err || userData === undefined) {
-        err.status = 403;
+        err.status = 401;
         return next(err);
       }
 
@@ -28,9 +28,9 @@ function verifyToken(req, res, next) {
       return next();
     });
   } else {
-    return res.status(403).json({
+    return res.status(400).json({
       success: false,
-      message: 'Token is undefined or invalid!'
+      message: 'Token is required!'
     });
   }
 }

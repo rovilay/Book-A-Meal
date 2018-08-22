@@ -14,6 +14,10 @@ module.exports = (sequelize, DataTypes) => {
     MealId: {
       type: DataTypes.UUID,
       allowNull: false,
+    },
+    mealOwner: {
+      type: DataTypes.UUID,
+      allowNull: false
     }
   });
   MenuMeal.associate = (/* models */) => {

@@ -159,7 +159,17 @@ const CustomerOrderTableRow = ({
                   dangerMode: true,
                 })
                 :
-                deleteRow(mealId);
+                swal({
+                  text: 'Are you sure you want to remove this meal?',
+                  buttons: true,
+                  // icon: 'warning',
+                  dangerMode: true,
+                })
+                  .then((confirmed) => {
+                    if (confirmed) {
+                      deleteRow(mealId);
+                    }
+                  });
             }}
           >
             <FontAwesome
