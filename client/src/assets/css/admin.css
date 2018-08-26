@@ -26,7 +26,6 @@
 
 .setMenuCard form>.date {
   display: flex;
-  /* border: 1px solid blue; */
   justify-content: flex-start;
 }
 
@@ -62,7 +61,6 @@ background: #8e8d8d
   flex-direction: column;
   overflow-y: scroll;
   height: auto;
-  /* border: 1px solid blue; */
   width: 100%;
   padding: 10px;
 }
@@ -72,7 +70,7 @@ background: #8e8d8d
   justify-content: space-between;
   width: 100%;
   padding: 10px;
-  margin: 5px 0;
+  margin: 5px;
   align-items: center;
   border: 1px solid #cccccc;
   border-radius: 3px;
@@ -204,6 +202,11 @@ background: #8e8d8d
   align-items: center;
 }
 
+.checkbox-card .checkbox,
+.mealsCheckbox .checkbox-card p>label {
+  font-size: 13px !important;
+}
+
 
 
 @media screen and (min-width: 700px) {
@@ -219,5 +222,6 @@ background: #8e8d8d
 
   .setMenuCard form>.date label {
     flex-basis: 20%;
+    font-size: 13px
   }
 }

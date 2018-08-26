@@ -58,7 +58,7 @@ class OrdersController {
         }
 
         // map orders to get url
-        let adminGrandTotalPrice = 0;
+        let grandTotalPrice = 0;
         const ordersWithMealUrl = orders.map((order) => {
           let totalPrice = 0;
           const modifiedOrder = order.get({ plain: true });
@@ -67,7 +67,7 @@ class OrdersController {
           Meals.map((meal) => { // map through order  meals to get total price;
             const { portion, cost } = meal.OrderMeal;
             totalPrice += (portion * cost);
-            adminGrandTotalPrice += (portion * cost);
+            grandTotalPrice += (portion * cost);
           });
 
           // modifiedOrder.totalPrice = newToT;
@@ -76,17 +76,19 @@ class OrdersController {
           return modifiedOrder;
         });
 
-        db.Order.sum('totalPrice', { where: (!admin) && { UserId } })
-          .then((grandTotalPrice) => {
-            res.status(200).send({
-              success: true,
-              message: 'Orders retrieved successfully!',
-              grandTotalPrice: (admin) ? adminGrandTotalPrice : grandTotalPrice,
-              pagination: paginate(limit, offset, count),
-              orders: ordersWithMealUrl
-            });
-          })
-          .catch(err => next(err));
+        res.status(200).send({
+          success: true,
+          message: 'Orders retrieved successfully!',
+          grandTotalPrice,
+          pagination: paginate(limit, offset, count),
+          orders: ordersWithMealUrl
+        });
+
+        // db.Order.sum('totalPrice', { where: (!admin) && { UserId } })
+        //   .then((grandTotalPrice) => {
+
+        //   })
+        //   .catch(err => next(err));
       })
       .catch((err) => {
         err = err || new Error('Error occurred while getting orders!');
@@ -170,7 +172,7 @@ class OrdersController {
     const { id: UserId } = req.user;
     const orderMeals = newOrder.meals.map(meal => meal.id); // Get all meal id
     const orderPortion = newOrder.meals.map(meal => meal.portion); // Get all meal portion
-    const orderMealsCost = newOrder.meals.map(meal => meal.price); // Get all meal cost
+    const orderMealsCost = newOrder.meals.map(meal => meal.unitPrice); // Get all meal cost
     checkMeal(orderMeals, undefined, next)
       .then((checked) => {
         if (checked) {
@@ -184,7 +186,7 @@ class OrdersController {
                 const { meals } = newOrder;
                 let i = 0;
                 while (i < meals.length) {
-                  const { id, portion, price: cost } = meals[i];
+                  const { id, portion, unitPrice: cost } = meals[i];
                   if (resMeal.id === id) {
                     totPrice += (cost * portion);
                   }
@@ -242,7 +244,7 @@ class OrdersController {
     const { id: UserId } = req.user;
     const updatedMealsId = updatedOrder.meals.map(meal => meal.id); // Get all meal id
     const updatedMealsPortion = updatedOrder.meals.map(meal => meal.portion); // Get all meal portion
-    const updatedMealsCost = updatedOrder.meals.map(meal => meal.price); // Get all meal cost
+    const updatedMealsCost = updatedOrder.meals.map(meal => meal.cost); // Get all meal cost
 
     checkMeal(updatedMealsId, undefined, next)
       .then((checked) => {
@@ -257,7 +259,7 @@ class OrdersController {
                 const { meals } = updatedOrder;
                 let i = 0;
                 while (i < meals.length) {
-                  const { id, portion, price: cost } = meals[i];
+                  const { id, portion, cost } = meals[i];
                   if (resMeal.id === id) {
                     totPrice += (cost * portion);
                   }

@@ -7,7 +7,7 @@ import {
   MEAL_ERROR
 } from '../actions/actiontypes';
 
-const setDefaultMealState = {
+export const mealDefaultState = {
   meals: [],
   mealOnEdit: {},
   error: '',
@@ -19,7 +19,7 @@ const setDefaultMealState = {
   }
 };
 
-const mealReducer = (state = setDefaultMealState, action) => {
+export const mealReducer = (state = mealDefaultState, action) => {
   switch (action.type) {
     case SET_MEALS:
       return {
@@ -29,7 +29,7 @@ const mealReducer = (state = setDefaultMealState, action) => {
       };
     case SET_DEFAULT_MEAL_STATE:
       return {
-        ...setDefaultMealState
+        ...mealDefaultState
       };
     case SET_MEAL_FOR_EDIT:
       return {
@@ -55,5 +55,3 @@ const mealReducer = (state = setDefaultMealState, action) => {
       return state;
   }
 };
-
-export default mealReducer;

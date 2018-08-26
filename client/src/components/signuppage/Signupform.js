@@ -331,10 +331,6 @@ const SignUpForm = props => (
       {props.formValues.message}
     </p>
   }
-
-    {
-      props.formValues.redirect && <Redirect to="/login" />
-    }
   </div>
 );
 

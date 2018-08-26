@@ -82,7 +82,7 @@ class MealPage extends Component {
         if (confirmed) {
           this.props.updateMeal({ mealId: mealOnEditId, data })
             .then((res) => {
-              if (res.success) {
+              if (res && res.success) {
                 this.closeEdit();
               }
             });
@@ -112,7 +112,6 @@ class MealPage extends Component {
               if (success) {
                 // close accordion
                 toggleAccordion('.accordion__body', 'accordion__body  accordion__body--hidden', 'true');
-                // this.clearForm();
                 this.closeEdit();
               }
             });

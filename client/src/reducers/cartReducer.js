@@ -5,12 +5,12 @@ import {
   EMPTY_CART,
 } from '../actions/actiontypes';
 
-const cartDefaultState = {
+export const cartDefaultState = {
   meals: [],
   totalPrice: 0
 };
 
-const cartReducer = (state = cartDefaultState, action) => {
+export const cartReducer = (state = cartDefaultState, action) => {
   switch (action.type) {
     case ADD_MEAL_TO_CART:
       return {
@@ -35,5 +35,3 @@ const cartReducer = (state = cartDefaultState, action) => {
       return state;
   }
 };
-
-export default cartReducer;
