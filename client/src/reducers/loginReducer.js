@@ -1,6 +1,6 @@
 import { SET_USER_DATA, LOG_OUT_USER } from '../actions/actiontypes';
 
-export const userDataDefaultState = {
+const userDataDefaultState = {
   user: {
     id: '',
     loginMessage: '',
@@ -12,7 +12,7 @@ export const userDataDefaultState = {
   }
 };
 
-export const loginReducer = (state = userDataDefaultState, action) => {
+const loginReducer = (state = userDataDefaultState, action) => {
   switch (action.type) {
     case SET_USER_DATA:
       return {
@@ -27,3 +27,5 @@ export const loginReducer = (state = userDataDefaultState, action) => {
       return state;
   }
 };
+
+export default loginReducer;

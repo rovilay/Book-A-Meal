@@ -18,35 +18,25 @@ const baseURL = process.env.BASE_URL;
  */
 async function serverReq(method, url, data = {}, authToken) {
   const token = getFromLs('jwt') || authToken;
-  // try {
-  //   const instance = await axios({
-  //     baseURL,
-  //     headers: {
-  //       Authorization: `Bearer ${token}`
-  //     },
-  //     method,
-  //     url,
-  //     data
-  //   });
+  try {
+    const instance = await axios({
+      baseURL,
+      headers: {
+        Authorization: `Bearer ${token}`
+      },
+      method,
+      url,
+      data
+    });
 
-  //   return instance;
-  // } catch (err) {
-  //   if (err.response) {
-  //     return err.response;
-  //   }
+    return instance;
+  } catch (err) {
+    if (err.response) {
+      return err.response;
+    }
 
-  //   return err;
-  // }
-
-  return axios({
-    baseURL,
-    headers: {
-      Authorization: `Bearer ${token}`
-    },
-    method,
-    url,
-    data
-  });
+    return err;
+  }
 }
 
 export default serverReq;

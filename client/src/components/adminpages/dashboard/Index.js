@@ -23,7 +23,10 @@ import {
   deleteMealInMenu, deleteMenuMeal
 } from '../../../actions/menuActions';
 import { getMeals } from '../../../actions/mealActions';
-import setModal from '../../../actions/modalActions';
+import {
+  setModal, deleteMealInEditModal,
+  addMealInEditMenuModal
+} from '../../../actions/modalActions';
 import MenuTable from './MenuTable/MenuTable';
 import SetMenuCard from './MenuCard/SetMenu';
 import Filter from '../../common/Filter';
@@ -40,6 +43,7 @@ class AdminDashboard extends Component {
     this.showMenuDetails = this.showMenuDetails.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.editMenu = this.editMenu.bind(this);
+    // this.deleteRow = this.deleteRow.bind(this);
     this.onSubmitUpdate = this.onSubmitUpdate.bind(this);
     this.unCheckAll = this.unCheckAll.bind(this);
     this.getMenus = this.getMenus.bind(this);
@@ -63,7 +67,7 @@ class AdminDashboard extends Component {
     if (this.props.modal.isEdit) {
       checkbox = document.getElementById(`${mealId}-edit`);
     } else {
-      checkbox = document.getElementById(`checkbox-${mealId}`);
+      checkbox = document.getElementById(mealId);
     }
     if (checkbox.checked === true) {
       this.props.addMealToNewMenu(mealId);
@@ -121,9 +125,14 @@ class AdminDashboard extends Component {
     this.props.emptyNewMenu();
   }
 
+  // deleteRow(id) {
+  //   this.props.deleteMealInEditModal(id);
+  //   this.props.deleteMealInEditMenu(id);
+  // }
+
   unCheckAll(mealIdArr) {
     mealIdArr.forEach((mealId) => {
-      const checkbox = document.getElementById(`checkbox-${mealId}`);
+      const checkbox = document.getElementById(mealId);
       checkbox.checked = false;
     });
   }
@@ -135,9 +144,9 @@ class AdminDashboard extends Component {
     this.props.postMenu({ postOn, meals })
       .then((success) => {
         if (success) {
-          toggleAccordion('.accordion__body', 'accordion__body  accordion__body--hidden', 'true'); // close accordion
           this.unCheckAll([...this.props.newMenuMeals]);
           this.props.emptyNewMenu();
+          toggleAccordion('.accordion__body', 'accordion__body  accordion__body--hidden', 'true'); // close accordion
         }
       });
   }
@@ -221,6 +230,7 @@ AdminDashboard.propTypes = {
   postMenu: PropTypes.func.isRequired,
   newMenuMeals: PropTypes.array.isRequired,
   setModal: PropTypes.func.isRequired,
+  deleteMealInEditModal: PropTypes.func.isRequired,
   updateMenu: PropTypes.func.isRequired,
   setMenuForEdit: PropTypes.func.isRequired,
   emptyNewMenu: PropTypes.func.isRequired,
@@ -260,7 +270,9 @@ const mapDispatchToProps = dispatch => bindActionCreators(
     setMenuForEdit,
     deleteMealInEditMenu,
     deleteMealInMenu,
+    deleteMealInEditModal,
     addMealInEditMenu,
+    addMealInEditMenuModal,
     getMenuMeals,
     setFilter,
     deleteMenuMeal

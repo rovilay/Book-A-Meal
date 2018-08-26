@@ -12,7 +12,7 @@ import {
   SET_MENU_FOR_EDIT
 } from '../actions/actiontypes';
 
-export const menuDefaultState = {
+const setDefaultMenuState = {
   todayMenu: [],
   newMenu: [],
   allMenus: [],
@@ -34,7 +34,7 @@ export const menuDefaultState = {
   }
 };
 
-export const menuReducer = (state = menuDefaultState, action) => {
+const menuReducer = (state = setDefaultMenuState, action) => {
   switch (action.type) {
     case SET_TODAY_MENU:
       return {
@@ -99,3 +99,5 @@ export const menuReducer = (state = menuDefaultState, action) => {
       return state;
   }
 };
+
+export default menuReducer;

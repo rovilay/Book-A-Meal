@@ -50,7 +50,7 @@ describe('OrdersController', () => {
         meals: [
           {
             id: '7a5d6838-569b-4fb5-955c-356ad7089645',
-            unitPrice: 300,
+            price: 300,
             portion: 5
           }
         ]

@@ -26,7 +26,7 @@ import {
   getOrderMeals
 } from '../../../actions/ordersActions';
 import setFilter from '../../../actions/filterActions';
-import setModal from '../../../actions/modalActions';
+import { setModal } from '../../../actions/modalActions';
 import Filter from '../../common/Filter';
 
 class CustomerOrder extends Component {

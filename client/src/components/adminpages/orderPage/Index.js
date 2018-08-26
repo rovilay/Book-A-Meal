@@ -15,7 +15,7 @@ import filterify from '../../../helpers/filterify';
 import AdminOrderTableRow from './OrderTablerow';
 import setFilter from '../../../actions/filterActions';
 import { getAllOrders, getOrderMeals } from '../../../actions/ordersActions';
-import setModal from '../../../actions/modalActions';
+import { setModal } from '../../../actions/modalActions';
 import { emptyEditMenu } from '../../../actions/menuActions';
 import Filter from '../../common/Filter';
 

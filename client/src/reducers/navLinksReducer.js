@@ -1,6 +1,6 @@
 import { SET_DEFAULT_NAV, SET_NAV_BAR } from '../actions/actiontypes';
 
-export const navLinksDefaultState = [
+const navLinksDefaultState = [
   {
     title: 'Log In',
     link: '/login'
@@ -11,7 +11,7 @@ export const navLinksDefaultState = [
   }
 ];
 
-export const navLinksReducer = (state = navLinksDefaultState, action) => {
+const navLinksReducer = (state = navLinksDefaultState, action) => {
   switch (action.type) {
     case SET_NAV_BAR:
       return [...action.navData];
@@ -21,3 +21,6 @@ export const navLinksReducer = (state = navLinksDefaultState, action) => {
       return state;
   }
 };
+
+
+export default navLinksReducer;

@@ -1,8 +1,10 @@
 import {
-  SET_MODAL
+  SET_MODAL,
+  DELETE_MEAL_IN_EDIT_MODAL,
+  ADD_MEAL_IN_EDIT_MENU_MODAL,
 } from '../actions/actiontypes';
 
-export const modalDefaultState = {
+const modalDefaultState = {
   isOpen: false,
   isEdit: false,
   isInfo: false,
@@ -17,14 +19,32 @@ export const modalDefaultState = {
   }
 };
 
-export const modalReducer = (state = modalDefaultState, action) => {
+const modalReducer = (state = modalDefaultState, action) => {
   switch (action.type) {
     case SET_MODAL:
       return {
         ...state,
         ...action.modal
       };
+    case ADD_MEAL_IN_EDIT_MENU_MODAL:
+      return {
+        ...state,
+        content: {
+          ...state.content,
+          meals: action.newMeals
+        }
+      };
+    case DELETE_MEAL_IN_EDIT_MODAL:
+      return {
+        ...state,
+        content: {
+          ...state.content,
+          ...action.newContent
+        }
+      };
     default:
       return state;
   }
 };
+
+export default modalReducer;

@@ -347,7 +347,7 @@ img {
   height: 100%;
   position: relative;
   object-fit: cover;
-  border-radius: 5px 5px 0 0;
+  border-radius: 5px 5px 0 0
 }
 
 
@@ -361,6 +361,7 @@ img {
   padding: 10px;
   position: absolute;
   opacity: 0;
+  /* transition: .5s ease; */
   background-color: rgba(0, 0, 0, .46);
   border-radius: 5px 5px 0 0;
   flex-direction: column;

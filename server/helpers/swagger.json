@@ -1,0 +1,1336 @@
+{
+  "swagger" : "2.0",
+  "info" : {
+    "description" : "Book-A-Meal is an app designed to let you order meals from your favourite resturant at your convience. To checkout the app, visit [https://rovilay.github.io/Book-A-Meal/UI](https://rovilay.github.io/Book-A-Meal/UI) .",
+    "version" : "1.0.0",
+    "title" : "Book-A-Meal",
+    "contact" : {
+      "email" : "ogooluwaakinola@gmail.com"
+    },
+    "license" : {
+      "name" : "MIT License",
+      "url" : "https://opensource.org/licenses/MIT"
+    }
+  },
+  "host" : "book-me-a-meal.herokuapp.com",
+  "basePath" : "/api/v1",
+  "tags" : [ {
+    "name" : "Users",
+    "description" : "For all users to register or log in",
+    "externalDocs" : {
+      "description" : "Find out more",
+      "url" : "https://rovilay.github.io/Book-A-Meal/"
+    }
+  }, {
+    "name" : "Meals",
+    "description" : "Meals endpoints"
+  }, {
+    "name" : "Menus",
+    "description" : "Menus endpoints"
+  }, {
+    "name" : "Orders",
+    "description" : "Orders endpoints"
+  } ],
+  "schemes" : [ "https" ],
+  "paths" : {
+    "/auth/signup" : {
+      "post" : {
+        "tags" : [ "Users" ],
+        "summary" : "Adds a new user to the system",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "User object that needs to be registered",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/User"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "User successfully created",
+            "schema" : {
+              "$ref" : "#/definitions/Res"
+            }
+          },
+          "400" : {
+            "description" : "[...] field is empty or An error occured, user not created!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/auth/login" : {
+      "post" : {
+        "tags" : [ "Users" ],
+        "summary" : "Gives registered user access to the system",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "description" : "User object that needs to be registered",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Login_User"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "You are logged in!",
+            "schema" : {
+              "$ref" : "#/definitions/Login_Res"
+            }
+          },
+          "400" : {
+            "description" : "[...] field is empty or An error occured, user not created!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        }
+      }
+    },
+    "/meals" : {
+      "get" : {
+        "tags" : [ "Meals" ],
+        "summary" : "Gets meals",
+        "description" : "This operation can only be performed by an admin/caterer",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Meals retrieved successfully",
+            "schema" : {
+              "$ref" : "#/definitions/Meal_Res"
+            }
+          },
+          "400" : {
+            "description" : "Error occurred while getting all meals",
+            "schema" : {
+              "$ref" : "#/definitions/Res"
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        },
+        "security" : [ {
+          "jwtHeader" : [ ]
+        } ]
+      },
+      "post" : {
+        "tags" : [ "Meals" ],
+        "summary" : "Adds meal",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Meal"
+          },
+          "x-examples" : {
+            "application/json" : "{\n    \"title\": \"SeMOvita and Ewedu\",\n    \"description\": \"So delicious\",\n    \"price\": 1000,\n    \"image\": \"image.com\"\n    \n}"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Meal added successfully!",
+            "schema" : {
+              "$ref" : "#/definitions/Post_Meal_Res"
+            }
+          },
+          "400" : {
+            "description" : "Some fields are empty OR Error occured while posting meal!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "403" : {
+            "description" : "User not allowed!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        },
+        "security" : [ {
+          "jwtHeader" : [ ]
+        } ]
+      }
+    },
+    "/meals/{id}" : {
+      "get" : {
+        "tags" : [ "Meals" ],
+        "summary" : "Get a meal based on ID",
+        "description" : "This operation can only be performed by an admin/caterer",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of meal to retrieve",
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Meal retrieved successfully!",
+            "schema" : {
+              "$ref" : "#/definitions/Post_Meal_Res"
+            }
+          },
+          "400" : {
+            "description" : "Some field are empty OR Error occurred while updating meal!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "403" : {
+            "description" : "User not allowed!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        },
+        "security" : [ {
+          "jwtHeader" : [ ]
+        } ]
+      },
+      "put" : {
+        "tags" : [ "Meals" ],
+        "summary" : "Update meal based on meal ID",
+        "description" : "This operation can only be done by an admin/caterer",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of meal intended for update",
+          "required" : true
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Meal"
+          },
+          "x-examples" : {
+            "application/json" : "{\n    \"title\": \"Rice and Spags\",\n    \"description\": \"So delicious\",\n    \"price\": 450,\n    \"image\": \"image.com\"\n    \n}"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Update successful!",
+            "schema" : {
+              "$ref" : "#/definitions/Update_Meal_Res"
+            }
+          },
+          "400" : {
+            "description" : "Error occurred while updating meal!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "403" : {
+            "description" : "User not allowed!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        },
+        "security" : [ {
+          "jwtHeader" : [ ]
+        } ]
+      },
+      "delete" : {
+        "tags" : [ "Meals" ],
+        "description" : "This operation can only be performed by an admin/caterer",
+        "consumes" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "ID of meal to delete",
+          "required" : true
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Meal deleted successfully!"
+          },
+          "400" : {
+            "description" : "Error occurred while deleting meal!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "403" : {
+            "description" : "User not allowed!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        },
+        "security" : [ {
+          "jwtHeader" : [ ]
+        } ]
+      }
+    },
+    "/menus" : {
+      "get" : {
+        "tags" : [ "Menus" ],
+        "summary" : "Gets all menus available",
+        "description" : "This operation can only be performed by an admin/caterer",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Menus retrieved successfully!",
+            "schema" : {
+              "$ref" : "#/definitions/Menus_Res"
+            }
+          },
+          "400" : {
+            "description" : "An input field is empty or Error occurred while getting all menus!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "403" : {
+            "description" : "User not allowed!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        },
+        "security" : [ {
+          "jwtHeader" : [ ]
+        } ]
+      },
+      "post" : {
+        "tags" : [ "Menus" ],
+        "summary" : "Add menu to system",
+        "description" : " This operation can only be performed by an admin/caterer | 'postOn' date should be in this format: 'yyyy-mm-dd'",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Menu"
+          },
+          "x-examples" : {
+            "application/json" : "{\n    \"postOn\": \"yyyy-mm-dd\",\n    \"meals\": [\"mealId\", \"mealId\"]\n    \n}"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Menu retrieved successfully!",
+            "schema" : {
+              "$ref" : "#/definitions/Res"
+            }
+          },
+          "400" : {
+            "description" : "An input field is empty or Error occurred while posting menus!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "403" : {
+            "description" : "User not allowed!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        },
+        "security" : [ {
+          "jwtHeader" : [ ]
+        } ]
+      }
+    },
+    "/menus/{DD}/{MM}/{YYYY}" : {
+      "get" : {
+        "tags" : [ "Menus" ],
+        "summary" : "Get menu by date",
+        "description" : "Can be performed by all users",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "DD",
+          "in" : "path",
+          "description" : "day",
+          "required" : true
+        }, {
+          "name" : "MM",
+          "in" : "path",
+          "description" : "month",
+          "required" : true
+        }, {
+          "name" : "YYYY",
+          "in" : "path",
+          "description" : "year",
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Menus retrieved successfully!",
+            "schema" : {
+              "$ref" : "#/definitions/Menu_Res"
+            }
+          },
+          "400" : {
+            "description" : "An input field is empty or Error occurred while getting all menus!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        },
+        "security" : [ {
+          "jwtHeader" : [ ]
+        } ]
+      },
+      "put" : {
+        "tags" : [ "Menus" ],
+        "summary" : "Update menu by post on date",
+        "description" : "Updates menu based on poston date",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "DD",
+          "in" : "path",
+          "description" : "day",
+          "required" : true
+        }, {
+          "name" : "MM",
+          "in" : "path",
+          "description" : "month",
+          "required" : true
+        }, {
+          "name" : "YYYY",
+          "in" : "path",
+          "description" : "year",
+          "required" : true
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : true,
+          "x-examples" : {
+            "application/json" : "{\n    \"meals\": [\n        \"xxxxxxxxxxx\"\n        ]\n}"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Menus updated successfully!",
+            "schema" : {
+              "$ref" : "#/definitions/Menu_Res"
+            }
+          },
+          "400" : {
+            "description" : "An input field is empty or Error occurred while getting all menus!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        },
+        "security" : [ {
+          "jwtHeader" : [ ]
+        } ]
+      }
+    },
+    "/orders" : {
+      "get" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Gets all orders",
+        "description" : "Can be performed by admin/caterer only",
+        "produces" : [ "application/json" ],
+        "parameters" : [ ],
+        "responses" : {
+          "200" : {
+            "description" : "Orders retrieved successfully!",
+            "schema" : {
+              "$ref" : "#/definitions/Orders_Res"
+            }
+          },
+          "400" : {
+            "description" : "Error occurred while getting all orders!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "403" : {
+            "description" : "User not allowed!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        },
+        "security" : [ {
+          "jwtHeader" : [ ]
+        } ]
+      },
+      "post" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Post orders",
+        "description" : "This operation can only be performed by a customer within opening hours - 7 a.m to 6 p.m",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "in" : "body",
+          "name" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Order"
+          },
+          "x-examples" : {
+            "application/json" : "{\n    \"deliveryAddress\": \"xxxx rd\",\n    \"meals\": [\n        {\n            \"id\": \"xxxxxxx.yyyyyy.zzzzz\",\n            \"portion\": 3\n        \n    }, \n    {\n        \"id\": \"xxxxx.yyyyyy.zzzzz\",\n        \"portion\": 2\n    }\n    ],\n    \n}"
+          }
+        } ],
+        "responses" : {
+          "201" : {
+            "description" : "Order placed successfully!",
+            "schema" : {
+              "$ref" : "#/definitions/Res"
+            }
+          },
+          "400" : {
+            "description" : "An input field is empty or Error occurred while posting order!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        },
+        "security" : [ {
+          "jwtHeader" : [ ]
+        } ]
+      }
+    },
+    "/orders/{userId}" : {
+      "get" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Gets orders placed by specific user",
+        "description" : "This operation can be performed by any registered user || get user Id from your login response.",
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "userId",
+          "in" : "path",
+          "description" : "Id of user whose order is to be retrieved",
+          "required" : true
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Orders retrieved successfully!",
+            "schema" : {
+              "$ref" : "#/definitions/Model3"
+            }
+          },
+          "400" : {
+            "description" : "Error occurred while getting orders!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "404" : {
+            "description" : "No order found!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        },
+        "security" : [ {
+          "jwtHeader" : [ ]
+        } ]
+      }
+    },
+    "/orders/{id}" : {
+      "put" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Updates Order",
+        "description" : "This operation can be performed by customers only and updates can not be done \"1 hours\" after an order has been placed",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of order to be updated",
+          "required" : true
+        }, {
+          "in" : "body",
+          "name" : "body",
+          "required" : true,
+          "schema" : {
+            "$ref" : "#/definitions/Order"
+          }
+        } ],
+        "responses" : {
+          "200" : {
+            "description" : "Order updated successfully!",
+            "schema" : {
+              "$ref" : "#/definitions/Res"
+            }
+          },
+          "400" : {
+            "description" : "An input field is empty or Error occurred while posting order!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        },
+        "security" : [ {
+          "jwtHeader" : [ ]
+        } ]
+      },
+      "delete" : {
+        "tags" : [ "Orders" ],
+        "summary" : "Deletes Order",
+        "description" : "This operation can be performed by customers only and deleting can not be done \"1 hours\" after an order has been placed",
+        "consumes" : [ "application/json" ],
+        "produces" : [ "application/json" ],
+        "parameters" : [ {
+          "name" : "id",
+          "in" : "path",
+          "description" : "id of order to be deleted",
+          "required" : true
+        } ],
+        "responses" : {
+          "204" : {
+            "description" : "Order deleted successfully!"
+          },
+          "400" : {
+            "description" : "An input field is empty or Error occurred while deleting order!",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          },
+          "403" : {
+            "description" : "Forbidden",
+            "schema" : {
+              "$ref" : "#/definitions/Error"
+            }
+          }
+        },
+        "security" : [ {
+          "jwtHeader" : [ ]
+        } ]
+      }
+    }
+  },
+  "securityDefinitions" : {
+    "jwtHeader" : {
+      "type" : "apiKey",
+      "name" : "Authorization",
+      "in" : "header"
+    }
+  },
+  "definitions" : {
+    "User" : {
+      "properties" : {
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        },
+        "address" : {
+          "type" : "string"
+        },
+        "city" : {
+          "type" : "string"
+        },
+        "Phone" : {
+          "type" : "string"
+        },
+        "state" : {
+          "type" : "string"
+        },
+        "email" : {
+          "type" : "string"
+        },
+        "address2" : {
+          "type" : "string",
+          "default" : "null"
+        },
+        "Phone2" : {
+          "type" : "string",
+          "default" : "null"
+        },
+        "admin" : {
+          "type" : "boolean",
+          "default" : false
+        }
+      },
+      "description" : "Sign up user fields",
+      "example" : {
+        "firstName" : "firstName",
+        "lastName" : "lastName",
+        "password" : "password",
+        "address" : "address",
+        "city" : "city",
+        "address2" : "null",
+        "Phone2" : "null",
+        "Phone" : "Phone",
+        "admin" : false,
+        "state" : "state",
+        "email" : "email"
+      }
+    },
+    "Login_User" : {
+      "properties" : {
+        "email" : {
+          "type" : "string"
+        },
+        "password" : {
+          "type" : "string"
+        }
+      },
+      "description" : "Login format",
+      "example" : {
+        "password" : "password",
+        "email" : "email"
+      }
+    },
+    "Login_Res" : {
+      "properties" : {
+        "success" : {
+          "type" : "boolean"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "userId" : {
+          "type" : "string",
+          "format" : "uuidv4",
+          "description" : "id of user"
+        },
+        "token" : {
+          "type" : "string"
+        }
+      },
+      "description" : "Response on successful login",
+      "example" : {
+        "success" : true,
+        "message" : "message",
+        "userId" : "userId",
+        "token" : "token"
+      }
+    },
+    "Meal" : {
+      "properties" : {
+        "title" : {
+          "type" : "string",
+          "description" : "Title of meal"
+        },
+        "description" : {
+          "type" : "string",
+          "description" : "Small details on the meal"
+        },
+        "price" : {
+          "type" : "integer",
+          "description" : "Price of the meal per portion/quantity"
+        },
+        "image" : {
+          "type" : "string",
+          "format" : "url",
+          "description" : "Image of meal to be posted"
+        }
+      },
+      "description" : "Format for posting meal",
+      "example" : {
+        "image" : "http://example.com/aeiou",
+        "price" : 0,
+        "description" : "description",
+        "title" : "title"
+      }
+    },
+    "Meal_Res" : {
+      "properties" : {
+        "success" : {
+          "type" : "boolean"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "meals" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/meal"
+          }
+        }
+      },
+      "description" : "Response on getting all meals",
+      "example" : {
+        "success" : true,
+        "message" : "message",
+        "meals" : [ {
+          "image" : "image",
+          "createdAt" : "createdAt",
+          "price" : 0,
+          "UserId" : "UserId",
+          "description" : "description",
+          "id" : "id",
+          "title" : "title",
+          "updatedAt" : "updatedAt"
+        }, {
+          "image" : "image",
+          "createdAt" : "createdAt",
+          "price" : 0,
+          "UserId" : "UserId",
+          "description" : "description",
+          "id" : "id",
+          "title" : "title",
+          "updatedAt" : "updatedAt"
+        } ]
+      }
+    },
+    "Post_Meal_Res" : {
+      "properties" : {
+        "success" : {
+          "type" : "boolean"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "meal" : {
+          "$ref" : "#/definitions/meal"
+        }
+      },
+      "description" : "Response on posting meal",
+      "example" : {
+        "meal" : {
+          "image" : "image",
+          "createdAt" : "createdAt",
+          "price" : 0,
+          "UserId" : "UserId",
+          "description" : "description",
+          "id" : "id",
+          "title" : "title",
+          "updatedAt" : "updatedAt"
+        },
+        "success" : true,
+        "message" : "message"
+      }
+    },
+    "meal" : {
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "price" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "image" : {
+          "type" : "string"
+        },
+        "UserId" : {
+          "type" : "string",
+          "description" : "user id of admin who posted the meal"
+        },
+        "createdAt" : {
+          "type" : "string"
+        },
+        "updatedAt" : {
+          "type" : "string"
+        }
+      },
+      "description" : "Meal object for each meal in the get meal response",
+      "example" : {
+        "image" : "image",
+        "createdAt" : "createdAt",
+        "price" : 0,
+        "UserId" : "UserId",
+        "description" : "description",
+        "id" : "id",
+        "title" : "title",
+        "updatedAt" : "updatedAt"
+      }
+    },
+    "Update_Meal_Res" : {
+      "properties" : {
+        "success" : {
+          "type" : "boolean"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "updatedMeal" : {
+          "$ref" : "#/definitions/UpdatedMeal"
+        }
+      },
+      "example" : {
+        "success" : true,
+        "updatedMeal" : {
+          "image" : "image",
+          "price" : 0,
+          "UserId" : "UserId",
+          "description" : "description",
+          "title" : "title"
+        },
+        "message" : "message"
+      }
+    },
+    "UpdatedMeal" : {
+      "properties" : {
+        "title" : {
+          "type" : "string"
+        },
+        "description" : {
+          "type" : "string"
+        },
+        "price" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "image" : {
+          "type" : "string"
+        },
+        "UserId" : {
+          "type" : "string"
+        }
+      },
+      "example" : {
+        "image" : "image",
+        "price" : 0,
+        "UserId" : "UserId",
+        "description" : "description",
+        "title" : "title"
+      }
+    },
+    "Menus" : {
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "postOn" : {
+          "type" : "string"
+        },
+        "UserId" : {
+          "type" : "string"
+        },
+        "createdAt" : {
+          "type" : "string"
+        },
+        "updatedAt" : {
+          "type" : "string"
+        },
+        "User" : {
+          "$ref" : "#/definitions/Menus_User"
+        },
+        "Meals" : {
+          "type" : "array",
+          "description" : "List of meals available on this menu",
+          "items" : {
+            "$ref" : "#/definitions/Menu_Meals"
+          }
+        }
+      },
+      "description" : "The menus property in the get menus response",
+      "example" : {
+        "createdAt" : "createdAt",
+        "User" : {
+          "firstName" : "firstName",
+          "lastName" : "lastName"
+        },
+        "UserId" : "UserId",
+        "id" : "id",
+        "Meals" : [ {
+          "price" : 0,
+          "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+          "title" : "title"
+        }, {
+          "price" : 0,
+          "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+          "title" : "title"
+        } ],
+        "postOn" : "postOn",
+        "updatedAt" : "updatedAt"
+      }
+    },
+    "Menu_Meals" : {
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "format" : "uuid"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "price" : {
+          "type" : "integer"
+        }
+      },
+      "description" : "Each meal object on the Menu meals list",
+      "example" : {
+        "price" : 0,
+        "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+        "title" : "title"
+      }
+    },
+    "Menus_Res" : {
+      "properties" : {
+        "success" : {
+          "type" : "boolean"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "menus" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Menus"
+          }
+        }
+      },
+      "description" : "Response when getting all menus",
+      "example" : {
+        "success" : true,
+        "menus" : [ {
+          "createdAt" : "createdAt",
+          "User" : {
+            "firstName" : "firstName",
+            "lastName" : "lastName"
+          },
+          "UserId" : "UserId",
+          "id" : "id",
+          "Meals" : [ {
+            "price" : 0,
+            "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+            "title" : "title"
+          }, {
+            "price" : 0,
+            "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+            "title" : "title"
+          } ],
+          "postOn" : "postOn",
+          "updatedAt" : "updatedAt"
+        }, {
+          "createdAt" : "createdAt",
+          "User" : {
+            "firstName" : "firstName",
+            "lastName" : "lastName"
+          },
+          "UserId" : "UserId",
+          "id" : "id",
+          "Meals" : [ {
+            "price" : 0,
+            "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+            "title" : "title"
+          }, {
+            "price" : 0,
+            "id" : "046b6c7f-0b8a-43b9-b35d-6489e6daee91",
+            "title" : "title"
+          } ],
+          "postOn" : "postOn",
+          "updatedAt" : "updatedAt"
+        } ],
+        "message" : "message"
+      }
+    },
+    "Menu_Res" : {
+      "properties" : {
+        "success" : {
+          "type" : "boolean"
+        },
+        "message" : {
+          "type" : "string"
+        }
+      },
+      "description" : "Response when getting a single menu",
+      "example" : {
+        "success" : true,
+        "message" : "message"
+      }
+    },
+    "Menu" : {
+      "properties" : {
+        "postOn" : {
+          "type" : "string",
+          "format" : "yyyy-mm-dd"
+        },
+        "meals" : {
+          "type" : "array",
+          "items" : {
+            "type" : "string"
+          }
+        }
+      },
+      "description" : "Format for posting menu. The 'meals' property is a list of meals on the menu.",
+      "example" : {
+        "postOn" : "postOn",
+        "meals" : [ "meals", "meals" ]
+      }
+    },
+    "Order" : {
+      "properties" : {
+        "deliveryAddress" : {
+          "type" : "string"
+        },
+        "meals" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Order_Meals"
+          }
+        }
+      },
+      "description" : "Order format for posting order",
+      "example" : {
+        "deliveryAddress" : "deliveryAddress",
+        "meals" : [ {
+          "portion" : 0,
+          "id" : "id"
+        }, {
+          "portion" : 0,
+          "id" : "id"
+        } ]
+      }
+    },
+    "Order_Meals" : {
+      "properties" : {
+        "id" : {
+          "type" : "string",
+          "description" : "meal id to order"
+        },
+        "portion" : {
+          "type" : "integer",
+          "description" : "portion or quantity of the meal to be ordered"
+        }
+      },
+      "description" : "Each meal ordered must have an id and portion(quantity)",
+      "example" : {
+        "portion" : 0,
+        "id" : "id"
+      }
+    },
+    "Orders_Res" : {
+      "properties" : {
+        "success" : {
+          "type" : "boolean"
+        },
+        "message" : {
+          "type" : "string"
+        },
+        "orders" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Orders"
+          }
+        }
+      },
+      "description" : "Respons recieved when getting all orders",
+      "example" : {
+        "success" : true,
+        "orders" : [ {
+          "createdAt" : "createdAt",
+          "User" : {
+            "firstName" : "firstName",
+            "lastName" : "lastName",
+            "Meals" : [ {
+              "price" : 6,
+              "id" : "id",
+              "title" : "title"
+            }, {
+              "price" : 6,
+              "id" : "id",
+              "title" : "title"
+            } ]
+          },
+          "deliveryAddress" : "deliveryAddress",
+          "totalPrice" : 0,
+          "UserId" : "UserId",
+          "id" : "id",
+          "updatedAt" : "updatedAt"
+        }, {
+          "createdAt" : "createdAt",
+          "User" : {
+            "firstName" : "firstName",
+            "lastName" : "lastName",
+            "Meals" : [ {
+              "price" : 6,
+              "id" : "id",
+              "title" : "title"
+            }, {
+              "price" : 6,
+              "id" : "id",
+              "title" : "title"
+            } ]
+          },
+          "deliveryAddress" : "deliveryAddress",
+          "totalPrice" : 0,
+          "UserId" : "UserId",
+          "id" : "id",
+          "updatedAt" : "updatedAt"
+        } ],
+        "message" : "message"
+      }
+    },
+    "Orders" : {
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "UserId" : {
+          "type" : "string"
+        },
+        "deliveryAddress" : {
+          "type" : "string"
+        },
+        "totalPrice" : {
+          "type" : "integer",
+          "format" : "int32"
+        },
+        "createdAt" : {
+          "type" : "string"
+        },
+        "updatedAt" : {
+          "type" : "string"
+        },
+        "User" : {
+          "$ref" : "#/definitions/Orders_User"
+        }
+      },
+      "description" : "Each order in the orders property list",
+      "example" : {
+        "createdAt" : "createdAt",
+        "User" : {
+          "firstName" : "firstName",
+          "lastName" : "lastName",
+          "Meals" : [ {
+            "price" : 6,
+            "id" : "id",
+            "title" : "title"
+          }, {
+            "price" : 6,
+            "id" : "id",
+            "title" : "title"
+          } ]
+        },
+        "deliveryAddress" : "deliveryAddress",
+        "totalPrice" : 0,
+        "UserId" : "UserId",
+        "id" : "id",
+        "updatedAt" : "updatedAt"
+      }
+    },
+    "Orders_User" : {
+      "properties" : {
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        },
+        "Meals" : {
+          "type" : "array",
+          "items" : {
+            "$ref" : "#/definitions/Orders_Meals"
+          }
+        }
+      },
+      "description" : "Customer who posted the order",
+      "example" : {
+        "firstName" : "firstName",
+        "lastName" : "lastName",
+        "Meals" : [ {
+          "price" : 6,
+          "id" : "id",
+          "title" : "title"
+        }, {
+          "price" : 6,
+          "id" : "id",
+          "title" : "title"
+        } ]
+      }
+    },
+    "Orders_Meals" : {
+      "properties" : {
+        "id" : {
+          "type" : "string"
+        },
+        "title" : {
+          "type" : "string"
+        },
+        "price" : {
+          "type" : "integer",
+          "format" : "int32"
+        }
+      },
+      "description" : "Meals description in the order response",
+      "example" : {
+        "price" : 6,
+        "id" : "id",
+        "title" : "title"
+      }
+    },
+    "Res" : {
+      "properties" : {
+        "success" : {
+          "type" : "boolean"
+        },
+        "message" : {
+          "type" : "string"
+        }
+      },
+      "description" : "Response recieved when operation is successful",
+      "example" : {
+        "success" : true,
+        "message" : "message"
+      }
+    },
+    "Error" : {
+      "properties" : {
+        "success" : {
+          "type" : "boolean",
+          "default" : false
+        },
+        "message" : {
+          "type" : "string"
+        }
+      },
+      "description" : "Response recieved when operation is unsuccessful"
+    },
+    "Menus_User" : {
+      "properties" : {
+        "firstName" : {
+          "type" : "string"
+        },
+        "lastName" : {
+          "type" : "string"
+        }
+      },
+      "description" : "Admin or caterer who created the meal",
+      "example" : {
+        "firstName" : "firstName",
+        "lastName" : "lastName"
+      }
+    }
+  },
+  "externalDocs" : {
+    "description" : "Find out more about Book-A-Meal",
+    "url" : "https://rovilay.github.io/Book-A-Meal/"
+  }
+}

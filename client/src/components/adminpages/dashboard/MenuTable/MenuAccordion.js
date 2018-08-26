@@ -20,20 +20,6 @@ class MenuAccordion extends Component {
     };
 
     this.handlePaginationClick = this.handlePaginationClick.bind(this);
-    this.handleAccordionBodyClose = this.handleAccordionBodyClose.bind(this);
-  }
-
-  /**
-   * handles menu meals state change
-   *
-   * @param {object} className className of DOM element to watch for
-   */
-  handleAccordionBodyClose(className) {
-    const element = document.querySelector(className);
-    if (element) {
-      const bodySelected = element.getAttribute('aria-selected');
-      (bodySelected) && this.setState({ isInfo: false });
-    }
   }
 
   /**
@@ -80,16 +66,8 @@ class MenuAccordion extends Component {
     const today = moment().format('YYYY-MM-DD');
 
     return (
-      <AccordionItem
-        key={sn}
-        hiddenbodyclassname="myhide-accordion"
-      >
-        <AccordionItemTitle
-          className={`accordion__title myaccordiontitle-${menuId}`}
-          onFocus={() => {
-            this.handleAccordionBodyClose(`.myaccordiontitle-${menuId}`);
-          }}
-        >
+      <AccordionItem key={sn}>
+        <AccordionItemTitle>
           <h3>
             <span className="serial">{sn}</span>
             <span className="postOn">{postOn}</span>
