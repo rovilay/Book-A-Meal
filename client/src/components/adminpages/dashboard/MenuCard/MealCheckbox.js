@@ -36,7 +36,7 @@ const MealCheckBoxCard = (props) => {
               type="checkbox"
               name="meal-check"
               className="meal-check"
-              id={meal.id}
+              id={`checkbox-${meal.id}`}
               defaultChecked={newMenuMeals.includes(meal.id)}
               onClick={() => {
                 setNewMenuMeal(meal.id);

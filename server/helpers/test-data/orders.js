@@ -34,7 +34,7 @@ const meals2UUID = [
 const menuUUID = [
   '5a12dead-82ef-4d0d-bd3c-77650882d018',
   '6f74f44c-36c5-4b43-b5dc-8db3e77d7f63'
-]
+];
 
 const ordersUUID = [
   'ede3ab95-e84e-4814-8011-adbc515eee5d',
@@ -228,41 +228,78 @@ export const admin4MenuMeals = [
   }
 ];
 
-export const customer1Order =  {
-    deliveryAddress: 'Ikotun Lagos',
-    meals: [
-      {
-        id: admin3MenuMeals[0].MealId,
-        price: meals1[0].price,
-        portion: 1
-      },
-      {
-        id: admin3MenuMeals[1].MealId,
-        price: meals2[0].price,
-        portion: 2
-      },
-      {
-        id: admin3MenuMeals[2].MealId,
-        price: meals2[0].price,
-        portion: 2
-      },
-    ]
-  };
+export const customer1Order = {
+  deliveryAddress: 'Ikotun Lagos',
+  meals: [
+    {
+      id: admin3MenuMeals[0].MealId,
+      unitPrice: meals1[0].price,
+      portion: 1
+    },
+    {
+      id: admin3MenuMeals[1].MealId,
+      unitPrice: meals2[0].price,
+      portion: 2
+    },
+    {
+      id: admin3MenuMeals[2].MealId,
+      unitPrice: meals2[0].price,
+      portion: 2
+    },
+  ]
+};
+
+export const customer1OrderUpdate = {
+  deliveryAddress: 'Ikotun Lagos',
+  meals: [
+    {
+      id: admin3MenuMeals[0].MealId,
+      cost: meals1[0].price,
+      portion: 1
+    },
+    {
+      id: admin3MenuMeals[1].MealId,
+      cost: meals2[0].price,
+      portion: 2
+    },
+    {
+      id: admin3MenuMeals[2].MealId,
+      cost: meals2[0].price,
+      portion: 2
+    },
+  ]
+};
 
 export const customer2Order = {
-    deliveryAddress: 'maryland Lagos',
-    meals: [
-      {
-        id: admin3MenuMeals[0].MealId,
-        price: meals1[1].price,
-        portion: 3
-      },
-      {
-        id: admin3MenuMeals[1].MealId,
-        price: meals2[1].price,
-        portion: 2
-      },
-    ]
+  deliveryAddress: 'maryland Lagos',
+  meals: [
+    {
+      id: admin3MenuMeals[0].MealId,
+      unitPrice: meals1[1].price,
+      portion: 3
+    },
+    {
+      id: admin3MenuMeals[1].MealId,
+      unitPrice: meals2[1].price,
+      portion: 2
+    },
+  ]
+};
+
+export const customer2OrderUpdate = {
+  deliveryAddress: 'maryland Lagos',
+  meals: [
+    {
+      id: admin3MenuMeals[0].MealId,
+      cost: meals1[1].price,
+      portion: 3
+    },
+    {
+      id: admin3MenuMeals[1].MealId,
+      cost: meals2[1].price,
+      portion: 2
+    },
+  ]
 };
 
 export const ordersData = [
@@ -282,7 +319,7 @@ export const ordersData = [
     createdAt: moment().format(),
     updatedAt: moment().format()
   }
-]
+];
 
 export const orderMeals = [
   {
@@ -340,4 +377,3 @@ export const orderMeals = [
     updatedAt: moment().format()
   }
 ];
-

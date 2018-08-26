@@ -1650,7 +1650,7 @@
         "id" : {
           "type" : "string"
         },
-        "price" : {
+        "unitPrice" : {
           "type" : "integer",
           "format" : "int32"
         },
@@ -1776,7 +1776,7 @@
         "id" : {
           "type" : "string"
         },
-        "price" : {
+        "cost" : {
           "type" : "integer",
           "format" : "int32"
         },

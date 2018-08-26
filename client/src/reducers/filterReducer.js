@@ -1,12 +1,12 @@
 import { SET_FILTER } from '../actions/actiontypes';
 
-const setDefaultFilterState = {
+export const filterDefaultState = {
   by: 'all',
   date: '',
   month: ''
 };
 
-const filterReducer = (state = setDefaultFilterState, action) => {
+export const filterReducer = (state = filterDefaultState, action) => {
   switch (action.type) {
     case SET_FILTER:
       return {
@@ -17,5 +17,3 @@ const filterReducer = (state = setDefaultFilterState, action) => {
       return state;
   }
 };
-
-export default filterReducer;

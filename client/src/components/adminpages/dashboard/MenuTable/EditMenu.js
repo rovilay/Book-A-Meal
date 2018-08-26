@@ -63,6 +63,7 @@ const EditMenuTable = (props) => {
                 <div className="checkbox-card">
                   {mealsNotInMenu.map(meal => (
                     <p key={meal.id} className="checkbox">
+                      {meal.title}
                       <input
                         type="checkbox"
                         name="meal-check"
@@ -73,7 +74,6 @@ const EditMenuTable = (props) => {
                         }}
                         value={meal.id}
                       />
-                      {meal.title}
                     </p>
                   ))}
                 </div>

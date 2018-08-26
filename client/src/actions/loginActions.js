@@ -49,48 +49,49 @@ export const logOutUser = () => {
  *
  * @return {Function} - function that dispatches setOrders and serverRes action to the redux store
  */
-export const loginUser = ({ email, password }) => (dispatch) => {
-  serverReq('post', '/api/v1/auth/login', { email, password })
-    .then((response) => {
+export const loginUser = ({ email, password }) => dispatch => serverReq('post', '/api/v1/auth/login', { email, password })
+  .then((response) => {
+    const {
+      token,
+      message,
+      success,
+      firstName,
+      lastName
+    } = response.data;
+    if (success) {
+      storeInLs('jwt', token);
       const {
-        token,
+        id,
+        admin,
+        exp
+      } = jwt.decode(token);
+      storeInLs('user', {
+        firstName,
+        lastName,
+        admin,
+        exp
+      });
+      history.push('/dashboard');
+      dispatch(setUserData({
         message,
         success,
+        id,
+        admin,
         firstName,
-        lastName
-      } = response.data;
-      if (success) {
-        storeInLs('jwt', token);
-        const {
-          id,
-          admin,
-          exp
-        } = jwt.decode(token);
-        storeInLs('user', {
-          firstName,
-          lastName,
-          admin,
-          exp
-        });
-        history.push('/dashboard');
-        dispatch(setUserData({
-          message,
-          success,
-          id,
-          admin,
-          firstName,
-          lastName,
-          exp
-        }));
-      } else {
-        delFromLs('jwt');
-        delFromLs('user');
-        dispatch(setUserData({
-          message,
-          success
-        }));
-        notify(message, 'toast-danger');
-      }
-    })
-    .catch(err => err);
-};
+        lastName,
+        exp
+      }));
+    }
+  })
+  .catch((err) => {
+    if (err.response.data) {
+      const { success, message } = err.response.data;
+      delFromLs('jwt');
+      delFromLs('user');
+      dispatch(setUserData({
+        message,
+        success
+      }));
+      return notify(message, 'toast-danger');
+    }
+  });
