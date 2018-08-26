@@ -15,11 +15,11 @@ import filterify from '../../../helpers/filterify';
 import AdminOrderTableRow from './OrderTablerow';
 import setFilter from '../../../actions/filterActions';
 import { getAllOrders, getOrderMeals } from '../../../actions/ordersActions';
-import { setModal } from '../../../actions/modalActions';
+import setModal from '../../../actions/modalActions';
 import { emptyEditMenu } from '../../../actions/menuActions';
 import Filter from '../../common/Filter';
 
-class OrderHistory extends Component {
+export class OrderHistory extends Component {
   constructor(props) {
     super(props);
 
@@ -77,7 +77,6 @@ class OrderHistory extends Component {
 
   render() {
     const { orders, pagination, grandTotalPrice } = this.props;
-    // const grandTotalPrice = summer(orders, 'totalPrice');
     const { offset, numOfPages, count } = pagination;
 
     return (
@@ -208,7 +207,7 @@ OrderHistory.propTypes = {
   getOrderMeals: PropTypes.func.isRequired,
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   orders: filterify(state.orders.history, state.filter),
   modal: state.modal,
   pagination: state.orders.pagination,

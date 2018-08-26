@@ -12,17 +12,19 @@ class FilterComp extends Component {
       date: '',
       month: ''
     };
+
+    this.handleFormSubmit = this.handleFormSubmit.bind(this);
+  }
+
+  handleFormSubmit(e) {
+    e.preventDefault();
+    this.props.setFilter({ ...this.state });
   }
 
   render() {
-    const { setFilter } = this.props;
     return (
       <div className="filter">
-        <form onSubmit={(e) => {
-          e.preventDefault();
-          setFilter({ ...this.state });
-        }}
-        >
+        <form onSubmit={this.handleFormSubmit}>
           <label htmlFor="filter" className="label">Filter By:</label>
           <div className="input-div">
             <select

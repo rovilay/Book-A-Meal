@@ -1,0 +1,1420 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OrderHistory component test should display \`No orders found!\` if no orders 1`] = `
+<div
+  className="admin-orderPage"
+>
+  <div
+    className="welcome"
+  >
+    <p
+      className="merienda"
+    >
+      Order History
+    </p>
+  </div>
+  <div
+    className="table-container"
+  >
+    <FilterComp
+      getAllOrders={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {},
+            ],
+            Array [
+              Object {},
+            ],
+            Array [
+              Object {
+                "limit": 12,
+                "offset": 12,
+              },
+            ],
+            Array [
+              Object {},
+            ],
+            Array [
+              Object {},
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      getOrderMeals={[Function]}
+      grandTotalPrice={1100}
+      modal={
+        Object {
+          "content": Object {},
+          "contentLabel": "Modal",
+          "isEdit": true,
+          "isOpen": true,
+          "isOrderInfo": true,
+        }
+      }
+      orders={Array []}
+      pagination={
+        Object {
+          "count": 13,
+          "limit": 12,
+          "numOfPages": 2,
+        }
+      }
+      setFilter={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {
+                "filter": "all",
+              },
+            ],
+            Array [
+              Object {
+                "filter": "all",
+              },
+            ],
+            Array [
+              Object {
+                "filter": "all",
+              },
+            ],
+            Array [
+              Object {
+                "filter": "all",
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      setModal={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {
+                "close": true,
+                "contentLabel": "",
+                "isEdit": false,
+                "isInfo": false,
+                "isOpen": false,
+                "isOrderInfo": false,
+              },
+            ],
+            Array [
+              Object {
+                "close": true,
+                "contentLabel": "",
+                "isEdit": false,
+                "isInfo": false,
+                "isOpen": false,
+                "isOrderInfo": false,
+              },
+            ],
+            Array [
+              Object {
+                "close": true,
+                "contentLabel": "",
+                "isEdit": false,
+                "isInfo": false,
+                "isOpen": false,
+                "isOrderInfo": false,
+              },
+            ],
+            Array [
+              Object {
+                "close": true,
+                "contentLabel": "",
+                "isEdit": false,
+                "isInfo": false,
+                "isOpen": false,
+                "isOrderInfo": false,
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      setNav={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Array [
+                Object {
+                  "link": "/dashboard",
+                  "title": "Manage Menus",
+                },
+                Object {
+                  "link": "/mealpage",
+                  "title": "Manage Meals",
+                },
+                Object {
+                  "link": "/orderHistory",
+                  "title": "Orders",
+                },
+                Object {
+                  "link": "/",
+                  "title": "Log Out",
+                },
+              ],
+            ],
+            Array [
+              Array [
+                Object {
+                  "link": "/dashboard",
+                  "title": "Manage Menus",
+                },
+                Object {
+                  "link": "/mealpage",
+                  "title": "Manage Meals",
+                },
+                Object {
+                  "link": "/orderHistory",
+                  "title": "Orders",
+                },
+                Object {
+                  "link": "/",
+                  "title": "Log Out",
+                },
+              ],
+            ],
+            Array [
+              Array [
+                Object {
+                  "link": "/dashboard",
+                  "title": "Manage Menus",
+                },
+                Object {
+                  "link": "/mealpage",
+                  "title": "Manage Meals",
+                },
+                Object {
+                  "link": "/orderHistory",
+                  "title": "Orders",
+                },
+                Object {
+                  "link": "/",
+                  "title": "Log Out",
+                },
+              ],
+            ],
+            Array [
+              Array [
+                Object {
+                  "link": "/dashboard",
+                  "title": "Manage Menus",
+                },
+                Object {
+                  "link": "/mealpage",
+                  "title": "Manage Meals",
+                },
+                Object {
+                  "link": "/orderHistory",
+                  "title": "Orders",
+                },
+                Object {
+                  "link": "/",
+                  "title": "Log Out",
+                },
+              ],
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      tableContent="order_history"
+    />
+  </div>
+  <p
+    className="empty not-found"
+  >
+    No orders found!
+  </p>
+  <PaginationBoxView
+    activeClassName="active"
+    breakClassName="break-me"
+    breakLabel={
+      <a
+        href=""
+      >
+        ...
+      </a>
+    }
+    containerClassName="pagination"
+    disableInitialCallback={false}
+    disabledClassName="disabled"
+    marginPagesDisplayed={2}
+    nextClassName="next"
+    nextLabel=">>"
+    onPageChange={[Function]}
+    pageCount={2}
+    pageRangeDisplayed={5}
+    previousClassName="previous"
+    previousLabel="<<"
+    subContainerClassName="pages pagination"
+  />
+  <ModalComp
+    getAllOrders={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            Object {},
+          ],
+          Array [
+            Object {},
+          ],
+          Array [
+            Object {
+              "limit": 12,
+              "offset": 12,
+            },
+          ],
+          Array [
+            Object {},
+          ],
+          Array [
+            Object {},
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
+    getOrderMeals={[Function]}
+    grandTotalPrice={1100}
+    hideModal={[Function]}
+    modal={
+      Object {
+        "content": Object {},
+        "contentLabel": "Modal",
+        "isEdit": true,
+        "isOpen": true,
+        "isOrderInfo": true,
+      }
+    }
+    orders={Array []}
+    pagination={
+      Object {
+        "count": 13,
+        "limit": 12,
+        "numOfPages": 2,
+      }
+    }
+    setFilter={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            Object {
+              "filter": "all",
+            },
+          ],
+          Array [
+            Object {
+              "filter": "all",
+            },
+          ],
+          Array [
+            Object {
+              "filter": "all",
+            },
+          ],
+          Array [
+            Object {
+              "filter": "all",
+            },
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
+    setModal={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            Object {
+              "close": true,
+              "contentLabel": "",
+              "isEdit": false,
+              "isInfo": false,
+              "isOpen": false,
+              "isOrderInfo": false,
+            },
+          ],
+          Array [
+            Object {
+              "close": true,
+              "contentLabel": "",
+              "isEdit": false,
+              "isInfo": false,
+              "isOpen": false,
+              "isOrderInfo": false,
+            },
+          ],
+          Array [
+            Object {
+              "close": true,
+              "contentLabel": "",
+              "isEdit": false,
+              "isInfo": false,
+              "isOpen": false,
+              "isOrderInfo": false,
+            },
+          ],
+          Array [
+            Object {
+              "close": true,
+              "contentLabel": "",
+              "isEdit": false,
+              "isInfo": false,
+              "isOpen": false,
+              "isOrderInfo": false,
+            },
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
+    setNav={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            Array [
+              Object {
+                "link": "/dashboard",
+                "title": "Manage Menus",
+              },
+              Object {
+                "link": "/mealpage",
+                "title": "Manage Meals",
+              },
+              Object {
+                "link": "/orderHistory",
+                "title": "Orders",
+              },
+              Object {
+                "link": "/",
+                "title": "Log Out",
+              },
+            ],
+          ],
+          Array [
+            Array [
+              Object {
+                "link": "/dashboard",
+                "title": "Manage Menus",
+              },
+              Object {
+                "link": "/mealpage",
+                "title": "Manage Meals",
+              },
+              Object {
+                "link": "/orderHistory",
+                "title": "Orders",
+              },
+              Object {
+                "link": "/",
+                "title": "Log Out",
+              },
+            ],
+          ],
+          Array [
+            Array [
+              Object {
+                "link": "/dashboard",
+                "title": "Manage Menus",
+              },
+              Object {
+                "link": "/mealpage",
+                "title": "Manage Meals",
+              },
+              Object {
+                "link": "/orderHistory",
+                "title": "Orders",
+              },
+              Object {
+                "link": "/",
+                "title": "Log Out",
+              },
+            ],
+          ],
+          Array [
+            Array [
+              Object {
+                "link": "/dashboard",
+                "title": "Manage Menus",
+              },
+              Object {
+                "link": "/mealpage",
+                "title": "Manage Meals",
+              },
+              Object {
+                "link": "/orderHistory",
+                "title": "Orders",
+              },
+              Object {
+                "link": "/",
+                "title": "Log Out",
+              },
+            ],
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
+  />
+</div>
+`;
+
+exports[`OrderHistory component test should map state to props 1`] = `
+Object {
+  "grandTotalPrice": 0,
+  "modal": Object {
+    "close": true,
+    "content": Object {},
+    "contentLabel": "",
+    "isEdit": false,
+    "isInfo": false,
+    "isOpen": false,
+    "isSetMenu": false,
+    "pagination": Object {
+      "limit": 10,
+      "numOfPages": 1,
+      "offset": 0,
+    },
+  },
+  "orderedMealsPagination": Object {
+    "count": 0,
+    "limit": 5,
+    "numOfPages": 1,
+    "offset": 0,
+  },
+  "orders": Array [],
+  "pagination": Object {
+    "count": 0,
+    "limit": 10,
+    "numOfPages": 1,
+    "offset": 0,
+  },
+}
+`;
+
+exports[`OrderHistory component test should render \`OrderHistory\` correctly 1`] = `
+<div
+  className="admin-orderPage"
+>
+  <div
+    className="welcome"
+  >
+    <p
+      className="merienda"
+    >
+      Order History
+    </p>
+  </div>
+  <div
+    className="table-container"
+  >
+    <FilterComp
+      getAllOrders={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {},
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      getOrderMeals={[Function]}
+      grandTotalPrice={1100}
+      modal={
+        Object {
+          "content": Object {},
+          "contentLabel": "Modal",
+          "isEdit": true,
+          "isOpen": true,
+          "isOrderInfo": true,
+        }
+      }
+      orders={
+        Array [
+          Object {
+            "Meals": "api/v1/orders/1",
+            "createdAt": "2018-08-23",
+            "id": 1,
+          },
+          Object {
+            "Meals": "api/v1/orders/2",
+            "createdAt": "2018-08-24",
+            "id": 2,
+          },
+          Object {
+            "Meals": "api/v1/orders/3",
+            "createdAt": "2018-08-25",
+            "id": 3,
+          },
+        ]
+      }
+      pagination={
+        Object {
+          "count": 13,
+          "limit": 12,
+          "numOfPages": 2,
+        }
+      }
+      setFilter={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {
+                "filter": "all",
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      setModal={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {
+                "close": true,
+                "contentLabel": "",
+                "isEdit": false,
+                "isInfo": false,
+                "isOpen": false,
+                "isOrderInfo": false,
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      setNav={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Array [
+                Object {
+                  "link": "/dashboard",
+                  "title": "Manage Menus",
+                },
+                Object {
+                  "link": "/mealpage",
+                  "title": "Manage Meals",
+                },
+                Object {
+                  "link": "/orderHistory",
+                  "title": "Orders",
+                },
+                Object {
+                  "link": "/",
+                  "title": "Log Out",
+                },
+              ],
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      tableContent="order_history"
+    />
+  </div>
+  <div
+    className="container-test"
+  >
+    <div
+      className="row head"
+    >
+      <p
+        className="row-item"
+        key="0"
+      >
+        S/N
+      </p>
+      <p
+        className="row-item"
+        key="1"
+      >
+        OrderId
+      </p>
+      <p
+        className="row-item"
+        key="2"
+      >
+        Date
+      </p>
+      <p
+        className="row-item"
+        key="3"
+      >
+        Total Cost
+      </p>
+      <p
+        className="row-item"
+        key="4"
+      >
+        Actions
+      </p>
+    </div>
+    <OrderTableRow
+      actions={
+        Object {
+          "delete": true,
+          "edit": true,
+          "info": true,
+        }
+      }
+      getAllOrders={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {},
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      getOrderMeals={[Function]}
+      grandTotalPrice={1100}
+      item={
+        Object {
+          "date": "August 23, 2018",
+          "orderId": 1,
+          "sn": NaN,
+          "totalPrice": undefined,
+        }
+      }
+      key="1"
+      mealsUrl="api/v1/orders/1"
+      modal={
+        Object {
+          "content": Object {},
+          "contentLabel": "Modal",
+          "isEdit": true,
+          "isOpen": true,
+          "isOrderInfo": true,
+        }
+      }
+      orderCreatedAt="2018-08-23"
+      orders={
+        Array [
+          Object {
+            "Meals": "api/v1/orders/1",
+            "createdAt": "2018-08-23",
+            "id": 1,
+          },
+          Object {
+            "Meals": "api/v1/orders/2",
+            "createdAt": "2018-08-24",
+            "id": 2,
+          },
+          Object {
+            "Meals": "api/v1/orders/3",
+            "createdAt": "2018-08-25",
+            "id": 3,
+          },
+        ]
+      }
+      pagination={
+        Object {
+          "count": 13,
+          "limit": 12,
+          "numOfPages": 2,
+        }
+      }
+      setFilter={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {
+                "filter": "all",
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      setModal={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {
+                "close": true,
+                "contentLabel": "",
+                "isEdit": false,
+                "isInfo": false,
+                "isOpen": false,
+                "isOrderInfo": false,
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      setNav={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Array [
+                Object {
+                  "link": "/dashboard",
+                  "title": "Manage Menus",
+                },
+                Object {
+                  "link": "/mealpage",
+                  "title": "Manage Meals",
+                },
+                Object {
+                  "link": "/orderHistory",
+                  "title": "Orders",
+                },
+                Object {
+                  "link": "/",
+                  "title": "Log Out",
+                },
+              ],
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      showDetails={[Function]}
+      sn={2}
+    />
+    <OrderTableRow
+      actions={
+        Object {
+          "delete": true,
+          "edit": true,
+          "info": true,
+        }
+      }
+      getAllOrders={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {},
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      getOrderMeals={[Function]}
+      grandTotalPrice={1100}
+      item={
+        Object {
+          "date": "August 24, 2018",
+          "orderId": 2,
+          "sn": NaN,
+          "totalPrice": undefined,
+        }
+      }
+      key="2"
+      mealsUrl="api/v1/orders/2"
+      modal={
+        Object {
+          "content": Object {},
+          "contentLabel": "Modal",
+          "isEdit": true,
+          "isOpen": true,
+          "isOrderInfo": true,
+        }
+      }
+      orderCreatedAt="2018-08-24"
+      orders={
+        Array [
+          Object {
+            "Meals": "api/v1/orders/1",
+            "createdAt": "2018-08-23",
+            "id": 1,
+          },
+          Object {
+            "Meals": "api/v1/orders/2",
+            "createdAt": "2018-08-24",
+            "id": 2,
+          },
+          Object {
+            "Meals": "api/v1/orders/3",
+            "createdAt": "2018-08-25",
+            "id": 3,
+          },
+        ]
+      }
+      pagination={
+        Object {
+          "count": 13,
+          "limit": 12,
+          "numOfPages": 2,
+        }
+      }
+      setFilter={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {
+                "filter": "all",
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      setModal={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {
+                "close": true,
+                "contentLabel": "",
+                "isEdit": false,
+                "isInfo": false,
+                "isOpen": false,
+                "isOrderInfo": false,
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      setNav={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Array [
+                Object {
+                  "link": "/dashboard",
+                  "title": "Manage Menus",
+                },
+                Object {
+                  "link": "/mealpage",
+                  "title": "Manage Meals",
+                },
+                Object {
+                  "link": "/orderHistory",
+                  "title": "Orders",
+                },
+                Object {
+                  "link": "/",
+                  "title": "Log Out",
+                },
+              ],
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      showDetails={[Function]}
+      sn={3}
+    />
+    <OrderTableRow
+      actions={
+        Object {
+          "delete": true,
+          "edit": true,
+          "info": true,
+        }
+      }
+      getAllOrders={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {},
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      getOrderMeals={[Function]}
+      grandTotalPrice={1100}
+      item={
+        Object {
+          "date": "August 25, 2018",
+          "orderId": 3,
+          "sn": NaN,
+          "totalPrice": undefined,
+        }
+      }
+      key="3"
+      mealsUrl="api/v1/orders/3"
+      modal={
+        Object {
+          "content": Object {},
+          "contentLabel": "Modal",
+          "isEdit": true,
+          "isOpen": true,
+          "isOrderInfo": true,
+        }
+      }
+      orderCreatedAt="2018-08-25"
+      orders={
+        Array [
+          Object {
+            "Meals": "api/v1/orders/1",
+            "createdAt": "2018-08-23",
+            "id": 1,
+          },
+          Object {
+            "Meals": "api/v1/orders/2",
+            "createdAt": "2018-08-24",
+            "id": 2,
+          },
+          Object {
+            "Meals": "api/v1/orders/3",
+            "createdAt": "2018-08-25",
+            "id": 3,
+          },
+        ]
+      }
+      pagination={
+        Object {
+          "count": 13,
+          "limit": 12,
+          "numOfPages": 2,
+        }
+      }
+      setFilter={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {
+                "filter": "all",
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      setModal={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {
+                "close": true,
+                "contentLabel": "",
+                "isEdit": false,
+                "isInfo": false,
+                "isOpen": false,
+                "isOrderInfo": false,
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      setNav={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Array [
+                Object {
+                  "link": "/dashboard",
+                  "title": "Manage Menus",
+                },
+                Object {
+                  "link": "/mealpage",
+                  "title": "Manage Meals",
+                },
+                Object {
+                  "link": "/orderHistory",
+                  "title": "Orders",
+                },
+                Object {
+                  "link": "/",
+                  "title": "Log Out",
+                },
+              ],
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      showDetails={[Function]}
+      sn={4}
+    />
+  </div>
+  <div
+    className="order"
+  >
+    <p
+      className="grandTot"
+    >
+      Total Sales: ₦
+      1100
+    </p>
+  </div>
+  <PaginationBoxView
+    activeClassName="active"
+    breakClassName="break-me"
+    breakLabel={
+      <a
+        href=""
+      >
+        ...
+      </a>
+    }
+    containerClassName="pagination"
+    disableInitialCallback={false}
+    disabledClassName="disabled"
+    marginPagesDisplayed={2}
+    nextClassName="next"
+    nextLabel=">>"
+    onPageChange={[Function]}
+    pageCount={2}
+    pageRangeDisplayed={5}
+    previousClassName="previous"
+    previousLabel="<<"
+    subContainerClassName="pages pagination"
+  />
+  <ModalComp
+    getAllOrders={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            Object {},
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
+    getOrderMeals={[Function]}
+    grandTotalPrice={1100}
+    hideModal={[Function]}
+    modal={
+      Object {
+        "content": Object {},
+        "contentLabel": "Modal",
+        "isEdit": true,
+        "isOpen": true,
+        "isOrderInfo": true,
+      }
+    }
+    orders={
+      Array [
+        Object {
+          "Meals": "api/v1/orders/1",
+          "createdAt": "2018-08-23",
+          "id": 1,
+        },
+        Object {
+          "Meals": "api/v1/orders/2",
+          "createdAt": "2018-08-24",
+          "id": 2,
+        },
+        Object {
+          "Meals": "api/v1/orders/3",
+          "createdAt": "2018-08-25",
+          "id": 3,
+        },
+      ]
+    }
+    pagination={
+      Object {
+        "count": 13,
+        "limit": 12,
+        "numOfPages": 2,
+      }
+    }
+    setFilter={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            Object {
+              "filter": "all",
+            },
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
+    setModal={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            Object {
+              "close": true,
+              "contentLabel": "",
+              "isEdit": false,
+              "isInfo": false,
+              "isOpen": false,
+              "isOrderInfo": false,
+            },
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
+    setNav={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            Array [
+              Object {
+                "link": "/dashboard",
+                "title": "Manage Menus",
+              },
+              Object {
+                "link": "/mealpage",
+                "title": "Manage Meals",
+              },
+              Object {
+                "link": "/orderHistory",
+                "title": "Orders",
+              },
+              Object {
+                "link": "/",
+                "title": "Log Out",
+              },
+            ],
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
+  />
+</div>
+`;

@@ -1,0 +1,48 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="3">
+
+  <testsuite name="loginpage"
+    errors="0" failures="0" hostname="" id="" package="loginpage" skipped="0"
+    tests="3" time="21.66" timestamp="">
+  
+    <testcase name="User should be logged in if already registered`" classname="loginpage" time="6.872" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="It should return error if email does not exist`" classname="loginpage" time="7.692" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="It should return error if password is wrong`" classname="loginpage" time="7.092" assertions="4">
+
+    
+
+    
+
+    
+
+    
+    </testcase>
+  
+
+  
+
+  
+  </testsuite>
+</testsuites>

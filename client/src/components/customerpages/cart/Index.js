@@ -9,7 +9,7 @@ import jwt from 'jsonwebtoken';
 import FontAwesome from 'react-fontawesome';
 import classname from 'classnames';
 
-import { getFromLs } from '../../../helpers/Ls';
+import { getFromLocalStorage } from '../../../helpers/localstorage';
 import isExpired from '../../../helpers/isExpired';
 import notify from '../../../helpers/notify';
 import {
@@ -22,17 +22,17 @@ import { postOrder } from '../../../actions/ordersActions';
 import { cartTableHead } from '../../../helpers/tableHeadData';
 import CartTableRow from './CartTablerow';
 
-class Cart extends Component {
+export class Cart extends Component {
   constructor(props) {
     super(props);
     this.state = {
       deliveryAddress: '',
     };
 
-    // this.setTotalPrice = this.setTotPrice.bind(this);
     this.onChange = this.onChange.bind(this);
     this.onOrder = this.onOrder.bind(this);
     this.deleteRow = this.deleteRow.bind(this);
+    this.updatePortion = this.updatePortion.bind(this);
   }
 
   componentDidMount() {
@@ -50,24 +50,23 @@ class Cart extends Component {
     }
   }
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value });
+  onChange(event) {
+    this.setState({ [event.target.name]: event.target.value });
   }
-
 
   /**
    * Places order
-   * @param {*} e DOM event
+   * @param {*} event DOM event
    * Sends ordered meals to server
    */
-  onOrder(e) {
-    e.preventDefault();
+  onOrder(event) {
+    event.preventDefault();
     const {
       history,
       cart,
     } = this.props;
     const { deliveryAddress } = this.state;
-    const token = getFromLs('jwt');
+    const token = getFromLocalStorage('jwt');
     if (token) {
       const {
         admin,
@@ -92,6 +91,19 @@ class Cart extends Component {
   deleteRow(meal) {
     this.props.deleteMealInCart(meal);
     notify('Meal removed from cart!', 'toast-danger', 'top-center');
+  }
+
+  /**
+   * updates cart meal portion
+   * @param  {any} meal the meal to update its portion
+   * @return function
+   * @memberof Cart
+   */
+  updatePortion(meal) {
+    return () => {
+      const portion = document.getElementById(`portion-${meal.id}`).value;
+      this.props.updateCartMealPortion({ ...meal, portion });
+    };
   }
 
   render() {
@@ -144,6 +156,7 @@ class Cart extends Component {
                   key={i}
                   item={meal}
                   deleteRow={this.deleteRow}
+                  updatePortion={this.updatePortion}
                   sn={++i}
                   showId={false}
                   actions={{
@@ -185,9 +198,10 @@ Cart.propTypes = {
   deleteMealInCart: PropTypes.func.isRequired,
   emptyCart: PropTypes.func.isRequired,
   postOrder: PropTypes.func.isRequired,
+  updateCartMealPortion: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   cart: state.cart.meals,
   cartTotalPrice: state.cart.totalPrice,
 });

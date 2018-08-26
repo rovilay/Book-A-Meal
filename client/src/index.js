@@ -6,19 +6,21 @@ import 'react-toastify/dist/ReactToastify.css';
 
 import store from './store/configureStore';
 import AppRouter from './routers/AppRouter';
-import './assets/css/button.css';
-import './assets/css/style.css';
-import './assets/css/header.css';
-import './assets/css/login.css';
-import './assets/css/style2.css';
-import './assets/css/customer.css';
-import './assets/css/table.css';
-import './assets/css/modal.css';
-import './assets/css/admin.css';
-import './assets/css/filter.css';
-import './assets/css/row.css';
-import './assets/css/menu.css';
-import './assets/css/meal.css';
+
+import './assets/scss/accordion.scss';
+import './assets/scss/button.scss';
+import './assets/scss/style.scss';
+import './assets/scss/header.scss';
+import './assets/scss/login.scss';
+import './assets/scss/style2.scss';
+import './assets/scss/customer.scss';
+import './assets/scss/table.scss';
+import './assets/scss/modal.scss';
+import './assets/scss/admin.scss';
+import './assets/scss/filter.scss';
+import './assets/scss/row.scss';
+import './assets/scss/menu.scss';
+import './assets/scss/meal.scss';
 
 const jsx = (
   <Provider store={store}>

@@ -1,0 +1,162 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Homepage component test should map state to props 1`] = `
+Object {
+  "pagination": Object {
+    "count": 0,
+    "limit": 10,
+    "numOfPages": 1,
+    "offset": 0,
+  },
+  "todayMenu": Array [],
+  "user": Object {
+    "admin": "",
+    "expire": "",
+    "firstName": "",
+    "id": "",
+    "isLogin": false,
+    "lastName": "",
+    "loginMessage": "",
+  },
+}
+`;
+
+exports[`Homepage component test should render Homepage correctly 1`] = `
+<main
+  className="homepage"
+>
+  <section
+    className="first-section"
+  >
+    <div
+      className="showcase"
+    >
+      <p
+        className="merienda"
+      >
+         Meals that perfectly fits your lifestyle
+      </p>
+      <a
+        className="view-menu-btn btn-2"
+        href="#menu"
+        role="button"
+      >
+        View menu
+      </a>
+    </div>
+  </section>
+  <section
+    className="intro"
+  >
+    <div
+      className="intro-container"
+    >
+      <h1
+        className="color-1"
+      >
+        Are you busy and hungry?
+      </h1>
+      <p>
+        Would you want to eat your favourite food from your favourite resturant?
+        <br />
+        Use this app to keep track of our menu and place orders at your convinience.
+      </p>
+      <p
+        className="buttons"
+      >
+        <button
+          className="btn-2"
+          onClick={[Function]}
+        >
+          Log in
+        </button>
+        <button
+          className="btn-2"
+          onClick={[Function]}
+        >
+          Sign up
+        </button>
+      </p>
+    </div>
+  </section>
+  <Menu
+    getTodayMenu={[Function]}
+    history={Array []}
+    menu={
+      Array [
+        Object {
+          "id": "1",
+          "title": "EBA AND EGUSI",
+        },
+        Object {
+          "id": "2",
+          "title": "SALAD",
+        },
+        Object {
+          "id": "3",
+          "title": "SPAGHETTI",
+        },
+        Object {
+          "id": "4",
+          "title": "YAM AND EGG",
+        },
+      ]
+    }
+    pagination={
+      Object {
+        "count": 13,
+        "limit": 12,
+        "numOfPages": 2,
+      }
+    }
+    setDefaultNav={[Function]}
+    todayMenu={
+      Array [
+        Object {
+          "id": "1",
+          "title": "EBA AND EGUSI",
+        },
+        Object {
+          "id": "2",
+          "title": "SALAD",
+        },
+        Object {
+          "id": "3",
+          "title": "SPAGHETTI",
+        },
+        Object {
+          "id": "4",
+          "title": "YAM AND EGG",
+        },
+      ]
+    }
+  />
+  <div
+    className="pagination-container"
+  >
+    <PaginationBoxView
+      activeClassName="active"
+      breakClassName="break-me"
+      breakLabel={
+        <a
+          href=""
+        >
+          ...
+        </a>
+      }
+      containerClassName="pagination"
+      disableInitialCallback={false}
+      disabledClassName="disabled"
+      marginPagesDisplayed={2}
+      nextClassName="next"
+      nextLabel=">>"
+      onPageChange={[Function]}
+      pageCount={2}
+      pageRangeDisplayed={5}
+      previousClassName="previous"
+      previousLabel="<<"
+      subContainerClassName="pages pagination"
+    />
+  </div>
+</main>
+`;

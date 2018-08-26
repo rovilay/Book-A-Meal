@@ -1,0 +1,232 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OrderDetailsTable component test should render \`OrderDetailsTable\` correctly 1`] = `
+<div
+  className="table-container"
+>
+  <div
+    className="order-details"
+  >
+    <h2
+      className="title"
+    >
+      Order Details
+    </h2>
+    <hr />
+    <p>
+      <span
+        className="bold"
+      >
+        Customer:
+      </span>
+       
+      john doe
+    </p>
+    <p>
+      <span
+        className="bold"
+      >
+        Date:
+      </span>
+       
+      September 3, 2018
+    </p>
+    <p>
+      <span
+        className="bold"
+      >
+        Time:
+      </span>
+       
+      12:00 AM
+    </p>
+    <p>
+      <span
+        className="bold"
+      >
+        Address:
+      </span>
+       
+      isuti rd
+    </p>
+  </div>
+  <div
+    className="container-test"
+  >
+    <div
+      className="row head"
+    >
+      <p
+        className="row-item"
+        key="0"
+      >
+        S/N
+      </p>
+      <p
+        className="row-item meal-title"
+        key="1"
+      >
+        Meal
+      </p>
+      <p
+        className="row-item"
+        key="2"
+      >
+        Unit Cost
+      </p>
+      <p
+        className="row-item"
+        key="3"
+      >
+        Portion
+      </p>
+      <p
+        className="row-item"
+        key="4"
+      >
+        Cost
+      </p>
+    </div>
+    <OrderTableRow
+      content={
+        Object {
+          "Meals": Array [
+            Object {
+              "OrderMeal": Object {
+                "cost": 400,
+                "portion": 1,
+              },
+              "id": 1,
+              "title": "Eba and Egusi",
+            },
+            Object {
+              "OrderMeal": Object {
+                "cost": 800,
+                "portion": 2,
+              },
+              "id": 2,
+              "title": "Ewa",
+            },
+          ],
+          "User": Object {
+            "firstName": "john",
+            "lastName": "doe",
+          },
+          "createdAt": "2018-09-03",
+          "deliveryAddress": "isuti rd",
+          "orderId": 6,
+        }
+      }
+      getOrderMeals={[MockFunction]}
+      id={1}
+      item={
+        Object {
+          "Meal": "Eba and Egusi",
+          "UnitCost": 400,
+          "cost": 400,
+          "portion": 1,
+          "sn": NaN,
+        }
+      }
+      key="1"
+      orderedMealsPagination={
+        Object {
+          "count": 13,
+          "limit": 12,
+          "numOfPages": 2,
+        }
+      }
+      title="Order Details"
+    />
+    <OrderTableRow
+      content={
+        Object {
+          "Meals": Array [
+            Object {
+              "OrderMeal": Object {
+                "cost": 400,
+                "portion": 1,
+              },
+              "id": 1,
+              "title": "Eba and Egusi",
+            },
+            Object {
+              "OrderMeal": Object {
+                "cost": 800,
+                "portion": 2,
+              },
+              "id": 2,
+              "title": "Ewa",
+            },
+          ],
+          "User": Object {
+            "firstName": "john",
+            "lastName": "doe",
+          },
+          "createdAt": "2018-09-03",
+          "deliveryAddress": "isuti rd",
+          "orderId": 6,
+        }
+      }
+      getOrderMeals={[MockFunction]}
+      id={2}
+      item={
+        Object {
+          "Meal": "Ewa",
+          "UnitCost": 800,
+          "cost": 1600,
+          "portion": 2,
+          "sn": NaN,
+        }
+      }
+      key="2"
+      orderedMealsPagination={
+        Object {
+          "count": 13,
+          "limit": 12,
+          "numOfPages": 2,
+        }
+      }
+      title="Order Details"
+    />
+  </div>
+  <div
+    className="total-cost"
+  >
+    <span
+      className="bold"
+    >
+      Total Cost: 
+    </span>
+     ₦
+    2000
+  </div>
+  <div
+    className="modal-pagination"
+  >
+    <PaginationBoxView
+      activeClassName="active"
+      breakClassName="break-me"
+      breakLabel={
+        <a
+          href=""
+        >
+          ...
+        </a>
+      }
+      containerClassName="pagination"
+      disableInitialCallback={false}
+      disabledClassName="disabled"
+      marginPagesDisplayed={2}
+      nextClassName="next"
+      nextLabel=">>"
+      onPageChange={[Function]}
+      pageCount={2}
+      pageRangeDisplayed={5}
+      previousClassName="previous"
+      previousLabel="<<"
+      subContainerClassName="pages pagination"
+    />
+  </div>
+</div>
+`;

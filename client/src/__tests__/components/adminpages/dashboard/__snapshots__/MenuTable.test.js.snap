@@ -1,0 +1,70 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuTable component test should render MenuTable correctly 1`] = `
+<div
+  className="accordion-container"
+>
+  <MenuAccordion
+    editMenu={[MockFunction]}
+    getAllMenus={[MockFunction]}
+    getMenuMeals={[MockFunction]}
+    item={
+      Object {
+        "Meals": undefined,
+        "createdBy": "ogooluwa akinola",
+        "menuId": "1",
+        "postOn": "2018-09-05",
+        "sn": NaN,
+      }
+    }
+    key="1"
+    menus={
+      Array [
+        Object {
+          "User": Object {
+            "firstName": "ogooluwa",
+            "lastName": "akinola",
+          },
+          "id": "1",
+          "meals": Array [],
+          "postOn": "2018-09-05",
+        },
+      ]
+    }
+    pagination={
+      Object {
+        "count": 13,
+        "limit": 12,
+        "numOfPages": 2,
+      }
+    }
+  />
+  <div
+    className="pagination-container"
+  >
+    <PaginationBoxView
+      activeClassName="active"
+      breakClassName="break-me"
+      breakLabel={
+        <a
+          href=""
+        >
+          ...
+        </a>
+      }
+      containerClassName="pagination"
+      disableInitialCallback={false}
+      disabledClassName="disabled"
+      marginPagesDisplayed={2}
+      nextClassName="next"
+      nextLabel=">>"
+      onPageChange={[Function]}
+      pageCount={2}
+      pageRangeDisplayed={5}
+      previousClassName="previous"
+      previousLabel="<<"
+      subContainerClassName="pages pagination"
+    />
+  </div>
+</div>
+`;

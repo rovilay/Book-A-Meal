@@ -1,0 +1,175 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModalComp component test should render \`ModalComp\` correctly 1`] = `
+<Modal
+  ariaHideApp={false}
+  bodyOpenClassName="ReactModal__Body--open"
+  className="modal"
+  closeTimeoutMS={0}
+  contentLabel="Edit Order"
+  isOpen={true}
+  overlayClassName="overlay"
+  parentSelector={[Function]}
+  portalClassName="ReactModalPortal"
+  shouldCloseOnEsc={true}
+  shouldCloseOnOverlayClick={true}
+  shouldFocusAfterRender={true}
+  shouldReturnFocusAfterClose={true}
+>
+  <div
+    className="closeBtn"
+  >
+    <button
+      className="modal-btn"
+      onClick={[MockFunction]}
+      type="button"
+    >
+      <FontAwesome
+        name="times"
+        size="2x"
+      />
+    </button>
+  </div>
+  <OrderDetailsTable
+    content={
+      Object {
+        "Meals": Array [
+          Object {
+            "OrderMeal": Object {
+              "cost": 400,
+              "portion": 1,
+            },
+            "id": 1,
+            "title": "Eba and Egusi",
+          },
+          Object {
+            "OrderMeal": Object {
+              "cost": 800,
+              "portion": 2,
+            },
+            "id": 2,
+            "title": "Ewa",
+          },
+        ],
+        "createdAt": "2018-09-01",
+        "deliveryAddress": "isuti rd",
+        "orderId": 6,
+      }
+    }
+    editOrder={[MockFunction]}
+    getOrderMeals={[MockFunction]}
+    hideModal={[MockFunction]}
+    modal={
+      Object {
+        "content": Object {
+          "Meals": Array [
+            Object {
+              "OrderMeal": Object {
+                "cost": 400,
+                "portion": 1,
+              },
+              "id": 1,
+              "title": "Eba and Egusi",
+            },
+            Object {
+              "OrderMeal": Object {
+                "cost": 800,
+                "portion": 2,
+              },
+              "id": 2,
+              "title": "Ewa",
+            },
+          ],
+          "createdAt": "2018-09-01",
+          "deliveryAddress": "isuti rd",
+          "orderId": 6,
+        },
+        "contentLabel": "Edit Order",
+        "isEdit": true,
+        "isInfo": true,
+        "isOpen": true,
+      }
+    }
+    orderedMealsPagination={
+      Object {
+        "count": 13,
+        "limit": 12,
+        "numOfPages": 2,
+      }
+    }
+    setModal={[MockFunction]}
+    title="Order Details"
+  />
+  <EditOrderTable
+    content={
+      Object {
+        "Meals": Array [
+          Object {
+            "OrderMeal": Object {
+              "cost": 400,
+              "portion": 1,
+            },
+            "id": 1,
+            "title": "Eba and Egusi",
+          },
+          Object {
+            "OrderMeal": Object {
+              "cost": 800,
+              "portion": 2,
+            },
+            "id": 2,
+            "title": "Ewa",
+          },
+        ],
+        "createdAt": "2018-09-01",
+        "deliveryAddress": "isuti rd",
+        "orderId": 6,
+      }
+    }
+    editOrder={[MockFunction]}
+    getOrderMeals={[MockFunction]}
+    hideModal={[MockFunction]}
+    isEdit={true}
+    modal={
+      Object {
+        "content": Object {
+          "Meals": Array [
+            Object {
+              "OrderMeal": Object {
+                "cost": 400,
+                "portion": 1,
+              },
+              "id": 1,
+              "title": "Eba and Egusi",
+            },
+            Object {
+              "OrderMeal": Object {
+                "cost": 800,
+                "portion": 2,
+              },
+              "id": 2,
+              "title": "Ewa",
+            },
+          ],
+          "createdAt": "2018-09-01",
+          "deliveryAddress": "isuti rd",
+          "orderId": 6,
+        },
+        "contentLabel": "Edit Order",
+        "isEdit": true,
+        "isInfo": true,
+        "isOpen": true,
+      }
+    }
+    orderedMealsPagination={
+      Object {
+        "count": 13,
+        "limit": 12,
+        "numOfPages": 2,
+      }
+    }
+    setModal={[MockFunction]}
+    title="Order Details"
+  />
+</Modal>
+`;

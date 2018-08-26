@@ -5,7 +5,43 @@
   "main": "index.js",
   "scripts": {
     "start:dev": "webpack-dev-server --mode development --open --hot",
-    "build": "webpack --mode production"
+    "build": "webpack --mode production",
+    "test": "jest -u"
+  },
+  "jest": {
+    "collectCoverage": true,
+    "verbose": true,
+    "coverageDirectory": "<rootDir>/coverage/",
+    "collectCoverageFrom": [
+      "<rootDir>/src/**/*.{js,jsx}"
+    ],
+    "testEnvironment": "jsdom",
+    "setupFiles": [
+      "jest-localstorage-mock",
+      "<rootDir>/src/__tests__/jest.config.js"
+    ],
+    "moduleNameMapper": {
+      "\\.(css|less|scss)$": "<rootDir>/__tests__/__mockData__/style.js"
+    },
+    "snapshotSerializers": [
+      "enzyme-to-json/serializer"
+    ],
+    "testMatch": [
+      "**/?(*.)(spec|test).js?(x)",
+      "**/src/__tests__/?(*.)(spec|test).js?(x)"
+    ],
+    "coveragePathIgnorePatterns": [
+      "<rootDir>/src/__tests__",
+      "<rootDir>/src/index.js",
+      "<rootDir>/src/components/HOCs",
+      "<rootDir>/src/helpers/history",
+      "<rootDir>/src/helpers/notify",
+      "<rootDir>/src/helpers/imageUploader",
+      "<rootDir>/src/store/configureStore.js",
+      "<rootDir>/src/routers/AppRouter.js",
+      "<rootDir>/src/reducers/rootReducer.js"
+    ],
+    "setupTestFrameworkScriptFile": "<rootDir>/src/__tests__/jest.config.js"
   },
   "proxy": "http://localhost:4000",
   "repository": {
@@ -36,9 +72,11 @@
     "css-loader": "^0.28.11",
     "dotenv": "^6.0.0",
     "dotenv-webpack": "^1.5.7",
+    "enzyme": "^3.5.0",
     "file-loader": "^1.1.11",
     "history": "^4.7.2",
     "html-webpack-plugin": "^3.2.0",
+    "jest": "^23.5.0",
     "jsonwebtoken": "^8.3.0",
     "moment": "^2.22.2",
     "node-sass": "^4.9.2",
@@ -74,6 +112,15 @@
     "webpack-cli": "^2.1.5"
   },
   "devDependencies": {
+    "axios-mock-adapter": "^1.15.0",
+    "enzyme-adapter-react-16": "^1.2.0",
+    "enzyme-to-json": "^3.3.4",
+    "jest-localstorage-mock": "^2.2.0",
+    "jsdom": "^12.0.0",
+    "moxios": "^0.4.0",
+    "nyc": "^12.0.2",
+    "redux-mock-store": "^1.5.3",
+    "uuid": "^3.3.2",
     "webpack-dev-server": "^3.1.4"
   }
 }

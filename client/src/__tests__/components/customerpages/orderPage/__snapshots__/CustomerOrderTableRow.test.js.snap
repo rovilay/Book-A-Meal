@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomerOrderTableRow component test should render CustomerOrderTableRow correctly 1`] = `
+<div
+  className="row"
+>
+  <p
+    className="row-item meal-title"
+    data-tip={5}
+    key="0"
+  >
+    5
+  </p>
+  <p
+    className="row-item"
+    key="1"
+  >
+    isuti rd
+  </p>
+  <p
+    className="row-item"
+    key="2"
+  >
+    <Component />
+    <Component />
+    <Component />
+    <Component />
+  </p>
+  <p
+    className="row-item"
+    key="3"
+  >
+    1100
+  </p>
+  <p
+    className="row-item input-div"
+    key="4"
+  >
+    <input
+      className="portion"
+      defaultValue={2}
+      id="portion-5"
+      min="1"
+      name="portion"
+      onChange={[Function]}
+      required={true}
+      type="number"
+    />
+  </p>
+  <p
+    className="row-item actions"
+  >
+    <button
+      className="btn-3 box-shadow"
+      onClick={[Function]}
+    >
+      <FontAwesome
+        className="trash info-circle"
+        name="info-circle"
+        size="2x"
+      />
+    </button>
+    <button
+      className="btn-3 box-shadow"
+      onClick={[Function]}
+    >
+      <FontAwesome
+        className="pencil"
+        name="pencil"
+        size="2x"
+      />
+    </button>
+    <button
+      className="btn-3 box-shadow"
+      onClick={[Function]}
+    >
+      <FontAwesome
+        className="trash"
+        name="trash"
+        size="2x"
+      />
+    </button>
+  </p>
+  <ReactTooltip
+    className="mytooltip"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
+</div>
+`;

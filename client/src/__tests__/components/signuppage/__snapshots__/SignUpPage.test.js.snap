@@ -1,0 +1,34 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignUpPage component test should render SignUpPage correctly 1`] = `
+<section
+  className="signuppage"
+>
+  <div
+    className="signupform-container"
+  >
+    <SignUpForm
+      change={[Function]}
+      formValues={
+        Object {
+          "Phone": "",
+          "Phone2": "",
+          "address": "",
+          "address2": "",
+          "admin": "",
+          "city": "",
+          "cpassword": "",
+          "email": "",
+          "firstName": "",
+          "isValid": false,
+          "lastName": "",
+          "password": "",
+          "response": Object {},
+          "state": "",
+        }
+      }
+      submit={[Function]}
+    />
+  </div>
+</section>
+`;

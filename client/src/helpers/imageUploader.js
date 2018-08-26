@@ -1,6 +1,6 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
-import moveProgressBar from './progressbar';
+import moveProgressBar from './moveProgressBar';
 
 dotenv.config();
 /**

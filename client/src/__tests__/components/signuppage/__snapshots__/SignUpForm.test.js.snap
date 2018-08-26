@@ -1,0 +1,333 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SignUpForm component test should render SignUpPage correctly 1`] = `
+<div
+  className="signup-card"
+>
+  <p
+    className="alert-danger"
+    id="alert"
+    role="alert"
+  >
+    role must be chosen
+  </p>
+  <div
+    className="form-title"
+    id="signup-form-title"
+  >
+    Sign Up
+  </div>
+  <hr />
+  <form
+    className="signup-form"
+    id="signup"
+    onSubmit={[Function]}
+  >
+    <p>
+      <label
+        htmlFor="firstName"
+      >
+        First name
+        <span
+          className="asterik"
+        >
+          *
+        </span>
+      </label>
+      <input
+        id="signup-fname"
+        name="firstName"
+        onChange={[Function]}
+        placeholder="Enter first name"
+        required={true}
+        type="text"
+        value="ogoolu0wa"
+      />
+      <span
+        className="alert-danger"
+        id="alert"
+        role="alert"
+      >
+        First name is invalid
+      </span>
+    </p>
+    <p>
+      <label
+        htmlFor="lastName"
+      >
+        Last name
+        <span
+          className="asterik"
+        >
+          *
+        </span>
+      </label>
+      <input
+        id="signup-lname"
+        name="lastName"
+        onChange={[Function]}
+        placeholder="Enter last name"
+        required={true}
+        type="text"
+        value="akino9la"
+      />
+      <span
+        className="alert-danger"
+        id="alert"
+        role="alert"
+      >
+        Last name is invalid
+      </span>
+    </p>
+    <p
+      className="full"
+    >
+      <label
+        htmlFor="email"
+      >
+        Email
+        <span
+          className="asterik"
+        >
+          *
+        </span>
+      </label>
+      <input
+        id="signup-email"
+        name="email"
+        onChange={[Function]}
+        placeholder="Enter email"
+        required={true}
+        type="email"
+        value="test@testcom"
+      />
+      <span
+        className="alert-danger"
+        id="alert"
+        role="alert"
+      >
+        email is invalid
+      </span>
+    </p>
+    <p
+      className="full"
+    >
+      <label
+        htmlFor="role"
+      >
+        Role
+        <span
+          className="asterik"
+        >
+          *
+        </span>
+      </label>
+      <select
+        id="signup-role"
+        name="admin"
+        onChange={[Function]}
+        required={true}
+      >
+        <option
+          value=""
+        >
+          Choose role
+        </option>
+        <option
+          value="true"
+        >
+          Caterer
+        </option>
+        <option
+          value="false"
+        >
+          Customer
+        </option>
+      </select>
+    </p>
+    <p>
+      <label
+        htmlFor="Phone"
+      >
+        Phone
+        <span
+          className="asterik"
+        >
+          *
+        </span>
+      </label>
+      <input
+        id="signup-phone"
+        name="Phone"
+        onChange={[Function]}
+        placeholder="Enter phone number"
+        required={true}
+        type="text"
+        value="09807688767"
+      />
+    </p>
+    <p>
+      <label
+        htmlFor="address"
+      >
+        Address
+        <span
+          className="asterik"
+        >
+          *
+        </span>
+      </label>
+      <input
+        id="signup-address"
+        name="address"
+        onChange={[Function]}
+        placeholder="Enter permanent address"
+        required={true}
+        type="text"
+        value="ad8b"
+      />
+    </p>
+    <p>
+      <label
+        htmlFor="city"
+      >
+        City
+        <span
+          className="asterik"
+        >
+          *
+        </span>
+      </label>
+      <input
+        id="signup-city"
+        name="city"
+        onChange={[Function]}
+        placeholder="Enter City"
+        required={true}
+        type="text"
+        value="ikj9"
+      />
+      <span
+        className="alert-danger"
+        id="alert"
+        role="alert"
+      >
+        city is not valid
+      </span>
+    </p>
+    <p>
+      <label
+        htmlFor="state"
+      >
+        State
+        <span
+          className="asterik"
+        >
+          *
+        </span>
+      </label>
+      <input
+        id="signup-state"
+        name="state"
+        onChange={[Function]}
+        placeholder="Enter State"
+        required={true}
+        type="text"
+        value="lag0"
+      />
+      <span
+        className="alert-danger"
+        id="alert"
+        role="alert"
+      >
+        state is invalid
+      </span>
+    </p>
+    <p>
+      <label
+        htmlFor="password"
+      >
+        Password
+        <span
+          className="asterik"
+        >
+          *
+        </span>
+      </label>
+      <input
+        id="signup-psw"
+        name="password"
+        onChange={[Function]}
+        placeholder="Enter Password"
+        required={true}
+        type="password"
+        value="1234567"
+      />
+      <span
+        className="alert-danger"
+        id="alert"
+        role="alert"
+      >
+        password do not match!
+      </span>
+    </p>
+    <p>
+      <label
+        htmlFor="cpassword"
+      >
+        Confirm Password
+        <span
+          className="asterik"
+        >
+          *
+        </span>
+      </label>
+      <input
+        id="signup-cpsw"
+        name="cpassword"
+        onChange={[Function]}
+        placeholder="Confirm Password"
+        required={true}
+        type="password"
+        value="123456"
+      />
+      <span
+        className="alert-danger"
+        id="alert"
+        role="alert"
+      >
+        password do not match!
+      </span>
+    </p>
+    <p
+      className="full"
+    >
+      <button
+        className="signupbtn btn-2"
+        disabled={true}
+        id="signupbtn"
+        name="signupbtn"
+        type="submit"
+      >
+        Sign Up
+      </button>
+    </p>
+  </form>
+  <p>
+    <Link
+      className="link"
+      replace={false}
+      to="/Login"
+    >
+      Click Here! to Log in
+    </Link>
+  </p>
+  <p
+    className="alert-danger"
+    id="alert"
+    role="alert"
+  >
+    role must be chosen
+  </p>
+</div>
+`;

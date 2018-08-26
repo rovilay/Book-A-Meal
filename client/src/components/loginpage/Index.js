@@ -5,12 +5,12 @@ import { Link } from 'react-router-dom';
 import { connect } from 'react-redux';
 import PropTypes from 'prop-types';
 
-import setSuccessfulSignUpMsg from '../../actions/signupActions';
+import { setSuccessfulSignUpMsg } from '../../actions/signupActions';
 import { loginUser } from '../../actions/loginActions';
 import LoginForm from './Loginform';
 import notify from '../../helpers/notify';
 
-class LogInPage extends Component {
+export class LogInPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -22,6 +22,7 @@ class LogInPage extends Component {
     this.onChange = this.onChange.bind(this);
   }
 
+  /* istanbul ignore next */
   componentDidMount() {
     setTimeout(
       () => {
@@ -39,15 +40,16 @@ class LogInPage extends Component {
     );
   }
 
-  onChange(e) {
-    this.setState({ [e.target.name]: e.target.value.trim() });
+  onChange(event) {
+    event.preventDefault();
+    this.setState({ [event.target.name]: event.target.value.trim() });
   }
 
   /**
    * Logs user in on submit
-   * @param {Object} e DOM event
    */
-  logUserIn() {
+  logUserIn(event) {
+    event.preventDefault();
     this.props.loginUser({ ...this.state });
   }
 
@@ -82,7 +84,7 @@ LogInPage.propTypes = {
   user: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   signUpSuccess: state.signUp.signUpSuccess,
   user: state.login.user
 });

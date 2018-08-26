@@ -1,0 +1,48 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`OrderTablerow component test should render \`OrderTablerow\` correctly 1`] = `
+<div
+  className="row"
+>
+  <p
+    className="row-item meal-title"
+    data-tip={6}
+    key="0"
+  >
+    6
+  </p>
+  <p
+    className="row-item"
+    key="1"
+  >
+    isuti rd
+  </p>
+  <p
+    className="row-item"
+    key="2"
+  >
+    <Component />
+    <Component />
+  </p>
+  <p
+    className="row-item actions"
+  >
+    <button
+      className="btn-3 box-shadow"
+      onClick={[Function]}
+    >
+      <FontAwesome
+        className="trash info-circle"
+        name="info-circle"
+        size="2x"
+      />
+    </button>
+  </p>
+  <ReactTooltip
+    className="mytooltip"
+    insecure={true}
+    resizeHide={true}
+    wrapper="div"
+  />
+</div>
+`;

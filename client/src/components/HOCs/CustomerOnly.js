@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import jwt from 'jsonwebtoken';
 
 import isExpired from '../../helpers/isExpired';
-import { getFromLs } from '../../helpers/Ls';
+import { getFromLocalStorage } from '../../helpers/localstorage';
 import { addMealToCart } from '../../actions/cartActions';
 import { setDefaultNav, setNav } from '../../actions/navLinksActions';
 
@@ -27,7 +27,7 @@ export default function (Comp) {
 
     componentWillMount() {
       const { history } = this.props;
-      const token = getFromLs('jwt');
+      const token = getFromLocalStorage('jwt');
       if (token) {
         const {
           exp,

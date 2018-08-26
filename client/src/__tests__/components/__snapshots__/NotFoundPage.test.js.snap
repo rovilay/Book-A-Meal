@@ -1,0 +1,23 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`NotFoundPage component test should render NotFoundPage correctly 1`] = `
+<div
+  className="not-found-page-container"
+>
+  <div
+    className="not-found-page"
+  >
+    <h1>
+      404!
+    </h1>
+    You seem Lost! Click 
+    <Link
+      replace={false}
+      to="/"
+    >
+      here
+    </Link>
+     to go home.
+  </div>
+</div>
+`;

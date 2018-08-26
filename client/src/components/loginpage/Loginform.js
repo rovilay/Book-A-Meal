@@ -11,10 +11,7 @@ const LoginForm = props => (
     <form
       id="login"
       className="login-form"
-      onSubmit={(e) => {
-        e.preventDefault();
-        props.logUserIn();
-      }}
+      onSubmit={props.logUserIn}
     >
       <p>
         <label htmlFor="email">Email
@@ -26,10 +23,7 @@ const LoginForm = props => (
           placeholder="Enter Email"
           name="email"
           value={props.email}
-          onChange={(e) => {
-            e.preventDefault();
-            props.onChange(e);
-          }}
+          onChange={props.onChange}
           required
         />
       </p>
@@ -44,10 +38,7 @@ const LoginForm = props => (
           placeholder="Enter password"
           name="password"
           value={props.password}
-          onChange={(e) => {
-            e.preventDefault();
-            props.onChange(e);
-          }}
+          onChange={props.onChange}
           required
         />
       </p>

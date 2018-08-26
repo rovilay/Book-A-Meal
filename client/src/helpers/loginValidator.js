@@ -10,6 +10,7 @@ const loginValidator = ({ email, password }) => {
     inValid = 'password field is empty';
   }
 
+  // return `Login` invalid is still empty after the check.
   if (inValid === '') {
     return 'Login';
   }

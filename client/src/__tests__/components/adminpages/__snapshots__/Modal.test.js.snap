@@ -1,0 +1,193 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`ModalComp component test should render ModalComp correctly 1`] = `
+<Modal
+  ariaHideApp={false}
+  bodyOpenClassName="ReactModal__Body--open"
+  className="modal"
+  closeTimeoutMS={0}
+  contentLabel="Modal"
+  isOpen={true}
+  overlayClassName="overlay"
+  parentSelector={[Function]}
+  portalClassName="ReactModalPortal"
+  shouldCloseOnEsc={true}
+  shouldCloseOnOverlayClick={true}
+  shouldFocusAfterRender={true}
+  shouldReturnFocusAfterClose={true}
+>
+  <div
+    className="closeBtn"
+  >
+    <button
+      className=""
+      onClick={[MockFunction]}
+    >
+      <FontAwesome
+        name="times"
+        size="2x"
+      />
+    </button>
+  </div>
+  <EditMenuTable
+    addMealInEditMenu={[MockFunction]}
+    content={
+      Object {
+        "meals": Array [
+          Object {
+            "id": "1",
+            "title": "EBA AND EGUSI",
+          },
+          Object {
+            "id": "2",
+            "title": "SALAD",
+          },
+        ],
+        "menuId": "1",
+      }
+    }
+    deleteMealInEditMenu={[MockFunction]}
+    editMenuMeals={[MockFunction]}
+    emptyEditMenu={
+      [MockFunction] {
+        "calls": Array [
+          Array [],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
+    hideModal={[MockFunction]}
+    isEdit={true}
+    meals={
+      Array [
+        Object {
+          "id": "1",
+          "title": "EBA AND EGUSI",
+        },
+        Object {
+          "id": "2",
+          "title": "SALAD",
+        },
+        Object {
+          "id": "3",
+          "title": "SPAGHETTI",
+        },
+        Object {
+          "id": "4",
+          "title": "YAM AND EGG",
+        },
+      ]
+    }
+    modal={
+      Object {
+        "content": Object {
+          "meals": Array [
+            Object {
+              "id": "1",
+              "title": "EBA AND EGUSI",
+            },
+            Object {
+              "id": "2",
+              "title": "SALAD",
+            },
+          ],
+          "menuId": "1",
+        },
+        "contentLabel": "Modal",
+        "isEdit": true,
+        "isOpen": true,
+        "isOrderInfo": true,
+      }
+    }
+    orderedMealsPagination={Object {}}
+    setModal={[MockFunction]}
+    title="Modal"
+    updateMenu={[MockFunction]}
+  />
+  <OrderDetailsTable
+    addMealInEditMenu={[MockFunction]}
+    content={
+      Object {
+        "meals": Array [
+          Object {
+            "id": "1",
+            "title": "EBA AND EGUSI",
+          },
+          Object {
+            "id": "2",
+            "title": "SALAD",
+          },
+        ],
+        "menuId": "1",
+      }
+    }
+    deleteMealInEditMenu={[MockFunction]}
+    editMenuMeals={[MockFunction]}
+    emptyEditMenu={
+      [MockFunction] {
+        "calls": Array [
+          Array [],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
+    hideModal={[MockFunction]}
+    isEdit={true}
+    meals={
+      Array [
+        Object {
+          "id": "1",
+          "title": "EBA AND EGUSI",
+        },
+        Object {
+          "id": "2",
+          "title": "SALAD",
+        },
+        Object {
+          "id": "3",
+          "title": "SPAGHETTI",
+        },
+        Object {
+          "id": "4",
+          "title": "YAM AND EGG",
+        },
+      ]
+    }
+    modal={
+      Object {
+        "content": Object {
+          "meals": Array [
+            Object {
+              "id": "1",
+              "title": "EBA AND EGUSI",
+            },
+            Object {
+              "id": "2",
+              "title": "SALAD",
+            },
+          ],
+          "menuId": "1",
+        },
+        "contentLabel": "Modal",
+        "isEdit": true,
+        "isOpen": true,
+        "isOrderInfo": true,
+      }
+    }
+    orderedMealsPagination={Object {}}
+    setModal={[MockFunction]}
+    title="Modal"
+    updateMenu={[MockFunction]}
+  />
+</Modal>
+`;

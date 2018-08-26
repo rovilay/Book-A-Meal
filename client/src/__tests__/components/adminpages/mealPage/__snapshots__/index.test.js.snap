@@ -1,0 +1,849 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MealPage component test should map state to props 1`] = `
+Object {
+  "mealError": "",
+  "mealOnEdit": Object {},
+  "meals": Array [],
+  "pagination": Object {
+    "count": 0,
+    "limit": 12,
+    "numOfPages": 1,
+    "offset": 0,
+  },
+}
+`;
+
+exports[`MealPage component test should render MealPage correctly 1`] = `
+<div
+  className="meal-page"
+>
+  <div
+    className="welcome merienda"
+  >
+    <p
+      className="merienda"
+    >
+      Manage Meals
+    </p>
+  </div>
+  <section
+    className="setMeal"
+  >
+    <AccordionWrapper
+      accordion={true}
+      className="accordion"
+      onChange={[Function]}
+    >
+      <div
+        className="setMeal-container"
+      >
+        <Mealform
+          addMeal={[Function]}
+          closeEdit={[Function]}
+          deleteMeal={[MockFunction]}
+          disableBtn={false}
+          getMeals={
+            [MockFunction] {
+              "calls": Array [
+                Array [
+                  Object {
+                    "limit": 12,
+                  },
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "isThrow": false,
+                  "value": undefined,
+                },
+              ],
+            }
+          }
+          handleChange={[Function]}
+          imageToUpload=""
+          isEdit={false}
+          mealError="Error"
+          mealOnEdit={
+            Object {
+              "description": "so sweet",
+              "id": "6edf5100-3313-4a4f-8a9d-a1bf79b0a72f",
+              "portion": 2,
+              "price": 1000,
+              "title": "EBA AND EGUSI",
+            }
+          }
+          meals={
+            Array [
+              Object {
+                "id": "6edf5100-3313-4a4f-8a9d-a1bf79b0a72f",
+                "portion": 2,
+                "price": 1000,
+                "title": "EBA AND EGUSI",
+              },
+              Object {
+                "id": "ce41fb68-4a51-4033-8c3a-e5a27eadcc91",
+                "portion": 3,
+                "price": 400,
+                "title": "SALAD",
+              },
+              Object {
+                "id": "58634b35-2254-40de-a5eb-3c1166ac56c0",
+                "portion": 1,
+                "price": 600,
+                "title": "SPAGHETTI",
+              },
+              Object {
+                "id": "959f0675-0ad3-47b7-8401-ec9e10bc1863",
+                "portion": 2,
+                "price": 500,
+                "title": "YAM AND EGG",
+              },
+            ]
+          }
+          pagination={
+            Object {
+              "count": 13,
+              "limit": 12,
+              "numOfPages": 2,
+            }
+          }
+          postMeal={[MockFunction]}
+          removeMealFromEdit={[MockFunction]}
+          setFilter={
+            [MockFunction] {
+              "calls": Array [
+                Array [
+                  Object {
+                    "filter": "all",
+                  },
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "isThrow": false,
+                  "value": undefined,
+                },
+              ],
+            }
+          }
+          setMealForEdit={[MockFunction]}
+          setNav={
+            [MockFunction] {
+              "calls": Array [
+                Array [
+                  Array [
+                    Object {
+                      "link": "/dashboard",
+                      "title": "Manage Menus",
+                    },
+                    Object {
+                      "link": "/mealpage",
+                      "title": "Manage Meals",
+                    },
+                    Object {
+                      "link": "/orderHistory",
+                      "title": "Orders",
+                    },
+                    Object {
+                      "link": "/",
+                      "title": "Log Out",
+                    },
+                  ],
+                ],
+              ],
+              "results": Array [
+                Object {
+                  "isThrow": false,
+                  "value": undefined,
+                },
+              ],
+            }
+          }
+          showUploadBar={[Function]}
+          updateMeal={[Function]}
+          updateMealOnEdit={[MockFunction]}
+          uploadImage={[Function]}
+          uploadedImageLink=""
+        />
+      </div>
+    </AccordionWrapper>
+  </section>
+  <div
+    className=""
+  >
+    <div
+      className="title"
+    >
+      Meals
+    </div>
+    <FilterComp
+      deleteMeal={[MockFunction]}
+      getMeals={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {
+                "limit": 12,
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      mealError="Error"
+      mealOnEdit={
+        Object {
+          "description": "so sweet",
+          "id": "6edf5100-3313-4a4f-8a9d-a1bf79b0a72f",
+          "portion": 2,
+          "price": 1000,
+          "title": "EBA AND EGUSI",
+        }
+      }
+      meals={
+        Array [
+          Object {
+            "id": "6edf5100-3313-4a4f-8a9d-a1bf79b0a72f",
+            "portion": 2,
+            "price": 1000,
+            "title": "EBA AND EGUSI",
+          },
+          Object {
+            "id": "ce41fb68-4a51-4033-8c3a-e5a27eadcc91",
+            "portion": 3,
+            "price": 400,
+            "title": "SALAD",
+          },
+          Object {
+            "id": "58634b35-2254-40de-a5eb-3c1166ac56c0",
+            "portion": 1,
+            "price": 600,
+            "title": "SPAGHETTI",
+          },
+          Object {
+            "id": "959f0675-0ad3-47b7-8401-ec9e10bc1863",
+            "portion": 2,
+            "price": 500,
+            "title": "YAM AND EGG",
+          },
+        ]
+      }
+      pagination={
+        Object {
+          "count": 13,
+          "limit": 12,
+          "numOfPages": 2,
+        }
+      }
+      postMeal={[MockFunction]}
+      removeMealFromEdit={[MockFunction]}
+      setFilter={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Object {
+                "filter": "all",
+              },
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      setMealForEdit={[MockFunction]}
+      setNav={
+        [MockFunction] {
+          "calls": Array [
+            Array [
+              Array [
+                Object {
+                  "link": "/dashboard",
+                  "title": "Manage Menus",
+                },
+                Object {
+                  "link": "/mealpage",
+                  "title": "Manage Meals",
+                },
+                Object {
+                  "link": "/orderHistory",
+                  "title": "Orders",
+                },
+                Object {
+                  "link": "/",
+                  "title": "Log Out",
+                },
+              ],
+            ],
+          ],
+          "results": Array [
+            Object {
+              "isThrow": false,
+              "value": undefined,
+            },
+          ],
+        }
+      }
+      tableContent="caterer_meals"
+      updateMeal={[MockFunction]}
+      updateMealOnEdit={[MockFunction]}
+    />
+    <div
+      className="menu-container"
+    >
+      <MealCard
+        deleteMeal={[MockFunction]}
+        editMeal={[Function]}
+        getMeals={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                Object {
+                  "limit": 12,
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "isThrow": false,
+                "value": undefined,
+              },
+            ],
+          }
+        }
+        key="6edf5100-3313-4a4f-8a9d-a1bf79b0a72f"
+        mealData={
+          Object {
+            "id": "6edf5100-3313-4a4f-8a9d-a1bf79b0a72f",
+            "portion": 2,
+            "price": 1000,
+            "title": "EBA AND EGUSI",
+          }
+        }
+        mealError="Error"
+        mealOnEdit={
+          Object {
+            "description": "so sweet",
+            "id": "6edf5100-3313-4a4f-8a9d-a1bf79b0a72f",
+            "portion": 2,
+            "price": 1000,
+            "title": "EBA AND EGUSI",
+          }
+        }
+        meals={
+          Array [
+            Object {
+              "id": "6edf5100-3313-4a4f-8a9d-a1bf79b0a72f",
+              "portion": 2,
+              "price": 1000,
+              "title": "EBA AND EGUSI",
+            },
+            Object {
+              "id": "ce41fb68-4a51-4033-8c3a-e5a27eadcc91",
+              "portion": 3,
+              "price": 400,
+              "title": "SALAD",
+            },
+            Object {
+              "id": "58634b35-2254-40de-a5eb-3c1166ac56c0",
+              "portion": 1,
+              "price": 600,
+              "title": "SPAGHETTI",
+            },
+            Object {
+              "id": "959f0675-0ad3-47b7-8401-ec9e10bc1863",
+              "portion": 2,
+              "price": 500,
+              "title": "YAM AND EGG",
+            },
+          ]
+        }
+        pagination={
+          Object {
+            "count": 13,
+            "limit": 12,
+            "numOfPages": 2,
+          }
+        }
+        postMeal={[MockFunction]}
+        removeMealFromEdit={[MockFunction]}
+        setFilter={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                Object {
+                  "filter": "all",
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "isThrow": false,
+                "value": undefined,
+              },
+            ],
+          }
+        }
+        setMealForEdit={[MockFunction]}
+        setNav={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                Array [
+                  Object {
+                    "link": "/dashboard",
+                    "title": "Manage Menus",
+                  },
+                  Object {
+                    "link": "/mealpage",
+                    "title": "Manage Meals",
+                  },
+                  Object {
+                    "link": "/orderHistory",
+                    "title": "Orders",
+                  },
+                  Object {
+                    "link": "/",
+                    "title": "Log Out",
+                  },
+                ],
+              ],
+            ],
+            "results": Array [
+              Object {
+                "isThrow": false,
+                "value": undefined,
+              },
+            ],
+          }
+        }
+        updateMeal={[MockFunction]}
+        updateMealOnEdit={[MockFunction]}
+      />
+      <MealCard
+        deleteMeal={[MockFunction]}
+        editMeal={[Function]}
+        getMeals={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                Object {
+                  "limit": 12,
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "isThrow": false,
+                "value": undefined,
+              },
+            ],
+          }
+        }
+        key="ce41fb68-4a51-4033-8c3a-e5a27eadcc91"
+        mealData={
+          Object {
+            "id": "ce41fb68-4a51-4033-8c3a-e5a27eadcc91",
+            "portion": 3,
+            "price": 400,
+            "title": "SALAD",
+          }
+        }
+        mealError="Error"
+        mealOnEdit={
+          Object {
+            "description": "so sweet",
+            "id": "6edf5100-3313-4a4f-8a9d-a1bf79b0a72f",
+            "portion": 2,
+            "price": 1000,
+            "title": "EBA AND EGUSI",
+          }
+        }
+        meals={
+          Array [
+            Object {
+              "id": "6edf5100-3313-4a4f-8a9d-a1bf79b0a72f",
+              "portion": 2,
+              "price": 1000,
+              "title": "EBA AND EGUSI",
+            },
+            Object {
+              "id": "ce41fb68-4a51-4033-8c3a-e5a27eadcc91",
+              "portion": 3,
+              "price": 400,
+              "title": "SALAD",
+            },
+            Object {
+              "id": "58634b35-2254-40de-a5eb-3c1166ac56c0",
+              "portion": 1,
+              "price": 600,
+              "title": "SPAGHETTI",
+            },
+            Object {
+              "id": "959f0675-0ad3-47b7-8401-ec9e10bc1863",
+              "portion": 2,
+              "price": 500,
+              "title": "YAM AND EGG",
+            },
+          ]
+        }
+        pagination={
+          Object {
+            "count": 13,
+            "limit": 12,
+            "numOfPages": 2,
+          }
+        }
+        postMeal={[MockFunction]}
+        removeMealFromEdit={[MockFunction]}
+        setFilter={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                Object {
+                  "filter": "all",
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "isThrow": false,
+                "value": undefined,
+              },
+            ],
+          }
+        }
+        setMealForEdit={[MockFunction]}
+        setNav={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                Array [
+                  Object {
+                    "link": "/dashboard",
+                    "title": "Manage Menus",
+                  },
+                  Object {
+                    "link": "/mealpage",
+                    "title": "Manage Meals",
+                  },
+                  Object {
+                    "link": "/orderHistory",
+                    "title": "Orders",
+                  },
+                  Object {
+                    "link": "/",
+                    "title": "Log Out",
+                  },
+                ],
+              ],
+            ],
+            "results": Array [
+              Object {
+                "isThrow": false,
+                "value": undefined,
+              },
+            ],
+          }
+        }
+        updateMeal={[MockFunction]}
+        updateMealOnEdit={[MockFunction]}
+      />
+      <MealCard
+        deleteMeal={[MockFunction]}
+        editMeal={[Function]}
+        getMeals={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                Object {
+                  "limit": 12,
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "isThrow": false,
+                "value": undefined,
+              },
+            ],
+          }
+        }
+        key="58634b35-2254-40de-a5eb-3c1166ac56c0"
+        mealData={
+          Object {
+            "id": "58634b35-2254-40de-a5eb-3c1166ac56c0",
+            "portion": 1,
+            "price": 600,
+            "title": "SPAGHETTI",
+          }
+        }
+        mealError="Error"
+        mealOnEdit={
+          Object {
+            "description": "so sweet",
+            "id": "6edf5100-3313-4a4f-8a9d-a1bf79b0a72f",
+            "portion": 2,
+            "price": 1000,
+            "title": "EBA AND EGUSI",
+          }
+        }
+        meals={
+          Array [
+            Object {
+              "id": "6edf5100-3313-4a4f-8a9d-a1bf79b0a72f",
+              "portion": 2,
+              "price": 1000,
+              "title": "EBA AND EGUSI",
+            },
+            Object {
+              "id": "ce41fb68-4a51-4033-8c3a-e5a27eadcc91",
+              "portion": 3,
+              "price": 400,
+              "title": "SALAD",
+            },
+            Object {
+              "id": "58634b35-2254-40de-a5eb-3c1166ac56c0",
+              "portion": 1,
+              "price": 600,
+              "title": "SPAGHETTI",
+            },
+            Object {
+              "id": "959f0675-0ad3-47b7-8401-ec9e10bc1863",
+              "portion": 2,
+              "price": 500,
+              "title": "YAM AND EGG",
+            },
+          ]
+        }
+        pagination={
+          Object {
+            "count": 13,
+            "limit": 12,
+            "numOfPages": 2,
+          }
+        }
+        postMeal={[MockFunction]}
+        removeMealFromEdit={[MockFunction]}
+        setFilter={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                Object {
+                  "filter": "all",
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "isThrow": false,
+                "value": undefined,
+              },
+            ],
+          }
+        }
+        setMealForEdit={[MockFunction]}
+        setNav={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                Array [
+                  Object {
+                    "link": "/dashboard",
+                    "title": "Manage Menus",
+                  },
+                  Object {
+                    "link": "/mealpage",
+                    "title": "Manage Meals",
+                  },
+                  Object {
+                    "link": "/orderHistory",
+                    "title": "Orders",
+                  },
+                  Object {
+                    "link": "/",
+                    "title": "Log Out",
+                  },
+                ],
+              ],
+            ],
+            "results": Array [
+              Object {
+                "isThrow": false,
+                "value": undefined,
+              },
+            ],
+          }
+        }
+        updateMeal={[MockFunction]}
+        updateMealOnEdit={[MockFunction]}
+      />
+      <MealCard
+        deleteMeal={[MockFunction]}
+        editMeal={[Function]}
+        getMeals={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                Object {
+                  "limit": 12,
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "isThrow": false,
+                "value": undefined,
+              },
+            ],
+          }
+        }
+        key="959f0675-0ad3-47b7-8401-ec9e10bc1863"
+        mealData={
+          Object {
+            "id": "959f0675-0ad3-47b7-8401-ec9e10bc1863",
+            "portion": 2,
+            "price": 500,
+            "title": "YAM AND EGG",
+          }
+        }
+        mealError="Error"
+        mealOnEdit={
+          Object {
+            "description": "so sweet",
+            "id": "6edf5100-3313-4a4f-8a9d-a1bf79b0a72f",
+            "portion": 2,
+            "price": 1000,
+            "title": "EBA AND EGUSI",
+          }
+        }
+        meals={
+          Array [
+            Object {
+              "id": "6edf5100-3313-4a4f-8a9d-a1bf79b0a72f",
+              "portion": 2,
+              "price": 1000,
+              "title": "EBA AND EGUSI",
+            },
+            Object {
+              "id": "ce41fb68-4a51-4033-8c3a-e5a27eadcc91",
+              "portion": 3,
+              "price": 400,
+              "title": "SALAD",
+            },
+            Object {
+              "id": "58634b35-2254-40de-a5eb-3c1166ac56c0",
+              "portion": 1,
+              "price": 600,
+              "title": "SPAGHETTI",
+            },
+            Object {
+              "id": "959f0675-0ad3-47b7-8401-ec9e10bc1863",
+              "portion": 2,
+              "price": 500,
+              "title": "YAM AND EGG",
+            },
+          ]
+        }
+        pagination={
+          Object {
+            "count": 13,
+            "limit": 12,
+            "numOfPages": 2,
+          }
+        }
+        postMeal={[MockFunction]}
+        removeMealFromEdit={[MockFunction]}
+        setFilter={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                Object {
+                  "filter": "all",
+                },
+              ],
+            ],
+            "results": Array [
+              Object {
+                "isThrow": false,
+                "value": undefined,
+              },
+            ],
+          }
+        }
+        setMealForEdit={[MockFunction]}
+        setNav={
+          [MockFunction] {
+            "calls": Array [
+              Array [
+                Array [
+                  Object {
+                    "link": "/dashboard",
+                    "title": "Manage Menus",
+                  },
+                  Object {
+                    "link": "/mealpage",
+                    "title": "Manage Meals",
+                  },
+                  Object {
+                    "link": "/orderHistory",
+                    "title": "Orders",
+                  },
+                  Object {
+                    "link": "/",
+                    "title": "Log Out",
+                  },
+                ],
+              ],
+            ],
+            "results": Array [
+              Object {
+                "isThrow": false,
+                "value": undefined,
+              },
+            ],
+          }
+        }
+        updateMeal={[MockFunction]}
+        updateMealOnEdit={[MockFunction]}
+      />
+    </div>
+    <div
+      className="pagination-container"
+    >
+      <PaginationBoxView
+        activeClassName="active"
+        breakClassName="break-me"
+        breakLabel={
+          <a
+            href=""
+          >
+            ...
+          </a>
+        }
+        containerClassName="pagination"
+        disableInitialCallback={false}
+        disabledClassName="disabled"
+        marginPagesDisplayed={2}
+        nextClassName="next"
+        nextLabel=">>"
+        onPageChange={[Function]}
+        pageCount={2}
+        pageRangeDisplayed={5}
+        previousClassName="previous"
+        previousLabel="<<"
+        subContainerClassName="pages pagination"
+      />
+    </div>
+  </div>
+</div>
+`;

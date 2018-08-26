@@ -22,7 +22,7 @@ const {
 describe('Meals API routes', () => {
   before(async () => {
     await db.User.truncate();
-    // await db.Meal.truncate();
+    await db.Meal.truncate();
     await db.User.create(adminUser1);
     await db.User.create(adminUser2);
     await db.User.create(customerUser1)
@@ -306,7 +306,7 @@ describe('Meals API routes', () => {
           expect(res.body).to.have.all.keys('success', 'message', 'meal');
           expect(success).to.equal(true);
           expect(message).to.equal('Meal added successfully!');
-          expect(meal.image).to.equal('https://img.com');
+          expect(meal.image).to.equal('https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg');
           expect(meal.description).to.equal('Its traditional');
           expect(meal.title).to.equal('EBA AND GBEGIRI');
           expect(meal.price).to.equal(500);
@@ -317,7 +317,7 @@ describe('Meals API routes', () => {
         });
     });
 
-    it('should not allow customer', (done) => {
+    it('should not allow customer post meal', (done) => {
       chai.request(app.listen())
         .post('/api/v1/meals')
         .set('Authorization', `Bearer ${customerToken}`)
@@ -359,7 +359,7 @@ describe('Meals API routes', () => {
           expect(res.body).to.have.all.keys('success', 'message', 'meal');
           expect(success).to.equal(true);
           expect(message).to.equal('Meal added successfully!');
-          expect(meal.image).to.equal('https://img.com');
+          expect(meal.image).to.equal('https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg');
           expect(meal.description).to.equal('Its traditional');
           expect(meal.title).to.equal('EBA AND GBEGIRI');
           expect(meal.price).to.equal(500);
@@ -411,7 +411,7 @@ describe('Meals API routes', () => {
       title: 'Sharwama',
       description: 'So delicious',
       price: 900,
-      image: 'https://img.com'
+      image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg'
     };
 
     it('should update meal if meal exist and belong to the admin', (done) => {

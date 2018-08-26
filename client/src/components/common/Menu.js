@@ -38,8 +38,7 @@ const Menu = (props) => {
 };
 
 Menu.propTypes = {
-  menu: PropTypes.array.isRequired,
-  // todayMenuPagination: PropTypes.object.isRequired,
+  menu: PropTypes.array.isRequired
 };
 
 export default Menu;

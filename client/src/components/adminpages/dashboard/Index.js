@@ -23,18 +23,15 @@ import {
   deleteMealInMenu, deleteMenuMeal
 } from '../../../actions/menuActions';
 import { getMeals } from '../../../actions/mealActions';
-import {
-  setModal, deleteMealInEditModal,
-  addMealInEditMenuModal
-} from '../../../actions/modalActions';
+import setModal from '../../../actions/modalActions';
 import MenuTable from './MenuTable/MenuTable';
-import SetMenuCard from './MenuCard/SetMenu';
+import SetMenuCard from './MenuCard/SetMenuCard';
 import Filter from '../../common/Filter';
 import setFilter from '../../../actions/filterActions';
 import ModalComp from '../Modal/Index';
 import toggleAccordion from '../../../helpers/toggleAccordion';
 
-class AdminDashboard extends Component {
+export class AdminDashboard extends Component {
   constructor(props) {
     super(props);
 
@@ -43,7 +40,6 @@ class AdminDashboard extends Component {
     this.showMenuDetails = this.showMenuDetails.bind(this);
     this.hideModal = this.hideModal.bind(this);
     this.editMenu = this.editMenu.bind(this);
-    // this.deleteRow = this.deleteRow.bind(this);
     this.onSubmitUpdate = this.onSubmitUpdate.bind(this);
     this.unCheckAll = this.unCheckAll.bind(this);
     this.getMenus = this.getMenus.bind(this);
@@ -67,7 +63,7 @@ class AdminDashboard extends Component {
     if (this.props.modal.isEdit) {
       checkbox = document.getElementById(`${mealId}-edit`);
     } else {
-      checkbox = document.getElementById(mealId);
+      checkbox = document.getElementById(`checkbox-${mealId}`);
     }
     if (checkbox.checked === true) {
       this.props.addMealToNewMenu(mealId);
@@ -125,18 +121,14 @@ class AdminDashboard extends Component {
     this.props.emptyNewMenu();
   }
 
-  // deleteRow(id) {
-  //   this.props.deleteMealInEditModal(id);
-  //   this.props.deleteMealInEditMenu(id);
-  // }
-
   unCheckAll(mealIdArr) {
     mealIdArr.forEach((mealId) => {
-      const checkbox = document.getElementById(mealId);
+      const checkbox = document.getElementById(`checkbox-${mealId}`);
       checkbox.checked = false;
     });
   }
 
+  /* istanbul ignore next */
   submitNewMenu() {
     const meals = [...this.props.newMenuMeals];
     const date = document.getElementById('postOn').value;
@@ -144,9 +136,9 @@ class AdminDashboard extends Component {
     this.props.postMenu({ postOn, meals })
       .then((success) => {
         if (success) {
+          toggleAccordion('.accordion__body', 'accordion__body  accordion__body--hidden', 'true'); // close accordion
           this.unCheckAll([...this.props.newMenuMeals]);
           this.props.emptyNewMenu();
-          toggleAccordion('.accordion__body', 'accordion__body  accordion__body--hidden', 'true'); // close accordion
         }
       });
   }
@@ -158,7 +150,6 @@ class AdminDashboard extends Component {
    * @param {object} data data object from pagination component
    */
   handlePaginationClick(data) {
-    // const nextPage = data.selected + 1;
     const { limit } = this.props.pagination;
     const offset = (data.selected) * limit;
     this.getMenus({ limit, offset });
@@ -171,7 +162,7 @@ class AdminDashboard extends Component {
       <div>
         <div className="welcome">
           <p className="merienda">
-            welcome {firstName} {lastName}
+            Welcome {firstName} {lastName}
           </p>
         </div>
         <section className="setmenu">
@@ -210,7 +201,6 @@ class AdminDashboard extends Component {
         </section>
         <ModalComp
           hideModal={this.hideModal}
-          // deleteRow={this.deleteRow}
           submitUpdate={this.onSubmitUpdate}
           setNewMenuMeal={this.setNewMenuMeal}
           {...this.props}
@@ -230,7 +220,6 @@ AdminDashboard.propTypes = {
   postMenu: PropTypes.func.isRequired,
   newMenuMeals: PropTypes.array.isRequired,
   setModal: PropTypes.func.isRequired,
-  deleteMealInEditModal: PropTypes.func.isRequired,
   updateMenu: PropTypes.func.isRequired,
   setMenuForEdit: PropTypes.func.isRequired,
   emptyNewMenu: PropTypes.func.isRequired,
@@ -242,7 +231,7 @@ AdminDashboard.propTypes = {
   pagination: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   meals: arraySort(state.meal.meals, 'title'),
   newMenuMeals: state.menu.newMenu,
   menus: filterify(state.menu.allMenus, state.filter),
@@ -251,7 +240,7 @@ const mapStateToProps = state => ({
   menuMealsPagination: state.menu.menuMealsPagination,
   modal: state.modal,
   editMenuMeals: state.menu.editMenu,
-  mealPagination: state.meal.pagination,
+  mealPagination: state.meal.pagination
 });
 
 const mapDispatchToProps = dispatch => bindActionCreators(
@@ -270,9 +259,7 @@ const mapDispatchToProps = dispatch => bindActionCreators(
     setMenuForEdit,
     deleteMealInEditMenu,
     deleteMealInMenu,
-    deleteMealInEditModal,
     addMealInEditMenu,
-    addMealInEditMenuModal,
     getMenuMeals,
     setFilter,
     deleteMenuMeal

@@ -1,0 +1,49 @@
+{
+  "src_folders" : ["e2e-tests"],
+  "output_folder" : "reports",
+  "globals_path": "./nightwatch.globals.js",
+
+  "selenium" : {
+    "start_process" : true,
+    "server_path" : "./.selenium/selenium-server/3.9.1-server.jar",
+    "host": "127.0.0.1",
+    "log_path" : "./reports",
+    "port" : 4444,
+    "cli_args" : {
+      "webdriver.chrome.driver" : "./.selenium/chromedriver/2.41-x64-chromedriver",
+      "webdriver.gecko.driver" : "./.selenium/geckodriver/0.21.0-x64-geckodriver"
+    }
+  },
+
+  "test_settings" : {
+    "default" : {
+      "launch_url" : "http://localhost",
+      "selenium_port"  : 4444,
+      "selenium_host"  : "localhost",
+      "silent": true,
+      "screenshots" : {
+        "enabled" : false,
+        "path" : ""
+      },
+      "desiredCapabilities": {
+        "browserName": "chrome",
+        "marionette": true,
+        "javascriptEnabled": true,
+        "acceptSslCerts": true,
+        "elementScrollBehavior": 1
+      }
+    },
+
+    "chrome" : {
+      "desiredCapabilities": {
+        "browserName": "chrome",
+        "elementScrollBehavior": 1
+      }
+    },
+    "firefox" : {
+      "desiredCapabilities": {
+        "browserName": "firefox"
+      }
+    }
+  }
+}

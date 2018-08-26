@@ -1,0 +1,70 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<testsuites errors="0"
+            failures="0"
+            tests="9">
+
+  <testsuite name="customerpages"
+    errors="0" failures="0" hostname="" id="" package="customerpages" skipped="0"
+    tests="9" time="50.98" timestamp="">
+  
+    <testcase name="It should login customer`" classname="customerpages" time="6.094" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="It should show today&#39;s menu on customer dashboard" classname="customerpages" time="2.090" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="It should add meal to cart if meal&#39;s add button is clicked" classname="customerpages" time="5.066" assertions="0">
+    </testcase>
+  
+    <testcase name="It should navigate to cartpage and place order" classname="customerpages" time="5.353" assertions="3">
+
+    
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="It should not remove meal from cart if delete is clicked but not confirmed" classname="customerpages" time="7.319" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="It should remove meal from cart if delete is clicked and confirmed" classname="customerpages" time="6.182" assertions="1">
+
+    
+    </testcase>
+  
+    <testcase name="It should navigate to orderpage and show order details when order info button is clicked" classname="customerpages" time="6.290" assertions="2">
+
+    
+
+    
+    </testcase>
+  
+    <testcase name="It should show edit order modal and update order when order edit button is clicked" classname="customerpages" time="6.272" assertions="0">
+    </testcase>
+  
+    <testcase name="It should cancel order if delete order button is clicked and confirmed" classname="customerpages" time="6.314" assertions="1">
+
+    
+    </testcase>
+  
+
+  
+
+  
+  </testsuite>
+</testsuites>

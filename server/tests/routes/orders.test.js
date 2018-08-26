@@ -1,11 +1,14 @@
 import chai, { expect } from 'chai';
 import chaiHttp from 'chai-http';
 import moment from 'moment';
+import dotenv from 'dotenv'
 
 import app from '../../app';
 import db from '../../../models';
 import getToken from '../../helpers/gettokens';
 import userData from '../../helpers/test-data/users';
+
+dotenv.config();
 
 import {
   meals1,
@@ -16,7 +19,8 @@ import {
   admin3MenuMeals,
   admin4MenuMeals,
   ordersData,
-  orderMeals
+  orderMeals,
+  customer1OrderUpdate
 } from '../../helpers/test-data/orders';
 
 chai.use(chaiHttp);
@@ -59,7 +63,7 @@ describe('Orders API routes', () => {
 
   before(async () => {
     await db.User.truncate();
-    await db.Meal.destroy({ truncate: true });
+    await db.Meal.destroy({ truncate: { cascade: true } });
     await db.Menu.truncate();
     await db.MenuMeal.truncate();
     await db.Order.truncate();
@@ -93,7 +97,7 @@ describe('Orders API routes', () => {
       .end((err, res) => {
         if(err) return done(err);
         // check if it's opening hours or not
-        if(moment().hour() >= 7 && moment().hour() <= 18) {
+        if(moment().hour() >= process.env.OPENINGHOUR && moment().hour() <= process.env.CLOSINGHOUR) {
           expect(res.status).to.equal(201);
           expect(res.body.success).to.equal(true);
           expect(res.body.message).to.equal('Order placed successfully!');
@@ -138,7 +142,7 @@ describe('Orders API routes', () => {
       .end((err, res) => {
         if(err) return done(err);
 
-        if(moment().hour() >= 7 && moment().hour() <= 18) {
+        if(moment().hour() >= process.env.OPENINGHOUR && moment().hour() <= process.env.CLOSINGHOUR) {
           expect(res.status).to.equal(400);
           expect(res.body.message).to.equal('meal entry is not correct');
 
@@ -162,7 +166,7 @@ describe('Orders API routes', () => {
       .end((err, res) => {
         if(err) return done(err);
 
-        if(moment().hour() >= 7 && moment().hour() <= 18) {
+        if(moment().hour() >= process.env.OPENINGHOUR && moment().hour() <= process.env.CLOSINGHOUR) {
           expect(res.status).to.equal(400);
           expect(res.body.message).to.equal('deliveryAddress field is empty!');
 
@@ -185,13 +189,13 @@ describe('Orders API routes', () => {
             {
               id: '32947007-da1b-4bc1-ad3a-8cc106dee9fb', // non existing meal
               portion: 2,
-              price: 200
+              unitPrice: 200
             }
           ]
       })
       .end((err, res) => {
         if(err) return done(err);
-        if(moment().hour() >= 7 && moment().hour() <= 18) {
+        if(moment().hour() >= process.env.OPENINGHOUR && moment().hour() <= process.env.CLOSINGHOUR) {
           expect(res.status).to.equal(404);
           expect(res.body.message).to.equal('meals 32947007-da1b-4bc1-ad3a-8cc106dee9fb, not found!');
         } else {
@@ -363,7 +367,7 @@ describe('Orders API routes', () => {
       chai.request(app.listen())
       .put(`/api/v1/orders/${ordersData[0].id}`)
       .set('Authorization', `Bearer ${customer1Token}`)
-      .send(customer2Order)
+      .send(customer1OrderUpdate)
       .end((err, res) => {
         const { success, message } = res.body;
         if(err) return done(err);
@@ -394,7 +398,7 @@ describe('Orders API routes', () => {
       chai.request(app.listen())
       .put(`/api/v1/orders/${ordersData[0].id}`)
       .set('Authorization', `Bearer ${customer2Token}`)
-      .send(customer2Order)
+      .send(customer1OrderUpdate)
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(404);

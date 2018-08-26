@@ -44,12 +44,12 @@ const Mealform = ({
           <form
             id="meal-form"
             className="meal-form"
-            onSubmit={(e) => {
-              e.preventDefault();
+            onSubmit={(event) => {
+              event.preventDefault();
               if (isEdit) {
                 return updateMeal(mealOnEdit.id);
               }
-              return addMeal(e);
+              return addMeal(event);
             }}
           >
             <div className="name">
@@ -62,9 +62,9 @@ const Mealform = ({
                   placeholder="Enter meal name"
                   name="title"
                   id="meal-name"
-                  onChange={(e) => {
-                    e.preventDefault();
-                    handleChange(e);
+                  onChange={(event) => {
+                    event.preventDefault();
+                    handleChange(event);
                   }}
                   value={mealOnEdit.title || ''}
                   required
@@ -82,11 +82,11 @@ const Mealform = ({
                   placeholder="Enter price"
                   name="price"
                   id="price"
-                  min="0"
+                  min="1"
                   max="1000000"
-                  onChange={(e) => {
-                    e.preventDefault();
-                    handleChange(e);
+                  onChange={(event) => {
+                    event.preventDefault();
+                    handleChange(event);
                   }}
                   value={mealOnEdit.price || ''}
                   required
@@ -101,13 +101,13 @@ const Mealform = ({
               <p className="input-div desc">
                 <input
                   type="text"
-                  placeholder="Enter meal description"
+                  placeholder="Describe meal in not more than 100 words."
                   name="description"
-                  maxLength="60"
+                  maxLength="100"
                   id="dsc"
-                  onChange={(e) => {
-                    e.preventDefault();
-                    handleChange(e);
+                  onChange={(event) => {
+                    event.preventDefault();
+                    handleChange(event);
                   }}
                   value={mealOnEdit.description || ''}
                   required
@@ -124,11 +124,10 @@ const Mealform = ({
                   type="file"
                   placeholder="Enter img link"
                   name="image"
+                  accept="image/*"
                   id="meal-image"
                   defaultValue={mealOnEdit.image || ''}
-                  onChange={() => {
-                    uploadImage();
-                  }}
+                  onChange={uploadImage}
                 />
               </p>
             </div>
@@ -194,8 +193,8 @@ const Mealform = ({
                     id="back-btn"
                     className="btn-2 back-btn"
                     disabled={disableBtn}
-                    onClick={(e) => {
-                      e.preventDefault();
+                    onClick={(event) => {
+                      event.preventDefault();
                       closeEdit();
                     }}
                   >

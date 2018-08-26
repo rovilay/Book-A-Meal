@@ -665,7 +665,7 @@
         } ]
       }
     },
-    "/api/v1/orders/<orderId>/meals" : {
+    "/orders/<orderId>/meals" : {
       "get" : {
         "tags" : [ "Orders" ],
         "summary" : "Gets meals of an order",
@@ -721,7 +721,7 @@
         } ]
       }
     },
-    "/api/v1/orders/<orderId>" : {
+    "/orders/<orderId>" : {
       "put" : {
         "tags" : [ "Orders" ],
         "summary" : "Updates an order",
@@ -1650,7 +1650,7 @@
         "id" : {
           "type" : "string"
         },
-        "price" : {
+        "unitPrice" : {
           "type" : "integer",
           "format" : "int32"
         },
@@ -1776,7 +1776,7 @@
         "id" : {
           "type" : "string"
         },
-        "price" : {
+        "cost" : {
           "type" : "integer",
           "format" : "int32"
         },

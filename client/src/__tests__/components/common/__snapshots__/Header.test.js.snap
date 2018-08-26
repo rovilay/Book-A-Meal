@@ -1,0 +1,81 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Header component test should map state to props 1`] = `
+Object {
+  "cart": Array [],
+  "navLinks": Array [],
+}
+`;
+
+exports[`Header component test should render Header correctly 1`] = `
+<header
+  className="header"
+>
+  <NavLink
+    activeClassName="active"
+    aria-current="page"
+    className="logo"
+    exact={true}
+    to="/"
+  >
+    Book-A-Meal
+  </NavLink>
+  <a
+    className="ham"
+    onClick={[Function]}
+  >
+    <FontAwesome
+      id="mobile-menu"
+      name="bars"
+    />
+  </a>
+  <div
+    className="nav-menu"
+    id="nav-menu"
+  >
+    <NavLink
+      activeClassName="active"
+      aria-current="page"
+      className="is-active nav-link"
+      key="0"
+      to="/dashboard"
+    >
+      Menu
+    </NavLink>
+    <NavLink
+      activeClassName="active"
+      aria-current="page"
+      className="is-active nav-link"
+      key="1"
+      to="/cart"
+    >
+      <FontAwesome
+        name="cart-plus"
+      />
+      <span
+        className=""
+      >
+        (
+        0
+        )
+      </span>
+    </NavLink>
+    <NavLink
+      activeClassName="active"
+      aria-current="page"
+      className="is-active nav-link"
+      key="2"
+      to="/orders"
+    >
+      Orders
+    </NavLink>
+    <a
+      className="is-active nav-link"
+      key="3"
+      onClick={[Function]}
+    >
+      Log Out
+    </a>
+  </div>
+</header>
+`;

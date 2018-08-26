@@ -1,0 +1,415 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditOrderTable component test should render EditOrderTable correctly 1`] = `
+<div
+  className="modal-container"
+>
+  <h2
+    className="title"
+  >
+    Edit Order
+  </h2>
+  <hr />
+  <form
+    className="edit-order"
+    onSubmit={[Function]}
+  >
+    <div
+      className="address"
+    >
+      <label
+        htmlFor="address"
+      >
+        Address:
+      </label>
+      <div
+        className="input-div"
+      >
+        <input
+          defaultValue="isuti rd"
+          id="delivery-address"
+          name="deliveryAddress"
+          placeholder="Enter delivery address"
+          required={true}
+          type="text"
+        />
+      </div>
+    </div>
+    <div
+      className="container-test"
+    >
+      <div
+        className="row head"
+      >
+        <p
+          className="row-item"
+          key="0"
+        >
+          S/N
+        </p>
+        <p
+          className="row-item meal-title"
+          key="1"
+        >
+          Meal
+        </p>
+        <p
+          className="row-item"
+          key="2"
+        >
+          Unit Cost
+        </p>
+        <p
+          className="row-item"
+          key="3"
+        >
+          Portion
+        </p>
+        <p
+          className="row-item"
+          key="4"
+        >
+          Cost
+        </p>
+        <p
+          className="row-item"
+          key="5"
+        >
+          Actions
+        </p>
+      </div>
+      <CustomerOrderTableRow
+        actions={
+          Object {
+            "delete": true,
+            "edit": false,
+            "info": false,
+          }
+        }
+        editOrder={
+          Object {
+            "UserId": "1",
+            "deliveryAddress": "isuti rd",
+            "orderId": 5,
+            "orderedMeals": Array [
+              Object {
+                "cost": 300,
+                "id": "1",
+                "portion": 1,
+                "price": 300,
+                "title": "EBA AND EGUSI",
+              },
+              Object {
+                "cost": 200,
+                "id": "2",
+                "portion": 1,
+                "price": 200,
+                "title": "SALAD",
+              },
+              Object {
+                "cost": 100,
+                "id": "3",
+                "portion": 2,
+                "price": 200,
+                "title": "SPAGHETTI",
+              },
+              Object {
+                "cost": 400,
+                "id": "4",
+                "portion": 1,
+                "price": 400,
+                "title": "YAM AND EGG",
+              },
+            ],
+            "totalPrice": 1100,
+          }
+        }
+        getOrderMeals={[Function]}
+        isEdit={false}
+        item={
+          Object {
+            "Meal": "EBA AND EGUSI",
+            "cost": 300,
+            "portion": 1,
+            "price": 300,
+            "sn": NaN,
+          }
+        }
+        key="1"
+        mealId="1"
+        orderCreatedAt={"2018-09-05T01:49:08.594Z"}
+        orderedMealsLength={4}
+        orderedMealsPagination={
+          Object {
+            "count": 13,
+            "limit": 12,
+            "numOfPages": 2,
+          }
+        }
+        title="Edit Order"
+        updateOrder={[Function]}
+      />
+      <CustomerOrderTableRow
+        actions={
+          Object {
+            "delete": true,
+            "edit": false,
+            "info": false,
+          }
+        }
+        editOrder={
+          Object {
+            "UserId": "1",
+            "deliveryAddress": "isuti rd",
+            "orderId": 5,
+            "orderedMeals": Array [
+              Object {
+                "cost": 300,
+                "id": "1",
+                "portion": 1,
+                "price": 300,
+                "title": "EBA AND EGUSI",
+              },
+              Object {
+                "cost": 200,
+                "id": "2",
+                "portion": 1,
+                "price": 200,
+                "title": "SALAD",
+              },
+              Object {
+                "cost": 100,
+                "id": "3",
+                "portion": 2,
+                "price": 200,
+                "title": "SPAGHETTI",
+              },
+              Object {
+                "cost": 400,
+                "id": "4",
+                "portion": 1,
+                "price": 400,
+                "title": "YAM AND EGG",
+              },
+            ],
+            "totalPrice": 1100,
+          }
+        }
+        getOrderMeals={[Function]}
+        isEdit={false}
+        item={
+          Object {
+            "Meal": "SALAD",
+            "cost": 200,
+            "portion": 1,
+            "price": 200,
+            "sn": NaN,
+          }
+        }
+        key="2"
+        mealId="2"
+        orderCreatedAt={"2018-09-05T01:49:08.594Z"}
+        orderedMealsLength={4}
+        orderedMealsPagination={
+          Object {
+            "count": 13,
+            "limit": 12,
+            "numOfPages": 2,
+          }
+        }
+        title="Edit Order"
+        updateOrder={[Function]}
+      />
+      <CustomerOrderTableRow
+        actions={
+          Object {
+            "delete": true,
+            "edit": false,
+            "info": false,
+          }
+        }
+        editOrder={
+          Object {
+            "UserId": "1",
+            "deliveryAddress": "isuti rd",
+            "orderId": 5,
+            "orderedMeals": Array [
+              Object {
+                "cost": 300,
+                "id": "1",
+                "portion": 1,
+                "price": 300,
+                "title": "EBA AND EGUSI",
+              },
+              Object {
+                "cost": 200,
+                "id": "2",
+                "portion": 1,
+                "price": 200,
+                "title": "SALAD",
+              },
+              Object {
+                "cost": 100,
+                "id": "3",
+                "portion": 2,
+                "price": 200,
+                "title": "SPAGHETTI",
+              },
+              Object {
+                "cost": 400,
+                "id": "4",
+                "portion": 1,
+                "price": 400,
+                "title": "YAM AND EGG",
+              },
+            ],
+            "totalPrice": 1100,
+          }
+        }
+        getOrderMeals={[Function]}
+        isEdit={false}
+        item={
+          Object {
+            "Meal": "SPAGHETTI",
+            "cost": 100,
+            "portion": 2,
+            "price": 200,
+            "sn": NaN,
+          }
+        }
+        key="3"
+        mealId="3"
+        orderCreatedAt={"2018-09-05T01:49:08.594Z"}
+        orderedMealsLength={4}
+        orderedMealsPagination={
+          Object {
+            "count": 13,
+            "limit": 12,
+            "numOfPages": 2,
+          }
+        }
+        title="Edit Order"
+        updateOrder={[Function]}
+      />
+      <CustomerOrderTableRow
+        actions={
+          Object {
+            "delete": true,
+            "edit": false,
+            "info": false,
+          }
+        }
+        editOrder={
+          Object {
+            "UserId": "1",
+            "deliveryAddress": "isuti rd",
+            "orderId": 5,
+            "orderedMeals": Array [
+              Object {
+                "cost": 300,
+                "id": "1",
+                "portion": 1,
+                "price": 300,
+                "title": "EBA AND EGUSI",
+              },
+              Object {
+                "cost": 200,
+                "id": "2",
+                "portion": 1,
+                "price": 200,
+                "title": "SALAD",
+              },
+              Object {
+                "cost": 100,
+                "id": "3",
+                "portion": 2,
+                "price": 200,
+                "title": "SPAGHETTI",
+              },
+              Object {
+                "cost": 400,
+                "id": "4",
+                "portion": 1,
+                "price": 400,
+                "title": "YAM AND EGG",
+              },
+            ],
+            "totalPrice": 1100,
+          }
+        }
+        getOrderMeals={[Function]}
+        isEdit={false}
+        item={
+          Object {
+            "Meal": "YAM AND EGG",
+            "cost": 400,
+            "portion": 1,
+            "price": 400,
+            "sn": NaN,
+          }
+        }
+        key="4"
+        mealId="4"
+        orderCreatedAt={"2018-09-05T01:49:08.594Z"}
+        orderedMealsLength={4}
+        orderedMealsPagination={
+          Object {
+            "count": 13,
+            "limit": 12,
+            "numOfPages": 2,
+          }
+        }
+        title="Edit Order"
+        updateOrder={[Function]}
+      />
+    </div>
+    <div
+      className="order"
+    >
+      <p
+        className="orderTot"
+        id="order-total-price"
+      >
+        Total Price: ₦
+        1100
+      </p>
+      <button
+        className="btn-2"
+        disabled={false}
+        id="order-btn"
+        name="orderbtn"
+        type="submit"
+      >
+        Update order
+      </button>
+    </div>
+  </form>
+  <div
+    className="modal-pagination"
+  >
+    <PaginationBoxView
+      activeClassName="active"
+      breakClassName="break-me"
+      breakLabel={
+        <a
+          href=""
+        >
+          ...
+        </a>
+      }
+      containerClassName="pagination"
+      disableInitialCallback={false}
+      disabledClassName="disabled"
+      marginPagesDisplayed={2}
+      nextClassName="next"
+      nextLabel=">>"
+      onPageChange={[Function]}
+      pageCount={2}
+      pageRangeDisplayed={5}
+      previousClassName="previous"
+      previousLabel="<<"
+      subContainerClassName="pages pagination"
+    />
+  </div>
+</div>
+`;

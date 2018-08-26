@@ -1,7 +1,6 @@
 import moment from 'moment';
 
 import userData from './users';
-// import { admin3MenuMeals } from './menus';
 
 const {
   adminUser3,
@@ -34,7 +33,7 @@ const meals2UUID = [
 const menuUUID = [
   '5a12dead-82ef-4d0d-bd3c-77650882d018',
   '6f74f44c-36c5-4b43-b5dc-8db3e77d7f63'
-]
+];
 
 const ordersUUID = [
   'ede3ab95-e84e-4814-8011-adbc515eee5d',
@@ -46,43 +45,43 @@ export const admin3Meals = [
     title: ' BOILED PLANTAIN',
     description: 'So delicious',
     price: 500,
-    image: 'https://img.com'
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg'
   },
   {
     title: 'CHICKEN',
     description: 'So delicious',
     price: 900,
-    image: 'https://img.com'
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg'
   },
   {
     title: 'FRIED YAM',
     description: 'So delicious',
     price: 650,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'YELLOW RICE',
     description: 'So delicious',
     price: 400,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'POTATO CHIPS',
     description: 'so delicious',
     price: 600,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'CREAM CAKE',
     description: 'so delicious',
     price: 900,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'SPAGHETTI, CHEESE AND SALAD',
     description: 'so delicious',
     price: 800,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   }
 ];
 
@@ -91,43 +90,43 @@ export const admin4Meals = [
     title: 'BOILED EGG',
     description: 'so delicious',
     price: 1400,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'COCONUT RICE, STEW AND CHICKEN',
     description: 'so delicious',
     price: 800,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'APPLE AND BERRY',
     description: 'so delicious',
     price: 600,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'FRIED RICE, SALAD AND CHICKEN',
     description: 'so delicious',
     price: 800,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'SALAD AND WHIPPED CREAM',
     description: 'so delicious',
     price: 500,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'YAM AND FRIED EGG',
     description: 'so delicious',
     price: 650,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'PANCAKES, SUSAGE AND SYRUP',
     description: 'so delicious',
     price: 800,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   }
 ];
 
@@ -137,6 +136,8 @@ export const meals1 = admin3Meals.map((meal, i) => {
   meal.UserId = adminUser3.id;
   return meal;
 });
+
+export const catererRoseMeals = meals1;
 
 export const meals2 = admin4Meals.map((meal, i) => {
   meal.id = meals2UUID[i];
@@ -228,41 +229,78 @@ export const admin4MenuMeals = [
   }
 ];
 
-export const customer1Order =  {
-    deliveryAddress: 'Ikotun Lagos',
-    meals: [
-      {
-        id: admin3MenuMeals[0].MealId,
-        price: meals1[0].price,
-        portion: 1
-      },
-      {
-        id: admin3MenuMeals[1].MealId,
-        price: meals2[0].price,
-        portion: 2
-      },
-      {
-        id: admin3MenuMeals[2].MealId,
-        price: meals2[0].price,
-        portion: 2
-      },
-    ]
-  };
+export const customer1Order = {
+  deliveryAddress: 'Ikotun Lagos',
+  meals: [
+    {
+      id: admin3MenuMeals[0].MealId,
+      unitPrice: meals1[0].price,
+      portion: 1
+    },
+    {
+      id: admin3MenuMeals[1].MealId,
+      unitPrice: meals2[0].price,
+      portion: 2
+    },
+    {
+      id: admin3MenuMeals[2].MealId,
+      unitPrice: meals2[0].price,
+      portion: 2
+    },
+  ]
+};
+
+export const customer1OrderUpdate = {
+  deliveryAddress: 'Ikotun Lagos',
+  meals: [
+    {
+      id: admin3MenuMeals[0].MealId,
+      cost: meals1[0].price,
+      portion: 1
+    },
+    {
+      id: admin3MenuMeals[1].MealId,
+      cost: meals2[0].price,
+      portion: 2
+    },
+    {
+      id: admin3MenuMeals[2].MealId,
+      cost: meals2[0].price,
+      portion: 2
+    },
+  ]
+};
 
 export const customer2Order = {
-    deliveryAddress: 'maryland Lagos',
-    meals: [
-      {
-        id: admin3MenuMeals[0].MealId,
-        price: meals1[1].price,
-        portion: 3
-      },
-      {
-        id: admin3MenuMeals[1].MealId,
-        price: meals2[1].price,
-        portion: 2
-      },
-    ]
+  deliveryAddress: 'maryland Lagos',
+  meals: [
+    {
+      id: admin3MenuMeals[0].MealId,
+      unitPrice: meals1[1].price,
+      portion: 3
+    },
+    {
+      id: admin3MenuMeals[1].MealId,
+      unitPrice: meals2[1].price,
+      portion: 2
+    },
+  ]
+};
+
+export const customer2OrderUpdate = {
+  deliveryAddress: 'maryland Lagos',
+  meals: [
+    {
+      id: admin3MenuMeals[0].MealId,
+      cost: meals1[1].price,
+      portion: 3
+    },
+    {
+      id: admin3MenuMeals[1].MealId,
+      cost: meals2[1].price,
+      portion: 2
+    },
+  ]
 };
 
 export const ordersData = [
@@ -282,7 +320,7 @@ export const ordersData = [
     createdAt: moment().format(),
     updatedAt: moment().format()
   }
-]
+];
 
 export const orderMeals = [
   {
@@ -340,4 +378,3 @@ export const orderMeals = [
     updatedAt: moment().format()
   }
 ];
-

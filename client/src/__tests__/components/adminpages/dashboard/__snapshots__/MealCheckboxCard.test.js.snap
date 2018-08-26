@@ -1,0 +1,111 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MealCheckboxCard component test should render MealCheckboxCard correctly 1`] = `
+<div
+  className="mealsCheckbox"
+>
+  <div
+    className="checkbox-card"
+  >
+    <p
+      key="1"
+    >
+      <label
+        htmlFor="1"
+      >
+        EBA AND EGUSI
+      </label>
+      <input
+        className="meal-check"
+        defaultChecked={false}
+        id="checkbox-1"
+        name="meal-check"
+        onClick={[Function]}
+        type="checkbox"
+        value="1"
+      />
+    </p>
+    <p
+      key="2"
+    >
+      <label
+        htmlFor="2"
+      >
+        SALAD
+      </label>
+      <input
+        className="meal-check"
+        defaultChecked={false}
+        id="checkbox-2"
+        name="meal-check"
+        onClick={[Function]}
+        type="checkbox"
+        value="2"
+      />
+    </p>
+    <p
+      key="3"
+    >
+      <label
+        htmlFor="3"
+      >
+        SPAGHETTI
+      </label>
+      <input
+        className="meal-check"
+        defaultChecked={false}
+        id="checkbox-3"
+        name="meal-check"
+        onClick={[Function]}
+        type="checkbox"
+        value="3"
+      />
+    </p>
+    <p
+      key="4"
+    >
+      <label
+        htmlFor="4"
+      >
+        YAM AND EGG
+      </label>
+      <input
+        className="meal-check"
+        defaultChecked={false}
+        id="checkbox-4"
+        name="meal-check"
+        onClick={[Function]}
+        type="checkbox"
+        value="4"
+      />
+    </p>
+  </div>
+  <div
+    className="pagination-container"
+  >
+    <PaginationBoxView
+      activeClassName="active"
+      breakClassName="break-me"
+      breakLabel={
+        <a
+          href=""
+        >
+          ...
+        </a>
+      }
+      containerClassName="pagination"
+      disableInitialCallback={false}
+      disabledClassName="disabled"
+      marginPagesDisplayed={2}
+      nextClassName="next"
+      nextLabel=">>"
+      onPageChange={[Function]}
+      pageCount={2}
+      pageRangeDisplayed={5}
+      previousClassName="previous"
+      previousLabel="<<"
+      subContainerClassName="pages pagination"
+    />
+  </div>
+</div>
+`;
