@@ -12,9 +12,9 @@ function customerOnly(req, res, next) {
     return next();
   }
 
-  const err = new Error('Only customers are allowed to perform this operation!');
-  err.status = 403;
-  return next(err);
+  const error = new Error('Only customers are allowed to perform this operation!');
+  error.status = 403;
+  return next(error);
 }
 
 export default customerOnly;

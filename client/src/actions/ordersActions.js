@@ -150,14 +150,14 @@ export const deleteMealInEditOrder = mealId => (dispatch, getState) => {
 
 export const getOrders = ({ limit = 10, offset = 0 }) => dispatch => (
   serverReq('get', `/api/v1/orders?limit=${limit}&offset=${offset}`)
-    .then((res) => {
-      if (res.data) {
+    .then((response) => {
+      if (response.data) {
         const {
           success,
           orders: history,
           grandTotalPrice,
           pagination
-        } = res.data;
+        } = response.data;
 
         if (success) {
           dispatch({
@@ -169,10 +169,10 @@ export const getOrders = ({ limit = 10, offset = 0 }) => dispatch => (
             }
           });
         }
-        return res.data;
+        return response.data;
       }
     })
-    .catch(err => err)
+    .catch(error => error)
 );
 
 /**
@@ -184,13 +184,13 @@ export const getOrders = ({ limit = 10, offset = 0 }) => dispatch => (
  * @return {Function} - dispatches an set customer order action to the redux store
  */
 export const getOrderMeals = (mealsUrl, { limit = 5, offset = 0 }) => dispatch => serverReq('get', `${mealsUrl}?limit=${limit}&offset=${offset}`)
-  .then((res) => {
-    if (res.data) {
+  .then((response) => {
+    if (response.data) {
       const {
         success,
         order,
         pagination
-      } = res.data;
+      } = response.data;
 
       if (success) {
         dispatch({
@@ -202,10 +202,10 @@ export const getOrderMeals = (mealsUrl, { limit = 5, offset = 0 }) => dispatch =
         });
       }
 
-      return res.data;
+      return response.data;
     }
   })
-  .catch(err => err);
+  .catch(error => error);
 
 /**
  * Sends async server requests to get all orders using the axios api
@@ -234,7 +234,7 @@ export const getAllOrders = ({ limit = 10, offset = 0 }) => dispatch => serverRe
       }
     }
   })
-  .catch(err => err);
+  .catch(error => error);
 
 
 /**
@@ -246,17 +246,17 @@ export const getAllOrders = ({ limit = 10, offset = 0 }) => dispatch => serverRe
  */
 export const updateOrder = (id, data) => (dispatch) => {
   serverReq('put', `/api/v1/orders/${id}`, data)
-    .then((res) => {
-      const { success, message } = res.data;
+    .then((response) => {
+      const { success, message } = response.data;
       if (success) {
         notify(message, 'toast-success');
         dispatch(getOrders({}));
         dispatch(setModal({}));
       }
     })
-    .catch((err) => {
-      if (err.response.data) {
-        const { message } = err.response.data;
+    .catch((error) => {
+      if (error.response.data) {
+        const { message } = error.response.data;
         notify(message, 'toast-danger');
       }
     });
@@ -269,15 +269,15 @@ export const updateOrder = (id, data) => (dispatch) => {
  * @return {Function} - dispatches server response to store action to the redux store
  */
 export const deleteOrder = id => dispatch => serverReq('delete', `/api/v1/orders/${id}`)
-  .then((res) => {
-    if (res.status === 204) {
+  .then((response) => {
+    if (response.status === 204) {
       notify('Order canceled!', 'toast-success');
       dispatch(deleteOrderSuccess(id));
     }
   })
-  .catch((err) => {
-    if (err.response.data) {
-      const { message } = err.response.data;
+  .catch((error) => {
+    if (error.response.data) {
+      const { message } = error.response.data;
       notify(message, 'toast-danger');
     }
   });
@@ -294,9 +294,9 @@ export const postOrder = (deliveryAddress, meals) => dispatch => serverReq('post
       notify(message, 'toast-success', 'top-center');
     }
   })
-  .catch((err) => {
-    if (err.response.data) {
-      const { message } = err.response.data;
+  .catch((error) => {
+    if (error.response.data) {
+      const { message } = error.response.data;
       notify(message, 'toast-danger');
     }
   });

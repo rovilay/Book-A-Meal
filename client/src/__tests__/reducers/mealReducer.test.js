@@ -37,7 +37,7 @@ describe('Meal reducers', () => {
   });
 
 
-  it('should update state to default state', (done) => {
+  it('should set meal for edit', (done) => {
     const action = {
       type: SET_MEAL_FOR_EDIT,
       mealForEdit: meals[0]

@@ -3,8 +3,8 @@ import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import { mockReq, mockRes } from 'sinon-express-mock';
 import sinonChai from 'sinon-chai';
-import authenticate from '../../middlewares/authenticate';
-import getToken from '../../helpers/gettokens';
+import authorize from '../../middlewares/authorize';
+import getToken from '../../helpers/getToken';
 
 chai.use(chaiHttp);
 chai.use(sinonChai);
@@ -46,27 +46,27 @@ describe('Authenticate middleware', () => {
   const next = sinon.spy();
 
   it('should verify and add user object to req object', () => {
-    authenticate(reqHeader, res, next);
+    authorize(reqHeader, res, next);
     expect(reqHeader.user).to.not.equal(undefined);
   });
 
   it('should verify and and call next', () => {
-    authenticate(reqHeader, res, next);
+    authorize(reqHeader, res, next);
     next.should.have.been.called;
   });
 
   it('should return status 403 if token wrong', () => {
-    authenticate(wrongReqHeader, res, next);
+    authorize(wrongReqHeader, res, next);
     next.should.have.been.called;
   });
 
   it('should return status 403 if token wrong', () => {
-    authenticate(wrongReqHeader2, res, next);
+    authorize(wrongReqHeader2, res, next);
     next.should.have.been.called;
   });
 
   it('should return status 403 if token undefined', () => {
-    authenticate(emptyReqHeader, res, next);
+    authorize(emptyReqHeader, res, next);
     res.status.should.be.calledWith(400);
     res.json.should.be.calledWith({
       success: false,

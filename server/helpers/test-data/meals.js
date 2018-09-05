@@ -5,7 +5,7 @@ export const unOwnedMeal = {
   image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg'
 };
 
-export const admin1Meals = [
+export const catererJohnMeals = [
   {
     title: 'PLANTAIN AND EGG',
     description: 'So delicious',
@@ -50,7 +50,7 @@ export const admin1Meals = [
   }
 ];
 
-export const admin2Meals = [
+export const catererEstherMeals = [
   {
     title: 'PANCAKES',
     description: 'so delicious',

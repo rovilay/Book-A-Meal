@@ -18,7 +18,8 @@ describe('LoginPage component test', () => {
         password: '1234567'
       },
       history: {},
-      loginUser: jest.fn()
+      loginUser: jest.fn(),
+      onChange: jest.fn()
     };
 
     return shallow(<LogInPage {...props} />)

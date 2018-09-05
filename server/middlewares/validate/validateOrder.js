@@ -15,16 +15,16 @@ function validateOrder(req, res, next) {
   const newOrder = req.body;
   keys.forEach((key) => {
     if (newOrder[`${key}`] === undefined || newOrder[`${key}`] === '') {
-      const err = new Error(`${key} field is empty!`);
-      err.status = 400;
-      return next(err);
+      const error = new Error(`${key} field is empty!`);
+      error.status = 400;
+      return next(error);
     }
   });
 
   if (newOrder.meals.length === 0) {
-    const err = new Error('meals field is empty!');
-    err.status = 400;
-    return next(err);
+    const error = new Error('meals field is empty!');
+    error.status = 400;
+    return next(error);
   }
 
   // check meals content
@@ -38,9 +38,9 @@ function validateOrder(req, res, next) {
     meal.portion === '' || meal.portion === undefined || parseInt(meal.portion, 10) === 0 || isNaN(meal.portion) ||
     unitPrice === '' || unitPrice === undefined || parseInt(unitPrice, 10) === 0 || isNaN(unitPrice)
     ) {
-      const err = new Error('meal entry is not correct');
-      err.status = 400;
-      return next(err);
+      const error = new Error('meal entry is not correct');
+      error.status = 400;
+      return next(error);
     }
   });
 

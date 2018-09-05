@@ -1,16 +1,16 @@
 import moment from 'moment';
 
-import userData from './users';
+import users from './users';
 
 const {
-  adminUser3,
-  adminUser4,
-  customerUser1,
-  customerUser2
-} = userData;
+  catererMaria,
+  catererDeji,
+  customerRose,
+  customerRovi
+} = users;
 
 // repeating this because of sequelize unique constraint errors
-export const meals1UUID = [
+export const catererMariaMealsUUID = [
   '7a5d6838-569b-4fb5-955c-356ad7089645',
   'ed6b4db0-c8d0-4d86-8107-2ac0a5dd76ea',
   '2fc9b78e-91fc-4e3a-a606-1d03ade6768f',
@@ -20,7 +20,7 @@ export const meals1UUID = [
   '4cc7f6c5-cb6b-499a-aac2-aa430bbb4b23'
 ];
 
-const meals2UUID = [
+const catererDejiMealsUUID = [
   '16c4c33f-db5e-457b-8559-849b1b5a1830',
   'b0092d7d-10fe-4ec1-8e31-49f5518ce037',
   '7a41ce1d-ac67-4fc7-9e3f-7470840ac355',
@@ -40,7 +40,7 @@ const ordersUUID = [
   '50aba9e1-a012-4ae4-b7a6-8dd5dda0ac29'
 ];
 
-export const admin3Meals = [
+export const catererMariaMeals = [
   {
     title: ' BOILED PLANTAIN',
     description: 'So delicious',
@@ -85,7 +85,7 @@ export const admin3Meals = [
   }
 ];
 
-export const admin4Meals = [
+export const catererDejiMeals = [
   {
     title: 'BOILED EGG',
     description: 'so delicious',
@@ -131,17 +131,17 @@ export const admin4Meals = [
 ];
 
 // create meals with id and userId
-export const meals1 = admin3Meals.map((meal, i) => {
-  meal.id = meals1UUID[i];
-  meal.UserId = adminUser3.id;
+export const caterermariaMeals = catererMariaMeals.map((meal, i) => {
+  meal.id = catererMariaMealsUUID[i];
+  meal.UserId = catererMaria.id;
   return meal;
 });
 
-export const catererRoseMeals = meals1;
+export const catererRoseMeals = caterermariaMeals;
 
-export const meals2 = admin4Meals.map((meal, i) => {
-  meal.id = meals2UUID[i];
-  meal.UserId = adminUser4.id;
+export const catererdejiMeals = catererDejiMeals.map((meal, i) => {
+  meal.id = catererDejiMealsUUID[i];
+  meal.UserId = catererDeji.id;
   return meal;
 });
 
@@ -153,14 +153,14 @@ export const menusDatas = [
   {
     id: menuUUID[0],
     postOn: moment().format('YYYY-MM-DD'),
-    UserId: adminUser3.id,
+    UserId: catererMaria.id,
     createdAt: moment().format(),
     updatedAt: moment().format()
   },
   {
     id: menuUUID[1],
     postOn: '2018-06-20', // expired menu
-    UserId: adminUser4.id,
+    UserId: catererDeji.id,
     createdAt: moment().format(),
     updatedAt: moment().format()
   }
@@ -170,25 +170,25 @@ export const menusDatas = [
  * mock menu meals
  * data to populate MenuMeals table
  */
-export const admin3MenuMeals = [
+export const catererMariaMenuMeals = [
   {
     MenuId: menuUUID[0],
-    MealId: meals1UUID[0],
-    mealOwner: adminUser3.id,
+    MealId: catererMariaMealsUUID[0],
+    mealOwner: catererMaria.id,
     createdAt: moment().format(),
     updatedAt: moment().format()
   },
   {
     MenuId: menuUUID[0],
-    MealId: meals1UUID[1],
-    mealOwner: adminUser3.id,
+    MealId: catererMariaMealsUUID[1],
+    mealOwner: catererMaria.id,
     createdAt: moment().format(),
     updatedAt: moment().format()
   },
   {
     MenuId: menuUUID[0],
-    MealId: meals1UUID[2],
-    mealOwner: adminUser3.id,
+    MealId: catererMariaMealsUUID[2],
+    mealOwner: catererMaria.id,
     createdAt: moment().format(),
     updatedAt: moment().format()
   }
@@ -198,106 +198,106 @@ export const admin3MenuMeals = [
  * mock menu meals
  * data to populate MenuMeals table
  */
-export const admin4MenuMeals = [
+export const catererDejiMenuMeals = [
   {
     MenuId: menuUUID[1],
-    MealId: meals2UUID[0],
-    mealOwner: adminUser4.id,
+    MealId: catererDejiMealsUUID[0],
+    mealOwner: catererDeji.id,
     createdAt: moment().format(),
     updatedAt: moment().format()
   },
   {
     MenuId: menuUUID[1],
-    MealId: meals2UUID[1],
-    mealOwner: adminUser4.id,
+    MealId: catererDejiMealsUUID[1],
+    mealOwner: catererDeji.id,
     createdAt: moment().format(),
     updatedAt: moment().format()
   },
   {
     MenuId: menuUUID[1],
-    MealId: meals2UUID[2],
-    mealOwner: adminUser4.id,
+    MealId: catererDejiMealsUUID[2],
+    mealOwner: catererDeji.id,
     createdAt: moment().format(),
     updatedAt: moment().format()
   },
   {
     MenuId: menuUUID[1],
-    MealId: meals2UUID[3],
-    mealOwner: adminUser4.id,
+    MealId: catererDejiMealsUUID[3],
+    mealOwner: catererDeji.id,
     createdAt: moment().format(),
     updatedAt: moment().format()
   }
 ];
 
-export const customer1Order = {
+export const customerRoseOrder = {
   deliveryAddress: 'Ikotun Lagos',
   meals: [
     {
-      id: admin3MenuMeals[0].MealId,
-      unitPrice: meals1[0].price,
+      id: catererMariaMenuMeals[0].MealId,
+      unitPrice: caterermariaMeals[0].price,
       portion: 1
     },
     {
-      id: admin3MenuMeals[1].MealId,
-      unitPrice: meals2[0].price,
+      id: catererMariaMenuMeals[1].MealId,
+      unitPrice: catererdejiMeals[0].price,
       portion: 2
     },
     {
-      id: admin3MenuMeals[2].MealId,
-      unitPrice: meals2[0].price,
+      id: catererMariaMenuMeals[2].MealId,
+      unitPrice: catererdejiMeals[0].price,
       portion: 2
     },
   ]
 };
 
-export const customer1OrderUpdate = {
+export const customerRoseOrderUpdate = {
   deliveryAddress: 'Ikotun Lagos',
   meals: [
     {
-      id: admin3MenuMeals[0].MealId,
-      cost: meals1[0].price,
+      id: catererMariaMenuMeals[0].MealId,
+      cost: caterermariaMeals[0].price,
       portion: 1
     },
     {
-      id: admin3MenuMeals[1].MealId,
-      cost: meals2[0].price,
+      id: catererMariaMenuMeals[1].MealId,
+      cost: catererdejiMeals[0].price,
       portion: 2
     },
     {
-      id: admin3MenuMeals[2].MealId,
-      cost: meals2[0].price,
-      portion: 2
-    },
-  ]
-};
-
-export const customer2Order = {
-  deliveryAddress: 'maryland Lagos',
-  meals: [
-    {
-      id: admin3MenuMeals[0].MealId,
-      unitPrice: meals1[1].price,
-      portion: 3
-    },
-    {
-      id: admin3MenuMeals[1].MealId,
-      unitPrice: meals2[1].price,
+      id: catererMariaMenuMeals[2].MealId,
+      cost: catererdejiMeals[0].price,
       portion: 2
     },
   ]
 };
 
-export const customer2OrderUpdate = {
+export const customerRoviOrder = {
   deliveryAddress: 'maryland Lagos',
   meals: [
     {
-      id: admin3MenuMeals[0].MealId,
-      cost: meals1[1].price,
+      id: catererMariaMenuMeals[0].MealId,
+      unitPrice: caterermariaMeals[1].price,
       portion: 3
     },
     {
-      id: admin3MenuMeals[1].MealId,
-      cost: meals2[1].price,
+      id: catererMariaMenuMeals[1].MealId,
+      unitPrice: catererdejiMeals[1].price,
+      portion: 2
+    },
+  ]
+};
+
+export const customerRoviOrderUpdate = {
+  deliveryAddress: 'maryland Lagos',
+  meals: [
+    {
+      id: catererMariaMenuMeals[0].MealId,
+      cost: caterermariaMeals[1].price,
+      portion: 3
+    },
+    {
+      id: catererMariaMenuMeals[1].MealId,
+      cost: catererdejiMeals[1].price,
       portion: 2
     },
   ]
@@ -306,7 +306,7 @@ export const customer2OrderUpdate = {
 export const ordersData = [
   {
     id: ordersUUID[0],
-    UserId: customerUser1.id,
+    UserId: customerRose.id,
     deliveryAddress: '147 isuti rd',
     totalPrice: 4400,
     createdAt: moment().format(),
@@ -314,7 +314,7 @@ export const ordersData = [
   },
   {
     id: ordersUUID[1],
-    UserId: customerUser2.id,
+    UserId: customerRovi.id,
     deliveryAddress: '50 isuti rd',
     totalPrice: 3000,
     createdAt: moment().format(),
@@ -326,7 +326,7 @@ export const orderMeals = [
   {
     id: 1,
     OrderId: ordersUUID[0],
-    MealId: admin3MenuMeals[0].MealId,
+    MealId: catererMariaMenuMeals[0].MealId,
     portion: 2,
     cost: 500,
     createdAt: moment().format(),
@@ -335,7 +335,7 @@ export const orderMeals = [
   {
     id: 2,
     OrderId: ordersUUID[0],
-    MealId: admin3MenuMeals[1].MealId,
+    MealId: catererMariaMenuMeals[1].MealId,
     portion: 3,
     cost: 600,
     createdAt: moment().format(),
@@ -344,7 +344,7 @@ export const orderMeals = [
   {
     id: 3,
     OrderId: ordersUUID[0],
-    MealId: admin3MenuMeals[2].MealId,
+    MealId: catererMariaMenuMeals[2].MealId,
     portion: 4,
     cost: 400,
     createdAt: moment().format(),
@@ -353,7 +353,7 @@ export const orderMeals = [
   {
     id: 4,
     OrderId: ordersUUID[1],
-    MealId: admin3MenuMeals[0].MealId,
+    MealId: catererMariaMenuMeals[0].MealId,
     portion: 1,
     cost: 600,
     createdAt: moment().format(),
@@ -362,7 +362,7 @@ export const orderMeals = [
   {
     id: 5,
     OrderId: ordersUUID[1],
-    MealId: admin3MenuMeals[1].MealId,
+    MealId: catererMariaMenuMeals[1].MealId,
     portion: 1,
     cost: 800,
     createdAt: moment().format(),
@@ -371,7 +371,7 @@ export const orderMeals = [
   {
     id: 6,
     OrderId: ordersUUID[1],
-    MealId: admin3MenuMeals[2].MealId,
+    MealId: catererMariaMenuMeals[2].MealId,
     portion: 2,
     cost: 800,
     createdAt: moment().format(),

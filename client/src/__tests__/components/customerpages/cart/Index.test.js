@@ -13,9 +13,11 @@ describe('CustomerDashboard component test', () => {
       cart: orders,
       cartTotalPrice: 1100,
       history: {},
-      deleteMealInCart: () => jest.fn(),
-      emptyCart: () => jest.fn(),
-      postOrder: () => jest.fn(),
+      deleteMealInCart: jest.fn(),
+      emptyCart: jest.fn(),
+      postOrder: jest.fn(),
+      updateCartMealPortion: jest.fn(),
+      deleteRow: jest.fn()
     };
 
     return shallow(<Cart {...props} />)

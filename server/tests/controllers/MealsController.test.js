@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import { mockReq, mockRes } from 'sinon-express-mock';
 import sinonChai from 'sinon-chai';
-import mealsController from '../../controller/meals';
+import MealsController from '../../controller/MealsController';
 
 chai.use(chaiHttp);
 chai.use(sinonChai);
@@ -23,7 +23,7 @@ describe('MealsController', () => {
     });
 
     it('should return next on error', () => {
-      mealsController.addMeal(req, res, next);
+      MealsController.addMeal(req, res, next);
       next();
       expect(next).to.have.been.called;
     });
@@ -43,7 +43,7 @@ describe('MealsController', () => {
     });
 
     it('should return next on error', () => {
-      mealsController.updateMeal(req, res, next);
+      MealsController.updateMeal(req, res, next);
       expect(next).to.have.been.called;
     });
   });
@@ -59,7 +59,7 @@ describe('MealsController', () => {
     });
 
     it('should return next on error', () => {
-      mealsController.deleteMeal(req, res, next);
+      MealsController.deleteMeal(req, res, next);
       expect(next).to.have.been.called;
     });
   });

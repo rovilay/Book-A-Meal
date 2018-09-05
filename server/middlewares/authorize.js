@@ -1,27 +1,29 @@
 import jwt from 'jsonwebtoken';
+import dotenv from 'dotenv';
 
-require('dotenv').config();
+dotenv.config();
+
 /**
- * Verifies token
+ * Authorizes requests by verifying token
  *
- * @exports verifyToken
+ * @exports authorize
  * @param  {object} req - Request object
  * @param  {object} res - Response object
  * @param  {object} next - next object (handles error or continues to next
  * middleware)
  * @return {object} next
  */
-function verifyToken(req, res, next) {
+function authorize(req, res, next) {
   // Get auth header from req header
   const bearerToken = req.headers.authorization;
 
   if (bearerToken && bearerToken.split(' ')[0] === 'Bearer') {
     const token = bearerToken.split(' ')[1];
     // verify token
-    jwt.verify(token, process.env.SECRET, (err, userData) => {
-      if (err || userData === undefined) {
-        err.status = 401;
-        return next(err);
+    jwt.verify(token, process.env.SECRET, (error, userData) => {
+      if (error || userData === undefined) {
+        error.status = 401;
+        return next(error);
       }
 
       req.user = { ...userData };
@@ -35,4 +37,4 @@ function verifyToken(req, res, next) {
   }
 }
 
-export default verifyToken;
+export default authorize;

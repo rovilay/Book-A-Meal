@@ -3,16 +3,16 @@ import db from '../models';
 import userData from '../server/helpers/test-data/users';
 import {
   menusDatas,
-  admin3MenuMeals,
-  admin4MenuMeals,
-  meals1,
-  meals2
+  catererMariaMenuMeals,
+  catererDejiMenuMeals,
+  caterermariaMeals,
+  catererdejiMeals
 } from '../server/helpers/test-data/menus';
 
 const {
-  adminUser3,
-  adminUser4,
-  customerUser1,
+  catererMaria,
+  catererDeji,
+  customerRose,
 } = userData;
 
 module.exports = {
@@ -24,16 +24,16 @@ module.exports = {
     await db.Meal.destroy({ force: true, truncate: { cascade: true } });
     await db.User.truncate();
 
-    await db.User.create(adminUser3);
-    await db.User.create(adminUser4);
-    await db.User.create(customerUser1);
+    await db.User.create(catererMaria);
+    await db.User.create(catererDeji);
+    await db.User.create(customerRose);
 
-    await meals1.map(meal => db.Meal.create(meal));
-    await meals2.map(meal => db.Meal.create(meal));
+    await caterermariaMeals.map(meal => db.Meal.create(meal));
+    await catererdejiMeals.map(meal => db.Meal.create(meal));
 
     await db.Menu.bulkCreate(menusDatas);
-    await db.MenuMeal.bulkCreate(admin3MenuMeals);
-    await db.MenuMeal.bulkCreate(admin4MenuMeals);
+    await db.MenuMeal.bulkCreate(catererMariaMenuMeals);
+    await db.MenuMeal.bulkCreate(catererDejiMenuMeals);
   },
   after: async () => {
     await db.OrderMeal.truncate();
@@ -52,8 +52,8 @@ module.exports = {
       .waitForElementVisible('body', 1000)
       .click('#nav-menu > a:nth-child(1)')
       .waitForElementVisible('.loginpage', 1000)
-      .setValue('#login-email', `${customerUser1.email}`)
-      .setValue('#login-password', `${customerUser1.password}`)
+      .setValue('#login-email', `${customerRose.email}`)
+      .setValue('#login-password', `${customerRose.password}`)
       .waitForElementVisible('.loginbtn', 1000)
       .pause(2000)
       .click('.loginbtn')
@@ -61,7 +61,7 @@ module.exports = {
   },
   'It should show today\'s menu on customer dashboard': (browser) => {
     browser
-      .assert.containsText('.merienda', `Welcome, ${customerUser1.firstName} ${customerUser1.lastName}`)
+      .assert.containsText('.merienda', `Welcome, ${customerRose.firstName} ${customerRose.lastName}`)
       .waitForElementVisible('body', 1000)
       .pause(2000)
       .assert.containsText('#menu > div.title', 'TODAY\'S MENU')
@@ -84,7 +84,7 @@ module.exports = {
       .pause(2000)
       .submitForm('form')
       .pause(2000)
-      .assert.containsText('.merienda', `Welcome, ${customerUser1.firstName} ${customerUser1.lastName}`);
+      .assert.containsText('.merienda', `Welcome, ${customerRose.firstName} ${customerRose.lastName}`);
   },
   'It should not remove meal from cart if delete is clicked but not confirmed': (browser) => {
     browser
@@ -105,7 +105,7 @@ module.exports = {
       .pause(2000)
       .click('body > div.swal-overlay.swal-overlay--show-modal > div > div.swal-footer > div:nth-child(2) > button')
       .pause(2000)
-      .assert.containsText('.merienda', `Welcome, ${customerUser1.firstName} ${customerUser1.lastName}`);
+      .assert.containsText('.merienda', `Welcome, ${customerRose.firstName} ${customerRose.lastName}`);
   },
   'It should navigate to orderpage and show order details when order info button is clicked': (browser) => {
     browser
