@@ -1,12 +1,15 @@
 import arraySort from 'array-sort';
+import jwt from 'jsonwebtoken';
 
 import serverReq from '../helpers/serverReq';
 import notify from '../helpers/notify';
 import { emptyCart } from './cartActions';
-import setModal from './modalActions';
+import { setModal } from './modalActions';
+import { getFromLs } from '../helpers/Ls';
 import {
   DELETE_MEAL_IN_EDIT_ORDER,
   DELETE_ORDER_SUCCESS,
+  UPDATE_ORDER_SUCCESS,
   SET_EDIT_ORDER,
   SET_ORDERS,
   SET_ORDER_MEALS,
@@ -68,24 +71,23 @@ export const setOrders = ({
   })
 );
 
-// /**
-//  *
-//  * @param {string} orderId id of order to update in order history
-//  * @param {string} updatedOrderMeals meals of the updated order
-//  */
-// export const updateOrderSuccess = (orderId, updatedOrderMeals) => (dispatch, getState) => {
-//   const { history } = getState().orders;
-//   const updatedOrder = history.map((order) => {
-//     if (order.id === orderId) {
-//       order.Meals = updatedOrderMeals;
-//     }
-//     return order;
-//   });
-//   return dispatch({
-//     type: UPDATE_ORDER_SUCCESS,
-//     updatedOrder
-//   });
-// };
+/**
+ *
+ * @param {string} orderId id of order to update in order history
+ * @param {string} updatedOrderMeals meals of the updated order
+ */
+export const updateOrderSuccess = (orderId, updatedOrderMeals) => (dispatch, getState) => {
+  const { history } = getState().orders;
+  const updatedOrder = history.map((order) => {
+    if (order.id === orderId) {
+      order.Meals = updatedOrderMeals;
+    }
+  });
+  return dispatch({
+    type: UPDATE_ORDER_SUCCESS,
+    updatedOrder
+  });
+};
 
 /**
  * Redux action that update order meal portion in store
@@ -99,22 +101,18 @@ export const updateOrderedMealPortion = ({
 }) => (dispatch, getState) => {
   const { orderedMeals } = getState().orders.editOrder;
   let totalPrice = 0;
-
-  const updatedOrderMeals = [...orderedMeals].map((meal) => {
+  orderedMeals.map((meal) => {
     if (meal.id === mealId) {
       meal.portion = portion;
       meal.price = portion * meal.cost;
     }
     totalPrice += meal.price;
-    return meal;
   });
-
-
   return dispatch({
     type: UPDATE_ORDERED_MEAL_PORTION,
     updatedOrder: {
       totalPrice,
-      orderedMeals: updatedOrderMeals
+      orderedMeals
     }
   });
 };
@@ -127,23 +125,19 @@ export const updateOrderedMealPortion = ({
  */
 export const deleteMealInEditOrder = mealId => (dispatch, getState) => {
   /* eslint prefer-const:0 */
-  const { orderedMeals, totalPrice } = getState().orders.editOrder;
-
-  let newTotalPrice = totalPrice;
-  const newOrderedMeals = [...orderedMeals];
-
-  newOrderedMeals.map((meal, i) => {
+  let { orderedMeals, totalPrice } = getState().orders.editOrder;
+  orderedMeals.map((meal, i) => {
     if (meal.id === mealId) {
-      newOrderedMeals.splice(i, 1);
-      newTotalPrice -= meal.price;
+      orderedMeals.splice(i, 1);
+      totalPrice -= meal.price;
     }
   });
 
   return dispatch({
     type: DELETE_MEAL_IN_EDIT_ORDER,
     modifiedOrder: {
-      orderedMeals: newOrderedMeals,
-      totalPrice: newTotalPrice
+      orderedMeals,
+      totalPrice
     }
   });
 };
@@ -183,58 +177,62 @@ export const getOrders = ({ limit = 10, offset = 0 }) => dispatch => (
  * @param  {number} offset - pagination offset
  * @return {Function} - dispatches an set customer order action to the redux store
  */
-export const getOrderMeals = (mealsUrl, { limit = 5, offset = 0 }) => dispatch => serverReq('get', `${mealsUrl}?limit=${limit}&offset=${offset}`)
-  .then((res) => {
-    if (res.data) {
-      const {
-        success,
-        order,
-        pagination
-      } = res.data;
+export const getOrderMeals = (mealsUrl, { limit = 5, offset = 0 }) => dispatch => (
+  serverReq('get', `${mealsUrl}?limit=${limit}&offset=${offset}`)
+    .then((res) => {
+      if (res.data) {
+        const {
+          success,
+          order,
+          pagination
+        } = res.data;
 
-      if (success) {
-        dispatch({
-          type: SET_ORDER_MEALS,
-          order: {
-            orderedMeals: order[0].Meals,
-            orderedMealsPagination: pagination
-          }
-        });
+        if (success) {
+          dispatch({
+            type: SET_ORDER_MEALS,
+            order: {
+              orderedMeals: order[0].Meals,
+              orderedMealsPagination: pagination
+            }
+          });
+        }
+
+        return res.data;
       }
-
-      return res.data;
-    }
-  })
-  .catch(err => err);
+    })
+    .catch(err => err)
+);
 
 /**
  * Sends async server requests to get all orders using the axios api
  *
  * @return {Function} - function that dispatches setOrders and serverRes action to the redux store
  */
-export const getAllOrders = ({ limit = 10, offset = 0 }) => dispatch => serverReq('get', `/api/v1/orders?limit=${limit}&offset=${offset}`)
-  .then((response) => {
-    if (response.data) {
-      const {
-        success,
-        grandTotalPrice,
-        pagination,
-        orders: history
-      } = response.data;
+export const getAllOrders = ({ limit = 10, offset = 0 }) => (dispatch) => {
+  serverReq('get', `/api/v1/orders?limit=${limit}&offset=${offset}`)
+    .then((response) => {
+      if (response.data) {
+        const {
+          success,
+          grandTotalPrice,
+          pagination,
+          orders: history
+        } = response.data;
 
-      if (success) {
-        dispatch({
-          type: SET_ORDERS,
-          orders: {
-            history: arraySort(history, 'createdAt', { reverse: true }),
-            grandTotalPrice,
-            pagination
-          }
-        });
+        if (success) {
+          dispatch({
+            type: SET_ORDERS,
+            orders: {
+              history: arraySort(history, 'createdAt', { reverse: true }),
+              grandTotalPrice,
+              pagination
+            }
+          });
+        }
       }
-    }
-  })
-  .catch(err => err);
+    })
+    .catch(err => err);
+};
 
 
 /**
@@ -250,16 +248,14 @@ export const updateOrder = (id, data) => (dispatch) => {
       const { success, message } = res.data;
       if (success) {
         notify(message, 'toast-success');
+        const { id: userId } = jwt.decode(getFromLs('jwt'));
         dispatch(getOrders({}));
         dispatch(setModal({}));
-      }
-    })
-    .catch((err) => {
-      if (err.response.data) {
-        const { message } = err.response.data;
+      } else {
         notify(message, 'toast-danger');
       }
-    });
+    })
+    .catch(err => err);
 };
 
 /**
@@ -268,35 +264,34 @@ export const updateOrder = (id, data) => (dispatch) => {
  * @param  {string} id - ID of order to delete
  * @return {Function} - dispatches server response to store action to the redux store
  */
-export const deleteOrder = id => dispatch => serverReq('delete', `/api/v1/orders/${id}`)
-  .then((res) => {
-    if (res.status === 204) {
-      notify('Order canceled!', 'toast-success');
-      dispatch(deleteOrderSuccess(id));
-    }
-  })
-  .catch((err) => {
-    if (err.response.data) {
-      const { message } = err.response.data;
-      notify(message, 'toast-danger');
-    }
-  });
+export const deleteOrder = id => (dispatch) => {
+  serverReq('delete', `/api/v1/orders/${id}`)
+    .then((res) => {
+      const { message } = res.data;
+      if (res.status === 204) {
+        notify('Order canceled!', 'toast-success');
+        dispatch(deleteOrderSuccess(id));
+      } else {
+        notify(message, 'toast-danger');
+      }
+    })
+    .catch(err => err);
+};
 
 /**
  * Places order
  * Sends ordered meals to server
  */
-export const postOrder = (deliveryAddress, meals) => dispatch => serverReq('post', '/api/v1/orders', { deliveryAddress, meals })
-  .then((response) => {
-    const { success, message } = response.data;
-    if (success) {
-      dispatch(emptyCart());
-      notify(message, 'toast-success', 'top-center');
-    }
-  })
-  .catch((err) => {
-    if (err.response.data) {
-      const { message } = err.response.data;
-      notify(message, 'toast-danger');
-    }
-  });
+export const postOrder = (deliveryAddress, meals) => (dispatch) => {
+  serverReq('post', '/api/v1/orders', { deliveryAddress, meals })
+    .then((response) => {
+      const { success, message } = response.data;
+      if (success) {
+        dispatch(emptyCart());
+        notify(message, 'toast-success', 'top-center');
+      } else {
+        notify(message, 'toast-danger');
+      }
+    })
+    .catch(err => notify(err, 'toast-danger'));
+};

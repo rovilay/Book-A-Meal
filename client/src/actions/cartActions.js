@@ -46,6 +46,7 @@ export const addMealToCart = ({
         cart,
       });
 
+      // storeInLs('bookAMealCart', cart);
       return notify('Meal added to cart', 'toast-success', 'bottom-left');
     }
     if (newMeals.length !== meals.length) {
@@ -76,6 +77,8 @@ export const updateCartMealPortion = ({ id, portion }) => (
       type: UPDATE_CART_MEAL_PORTION,
       updatedCart
     });
+
+    // storeInLs('bookAMealCart', updatedCart);
   }
 );
 
@@ -99,6 +102,8 @@ export const deleteMealInCart = ({ id, price }) => (
         type: DELETE_MEAL_IN_CART,
         modifiedCart
       });
+
+      // storeInLs('bookAMealCart', modifiedCart);
     }
   }
 );
@@ -118,3 +123,15 @@ export const addToCart = mealData => (dispatch) => {
 export const emptyCart = () => ({
   type: EMPTY_CART,
 });
+
+// export const setCartFromLs = () => (dispatch, getState) => {
+//   const { meals } = getState().cart;
+//   if (meals.length < 1) {
+//     // const cart = getFromLs('bookAMealCart');
+//     // console.log(cart);
+//     dispatch({
+//       type: SET_CART_FROM_LS,
+//       cart
+//     });
+//   }
+// };

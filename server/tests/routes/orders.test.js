@@ -16,9 +16,7 @@ import {
   admin3MenuMeals,
   admin4MenuMeals,
   ordersData,
-  orderMeals,
-  customer2OrderUpdate,
-  customer1OrderUpdate
+  orderMeals
 } from '../../helpers/test-data/orders';
 
 chai.use(chaiHttp);
@@ -187,7 +185,7 @@ describe('Orders API routes', () => {
             {
               id: '32947007-da1b-4bc1-ad3a-8cc106dee9fb', // non existing meal
               portion: 2,
-              unitPrice: 200
+              price: 200
             }
           ]
       })
@@ -365,7 +363,7 @@ describe('Orders API routes', () => {
       chai.request(app.listen())
       .put(`/api/v1/orders/${ordersData[0].id}`)
       .set('Authorization', `Bearer ${customer1Token}`)
-      .send(customer1OrderUpdate)
+      .send(customer2Order)
       .end((err, res) => {
         const { success, message } = res.body;
         if(err) return done(err);
@@ -396,7 +394,7 @@ describe('Orders API routes', () => {
       chai.request(app.listen())
       .put(`/api/v1/orders/${ordersData[0].id}`)
       .set('Authorization', `Bearer ${customer2Token}`)
-      .send(customer1OrderUpdate)
+      .send(customer2Order)
       .end((err, res) => {
         if(err) return done(err);
         expect(res.status).to.equal(404);

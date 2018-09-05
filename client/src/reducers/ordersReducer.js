@@ -7,7 +7,7 @@ import {
   SET_ORDER_MEALS
 } from '../actions/actiontypes';
 
-export const ordersDefaultState = {
+const ordersDefaultState = {
   grandTotalPrice: 0,
   history: [],
   orderMeals: [],
@@ -27,7 +27,7 @@ export const ordersDefaultState = {
   }
 };
 
-export const ordersReducer = (state = ordersDefaultState, action) => {
+const ordersReducer = (state = ordersDefaultState, action) => {
   switch (action.type) {
     case SET_ORDERS:
       return {
@@ -71,3 +71,5 @@ export const ordersReducer = (state = ordersDefaultState, action) => {
       return state;
   }
 };
+
+export default ordersReducer;

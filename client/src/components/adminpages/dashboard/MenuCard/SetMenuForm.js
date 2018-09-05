@@ -21,7 +21,7 @@ const SetMenuForm = props => (
           placeholder="DD / MM / YYYY"
           name="menu-date"
           min={moment().format('YYYY-MM-DD')}
-          max={moment().add('4', 'd').format('YYYY-MM-DD')}
+          max={moment().add('2', 'd').format('YYYY-MM-DD')}
           id="postOn"
           required
         />

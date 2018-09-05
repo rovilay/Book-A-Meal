@@ -101,9 +101,9 @@ const Mealform = ({
               <p className="input-div desc">
                 <input
                   type="text"
-                  placeholder="Describe meal in not more than 100 words."
+                  placeholder="Enter meal description"
                   name="description"
-                  maxLength="100"
+                  maxLength="60"
                   id="dsc"
                   onChange={(e) => {
                     e.preventDefault();
@@ -124,7 +124,6 @@ const Mealform = ({
                   type="file"
                   placeholder="Enter img link"
                   name="image"
-                  accept="image/*"
                   id="meal-image"
                   defaultValue={mealOnEdit.image || ''}
                   onChange={() => {

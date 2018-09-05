@@ -3,8 +3,9 @@ import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 
-import { signUp } from '../../actions/signupActions';
+import setSuccessfulSignUpMsg from '../../actions/signupActions';
 import sigupValidator from '../../helpers/signupValidator';
+import serverReq from '../../helpers/serverReq';
 import SignUpForm from './Signupform';
 
 class SignUpPage extends Component {
@@ -24,6 +25,7 @@ class SignUpPage extends Component {
       state: '',
       admin: '',
       isValid: false,
+      redirect: false,
       response: {}
     };
 
@@ -41,23 +43,25 @@ class SignUpPage extends Component {
    * Checks and sends form value to sever using axios
    * @param {*} e Form submit event
    */
-  onSubmit(e) {
+  async onSubmit(e) {
     e.preventDefault();
     if (this.state.role === '') {
       const err = { success: false, message: 'A role must be choosen!' };
       return this.setState({ response: { ...err } });
     }
-    const response = this.props.signUp(this.state);
+    const response = await serverReq('post', '/api/v1/auth/signup', this.state);
     const {
       success,
       message
-    } = response;
+    } = response.data;
 
     if (success) {
       this.setState({
         isValid: false,
+        redirect: true,
         response: { success, message },
       });
+      this.props.setSuccessfulSignUpMsg(this.state.response.message);
     } else {
       this.setState({ response: { success, message } });
     }
@@ -80,12 +84,12 @@ class SignUpPage extends Component {
 }
 
 SignUpPage.propTypes = {
-  signUp: PropTypes.func.isRequired
+  setSuccessfulSignUpMsg: PropTypes.func.isRequired
 };
 
 const mapDispatchToProps = dispatch => bindActionCreators(
   {
-    signUp
+    setSuccessfulSignUpMsg
   },
   dispatch
 );

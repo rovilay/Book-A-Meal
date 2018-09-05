@@ -9,8 +9,8 @@ import db from '../../models/index';
  * @return {boolean} true
  */
 
-async function checkMeals(Meals = [], UserId = undefined, next) { // check if input meals is correct or in db
-  const where = (UserId) ? { id: Meals, UserId } : { id: Meals };
+async function checkMeals(Meals, UserId = undefined, next) { // check if input meals is correct or in db
+  const where = (UserId) ? { id: Meals, UserId: UserId } : { id: Meals }
 
   const foundMeals = await db.Meal.findAll({
     where,
@@ -18,9 +18,9 @@ async function checkMeals(Meals = [], UserId = undefined, next) { // check if in
   });
 
   const foundMealsId = foundMeals.map(meal => meal.id);
-  // console.log('>>>>>>meals', Meals);
+
   //  check to get id of meals not found
-  const notFoundMeals = (Meals.length > 0) && Meals.filter(meal => (foundMealsId.indexOf(meal) > -1) ? false : meal);
+  const notFoundMeals = Meals.filter(meal => (foundMealsId.indexOf(meal) > -1) ? false : meal);
 
   if (notFoundMeals.length > 0) {
     const err = new Error(`meals ${notFoundMeals}, not found!`);

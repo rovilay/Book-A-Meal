@@ -19,6 +19,7 @@ const OrderDetailsTable = (props) => {
     id: orderId,
     Meals: orderMeals,
     deliveryAddress,
+    totalPrice,
     createdAt,
   } = content;
 
@@ -56,6 +57,9 @@ const OrderDetailsTable = (props) => {
         </p>
         <p>
           <span className="bold">Address:</span> {deliveryAddress}
+        </p>
+        <p>
+          <span className="bold">Total Price: &#8358;</span> {totalPrice}
         </p>
       </div>
 

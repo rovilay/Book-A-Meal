@@ -1,13 +1,13 @@
 import { SET_SIGNUP_SUCCESS } from '../actions/actiontypes';
 
-export const signUpReducersDefaultState = {
+const signUpReducersDefaultState = {
   signUpSuccess: {
     message: '',
     success: false,
   }
 };
 
-export const signUpReducer = (state = signUpReducersDefaultState, action) => {
+const signUpReducer = (state = signUpReducersDefaultState, action) => {
   switch (action.type) {
     case SET_SIGNUP_SUCCESS:
       return {
@@ -20,3 +20,5 @@ export const signUpReducer = (state = signUpReducersDefaultState, action) => {
       return state;
   }
 };
+
+export default signUpReducer;

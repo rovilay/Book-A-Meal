@@ -30,13 +30,9 @@ function validateOrder(req, res, next) {
   // check meals content
   const meals = [...newOrder.meals];
   meals.forEach((meal) => {
-    let unitPrice;
-    (meal.cost) && (unitPrice = meal.cost);
-    (meal.unitPrice) && ({ unitPrice } = meal);
-
     if (meal.id === '' || meal.id === undefined ||
     meal.portion === '' || meal.portion === undefined || parseInt(meal.portion, 10) === 0 || isNaN(meal.portion) ||
-    unitPrice === '' || unitPrice === undefined || parseInt(unitPrice, 10) === 0 || isNaN(unitPrice)
+    meal.price === '' || meal.price === undefined || parseInt(meal.price, 10) === 0 || isNaN(meal.price)
     ) {
       const err = new Error('meal entry is not correct');
       err.status = 400;
