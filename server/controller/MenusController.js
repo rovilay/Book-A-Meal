@@ -1,8 +1,8 @@
 import moment from 'moment';
 
-import db from '../../models/index';
+import db from '../../models';
 import checkMeal from '../helpers/checkMeal';
-import expire from '../helpers/expire';
+import isExpired from '../helpers/isExpired';
 import paginate from '../helpers/paginate';
 
 /**
@@ -24,7 +24,6 @@ class MenusController {
    */
   static getAllMenus(req, res, next) {
     /* eslint prefer-const: 0 */
-    // const { id: UserId } = req.user;
     let { limit, offset } = req.query;
     limit = Math.ceil(limit) || 10;
     offset = Math.ceil(offset) || 0;
@@ -33,15 +32,7 @@ class MenusController {
       include: [{
         model: db.User,
         attributes: ['firstName', 'lastName'],
-      },
-      // {
-      //   model: db.Meal,
-      //   where: { UserId },
-      //   through: {
-      //     attributes: ['id'],
-      //   },
-      // }
-      ],
+      }],
       order: [['postOn', 'DESC']],
       offset,
       limit
@@ -49,16 +40,16 @@ class MenusController {
       .then((response) => {
         const { count, rows: menus } = response;
         if (menus.length < 1 || count === 0) {
-          const err = new Error('No menu found!');
-          err.status = 404;
-          return next(err);
+          const error = new Error('No menu found!');
+          error.status = 404;
+          return next(error);
         }
 
         // map menus to get url
         const menusWithMealUrl = menus.map((menu) => {
-          const modMenu = menu.get({ plain: true });
-          modMenu.Meals = `/api/v1/menus/${modMenu.id}/meals`;
-          return modMenu;
+          const modifiedMenu = menu.get({ plain: true });
+          modifiedMenu.Meals = `/api/v1/menus/${modifiedMenu.id}/meals`;
+          return modifiedMenu;
         });
 
         return res.status(200).send({
@@ -68,10 +59,10 @@ class MenusController {
           menus: menusWithMealUrl
         });
       })
-      .catch((err) => {
-        err = err || new Error('Error occurred while getting all menus!');
-        err.status = 400;
-        return next(err);
+      .catch((error) => {
+        error = error || new Error('Error occurred while getting all menus!');
+        error.status = 500;
+        return next(error);
       });
   }
 
@@ -88,8 +79,6 @@ class MenusController {
   static getMenuMeals(req, res, next) {
     const { menuId } = req.params;
     const { id: UserId } = req.user;
-
-    /* eslint prefer-destructuring: 0 */
 
     let { limit, offset } = req.query;
     limit = Math.ceil(limit) || 10;
@@ -117,10 +106,10 @@ class MenusController {
       .then((response) => {
         const { count, rows: menu } = response;
         if (count < 1) {
-          const errMsg = 'Your meals are not in this menu';
-          const err = new Error(errMsg);
-          err.status = 404;
-          return next(err);
+          const errorMsg = 'Your meals are not in this menu';
+          const error = new Error(errorMsg);
+          error.status = 404;
+          return next(error);
         }
 
         res.status(200).send({
@@ -130,10 +119,10 @@ class MenusController {
           menu
         });
       })
-      .catch((err) => {
-        err = err || new Error('Error occurred while getting menu!');
-        err.status = 400;
-        return next(err);
+      .catch((error) => {
+        error = error || new Error('Error occurred while getting meals for this menu!');
+        error.status = 500;
+        return next(error);
       });
   }
 
@@ -153,6 +142,7 @@ class MenusController {
     let { limit, offset } = req.query;
     limit = Math.ceil(limit) || 10;
     offset = Math.ceil(offset) || 0;
+
     db.Menu.findAndCountAll({
       include: [{
         model: db.User,
@@ -174,10 +164,10 @@ class MenusController {
       .then((response) => {
         const { count, rows: menu } = response;
         if (count < 1) {
-          const errMsg = `Menu on date: ${today} not found!`;
-          const err = new Error(errMsg);
-          err.status = 404;
-          return next(err);
+          const errorMsg = `Menu on date: ${today} not found!`;
+          const error = new Error(errorMsg);
+          error.status = 404;
+          return next(error);
         }
 
         res.status(200).send({
@@ -187,10 +177,10 @@ class MenusController {
           menu
         });
       })
-      .catch((err) => {
-        err = err || new Error('Error occurred while getting menu!');
-        err.status = 400;
-        return next(err);
+      .catch((error) => {
+        error = error || new Error('Error occurred while getting menu!');
+        error.status = 500;
+        return next(error);
       });
   }
 
@@ -205,13 +195,14 @@ class MenusController {
    * @return {json} res.send
    * @memberof MenusController
    */
-  static postMenu(req, res, next) {
+  static createMenu(req, res, next) {
     const newMenu = req.body;
     const { meals, postOn } = newMenu;
     const { id: UserId } = req.user;
+
     checkMeal(meals, UserId, next)
-      .then((check) => {
-        if (check) {
+      .then((checked) => {
+        if (checked) {
           db.Menu.findOrCreate({
             where: { postOn },
             defaults: { UserId }
@@ -230,14 +221,14 @@ class MenusController {
                       menu: menu[0]
                     });
                   })
-                  .catch(err => next(err));
+                  .catch(error => next(error));
               } else {
-                const err = new Error(`Menu for date: ${newMenu.postOn} have already been posted!`);
-                err.status = 400;
-                throw err;
+                const error = new Error(`Menu for date: ${newMenu.postOn} have already been posted!`);
+                error.status = 409;
+                throw error;
               }
             })
-            .catch(err => next(err));
+            .catch(error => next(error));
         }
       });
   }
@@ -268,10 +259,10 @@ class MenusController {
             .then((menu) => {
               if (menu !== null) {
                 // check if menu can still be updated
-                if (expire(menu.postOn)) {
-                  const err = new Error('Can\'t modify menu anymore!');
-                  err.status = 405;
-                  throw err;
+                if (isExpired(menu.postOn)) {
+                  const error = new Error('Can\'t modify menu anymore!');
+                  error.status = 403;
+                  throw error;
                 }
 
                 db.MenuMeal.destroy({ // remove only the caterer's meals
@@ -288,7 +279,7 @@ class MenusController {
                     MealId: mealId,
                     mealOwner: UserId
                   })
-                    .catch(err => next(err));
+                    .catch(error => next(error));
                 });
 
                 res.status(200).send({
@@ -296,12 +287,12 @@ class MenusController {
                   message: 'Meals added to menu successfully!',
                 });
               } else {
-                const err = new Error('Menu not found!');
-                err.status = 404;
-                throw err;
+                const error = new Error('Menu not found!');
+                error.status = 404;
+                throw error;
               }
             })
-            .catch(err => next(err));
+            .catch(error => next(error));
         }
       });
   }
@@ -331,10 +322,10 @@ class MenusController {
             .then((menu) => {
               if (menu !== null) {
                 // check if menu can still be updated
-                if (expire(menu.postOn)) {
-                  const err = new Error('Can\'t modify menu anymore!');
-                  err.status = 405;
-                  throw err;
+                if (isExpired(menu.postOn)) {
+                  const error = new Error('Can\'t modify menu anymore!');
+                  error.status = 403;
+                  throw error;
                 }
 
                 db.MenuMeal.destroy({
@@ -344,7 +335,7 @@ class MenusController {
                     mealOwner: UserId
                   }
                 })
-                  .catch(err => next(err));
+                  .catch(error => next(error));
 
                 res.status(200).send({
                   success: true,
@@ -353,15 +344,15 @@ class MenusController {
               }
 
               if (menu === null) {
-                const err = new Error('Menu not found!');
-                err.status = 404;
-                throw err;
+                const error = new Error('Menu not found!');
+                error.status = 404;
+                throw error;
               }
             })
-            .catch((err) => {
-              err = err || new Error('Error occurred while deleting meal!');
-              err.status = err.status || 400;
-              return next(err);
+            .catch((error) => {
+              error = error || new Error('Error occurred while deleting meal!');
+              error.status = error.status || 500;
+              return next(error);
             });
         }
       });

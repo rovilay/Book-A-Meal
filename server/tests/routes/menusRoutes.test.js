@@ -6,22 +6,22 @@ import app from '../../app';
 import db from '../../../models';
 
 import {
-  admin3Menu,
-  admin4Menu,
+  catererMariaMenu,
+  catererDejiMenu,
   menusDatas,
-  admin3MenuMeals,
-  admin4MenuMeals,
-  meals1,
-  meals2
+  catererMariaMenuMeals,
+  catererDejiMenuMeals,
+  caterermariaMeals,
+  catererdejiMeals
 } from '../../helpers/test-data/menus';
-import getToken from '../../helpers/gettokens';
-import userData from '../../helpers/test-data/users';
+import getToken from '../../helpers/getToken';
+import users from '../../helpers/test-data/users';
 
 const {
-  adminUser3,
-  adminUser4,
-  customerUser1,
-} = userData;
+  catererMaria,
+  catererDeji,
+  customerRose,
+} = users;
 
 chai.use(chaiHttp);
 
@@ -29,25 +29,25 @@ describe('Menus API routes', () => {
 
 
   // token details
-  const admin3 = {
-    id: adminUser3.id,
-    admin: adminUser3.admin
+  const catererMariaTokenDetails = {
+    id: catererMaria.id,
+    admin: catererMaria.admin
   };
 
-  const admin4 = {
-    id: adminUser4.id,
-    admin: adminUser4.admin
+  const catererDejiTokenDetails = {
+    id: catererDeji.id,
+    admin: catererDeji.admin
   };
 
-  const customer = {
-    id: customerUser1.id,
-    admin: customerUser1.admin
+  const customerRoseTokenDetails = {
+    id: customerRose.id,
+    admin: customerRose.admin
   };
 
   // get tokens
-  const admin3Token = getToken(admin3);
-  const admin4Token = getToken(admin4);
-  const customerToken = getToken(customer);
+  const catererMariaToken = getToken(catererMariaTokenDetails);
+  const catererDejiToken = getToken(catererDejiTokenDetails);
+  const customerRoseToken = getToken(customerRoseTokenDetails);
 
   before(async () => {
     await db.User.truncate();
@@ -55,22 +55,22 @@ describe('Menus API routes', () => {
     await db.Menu.truncate();
     await db.MenuMeal.truncate();
 
-    await db.User.create(adminUser3);
-    await db.User.create(adminUser4);
-    await db.User.create(customerUser1)
+    await db.User.create(catererMaria);
+    await db.User.create(catererDeji);
+    await db.User.create(customerRose)
 
-    await meals1.map(meal => db.Meal.create(meal))
-    await meals2.map(meal => db.Meal.create(meal))
+    await caterermariaMeals.map(meal => db.Meal.create(meal))
+    await catererdejiMeals.map(meal => db.Meal.create(meal))
   });
 
   describe('POST /api/v1/menus', () => {
-    it('should post menu for the day only if admin', (done) => {
+    it('should allow caterer create menu for the day', (done) => {
       chai.request(app.listen())
       .post('/api/v1/menus')
-      .set('Authorization', `Bearer ${admin3Token}`)
-      .send(admin3Menu)
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${catererMariaToken}`)
+      .send(catererMariaMenu)
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(201);
         expect(res.body).to.have.all.keys('success', 'message', 'menu');
         expect(res.body.success).to.equal(true);
@@ -79,34 +79,34 @@ describe('Menus API routes', () => {
       });
     });
 
-    it('should not allow admin post menu on the same date more than once', (done) => {
+    it('should not allow caterer create menu on the same date more than once', (done) => {
       chai.request(app.listen())
       .post('/api/v1/menus')
-      .set('Authorization', `Bearer ${admin3Token}`)
+      .set('Authorization', `Bearer ${catererMariaToken}`)
       .send({
-        ...admin3Menu,
+        ...catererMariaMenu,
         postOn: '2020-05-18',
       })
-      .end((err, res) => {
-        if(err) return done(err);
-        expect(res.status).to.equal(400);
+      .end((error, res) => {
+        if(error) return done(error);
+        expect(res.status).to.equal(409);
         expect(res.body).to.have.all.keys('success', 'message');
         expect(res.body.success).to.equal(false);
-        expect(res.body.message).to.equal(`Menu for date: ${admin3Menu.postOn} have already been posted!`);
+        expect(res.body.message).to.equal(`Menu for date: ${catererMariaMenu.postOn} have already been posted!`);
         done();
       });
     });
 
-    it('should return error if poston date is in incorrect format', (done) => {
+    it('should return error if the `postOn` date is in incorrect format', (done) => {
       chai.request(app.listen())
       .post('/api/v1/menus')
-      .set('Authorization', `Bearer ${admin3Token}`)
+      .set('Authorization', `Bearer ${catererMariaToken}`)
       .send({
-        ...admin3Menu,
+        ...catererMariaMenu,
         postOn: '18-05-2020',
       })
-      .end((err, res) => {
-        if(err) return done(err);
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(400);
         expect(res.body).to.have.all.keys('success', 'message');
         expect(res.body.success).to.equal(false);
@@ -115,16 +115,16 @@ describe('Menus API routes', () => {
       });
     });
 
-    it('should not allow posting menu on past dates', (done) => {
+    it('should not allow menu to be created on past dates', (done) => {
       chai.request(app.listen())
       .post('/api/v1/menus')
-      .set('Authorization', `Bearer ${admin3Token}`)
+      .set('Authorization', `Bearer ${catererMariaToken}`)
       .send({
-        ...admin3Menu,
+        ...catererMariaMenu,
         postOn: '2009-05-18',
       })
-      .end((err, res) => {
-        if(err) return done(err);
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(400);
         expect(res.body).to.have.all.keys('success', 'message');
         expect(res.body.success).to.equal(false);
@@ -133,13 +133,13 @@ describe('Menus API routes', () => {
       });
     });
 
-    it('should allow admin post menu for another day', (done) => {
+    it('should allow caterer create menu for future dates', (done) => {
       chai.request(app.listen())
       .post('/api/v1/menus')
-      .set('Authorization', `Bearer ${admin4Token}`)
-      .send(admin4Menu)
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${catererDejiToken}`)
+      .send(catererDejiMenu)
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(201);
         expect(res.body).to.have.all.keys('success', 'message', 'menu');
         expect(res.body.success).to.equal(true);
@@ -148,47 +148,47 @@ describe('Menus API routes', () => {
       });
     });
 
-    it('should not allow admin post another admin\'s meal', (done) => {
+    it('should not allow a caterer post another caterer\'s meal', (done) => {
       chai.request(app.listen())
       .post('/api/v1/menus')
-      .set('Authorization', `Bearer ${admin3Token}`)
+      .set('Authorization', `Bearer ${catererMariaToken}`)
       .send({
-        ...admin4Menu,
+        ...catererDejiMenu,
         postOn: "2020-09-09"
       })
-      .end((err, res) => {
-        if(err) return done(err);
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(404);
         expect(res.body).to.have.all.keys('success', 'message');
         expect(res.body.success).to.equal(false);
-        expect(res.body.message).to.equal(`meals ${admin4Menu.meals}, not found!`);
+        expect(res.body.message).to.equal(`meals ${catererDejiMenu.meals}, not found!`);
         done();
       });
     });
 
-    it('should not allow customers post menu', (done) => {
+    it('should not allow customers caterer menu', (done) => {
       chai.request(app.listen())
       .post('/api/v1/menus')
-      .set('Authorization', `Bearer ${customerToken}`)
-      .send(admin4Menu)
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${customerRoseToken}`)
+      .send(catererDejiMenu)
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(403);
         expect(res.body.message).to.equal('User not allowed!');
         done();
       });
     });
 
-    it('should return error if input not correct', (done) => {
+    it('should return error if meals field is empty', (done) => {
       chai.request(app.listen())
       .post('/api/v1/menus')
-      .set('Authorization', `Bearer ${admin3Token}`)
+      .set('Authorization', `Bearer ${catererMariaToken}`)
       .send({
         postOn: '2020-08-20',
         meals: []
       })
-      .end((err, res) => {
-        if(err) return done(err);
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
         expect(res.body.message).to.equal('meals field is empty!');
@@ -196,16 +196,16 @@ describe('Menus API routes', () => {
       });
     });
 
-    it('should return error if input not correct', (done) => {
+    it('should return error if `postOn` field is empty', (done) => {
       chai.request(app.listen())
       .post('/api/v1/menus')
-      .set('Authorization', `Bearer ${admin3Token}`)
+      .set('Authorization', `Bearer ${catererMariaToken}`)
       .send({
-        ...admin3Menu,
+        ...catererMariaMenu,
         postOn: '',
       })
-      .end((err, res) => {
-        if(err) return done(err);
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(400);
         expect(res.body.success).to.equal(false);
         expect(res.body.message).to.equal('postOn field is empty!');
@@ -220,17 +220,17 @@ describe('Menus API routes', () => {
       await db.MenuMeal.truncate();
 
       await db.Menu.bulkCreate(menusDatas);
-      await db.MenuMeal.bulkCreate(admin3MenuMeals);
-      await db.MenuMeal.bulkCreate(admin4MenuMeals);
+      await db.MenuMeal.bulkCreate(catererMariaMenuMeals);
+      await db.MenuMeal.bulkCreate(catererDejiMenuMeals);
     })
 
-    it('should allow admin add menu to existing meals', (done) => {
+    it('should allow caterer add meals to existing menu', (done) => {
       chai.request(app.listen())
       .post(`/api/v1/menus/${menusDatas[0].id}/meals`)
-      .set('Authorization', `Bearer ${admin4Token}`)
-      .send({ meals: admin4Menu.meals}) // admin4 adds his meals to admin3's menu
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${catererDejiToken}`)
+      .send({ meals: catererDejiMenu.meals}) // catererDejiTokenDetails adds his meals to catererMariaTokenDetails's menu
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(200);
         expect(res.body).to.have.all.keys('success', 'message');
         expect(res.body.success).to.equal(true);
@@ -242,24 +242,24 @@ describe('Menus API routes', () => {
     it('should not allow customers add meals to menu', (done) => {
       chai.request(app.listen())
       .post(`/api/v1/menus/${menusDatas[0].id}/meals`)
-      .set('Authorization', `Bearer ${customerToken}`)
-      .send({ meals: admin4Menu.meals})
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${customerRoseToken}`)
+      .send({ meals: catererDejiMenu.meals})
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(403);
         expect(res.body.message).to.equal('User not allowed!');
         done();
       });
     });
 
-    it('should throw error if trying to add to expired menu', (done) => {
+    it('should throw error if trying to add to menu created on past dates', (done) => {
       chai.request(app.listen())
       .post(`/api/v1/menus/${menusDatas[1].id}/meals`) // expired menu id
-      .set('Authorization', `Bearer ${admin3Token}`)
-      .send({ meals: admin3Menu.meals}) // admin3 adds his meals to expired menu
-      .end((err, res) => {
-        if(err) return done(err);
-        expect(res.status).to.equal(405);
+      .set('Authorization', `Bearer ${catererMariaToken}`)
+      .send({ meals: catererMariaMenu.meals}) // catererMariaTokenDetails adds his meals to expired menu
+      .end((error, res) => {
+        if(error) return done(error);
+        expect(res.status).to.equal(403);
         expect(res.body).to.have.all.keys('success', 'message');
         expect(res.body.success).to.equal(false);
         expect(res.body.message).to.equal('Can\'t modify menu anymore!');
@@ -267,13 +267,13 @@ describe('Menus API routes', () => {
       });
     });
 
-    it('should throw error if menu not found', (done) => {
+    it('should throw error if menu is not found', (done) => {
       chai.request(app.listen())
       .post('/api/v1/menus/25cf8240-2eec-40dd-9678-1b6f722561d3/meals') // non-existing menu
-      .set('Authorization', `Bearer ${admin4Token}`)
-      .send({ meals: admin4Menu.meals})
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${catererDejiToken}`)
+      .send({ meals: catererDejiMenu.meals})
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(404);
         expect(res.body).to.have.all.keys('success', 'message');
         expect(res.body.success).to.equal(false);
@@ -282,17 +282,17 @@ describe('Menus API routes', () => {
       });
     });
 
-    it('should throw error if trying to add meals not created by the admin making request', (done) => {
+    it('should throw error if a caterer is trying to add another caterer\'s meal to a menu', (done) => {
       chai.request(app.listen())
       .post(`/api/v1/menus/${menusDatas[1].id}/meals`)
-      .set('Authorization', `Bearer ${admin4Token}`)
-      .send({ meals: admin3Menu.meals}) // admin4 trying to add admin3's meals to the menu
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${catererDejiToken}`)
+      .send({ meals: catererMariaMenu.meals}) // catererDeji trying to add catererMaria's meals to the menu
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(404);
         expect(res.body).to.have.all.keys('success', 'message');
         expect(res.body.success).to.equal(false);
-        expect(res.body.message).to.equal(`meals ${admin3Menu.meals}, not found!`);
+        expect(res.body.message).to.equal(`meals ${catererMariaMenu.meals}, not found!`);
         done();
       });
     });
@@ -300,10 +300,10 @@ describe('Menus API routes', () => {
     it('should throw error if menu id is wrong', (done) => {
       chai.request(app.listen())
       .post('/api/v1/menus/dhkSLSHksd/meals') // wrong params
-      .set('Authorization', `Bearer ${admin4Token}`)
-      .send({ meals: admin4Menu.meals}) // admin4 trying to add admin3's meals to the menu
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${catererDejiToken}`)
+      .send({ meals: catererDejiMenu.meals}) // catererDeji trying to add catererMaria's meals to the menu
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(400);
         expect(res.body).to.have.all.keys('success', 'message');
         expect(res.body.success).to.equal(false);
@@ -319,17 +319,17 @@ describe('Menus API routes', () => {
       await db.MenuMeal.truncate();
 
       await db.Menu.bulkCreate(menusDatas);
-      await db.MenuMeal.bulkCreate(admin3MenuMeals);
-      await db.MenuMeal.bulkCreate(admin4MenuMeals);
+      await db.MenuMeal.bulkCreate(catererMariaMenuMeals);
+      await db.MenuMeal.bulkCreate(catererDejiMenuMeals);
     })
 
-    it('should get menus for the present day', (done) => {
+    it('should get menu for the present day', (done) => {
       chai.request(app.listen())
       .get('/api/v1/menus/today')
-      .set('Authorization', `Bearer ${admin3Token}`)
-      .end((err, res) => {
+      .set('Authorization', `Bearer ${catererMariaToken}`)
+      .end((error, res) => {
         const { success, message, pagination, menu } = res.body;
-        if(err) return done(err);
+        if(error) return done(error);
         expect(res.status).to.equal(200);
         expect(success).to.equal(true);
         expect(message).to.equal('Menu retrieved successfully!');
@@ -343,23 +343,23 @@ describe('Menus API routes', () => {
         expect(pagination.nextOffset).to.equal(10);
         expect(menu).to.be.an('array');
         expect(menu[0]).to.have.all.keys('id', 'UserId', 'postOn', 'createdAt', 'User', 'Meals', 'updatedAt');
-        expect(menu[0].UserId).to.equal(adminUser3.id);
+        expect(menu[0].UserId).to.equal(catererMaria.id);
         expect(menu[0].id).to.equal(menusDatas[0].id);
-        expect(menu[0].User.firstName).to.equal(adminUser3.firstName);
-        expect(menu[0].User.lastName).to.equal(adminUser3.lastName);
+        expect(menu[0].User.firstName).to.equal(catererMaria.firstName);
+        expect(menu[0].User.lastName).to.equal(catererMaria.lastName);
         expect(menu[0].postOn).to.equal(moment().format('YYYY-MM-DD'));
         expect(menu[0].Meals.length).to.equal(3);
         done();
       });
     });
 
-    it('should allow customers', (done) => {
+    it('should allow customers get menu for present day', (done) => {
       chai.request(app.listen())
       .get('/api/v1/menus/today?limit=4')
-      .set('Authorization', `Bearer ${customerToken}`)
-      .end((err, res) => {
+      .set('Authorization', `Bearer ${customerRoseToken}`)
+      .end((error, res) => {
         const { success, message, pagination, menu } = res.body;
-        if(err) return done(err);
+        if(error) return done(error);
         expect(res.status).to.equal(200);
         expect(success).to.equal(true);
         expect(message).to.equal('Menu retrieved successfully!');
@@ -373,10 +373,10 @@ describe('Menus API routes', () => {
         expect(pagination.nextOffset).to.equal(4);
         expect(menu).to.be.an('array');
         expect(menu[0]).to.have.all.keys('id', 'postOn', 'UserId', 'createdAt', 'User', 'Meals', 'updatedAt');
-        expect(menu[0].UserId).to.equal(adminUser3.id);
+        expect(menu[0].UserId).to.equal(catererMaria.id);
         expect(menu[0].id).to.equal(menusDatas[0].id);
-        expect(menu[0].User.firstName).to.equal(adminUser3.firstName);
-        expect(menu[0].User.lastName).to.equal(adminUser3.lastName);
+        expect(menu[0].User.firstName).to.equal(catererMaria.firstName);
+        expect(menu[0].User.lastName).to.equal(catererMaria.lastName);
         expect(menu[0].postOn).to.equal(moment().format('YYYY-MM-DD'));
         expect(menu[0].Meals.length).to.equal(3);
         done();
@@ -390,17 +390,17 @@ describe('Menus API routes', () => {
       await db.MenuMeal.truncate();
 
       await db.Menu.bulkCreate(menusDatas);
-      await db.MenuMeal.bulkCreate(admin3MenuMeals);
-      await db.MenuMeal.bulkCreate(admin4MenuMeals);
+      await db.MenuMeal.bulkCreate(catererMariaMenuMeals);
+      await db.MenuMeal.bulkCreate(catererDejiMenuMeals);
     });
 
-    it('should get all menus', (done) => {
+    it('should allow caterer get all menus', (done) => {
       chai.request(app.listen())
       .get('/api/v1/menus')
-      .set('Authorization', `Bearer ${admin4Token}`)
-      .end((err, res) => {
+      .set('Authorization', `Bearer ${catererDejiToken}`)
+      .end((error, res) => {
         const { pagination, message, success, menus } = res.body;
-        if (err) return done(err);
+        if (error) return done(error);
         expect(res.status).to.equal(200);
         expect(res.body).to.have.all.keys('success', 'message', 'pagination', 'menus');
         expect(success).to.equal(true);
@@ -430,9 +430,9 @@ describe('Menus API routes', () => {
     it('should not allow customer get all menus', (done) => {
       chai.request(app.listen())
       .get('/api/v1/menus')
-      .set('Authorization', `Bearer ${customerToken}`)
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${customerRoseToken}`)
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(403);
         expect(res.body.message).to.equal('User not allowed!');
         done();
@@ -446,17 +446,17 @@ describe('Menus API routes', () => {
       await db.MenuMeal.truncate();
 
       await db.Menu.bulkCreate(menusDatas);
-      await db.MenuMeal.bulkCreate(admin3MenuMeals);
-      await db.MenuMeal.bulkCreate(admin4MenuMeals);
+      await db.MenuMeal.bulkCreate(catererMariaMenuMeals);
+      await db.MenuMeal.bulkCreate(catererDejiMenuMeals);
     });
 
-    it('should get a menu\'s meals only if admin', (done) => {
+    it('should allow caterer get a menu\'s meals', (done) => {
       chai.request(app.listen())
       .get(`/api/v1/menus/${menusDatas[1].id}/meals?limit=2`)
-      .set('Authorization', `Bearer ${admin4Token}`)
-      .end((err, res) => {
+      .set('Authorization', `Bearer ${catererDejiToken}`)
+      .end((error, res) => {
         const { pagination, message, success, menu } = res.body;
-        if (err) return done(err);
+        if (error) return done(error);
         expect(res.status).to.equal(200);
         expect(success).to.equal(true);
         expect(message).to.equal('Menu retrieved successfully!');
@@ -470,23 +470,23 @@ describe('Menus API routes', () => {
         expect(pagination.nextOffset).to.equal(2);
         expect(menu).to.be.an('array');
         expect(menu[0]).to.have.all.keys('id', 'postOn', 'UserId', 'createdAt', 'User', 'Meals', 'updatedAt');
-        expect(menu[0].UserId).to.equal(adminUser4.id);
+        expect(menu[0].UserId).to.equal(catererDeji.id);
         expect(menu[0].id).to.equal(menusDatas[1].id);
-        expect(menu[0].User.firstName).to.equal(adminUser4.firstName);
-        expect(menu[0].User.lastName).to.equal(adminUser4.lastName);
+        expect(menu[0].User.firstName).to.equal(catererDeji.firstName);
+        expect(menu[0].User.lastName).to.equal(catererDeji.lastName);
         expect(menu[0].postOn).to.equal(menusDatas[1].postOn);
         expect(menu[0].Meals.length).to.equal(2);
         done();
       });
     });
 
-    it('should return error if admin meals not in menu', (done) => {
+    it('should return error if caterer meals is not in the menu', (done) => {
       chai.request(app.listen())
       .get(`/api/v1/menus/${menusDatas[1].id}/meals?limit=2`)
-      .set('Authorization', `Bearer ${admin3Token}`)
-      .end((err, res) => {
+      .set('Authorization', `Bearer ${catererMariaToken}`)
+      .end((error, res) => {
         const { message, success } = res.body;
-        if (err) return done(err);
+        if (error) return done(error);
         expect(res.status).to.equal(404);
         expect(success).to.equal(false);
         expect(message).to.equal('Your meals are not in this menu');
@@ -494,12 +494,12 @@ describe('Menus API routes', () => {
       });
     });
 
-    it('should not allow customer get menu meals', (done) => {
+    it('should not allow customer get a menu\'s meals', (done) => {
       chai.request(app.listen())
       .get('/api/v1/menus')
-      .set('Authorization', `Bearer ${customerToken}`)
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${customerRoseToken}`)
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(403);
         expect(res.body.message).to.equal('User not allowed!');
         done();
@@ -514,19 +514,19 @@ describe('Menus API routes', () => {
       await db.MenuMeal.truncate();
 
       await db.Menu.bulkCreate(menusDatas);
-      await db.MenuMeal.bulkCreate(admin3MenuMeals);
-      await db.MenuMeal.bulkCreate(admin4MenuMeals);
+      await db.MenuMeal.bulkCreate(catererMariaMenuMeals);
+      await db.MenuMeal.bulkCreate(catererDejiMenuMeals);
     });
 
-    it('should not delete meal if customer', (done) => {
+    it('should not allow customer delete meals from a menu', (done) => {
       chai.request(app.listen())
       .delete(`/api/v1/menus/${menusDatas[0].id}/meals`)
-      .set('Authorization', `Bearer ${customerToken}`)
+      .set('Authorization', `Bearer ${customerRoseToken}`)
       .send({
-        meals: [admin3Menu.meals[0]]
+        meals: [catererMariaMenu.meals[0]]
       })
-      .end((err, res) => {
-        if(err) return done(err);
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(403);
         expect(res.body.success).to.equal(false);
         expect(res.body.message).to.equal('User not allowed!');
@@ -534,15 +534,15 @@ describe('Menus API routes', () => {
       });
     });
 
-    it('should not delete meal if meal id is incorrect', (done) => {
+    it('should return error if meal id is incorrect', (done) => {
       chai.request(app.listen())
       .delete('/api/v1/menus/frdtuyt56778/meals') // wrong params
-      .set('Authorization', `Bearer ${admin3Token}`)
+      .set('Authorization', `Bearer ${catererMariaToken}`)
       .send({
-        meals: [admin3Menu.meals[0]]
+        meals: [catererMariaMenu.meals[0]]
       })
-      .end((err, res) => {
-        if(err) return done(err);
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(400);
         expect(res.body).to.have.all.keys('success', 'message');
         expect(res.body.success).to.equal(false);
@@ -551,15 +551,15 @@ describe('Menus API routes', () => {
       });
     });
 
-    it('should return error if menu not found', (done) => {
+    it('should return error if menu is not found', (done) => {
       chai.request(app.listen())
       .delete('/api/v1/menus/df8449dc-1e13-4084-a32a-6f476261831a/meals') // non existing menu
-      .set('Authorization', `Bearer ${admin3Token}`)
+      .set('Authorization', `Bearer ${catererMariaToken}`)
       .send({
-        meals: [admin3Menu.meals[0]]
+        meals: [catererMariaMenu.meals[0]]
       })
-      .end((err, res) => {
-        if(err) return done(err);
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(404);
         expect(res.body).to.have.all.keys('success', 'message');
         expect(res.body.success).to.equal(false);
@@ -568,48 +568,48 @@ describe('Menus API routes', () => {
       });
     });
 
-    it('should return error if meal do not belong to admin making the request', (done) => {
+    it('should return error if meal do not belong to the caterer making the request', (done) => {
       chai.request(app.listen())
       .delete(`/api/v1/menus/${menusDatas[0].id}/meals`)
-      .set('Authorization', `Bearer ${admin4Token}`)
+      .set('Authorization', `Bearer ${catererDejiToken}`)
       .send({
-        meals: [admin3Menu.meals[0]]
+        meals: [catererMariaMenu.meals[0]]
       })
-      .end((err, res) => {
-        if(err) return done(err);
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(404);
         expect(res.body).to.have.all.keys('success', 'message');
         expect(res.body.success).to.equal(false);
-        expect(res.body.message).to.equal(`meals ${admin3Menu.meals[0]}, not found!`);
+        expect(res.body.message).to.equal(`meals ${catererMariaMenu.meals[0]}, not found!`);
         done();
       });
     });
 
-    it('should not delete meals in a menu has expired', (done) => {
+    it('should not delete meals in a menu that has expired', (done) => {
       chai.request(app.listen())
       .delete(`/api/v1/menus/${menusDatas[1].id}/meals`) // expired menu
-      .set('Authorization', `Bearer ${admin4Token}`)
+      .set('Authorization', `Bearer ${catererDejiToken}`)
       .send({
-        meals: [admin4Menu.meals[0]]
+        meals: [catererDejiMenu.meals[0]]
       })
-      .end((err, res) => {
-        if(err) return done(err);
-        expect(res.status).to.equal(405);
+      .end((error, res) => {
+        if(error) return done(error);
+        expect(res.status).to.equal(403);
         expect(res.body.success).to.equal(false);
         expect(res.body.message).to.equal('Can\'t modify menu anymore!');
         done();
       });
     });
 
-    it('should delete meals in a menu only if admin and meal belongs to the admin', (done) => {
+    it('should allow caterer delete meals from a menu', (done) => {
       chai.request(app.listen())
       .delete(`/api/v1/menus/${menusDatas[0].id}/meals`)
-      .set('Authorization', `Bearer ${admin3Token}`)
+      .set('Authorization', `Bearer ${catererMariaToken}`)
       .send({
-        meals: [admin3Menu.meals[0]]
+        meals: [catererMariaMenu.meals[0]]
       })
-      .end((err, res) => {
-        if(err) return done(err);
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(200);
         expect(res.body.success).to.equal(true);
         expect(res.body.message).to.equal('Meal removed from menu successfully!');

@@ -10,7 +10,7 @@ import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 
 
-const Mealform = ({
+const MealForm = ({
   closeEdit,
   updateMeal,
   addMeal,
@@ -213,7 +213,7 @@ const Mealform = ({
   </AccordionItem>
 );
 
-Mealform.propTypes = {
+MealForm.propTypes = {
   closeEdit: PropTypes.func.isRequired,
   addMeal: PropTypes.func.isRequired,
   handleChange: PropTypes.func.isRequired,
@@ -226,4 +226,4 @@ Mealform.propTypes = {
   mealOnEdit: PropTypes.object.isRequired
 };
 
-export default Mealform;
+export default MealForm;

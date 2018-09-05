@@ -30,10 +30,10 @@ class UsersController {
           message: 'user created successfully!',
         });
       })
-      .catch((err) => {
-        err = new Error('An error occurred, user already exist!');
-        err.status = 400;
-        return next(err);
+      .catch((error) => {
+        error = new Error('An error occurred, user already exist!');
+        error.status = 409;
+        return next(error);
       });
   }
 
@@ -56,14 +56,15 @@ class UsersController {
       attributes: ['id', 'firstName', 'lastName', 'admin', 'password'],
 
     })
-      .then((found) => {
+      .then((foundUser) => {
         const {
           id,
           firstName,
           lastName,
           admin,
           password
-        } = found;
+        } = foundUser;
+
         // Compare password
         bcrypt.compare(loginUser.password, password)
           .then((response) => {
@@ -75,13 +76,13 @@ class UsersController {
                 lastName
               };
             }
-            const err = new Error('Email or Password is incorrect!');
-            err.status = 401;
-            throw err;
+            const error = new Error('Email or Password is incorrect!');
+            error.status = 401;
+            throw error;
           })
           .then(() => {
             // generate token
-            jwt.sign({ id, admin }, process.env.SECRET, { expiresIn: '24h' }, (err, token) => {
+            jwt.sign({ id, admin }, process.env.SECRET, { expiresIn: '24h' }, (error, token) => {
               res.status(200).send({
                 success: true,
                 message: 'You are logged in!',
@@ -92,12 +93,12 @@ class UsersController {
               });
             });
           })
-          .catch(err => next(err));
+          .catch(error => next(error));
       })
-      .catch((err) => {
-        err = new Error('Email or Password is incorrect!');
-        err.status = 401;
-        return next(err);
+      .catch((error) => {
+        error = new Error('Email does not exist!');
+        error.status = 404;
+        return next(error);
       });
   }
 }

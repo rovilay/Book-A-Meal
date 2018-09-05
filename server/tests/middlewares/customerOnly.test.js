@@ -3,8 +3,8 @@ import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import { mockReq, mockRes } from 'sinon-express-mock';
 import sinonChai from 'sinon-chai';
-import adminOnly from '../../middlewares/adminOnly';
-import getToken from '../../helpers/gettokens';
+import customerOnly from '../../middlewares/customerOnly';
+
 
 chai.use(chaiHttp);
 chai.use(sinonChai);
@@ -22,26 +22,25 @@ const customer = {
   admin: false
 };
 
-describe('AdminOnly middleware', () => {
+describe('customerOnly middleware', () => {
   const res = mockRes();
   const next = sinon.spy();
-  const err = new Error('User not allowed!');
 
-  it('should call next if admin', () => {
-    const req = mockReq({
-      user: admin
-    });
-
-    adminOnly(req, res, next);
-    next.should.have.been.called;
-  });
-
-  it('should call next with err if customer', () => {
+  it('should call next if customer', () => {
     const req = mockReq({
       user: customer
     });
 
-    adminOnly(req, res, next);
+    customerOnly(req, res, next);
+    next.should.have.been.called;
+  });
+
+  it('should call next with err if admin', () => {
+    const req = mockReq({
+      user: admin
+    });
+
+    customerOnly(req, res, next);
     next.should.have.been.called;
   });
 });

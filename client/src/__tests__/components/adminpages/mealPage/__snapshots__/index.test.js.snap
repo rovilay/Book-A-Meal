@@ -38,7 +38,7 @@ exports[`MealPage component test should render MealPage correctly 1`] = `
       <div
         className="setMeal-container"
       >
-        <Mealform
+        <MealForm
           addMeal={[Function]}
           closeEdit={[Function]}
           deleteMeal={[MockFunction]}

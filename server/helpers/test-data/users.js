@@ -1,5 +1,5 @@
-const userData = {
-  adminUser1: {
+const users = {
+  catererJohn: {
     id: 'daf7db8c-b32a-4e69-9e2b-8aa7a3b076a0',
     firstName: 'John',
     lastName: 'Palmer',
@@ -11,7 +11,7 @@ const userData = {
     state: 'lagos',
     admin: true
   },
-  adminUser2: {
+  catererEsther: {
     id: 'bb736d9c-4d44-4445-b895-018728f15f3a',
     firstName: 'Esther',
     lastName: 'Akinola',
@@ -24,7 +24,7 @@ const userData = {
     admin: true
   },
 
-  adminUser3: {
+  catererMaria: {
     id: 'f846254d-b8c6-485d-b852-82a5fc55b29f',
     firstName: 'maria',
     lastName: 'akinola',
@@ -36,7 +36,7 @@ const userData = {
     state: 'lagos',
     admin: true
   },
-  adminUser4: {
+  catererDeji: {
     id: '85d71393-16c0-4801-aef9-a9ba1927c32c',
     firstName: 'deji',
     lastName: 'Akinola',
@@ -49,7 +49,7 @@ const userData = {
     admin: true
   },
 
-  customerUser1: {
+  customerRose: {
     id: '618ef639-4729-4256-bdf4-54ff2e6a61d9',
     firstName: 'Rose',
     lastName: 'Palmer',
@@ -64,7 +64,7 @@ const userData = {
     admin: false
   },
 
-  customerUser2: {
+  customerRovi: {
     id: '7b21aa99-6456-474a-85a8-ea14266e971c',
     firstName: 'rovi',
     lastName: 'akinola',
@@ -104,4 +104,4 @@ const userData = {
 
 };
 
-export default userData;
+export default users;

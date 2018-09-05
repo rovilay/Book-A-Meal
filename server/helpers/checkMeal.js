@@ -1,5 +1,5 @@
 /* eslint no-confusing-arrow: 0 */
-import db from '../../models/index';
+import db from '../../models';
 /**
  * Checks if meal is in db
  *
@@ -9,7 +9,7 @@ import db from '../../models/index';
  * @return {boolean} true
  */
 
-async function checkMeals(Meals = [], UserId = undefined, next) { // check if input meals is correct or in db
+async function checkMeal(Meals = [], UserId = undefined, next) { // check if input meals is correct or in db
   const where = (UserId) ? { id: Meals, UserId } : { id: Meals };
 
   const foundMeals = await db.Meal.findAll({
@@ -18,17 +18,17 @@ async function checkMeals(Meals = [], UserId = undefined, next) { // check if in
   });
 
   const foundMealsId = foundMeals.map(meal => meal.id);
-  // console.log('>>>>>>meals', Meals);
+
   //  check to get id of meals not found
-  const notFoundMeals = (Meals.length > 0) && Meals.filter(meal => (foundMealsId.indexOf(meal) > -1) ? false : meal);
+  const notFoundMeals = (Meals.length > 0) && Meals.filter(mealId => (foundMealsId.indexOf(mealId) > -1) ? false : mealId);
 
   if (notFoundMeals.length > 0) {
-    const err = new Error(`meals ${notFoundMeals}, not found!`);
-    err.status = 404;
-    return next(err);
+    const error = new Error(`meals ${notFoundMeals}, not found!`);
+    error.status = 404;
+    return next(error);
   }
 
   return true;
 }
 
-export default checkMeals;
+export default checkMeal;

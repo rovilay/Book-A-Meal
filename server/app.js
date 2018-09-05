@@ -5,11 +5,11 @@ import bodyParser from 'body-parser';
 import cors from 'cors';
 import path from 'path';
 import swaggerUi from 'swagger-ui-express';
-import mealRouter from './routes/mealRoutes';
-import menuRouter from './routes/menuRoutes';
-import ordersRouter from './routes/ordersRoutes';
-import usersRouter from './routes/usersRoutes';
-import myErrorHandler from './middlewares/errorHandler';
+import mealsRoutes from './routes/mealsRoutes';
+import menusRoutes from './routes/menusRoutes';
+import ordersRoutes from './routes/ordersRoutes';
+import usersRoutes from './routes/usersRoutes';
+import errorHandler from './middlewares/errorHandler';
 import swaggerDoc from '../swagger.json';
 
 
@@ -37,11 +37,11 @@ if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../../client/public')));
 }
 
-app.use(usersRouter);
-app.use(menuRouter);
-app.use(mealRouter);
-app.use(ordersRouter);
-app.use(myErrorHandler);
+app.use(usersRoutes);
+app.use(menusRoutes);
+app.use(mealsRoutes);
+app.use(ordersRoutes);
+app.use(errorHandler);
 
 // Serve client pages
 if (process.env.NODE_ENV === 'production') {

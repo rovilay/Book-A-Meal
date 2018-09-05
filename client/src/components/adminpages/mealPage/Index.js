@@ -79,8 +79,8 @@ export class MealPage extends Component {
       .then((confirmed) => {
         if (confirmed) {
           this.props.updateMeal({ mealId: mealOnEditId, data })
-            .then((res) => {
-              if (res && res.success) {
+            .then((response) => {
+              if (response && response.success) {
                 this.closeEdit();
               }
             });
@@ -177,16 +177,16 @@ export class MealPage extends Component {
         const url = imageUploader('meal-image');
         if (url) {
           url
-            .then((res) => {
-              if (typeof (res) === 'string') {
-                (this.state.isEdit) && this.props.updateMealOnEdit({ image: res });
+            .then((response) => {
+              if (typeof (response) === 'string') {
+                (this.state.isEdit) && this.props.updateMealOnEdit({ image: response });
                 return this.setState({
-                  uploadedImageLink: res,
+                  uploadedImageLink: response,
                   disableBtn: false
                 }); // enable btn after upload
               }
 
-              throw new Error(res.message);
+              throw new Error(response.message);
             })
             .catch(err => err);
         }

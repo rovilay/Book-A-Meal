@@ -55,13 +55,13 @@ export class CustomerOrderPage extends Component {
    */
   onEditOrder(mealsUrl) {
     this.props.getOrderMeals(mealsUrl, {})
-      .then((res) => {
+      .then((response) => {
         const {
           Meals,
           id: orderId,
           UserId,
           deliveryAddress,
-        } = res.order[0];
+        } = response.order[0];
         const orderedMeals = [];
         let totalPrice = 0;
 
@@ -98,8 +98,8 @@ export class CustomerOrderPage extends Component {
           isInfo: false,
           close: false,
           contentLabel: 'Edit Order',
-          content: { ...res.order[0] },
-          pagination: { ...res.pagination }
+          content: { ...response.order[0] },
+          pagination: { ...response.pagination }
         });
       });
   }
@@ -147,7 +147,7 @@ export class CustomerOrderPage extends Component {
    */
   showDetails(mealsUrl) {
     this.props.getOrderMeals(mealsUrl, {})
-      .then((res) => {
+      .then((response) => {
         this.props.setModal({
           isOpen: true,
           isInfo: true,
@@ -155,8 +155,8 @@ export class CustomerOrderPage extends Component {
           isOrderInfo: false,
           close: false,
           contentLabel: 'Order details',
-          content: { ...res.order[0] },
-          pagination: { ...res.pagination }
+          content: { ...response.order[0] },
+          pagination: { ...response.pagination }
         });
       });
   }

@@ -1,6 +1,6 @@
 /* eslint no-uneeded ternary: 0 */
 import UUID from 'uuid/v4';
-import db from '../../models/index';
+import db from '../../models';
 import checkMeal from '../helpers/checkMeal';
 import paginate from '../helpers/paginate';
 
@@ -52,9 +52,9 @@ class OrdersController {
       .then((response) => {
         const { rows: orders, count } = response;
         if (orders.length < 1) {
-          const err = new Error('No order found!');
-          err.status = 404;
-          return next(err);
+          const error = new Error('No order found!');
+          error.status = 404;
+          return next(error);
         }
 
         // map orders to get url
@@ -64,7 +64,8 @@ class OrdersController {
           const modifiedOrder = order.get({ plain: true });
           const { Meals } = modifiedOrder;
 
-          Meals.map((meal) => { // map through order  meals to get total price;
+          // map through order meals to get total price;
+          Meals.map((meal) => {
             const { portion, cost } = meal.OrderMeal;
             totalPrice += (portion * cost);
             grandTotalPrice += (portion * cost);
@@ -83,17 +84,11 @@ class OrdersController {
           pagination: paginate(limit, offset, count),
           orders: ordersWithMealUrl
         });
-
-        // db.Order.sum('totalPrice', { where: (!admin) && { UserId } })
-        //   .then((grandTotalPrice) => {
-
-        //   })
-        //   .catch(err => next(err));
       })
-      .catch((err) => {
-        err = err || new Error('Error occurred while getting orders!');
-        err.status = 400;
-        return next(err);
+      .catch((error) => {
+        error = error || new Error('Error occurred while getting orders!');
+        error.status = 500;
+        return next(error);
       });
   }
 
@@ -127,7 +122,6 @@ class OrdersController {
         },
       }],
       where: { id: orderId },
-      // subQuery,
       limit,
       offset
     })
@@ -135,9 +129,9 @@ class OrdersController {
         const { rows: order, count } = response;
 
         if (order.length < 1) {
-          const err = new Error('Order not found!');
-          err.status = 404;
-          return next(err);
+          const error = new Error('Order not found!');
+          error.status = 404;
+          return next(error);
         }
 
         db.Order.sum('totalPrice', { where: (!admin) && { UserId } })
@@ -148,12 +142,12 @@ class OrdersController {
             pagination: paginate(limit, offset, count),
             order
           }))
-          .catch(err => next(err));
+          .catch(error => next(error));
       })
-      .catch((err) => {
-        err = err || new Error('Error occurred while getting orders!');
-        err.status = 400;
-        return next(err);
+      .catch((error) => {
+        error = error || new Error('Error occurred while getting meals for this orders!');
+        error.status = 500;
+        return next(error);
       });
   }
 
@@ -180,27 +174,27 @@ class OrdersController {
             where: { id: orderMeals },
             attributes: ['id', 'price']
           })
-            .then((resMeals) => { // calculate order's total price
-              let totPrice = 0;
-              resMeals.forEach((resMeal) => {
+            .then((foundMeals) => { // calculate order's total price
+              let totalPrice = 0;
+              foundMeals.forEach((foundMeal) => {
                 const { meals } = newOrder;
                 let i = 0;
                 while (i < meals.length) {
                   const { id, portion, unitPrice: cost } = meals[i];
-                  if (resMeal.id === id) {
-                    totPrice += (cost * portion);
+                  if (foundMeal.id === id) {
+                    totalPrice += (cost * portion);
                   }
                   i++;
                 }
               });
-              return totPrice;
+              return totalPrice;
             })
-            .then((totPrice) => {
+            .then((totalPrice) => {
               db.Order.create({ // Add order to db
                 id: UUID.v4(),
                 UserId,
                 deliveryAddress: newOrder.deliveryAddress,
-                totalPrice: totPrice
+                totalPrice
               })
                 .then((order) => { // Add meal to join table
                   orderMeals.forEach((meal, index) => {
@@ -210,7 +204,7 @@ class OrdersController {
                         cost: orderMealsCost[index]
                       }
                     })
-                      .catch(err => next(err));
+                      .catch(error => next(error));
                   });
                   res.status(201).send({
                     success: true,
@@ -218,12 +212,12 @@ class OrdersController {
                     order
                   });
                 })
-                .catch((err) => {
-                  err.status = 400;
-                  return next(err);
+                .catch((error) => {
+                  error.status = 500;
+                  return next(error);
                 });
             })
-            .catch(err => next(err));
+            .catch(error => next(error));
         }
       });
   }
@@ -253,25 +247,25 @@ class OrdersController {
             where: { id: updatedMealsId },
             attributes: ['id', 'price']
           })
-            .then((resMeals) => { // calculate order's total price
-              let totPrice = 0;
-              resMeals.forEach((resMeal) => {
+            .then((foundMeals) => { // calculate order's total price
+              let totalPrice = 0;
+              foundMeals.forEach((foundMeal) => {
                 const { meals } = updatedOrder;
                 let i = 0;
                 while (i < meals.length) {
                   const { id, portion, cost } = meals[i];
-                  if (resMeal.id === id) {
-                    totPrice += (cost * portion);
+                  if (foundMeal.id === id) {
+                    totalPrice += (cost * portion);
                   }
                   i++;
                 }
               });
-              return totPrice;
+              return totalPrice;
             })
-            .then((totPrice) => {
+            .then((totalPrice) => {
               db.Order.update({
                 deliveryAddress: updatedOrder.deliveryAddress,
-                totalPrice: totPrice,
+                totalPrice,
               }, {
                 where: {
                   id: orderId,
@@ -279,6 +273,7 @@ class OrdersController {
                 },
               })
                 .then((update) => {
+                  // update is an array of a single 0 or 1: [0] or [1]
                   if (update[0]) {
                     db.OrderMeal.destroy({
                       where: {
@@ -288,9 +283,9 @@ class OrdersController {
 
                     return update;
                   }
-                  const err = new Error('Order not found!');
-                  err.status = 404;
-                  return next(err);
+                  const error = new Error('Order not found!');
+                  error.status = 404;
+                  return next(error);
                 })
                 .then((update) => {
                   if (update) {
@@ -301,9 +296,9 @@ class OrdersController {
                         portion: updatedMealsPortion[index],
                         cost: updatedMealsCost[index]
                       })
-                        .catch((err) => {
-                          err.status = 400;
-                          return next(err);
+                        .catch((error) => {
+                          error.status = 500;
+                          return next(error);
                         });
                     });
                     res.status(200).send({
@@ -313,9 +308,9 @@ class OrdersController {
                     });
                   }
                 })
-                .catch((err) => {
-                  err.status = 400;
-                  return next(err);
+                .catch((error) => {
+                  error.status = 500;
+                  return next(error);
                 });
             });
         }
@@ -354,15 +349,15 @@ class OrdersController {
             message: 'delete successful',
           });
         } else {
-          const err = new Error('Order not found!');
-          err.status = 404;
-          return next(err);
+          const error = new Error('Order not found!');
+          error.status = 404;
+          return next(error);
         }
       })
-      .catch((err) => {
-        err = err || new Error('Error occurred while deleting order');
-        err.status = 400;
-        return next(err);
+      .catch((error) => {
+        error = error || new Error('Error occurred while deleting order');
+        error.status = 500;
+        return next(error);
       });
   }
 }

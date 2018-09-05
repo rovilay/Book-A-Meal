@@ -83,9 +83,9 @@ export const loginUser = ({ email, password }) => dispatch => serverReq('post', 
       }));
     }
   })
-  .catch((err) => {
-    if (err.response.data) {
-      const { success, message } = err.response.data;
+  .catch((error) => {
+    if (error.response.data) {
+      const { success, message } = error.response.data;
       deleteInLocalStorage('jwt');
       deleteInLocalStorage('user');
       dispatch(setUserData({

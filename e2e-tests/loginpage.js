@@ -3,13 +3,13 @@ import db from '../models';
 import userData from '../server/helpers/test-data/users';
 
 const {
-  adminUser1
+  catererJohn
 } = userData;
 
 module.exports = {
   before: async () => {
     await db.User.truncate();
-    await db.User.create(adminUser1);
+    await db.User.create(catererJohn);
   },
   beforeEach: (browser) => {
     browser.maximizeWindow();
@@ -23,14 +23,14 @@ module.exports = {
       .waitForElementVisible('body', 1000)
       .click('#nav-menu > a:nth-child(1)')
       .waitForElementVisible('.loginpage', 1000)
-      .setValue('#login-email', `${adminUser1.email}`)
+      .setValue('#login-email', `${catererJohn.email}`)
       .pause(1000)
       .setValue('#login-password', '1234567')
       .waitForElementVisible('.loginbtn', 1000)
       .pause(2000)
       .click('.loginbtn')
       .pause(2000)
-      .assert.containsText('.merienda', `Welcome ${adminUser1.firstName} ${adminUser1.lastName}`)
+      .assert.containsText('.merienda', `Welcome ${catererJohn.firstName} ${catererJohn.lastName}`)
       .pause(2000)
       .end();
   },
@@ -55,7 +55,7 @@ module.exports = {
       .waitForElementVisible('body', 1000)
       .click('#nav-menu > a:nth-child(1)')
       .waitForElementVisible('.loginpage', 1000)
-      .setValue('#login-email', `${adminUser1.email}`)
+      .setValue('#login-email', `${catererJohn.email}`)
       .setValue('#login-password', '123456')
       .waitForElementVisible('.loginbtn', 1000)
       .pause(2000)

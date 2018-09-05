@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import { mockReq, mockRes } from 'sinon-express-mock';
 import sinonChai from 'sinon-chai';
-import validateOrder from '../../../middlewares/validate/orders';
+import validateOrder from '../../../middlewares/validate/validateOrder';
 
 chai.use(chaiHttp);
 chai.use(sinonChai);

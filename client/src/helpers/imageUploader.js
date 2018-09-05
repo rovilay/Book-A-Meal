@@ -27,8 +27,8 @@ const imageUploader = (id) => {
         moveProgressBar(uploadedPercent);
       }
     })
-      .then(res => res.data.url)
-      .catch(err => err);
+      .then(response => response.data.url)
+      .catch(error => error);
   }
 };
 

@@ -3,11 +3,11 @@ import notify from '../helpers/notify';
 import history from '../helpers/history';
 import { SET_SIGNUP_SUCCESS } from './actiontypes';
 
-export const setSuccessfulSignUpMsg = msg => ({
+export const setSuccessfulSignUpMsg = message => ({
   type: SET_SIGNUP_SUCCESS,
   isSignUp: {
     success: true,
-    message: msg
+    message
   }
 });
 
@@ -23,9 +23,9 @@ export const signUp = signUpDetails => dispatch => serverReq('post', '/api/v1/au
       return response.data;
     }
   })
-  .catch(((err) => {
-    if (err.response.data) {
-      const { message } = err.response.data;
+  .catch(((error) => {
+    if (error.response.data) {
+      const { message } = error.response.data;
       return notify(message, 'toast-danger');
     }
   }));

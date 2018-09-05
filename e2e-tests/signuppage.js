@@ -3,7 +3,7 @@ import db from '../models';
 import userData from '../server/helpers/test-data/users';
 
 const {
-  adminUser1,
+  catererJohn,
 } = userData;
 
 module.exports = {
@@ -23,18 +23,20 @@ module.exports = {
       .waitForElementVisible('body', 1000)
       .click('#nav-menu > a:nth-child(2)')
       .waitForElementVisible('.signuppage', 1000)
-      .setValue('#signup-fname', `${adminUser1.firstName}`)
-      .setValue('#signup-lname', `${adminUser1.lastName}`)
-      .setValue('#signup-email', `${adminUser1.email}`)
+      .setValue('#signup-fname', `${catererJohn.firstName}`)
+      .setValue('#signup-lname', `${catererJohn.lastName}`)
+      .setValue('#signup-email', `${catererJohn.email}`)
       .setValue('#signup-role', 'Caterer')
-      .setValue('#signup-phone', `${adminUser1.Phone}`)
-      .setValue('#signup-address', `${adminUser1.address}`)
-      .setValue('#signup-psw', `${adminUser1.password}`)
-      .setValue('#signup-cpsw', `${adminUser1.password}`)
-      .setValue('#signup-city', `${adminUser1.city}`)
-      .setValue('#signup-state', `${adminUser1.state}`)
+      .setValue('#signup-phone', `${catererJohn.Phone}`)
+      .setValue('#signup-address', `${catererJohn.address}`)
+      .setValue('#signup-psw', `${catererJohn.password}`)
+      .setValue('#signup-cpsw', `${catererJohn.password}`)
+      .setValue('#signup-city', `${catererJohn.city}`)
+      .setValue('#signup-state', `${catererJohn.state}`)
       .waitForElementVisible('#signup > p:nth-child(11) > button', 5000)
       .moveToElement('#signup > p:nth-child(11) > button', 10, 10)
+      .pause(2000)
+      .execute('window.scrollTo(0,document.body.scrollHeight)')
       .pause(5000)
       .submitForm('#root > div > div:nth-child(1) > section > div > div > form')
       .pause(2000)
@@ -62,7 +64,7 @@ module.exports = {
       .click('#nav-menu > a:nth-child(2)')
       .waitForElementVisible('.signuppage', 1000)
       .execute('window.scrollTo(0,document.body.scrollHeight)')
-      .setValue('#signup-psw', `${adminUser1.password}`)
+      .setValue('#signup-psw', `${catererJohn.password}`)
       .setValue('#signup-cpsw', '12345')
       .pause(2000)
       .assert.containsText('#signup > p:nth-child(9) > span', 'password do not match!')

@@ -2,10 +2,10 @@ import 'babel-polyfill';
 import db from '../models';
 import {
   menusDatas,
-  admin3MenuMeals,
-  admin4MenuMeals,
-  meals1,
-  meals2
+  catererMariaMenuMeals,
+  catererDejiMenuMeals,
+  caterermariaMeals,
+  catererdejiMeals
 } from '../server/helpers/test-data/menus';
 
 module.exports = {
@@ -17,12 +17,12 @@ module.exports = {
     await db.Meal.destroy({ force: true, truncate: { cascade: true } });
     await db.User.truncate();
 
-    await meals1.map(meal => db.Meal.create(meal));
-    await meals2.map(meal => db.Meal.create(meal));
+    await caterermariaMeals.map(meal => db.Meal.create(meal));
+    await catererdejiMeals.map(meal => db.Meal.create(meal));
 
     await db.Menu.bulkCreate(menusDatas);
-    await db.MenuMeal.bulkCreate(admin3MenuMeals);
-    await db.MenuMeal.bulkCreate(admin4MenuMeals);
+    await db.MenuMeal.bulkCreate(catererMariaMenuMeals);
+    await db.MenuMeal.bulkCreate(catererDejiMenuMeals);
   },
   after: async () => {
     await db.OrderMeal.truncate();
