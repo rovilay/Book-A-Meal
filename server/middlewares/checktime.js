@@ -1,5 +1,9 @@
 import moment from 'moment';
+import dotenv from 'dotenv';
 import db from '../../models/index';
+
+dotenv.config();
+
 /**
  * Restricts user based on time
  *
@@ -50,8 +54,8 @@ class checkTime {
   static canOrder(req, res, next) {
     const err = new Error(`it's ${moment().format('HH:mm')}, we are closed for the day, try again tomorrow!`);
     err.status = 403;
-    // Can only place order between 7 a.m. to 6 p.m.
-    if (moment().hour() >= 7 && moment().hour() <= 18) {
+    // Can only place order between OPENINGHOUR AND CLOSINGHOUR
+    if (moment().hour() >= process.env.OPENINGHOUR && moment().hour() <= process.env.CLOSINGHOUR) {
       return next();
     }
 

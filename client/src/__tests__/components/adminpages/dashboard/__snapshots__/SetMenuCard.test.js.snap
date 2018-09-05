@@ -1,0 +1,56 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SetMenuCard component test should render SetMenuCard correctly 1`] = `
+<AccordionItemWrapper
+  accordionStore={
+    AccordionContainer {
+      "_listeners": Array [],
+      "addItem": [Function],
+      "removeItem": [Function],
+      "setAccordion": [Function],
+      "setExpanded": [Function],
+      "setOnChange": [Function],
+      "state": Object {
+        "accordion": true,
+        "items": Array [],
+        "onChange": [Function],
+      },
+    }
+  }
+  className="accordion__item"
+  disabled={false}
+  expanded={false}
+  hideBodyClassName=""
+>
+  <AccordionItemTitleWrapper
+    className="accordion__title"
+    hideBodyClassName=""
+  >
+    <h3>
+      <span
+        className="postOn"
+      >
+        Create Menu
+      </span>
+    </h3>
+    <FontAwesome
+      name="chevron-down"
+    />
+  </AccordionItemTitleWrapper>
+  <AccordionItemBodyWrapper
+    className="accordion__body"
+    hideBodyClassName="accordion__body--hidden"
+  >
+    <div
+      className="setMenuCard"
+    >
+      <hr />
+      <SetMenuForm
+        editMenu={[MockFunction]}
+        getMenuMeals={[MockFunction]}
+        submitNewMenu={[MockFunction]}
+      />
+    </div>
+  </AccordionItemBodyWrapper>
+</AccordionItemWrapper>
+`;

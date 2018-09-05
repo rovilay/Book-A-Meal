@@ -1,6 +1,6 @@
 import axios from 'axios';
 import dotenv from 'dotenv';
-import { getFromLs } from './Ls';
+import { getFromLocalStorage } from './localstorage';
 
 dotenv.config();
 
@@ -17,26 +17,16 @@ const baseURL = process.env.BASE_URL;
  * @return {Promise} reponse data or error
  */
 async function serverReq(method, url, data = {}, authToken) {
-  const token = getFromLs('jwt') || authToken;
-  try {
-    const instance = await axios({
-      baseURL,
-      headers: {
-        Authorization: `Bearer ${token}`
-      },
-      method,
-      url,
-      data
-    });
-
-    return instance;
-  } catch (err) {
-    if (err.response) {
-      return err.response;
-    }
-
-    return err;
-  }
+  const token = getFromLocalStorage('jwt') || authToken;
+  return axios({
+    baseURL,
+    headers: {
+      Authorization: `Bearer ${token}`
+    },
+    method,
+    url,
+    data
+  });
 }
 
 export default serverReq;

@@ -1,0 +1,91 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MenuAccordion component test should render MenuAccordion correctly 1`] = `
+<AccordionItemWrapper
+  accordionStore={
+    AccordionContainer {
+      "_listeners": Array [],
+      "addItem": [Function],
+      "removeItem": [Function],
+      "setAccordion": [Function],
+      "setExpanded": [Function],
+      "setOnChange": [Function],
+      "state": Object {
+        "accordion": true,
+        "items": Array [],
+        "onChange": [Function],
+      },
+    }
+  }
+  className="accordion__item"
+  disabled={false}
+  expanded={false}
+  hiddenbodyclassname="myhide-accordion"
+  hideBodyClassName=""
+>
+  <AccordionItemTitleWrapper
+    className="accordion__title myaccordiontitle-undefined"
+    hideBodyClassName=""
+    onFocus={[Function]}
+  >
+    <h3>
+      <span
+        className="serial"
+      />
+      <span
+        className="postOn"
+      >
+        September 5, 2018
+      </span>
+    </h3>
+    <FontAwesome
+      name="chevron-down"
+    />
+  </AccordionItemTitleWrapper>
+  <AccordionItemBodyWrapper
+    className="accordion__body"
+    hideBodyClassName="accordion__body--hidden"
+  >
+    <div
+      className="accordion-body"
+    >
+      <div
+        className="menuContainer"
+      >
+        <div
+          className="menu-details"
+        >
+          <p
+            className="menu-id"
+          >
+            <span>
+              Post On:
+            </span>
+            <span>
+              September 5, 2018
+            </span>
+          </p>
+          <p
+            className="menu-id"
+          >
+            <span>
+              Created By:
+            </span>
+            <span />
+          </p>
+        </div>
+        <div
+          className="menu-meals"
+        >
+          <button
+            className="btn-2 show-meals-btn"
+            onClick={[Function]}
+          >
+            Show Meals
+          </button>
+        </div>
+      </div>
+    </div>
+  </AccordionItemBodyWrapper>
+</AccordionItemWrapper>
+`;

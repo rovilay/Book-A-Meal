@@ -1,0 +1,73 @@
+.filter {
+  width: 100%;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  form {
+    display: inline-flex !important;
+    margin: auto;
+    flex-direction: column !important;
+    justify-content: center;
+    align-items: center;
+    width: 80% !important;
+    padding: 5px 10px;
+    .label {
+      color: #000000;
+      flex-basis: 20%;
+      font-size: 16px;
+    }
+  }
+  button {
+    flex-basis: 4%;
+    min-width: auto !important;
+    margin-top: 6px;
+  }
+  .input-div {
+    /* background: rgb(0, 162, 255); */
+    flex-basis: 10%;
+    width: auto;
+    background: transparent !important;
+    border: 1px solid #ccc;
+    display: inline-flex;
+    justify-content: center;
+    padding: 7px;
+    margin: auto 5px;
+    border-radius: 3px;
+    &.inner-select {
+      flex-basis: 20%;
+    }
+    input, select {
+      /* margin: auto */
+      font-size: 14px;
+      border: none;
+      outline: none;
+    }
+  }
+  button {
+    flex-basis: 5%;
+    align-self: center;
+  }
+}
+
+@media screen and (min-width: 700px) {
+  .filter {
+    form {
+      .label {
+        flex-basis: 13%;
+        color: #000000;
+        font-size: 20px;
+        text-align: center;
+      }
+      display: inline-flex !important;
+      margin: auto;
+      flex-direction: row !important;
+      justify-content: center;
+      align-items: center;
+      width: 80% !important;
+      padding: 5px 10px;
+    }
+    .input-div {
+      width: 100%;
+    }
+  }
+}

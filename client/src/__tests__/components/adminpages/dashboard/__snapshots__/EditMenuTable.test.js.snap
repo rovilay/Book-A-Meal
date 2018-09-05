@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditMenuTable component test should render EditMenuTable correctly 1`] = `
+<div
+  className="table-container"
+>
+  <h2
+    className="title"
+  >
+    edit menu
+  </h2>
+  <hr />
+  <form
+    className="editmenu-modal-form"
+    onSubmit={[Function]}
+  >
+    <div
+      className="edit-menu-meals"
+    >
+      <hr />
+      <div
+        className="checkbox-card"
+      >
+        <p
+          className="checkbox"
+          key="3"
+        >
+          SPAGHETTI
+          <input
+            className="meal-check"
+            id="3-edit"
+            name="meal-check"
+            onClick={[Function]}
+            type="checkbox"
+            value="3"
+          />
+        </p>
+        <p
+          className="checkbox"
+          key="4"
+        >
+          YAM AND EGG
+          <input
+            className="meal-check"
+            id="4-edit"
+            name="meal-check"
+            onClick={[Function]}
+            type="checkbox"
+            value="4"
+          />
+        </p>
+      </div>
+    </div>
+    <div
+      className="menu-updatebtn"
+    >
+      <button
+        className="btn-2"
+        disabled={false}
+        id="menu-btn"
+        name="updateMenuBtn"
+        type="submit"
+      >
+        Update Menu
+      </button>
+    </div>
+  </form>
+</div>
+`;

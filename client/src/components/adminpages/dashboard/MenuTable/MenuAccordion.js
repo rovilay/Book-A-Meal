@@ -8,8 +8,8 @@ import PropTypes from 'prop-types';
 import ReactPaginate from 'react-paginate';
 import FontAwesome from 'react-fontawesome';
 import moment from 'moment';
-import swal from 'sweetalert';
-import '../../../../assets/css/accordion.css';
+import sweetAlert from 'sweetalert';
+
 
 class MenuAccordion extends Component {
   constructor(props) {
@@ -20,6 +20,25 @@ class MenuAccordion extends Component {
     };
 
     this.handlePaginationClick = this.handlePaginationClick.bind(this);
+    this.handleAccordionBodyClose = this.handleAccordionBodyClose.bind(this);
+    this.handleAccordionItemTitleFocus = this.handleAccordionItemTitleFocus.bind(this);
+    this.showMenuMeals = this.showMenuMeals.bind(this);
+    this.hideMenuMeals = this.hideMenuMeals.bind(this);
+    this.handleAddMealsToMenu = this.handleAddMealsToMenu.bind(this);
+    this.deleteMealInMenu = this.deleteMealInMenu.bind(this);
+  }
+
+  /**
+   * closes accordion body if menu meals is on show
+   *
+   * @param {object} className className of DOM element to watch for
+   */
+  handleAccordionBodyClose(className) {
+    const element = document.querySelector(className);
+    if (element) {
+      const bodySelected = element.getAttribute('aria-selected');
+      (bodySelected) && this.setState({ isInfo: false });
+    }
   }
 
   /**
@@ -37,19 +56,90 @@ class MenuAccordion extends Component {
       });
   }
 
+  /**
+   * closes accordion on focus
+   */
+  handleAccordionItemTitleFocus() {
+    return this.handleAccordionBodyClose(`.myaccordiontitle-${this.props.item.menuId}`);
+  }
+
+  /**
+   * shows menu meals
+   * @param {*} event DOM event
+   */
+  showMenuMeals(event) {
+    event.preventDefault();
+    const { Meals: mealUrl } = this.props.item;
+    this.props.getMenuMeals(mealUrl, {})
+      .then(() => {
+        this.setState({ isInfo: true });
+      });
+  }
+
+  /**
+   * hides menu meals
+   * @param {*} event DOM event
+   */
+  hideMenuMeals(event) {
+    event.preventDefault();
+    this.setState({ isInfo: false });
+  }
+
+  /**
+   * set menu to add meals
+   * @param {*} event DOM event
+   */
+  handleAddMealsToMenu(event) {
+    event.preventDefault();
+    const { item, menuMeals } = this.props;
+    const { meals } = menuMeals;
+
+    const postOn = moment(item.postOn).format('LL');
+    this.props.editMenu({ menuId: item.menuId, postOn, meals });
+  }
+
+  /**
+   * deletes meal in a menu
+   * @param {*} meal meal to delete
+   */
+  deleteMealInMenu(meal) {
+    return (event) => {
+      event.preventDefault();
+      const { item, menuMeals } = this.props;
+      const { Meals: mealUrl } = item;
+      const { meals } = menuMeals;
+
+      sweetAlert({
+        text: 'Are you sure you want to remove this meal?',
+        buttons: true,
+        dangerMode: true,
+      })
+        .then((confirmed) => {
+          if (confirmed) {
+            const MenuMealsToDelete = meals.filter(n => n.id === meal.id);
+            const MenuMealsToDeleteIds = MenuMealsToDelete.map(menuMeal => menuMeal.id);
+            this.props.deleteMenuMeal({ mealUrl, meals: MenuMealsToDeleteIds });
+          }
+        })
+        .catch(err => err);
+    };
+  }
+
   render() {
     const {
       isInfo,
     } = this.state;
+
     const {
       item,
       menuMeals,
-      getMenuMeals,
-      editMenu,
-      deleteMenuMeal
     } = this.props;
 
-    const { meals, pagination } = menuMeals;
+    const {
+      meals,
+      pagination
+    } = menuMeals;
+
     const {
       numOfPages,
       count
@@ -58,16 +148,21 @@ class MenuAccordion extends Component {
     const {
       sn,
       menuId,
-      createdBy,
-      Meals: mealUrl
+      createdBy
     } = item;
 
     const postOn = moment(item.postOn).format('LL');
     const today = moment().format('YYYY-MM-DD');
 
     return (
-      <AccordionItem key={sn}>
-        <AccordionItemTitle>
+      <AccordionItem
+        key={sn}
+        hiddenbodyclassname="myhide-accordion"
+      >
+        <AccordionItemTitle
+          className={`accordion__title myaccordiontitle-${menuId}`}
+          onFocus={this.handleAccordionItemTitleFocus}
+        >
           <h3>
             <span className="serial">{sn}</span>
             <span className="postOn">{postOn}</span>
@@ -98,13 +193,7 @@ class MenuAccordion extends Component {
                   (
                   <button
                     className="btn-2 show-meals-btn"
-                    onClick={(e) => {
-                      e.preventDefault();
-                      getMenuMeals(mealUrl, {})
-                        .then(() => {
-                          this.setState({ isInfo: true });
-                        });
-                    }}
+                    onClick={this.showMenuMeals}
                   >
                     Show Meals
                   </button>
@@ -118,10 +207,7 @@ class MenuAccordion extends Component {
                   <div className="meal-hide-add-btns show-mobile">
                     <button
                       className="responsive-btn-2 hide-meals-btn"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        this.setState({ isInfo: false });
-                      }}
+                      onClick={this.hideMenuMeals}
                     >
                       <FontAwesome
                         name = "eye-slash"
@@ -135,10 +221,7 @@ class MenuAccordion extends Component {
                       &&
                       <button
                         className="responsive-btn-2 add-meals-btn"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          editMenu({ menuId, postOn, meals });
-                        }}
+                        onClick={this.handleAddMealsToMenu}
                       >
                         <FontAwesome
                           name = "plus"
@@ -156,10 +239,7 @@ class MenuAccordion extends Component {
                   <div className="meal-hide-add-btns hide-mobile">
                     <button
                       className="responsive-btn-2 hide-meals-btn"
-                      onClick={(e) => {
-                        e.preventDefault();
-                        this.setState({ isInfo: false });
-                      }}
+                      onClick={this.hideMenuMeals}
                     >
                       Hide Meals
                     </button>
@@ -169,10 +249,7 @@ class MenuAccordion extends Component {
                       &&
                       <button
                         className="responsive-btn-2 add-meals-btn"
-                        onClick={(e) => {
-                          e.preventDefault();
-                          editMenu({ menuId, postOn, meals });
-                        }}
+                        onClick={this.handleAddMealsToMenu}
                       >
                         Add Meals
                       </button>
@@ -202,24 +279,8 @@ class MenuAccordion extends Component {
                             (moment(today, 'YYYY-MM-DD').isSameOrBefore(item.postOn))
                             &&
                             <button
-                              className="btn-3 box-shadow"
-                              onClick={(e) => {
-                                e.preventDefault();
-
-                                swal({
-                                  text: 'Are you sure you want to remove this meal?',
-                                  buttons: true,
-                                  dangerMode: true,
-                                })
-                                  .then((confirmed) => {
-                                    if (confirmed) {
-                                      const newMenuMeals = meals.filter(n => n.id === meal.id);
-                                      const MenuMealsToDelete = newMenuMeals.map(menuMeal => menuMeal.id);
-                                      deleteMenuMeal({ mealUrl, meals: MenuMealsToDelete });
-                                    }
-                                  })
-                                  .catch(err => err);
-                              }}
+                              className="btn-3 box-shadow deleteMeal"
+                              onClick={this.deleteMealInMenu(meal)}
                             >
                               <FontAwesome
                                 name="trash"

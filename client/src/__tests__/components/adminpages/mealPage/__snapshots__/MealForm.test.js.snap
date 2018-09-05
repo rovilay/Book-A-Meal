@@ -1,0 +1,560 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MealForm component test should call \`addMeal\` on form submit if not in edit state 1`] = `
+<AccordionItemWrapper
+  accordionStore={
+    AccordionContainer {
+      "_listeners": Array [],
+      "addItem": [Function],
+      "removeItem": [Function],
+      "setAccordion": [Function],
+      "setExpanded": [Function],
+      "setOnChange": [Function],
+      "state": Object {
+        "accordion": true,
+        "items": Array [],
+        "onChange": [Function],
+      },
+    }
+  }
+  className="accordion__item"
+  disabled={false}
+  expanded={false}
+  hideBodyClassName=""
+>
+  <AccordionItemTitleWrapper
+    className="accordion__title"
+    hideBodyClassName=""
+  >
+    <h3
+      className="form-title"
+      id="form-title"
+    >
+      Add Meal
+    </h3>
+    <FontAwesome
+      name="chevron-down"
+    />
+  </AccordionItemTitleWrapper>
+  <AccordionItemBodyWrapper
+    className="accordion__body"
+    hideBodyClassName="accordion__body--hidden"
+  >
+    <div
+      className="card"
+    >
+      <div
+        className="card-body"
+        id="form-card"
+      >
+        <form
+          className="meal-form"
+          id="meal-form"
+          onSubmit={[Function]}
+        >
+          <div
+            className="name"
+          >
+            <label
+              htmlFor="name"
+            >
+              Name
+            </label>
+            <p
+              className="input-div"
+            >
+              <input
+                id="meal-name"
+                name="title"
+                onChange={[Function]}
+                placeholder="Enter meal name"
+                required={true}
+                type="text"
+                value="EBA AND EGUSI"
+              />
+            </p>
+          </div>
+          <div
+            className="price"
+          >
+            <label
+              htmlFor="price"
+            >
+              Unit Price (₦)
+            </label>
+            <p
+              className="input-div"
+            >
+              <input
+                id="price"
+                max="1000000"
+                min="1"
+                name="price"
+                onChange={[Function]}
+                placeholder="Enter price"
+                required={true}
+                type="number"
+                value={1000}
+              />
+            </p>
+          </div>
+          <div
+            className="dsc"
+          >
+            <label
+              htmlFor="dsc"
+            >
+              Description
+            </label>
+            <p
+              className="input-div desc"
+            >
+              <input
+                id="dsc"
+                maxLength="100"
+                name="description"
+                onChange={[Function]}
+                placeholder="Describe meal in not more than 100 words."
+                required={true}
+                type="text"
+                value="So sweet"
+              />
+            </p>
+          </div>
+          <div>
+            <label
+              htmlFor="image"
+            >
+              Image
+            </label>
+            <p
+              className="input-div"
+            >
+              <input
+                accept="image/*"
+                defaultValue=""
+                id="meal-image"
+                name="image"
+                onChange={[MockFunction]}
+                placeholder="Enter img link"
+                type="file"
+              />
+            </p>
+          </div>
+          <div
+            className="progress"
+          >
+            <p
+              className="progressBar"
+              id="progressBar"
+            >
+              0%
+            </p>
+          </div>
+          <p
+            className="uploadedImage"
+          >
+            <img
+              alt="name"
+              src="http://image.com"
+            />
+          </p>
+          <p
+            className="buttons"
+          >
+            <button
+              className="btn-2"
+              disabled={false}
+              id="add-btn"
+              name="addbtn"
+              type="submit"
+            >
+              <FontAwesome
+                name="plus"
+              />
+              ADD MEAL
+            </button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </AccordionItemBodyWrapper>
+</AccordionItemWrapper>
+`;
+
+exports[`MealForm component test should call \`handleChange\` on form input change 1`] = `
+<AccordionItemWrapper
+  accordionStore={
+    AccordionContainer {
+      "_listeners": Array [],
+      "addItem": [Function],
+      "removeItem": [Function],
+      "setAccordion": [Function],
+      "setExpanded": [Function],
+      "setOnChange": [Function],
+      "state": Object {
+        "accordion": true,
+        "items": Array [],
+        "onChange": [Function],
+      },
+    }
+  }
+  className="accordion__item"
+  disabled={false}
+  expanded={false}
+  hideBodyClassName=""
+>
+  <AccordionItemTitleWrapper
+    className="accordion__title"
+    hideBodyClassName=""
+  >
+    <h3
+      className="form-title"
+      id="form-title"
+    >
+      Add Meal
+    </h3>
+    <FontAwesome
+      name="chevron-down"
+    />
+  </AccordionItemTitleWrapper>
+  <AccordionItemBodyWrapper
+    className="accordion__body"
+    hideBodyClassName="accordion__body--hidden"
+  >
+    <div
+      className="card"
+    >
+      <div
+        className="card-body"
+        id="form-card"
+      >
+        <form
+          className="meal-form"
+          id="meal-form"
+          onSubmit={[Function]}
+        >
+          <div
+            className="name"
+          >
+            <label
+              htmlFor="name"
+            >
+              Name
+            </label>
+            <p
+              className="input-div"
+            >
+              <input
+                id="meal-name"
+                name="title"
+                onChange={[Function]}
+                placeholder="Enter meal name"
+                required={true}
+                type="text"
+                value="EBA AND EGUSI"
+              />
+            </p>
+          </div>
+          <div
+            className="price"
+          >
+            <label
+              htmlFor="price"
+            >
+              Unit Price (₦)
+            </label>
+            <p
+              className="input-div"
+            >
+              <input
+                id="price"
+                max="1000000"
+                min="1"
+                name="price"
+                onChange={[Function]}
+                placeholder="Enter price"
+                required={true}
+                type="number"
+                value={1000}
+              />
+            </p>
+          </div>
+          <div
+            className="dsc"
+          >
+            <label
+              htmlFor="dsc"
+            >
+              Description
+            </label>
+            <p
+              className="input-div desc"
+            >
+              <input
+                id="dsc"
+                maxLength="100"
+                name="description"
+                onChange={[Function]}
+                placeholder="Describe meal in not more than 100 words."
+                required={true}
+                type="text"
+                value="So sweet"
+              />
+            </p>
+          </div>
+          <div>
+            <label
+              htmlFor="image"
+            >
+              Image
+            </label>
+            <p
+              className="input-div"
+            >
+              <input
+                accept="image/*"
+                defaultValue=""
+                id="meal-image"
+                name="image"
+                onChange={[MockFunction]}
+                placeholder="Enter img link"
+                type="file"
+              />
+            </p>
+          </div>
+          <div
+            className="progress"
+          >
+            <p
+              className="progressBar"
+              id="progressBar"
+            >
+              0%
+            </p>
+          </div>
+          <p
+            className="uploadedImage"
+          >
+            <img
+              alt="name"
+              src="http://image.com"
+            />
+          </p>
+          <p
+            className="buttons"
+          >
+            <button
+              className="btn-2"
+              disabled={false}
+              id="add-btn"
+              name="addbtn"
+              type="submit"
+            >
+              <FontAwesome
+                name="plus"
+              />
+              ADD MEAL
+            </button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </AccordionItemBodyWrapper>
+</AccordionItemWrapper>
+`;
+
+exports[`MealForm component test should render MealForm correctly 1`] = `
+<AccordionItemWrapper
+  accordionStore={
+    AccordionContainer {
+      "_listeners": Array [],
+      "addItem": [Function],
+      "removeItem": [Function],
+      "setAccordion": [Function],
+      "setExpanded": [Function],
+      "setOnChange": [Function],
+      "state": Object {
+        "accordion": true,
+        "items": Array [],
+        "onChange": [Function],
+      },
+    }
+  }
+  className="accordion__item"
+  disabled={false}
+  expanded={false}
+  hideBodyClassName=""
+>
+  <AccordionItemTitleWrapper
+    className="accordion__title"
+    hideBodyClassName=""
+  >
+    <h3
+      className="form-title"
+      id="form-title"
+    >
+      Edit Meal
+    </h3>
+    <FontAwesome
+      name="chevron-down"
+    />
+  </AccordionItemTitleWrapper>
+  <AccordionItemBodyWrapper
+    className="accordion__body"
+    hideBodyClassName="accordion__body--hidden"
+  >
+    <div
+      className="card"
+    >
+      <div
+        className="card-body"
+        id="form-card"
+      >
+        <form
+          className="meal-form"
+          id="meal-form"
+          onSubmit={[Function]}
+        >
+          <div
+            className="name"
+          >
+            <label
+              htmlFor="name"
+            >
+              Name
+            </label>
+            <p
+              className="input-div"
+            >
+              <input
+                id="meal-name"
+                name="title"
+                onChange={[Function]}
+                placeholder="Enter meal name"
+                required={true}
+                type="text"
+                value="EBA AND EGUSI"
+              />
+            </p>
+          </div>
+          <div
+            className="price"
+          >
+            <label
+              htmlFor="price"
+            >
+              Unit Price (₦)
+            </label>
+            <p
+              className="input-div"
+            >
+              <input
+                id="price"
+                max="1000000"
+                min="1"
+                name="price"
+                onChange={[Function]}
+                placeholder="Enter price"
+                required={true}
+                type="number"
+                value={1000}
+              />
+            </p>
+          </div>
+          <div
+            className="dsc"
+          >
+            <label
+              htmlFor="dsc"
+            >
+              Description
+            </label>
+            <p
+              className="input-div desc"
+            >
+              <input
+                id="dsc"
+                maxLength="100"
+                name="description"
+                onChange={[Function]}
+                placeholder="Describe meal in not more than 100 words."
+                required={true}
+                type="text"
+                value="So sweet"
+              />
+            </p>
+          </div>
+          <div>
+            <label
+              htmlFor="image"
+            >
+              Image
+            </label>
+            <p
+              className="input-div"
+            >
+              <input
+                accept="image/*"
+                defaultValue=""
+                id="meal-image"
+                name="image"
+                onChange={[MockFunction]}
+                placeholder="Enter img link"
+                type="file"
+              />
+            </p>
+          </div>
+          <div
+            className="progress"
+          >
+            <p
+              className="progressBar"
+              id="progressBar"
+            >
+              0%
+            </p>
+          </div>
+          <p
+            className="uploadedImage"
+          >
+            <img
+              alt="name"
+              src="http://image.com"
+            />
+          </p>
+          <p
+            className="buttons edit-buttons"
+          >
+            <button
+              className="btn-2"
+              disabled={false}
+              id="update-btn"
+              name="updatebtn"
+              type="submit"
+            >
+              <FontAwesome
+                name="arrow-circle-up"
+              />
+              UPDATE MEAL
+            </button>
+            <button
+              className="btn-2 back-btn"
+              disabled={false}
+              id="back-btn"
+              name="backbtn"
+              onClick={[Function]}
+              type="submit"
+            >
+              <FontAwesome
+                name="arrow-circle-left"
+              />
+              BACK
+            </button>
+          </p>
+        </form>
+      </div>
+    </div>
+  </AccordionItemBodyWrapper>
+</AccordionItemWrapper>
+`;

@@ -1,0 +1,61 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`LoginPage component test should map state to props 1`] = `
+Object {
+  "signUpSuccess": Object {
+    "message": "",
+    "success": false,
+  },
+  "user": Object {
+    "admin": "",
+    "expire": "",
+    "firstName": "",
+    "id": "",
+    "isLogin": false,
+    "lastName": "",
+    "loginMessage": "",
+  },
+}
+`;
+
+exports[`LoginPage component test should render LoginPage correctly 1`] = `
+<section
+  className="loginpage"
+  id="loginpage"
+>
+  <div
+    className="loginform-container"
+  >
+    <LoginForm
+      email=""
+      history={Object {}}
+      logUserIn={[Function]}
+      loginUser={[MockFunction]}
+      onChange={[Function]}
+      password=""
+      setSuccessfulSignUpMsg={[MockFunction]}
+      signUpSuccess={
+        Object {
+          "message": "you are signed up",
+        }
+      }
+      user={
+        Object {
+          "email": "test@test.com",
+          "password": "1234567",
+        }
+      }
+    />
+    <p
+      className="link"
+    >
+      <Link
+        replace={false}
+        to="/SignUp"
+      >
+        Click Here to SignUp!
+      </Link>
+    </p>
+  </div>
+</section>
+`;

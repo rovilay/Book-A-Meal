@@ -1,0 +1,168 @@
+.loginpage {
+  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.75)), url('https://res.cloudinary.com/dcqnswemi/image/upload/v1532282490/loginpag3.jpg') center #333 no-repeat;
+  background-attachment: scroll;
+  background-size: cover;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-content: center;
+  padding: 10px;
+  font-size: 7vw;
+}
+
+.loginform-container {
+  align-self: center;
+  margin: auto;
+  width: 100%;
+  overflow: hidden;
+  padding: 20px;
+  background: #ffffff;
+  display: flex;
+  flex-direction: column;
+  border-radius: 10px;
+  font-size: .5em;
+}
+
+.loginpage .loginform-container a {
+  color: #61B750;
+  text-decoration: none;
+  line-height: .7;
+  cursor: pointer;
+  &:hover {
+    color: #D27C41;
+  }
+}
+
+.loginform-container {
+  .link {
+    align-self: center;
+  }
+  .form-card {
+    border-radius: 10px;
+    padding: .3em;
+    width: 100%;
+    height: auto;
+    display: flex;
+    flex-direction: column;
+    font-size: 16px;
+  }
+}
+
+.form-card {
+  .login-form-title {
+    color: rgb(202, 124, 69);
+    text-transform: uppercase;
+    font-size: 28px;
+    font-weight: 600;
+    text-align: center;
+  }
+  hr {
+    color: #cccccc;
+    size: 3px;
+  }
+}
+
+.login-form p {
+  margin-top: 15px;
+  justify-content: space-between;
+  label {
+    font-size: 1.2em;
+    font-weight: 400;
+  }
+}
+
+.form-card form {
+  button {
+    width: 100%;
+    height: 40px;
+    outline: none;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+  input {
+    &[type=text], &[type=email], &[type=password] {
+      width: 100%;
+      height: 40px;
+      outline: none;
+      padding: 12px;
+      border: 1px solid #ccc;
+      border-radius: 4px;
+    }
+  }
+  button {
+    width: 100%;
+    height: 40px;
+    outline: none;
+    padding: 12px;
+    border: 1px solid #ccc;
+    border-radius: 4px;
+  }
+}
+
+input:focus {
+  outline-color: #D27C41;
+}
+
+button {
+  outline: none;
+}
+
+.form-card .asterik {
+  color: red;
+}
+
+.login-form p button {
+  background: #61B750;
+  color: #ffffff;
+  cursor: pointer;
+}
+
+.form-card .btn-1 {
+  border: none;
+  background: #61B750;
+  color: #fff;
+  padding: 1em 2em;
+  font-size: 1em;
+  text-align: center;
+  border-radius: 0.5em;
+  text-decoration: none;
+  cursor: pointer;
+  display: block;
+  &:hover {
+    background: #ff8619;
+    transition: background-color 2s ease-out;
+  }
+}
+
+.btn-1:focus {
+  background: #ff8619;
+  transition: background-color 2s ease-out;
+}
+
+/* alert */
+
+.alert-danger {
+  color: rgb(240, 98, 98);
+}
+
+.alert-success {
+  color: #48e048;
+}
+
+@media screen and (min-width: 700px) {
+  .loginpage .loginform-container {
+    width: 90%;
+    font-size: 30px;
+    a {
+      font-size: 0.5em;
+    }
+  }
+}
+
+@media screen and (min-width: 900px) {
+  .loginpage .loginform-container {
+    width: 50%;
+    font-size: 30px;
+  }
+}

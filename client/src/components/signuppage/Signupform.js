@@ -3,8 +3,7 @@
 import React from 'react';
 import validator from 'validator';
 import PropTypes from 'prop-types';
-import { Link, Redirect } from 'react-router-dom';
-// import { connect } from 'react-redux';
+import { Link } from 'react-router-dom';
 import classname from 'classnames';
 
 const SignUpForm = props => (
@@ -25,7 +24,7 @@ const SignUpForm = props => (
       Sign Up
     </div>
     <hr />
-    <form id="signup" className="signup-form" onSubmit={e => props.submit(e)}>
+    <form id="signup" className="signup-form" onSubmit={props.submit}>
       <p>
         <label htmlFor="firstName">
           First name
@@ -39,7 +38,7 @@ const SignUpForm = props => (
           name="firstName"
           id="signup-fname"
           value={props.formValues.firstName}
-          onChange={e => props.change(e)}
+          onChange={props.change}
           required
         />
         {
@@ -69,7 +68,7 @@ const SignUpForm = props => (
           name="lastName"
           id="signup-lname"
           value={props.formValues.lastName}
-          onChange={e => props.change(e)}
+          onChange={props.change}
           required
         />
         {
@@ -99,7 +98,7 @@ const SignUpForm = props => (
           id="signup-email"
           name="email"
           value={props.formValues.email}
-          onChange={e => props.change(e)}
+          onChange={props.change}
           required
         />
         {
@@ -121,7 +120,7 @@ const SignUpForm = props => (
           *
           </span>
         </label>
-        <select name="admin" id="signup-role" onChange={e => props.change(e)} required>
+        <select name="admin" id="signup-role" onChange={props.change} required>
           <option value="">
             Choose role
           </option>
@@ -157,7 +156,7 @@ const SignUpForm = props => (
           name="Phone"
           id="signup-phone"
           value={props.formValues.Phone}
-          onChange={e => props.change(e)}
+          onChange={props.change}
           required
         />
       </p>
@@ -175,7 +174,7 @@ const SignUpForm = props => (
           placeholder="Enter permanent address"
           name="address"
           value={props.formValues.address}
-          onChange={e => props.change(e)}
+          onChange={props.change}
           required
         />
       </p>
@@ -193,7 +192,7 @@ const SignUpForm = props => (
           placeholder="Enter City"
           name="city"
           value={props.formValues.city}
-          onChange={e => props.change(e)}
+          onChange={props.change}
           required
         />
         {
@@ -222,7 +221,7 @@ const SignUpForm = props => (
           placeholder="Enter State"
           name="state"
           value={props.formValues.state}
-          onChange={e => props.change(e)}
+          onChange={props.change}
           required
         />
         {
@@ -251,7 +250,7 @@ const SignUpForm = props => (
           placeholder="Enter Password"
           name="password"
           value={props.formValues.password}
-          onChange={e => props.change(e)}
+          onChange={props.change}
           required
         />
         {
@@ -284,7 +283,7 @@ const SignUpForm = props => (
           placeholder="Confirm Password"
           name="cpassword"
           value={props.formValues.cpassword}
-          onChange={e => props.change(e)}
+          onChange={props.change}
           required
         />
         {
@@ -331,10 +330,6 @@ const SignUpForm = props => (
       {props.formValues.message}
     </p>
   }
-
-    {
-      props.formValues.redirect && <Redirect to="/login" />
-    }
   </div>
 );
 

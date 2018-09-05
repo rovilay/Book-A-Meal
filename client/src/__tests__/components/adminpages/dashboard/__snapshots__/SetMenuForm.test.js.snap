@@ -1,0 +1,72 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`SetMenuForm component test should render SetMenuForm correctly 1`] = `
+<form
+  className="setmenu-form"
+  onSubmit={[Function]}
+>
+  <div
+    className="date"
+  >
+    <label
+      htmlFor="date"
+    >
+      Post on:
+    </label>
+    <p
+      className="input-div"
+    >
+      <input
+        id="postOn"
+        max="2018-09-07"
+        min="2018-09-05"
+        name="menu-date"
+        placeholder="DD / MM / YYYY"
+        required={true}
+        type="date"
+      />
+    </p>
+  </div>
+  <hr />
+  <MealCheckBoxCard
+    mealPagination={Object {}}
+    meals={Array []}
+    newMenuMeals={
+      Array [
+        Object {
+          "id": "1",
+          "title": "EBA AND EGUSI",
+        },
+        Object {
+          "id": "2",
+          "title": "SALAD",
+        },
+        Object {
+          "id": "3",
+          "title": "SPAGHETTI",
+        },
+        Object {
+          "id": "4",
+          "title": "YAM AND EGG",
+        },
+      ]
+    }
+    setNewMenuMeal={[MockFunction]}
+    submitNewMenu={[MockFunction]}
+  />
+  <hr />
+  <p
+    className="submit-btn"
+  >
+    <button
+      className="btn-2"
+      disabled={false}
+      id="addbtn"
+      name="addbtn"
+      type="submit"
+    >
+      Add Menu
+    </button>
+  </p>
+</form>
+`;

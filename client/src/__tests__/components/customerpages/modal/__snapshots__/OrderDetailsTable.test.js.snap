@@ -1,0 +1,210 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`EditOrderTable component test should render EditOrderTable correctly 1`] = `
+<div
+  className="modal-container"
+>
+  <div
+    className="order-details"
+  >
+    <h2
+      className="title"
+    >
+      Order Details
+    </h2>
+    <hr />
+    <p>
+      <span
+        className="bold"
+      >
+        Date:
+      </span>
+       
+      September 1, 2018
+    </p>
+    <p>
+      <span
+        className="bold"
+      >
+        Time:
+      </span>
+       
+      00:00
+    </p>
+    <p>
+      <span
+        className="bold"
+      >
+        Address:
+      </span>
+       
+      isuti rd
+    </p>
+  </div>
+  <div
+    className="container-test"
+  >
+    <div
+      className="row head"
+    >
+      <p
+        className="row-item"
+        key="0"
+      >
+        S/N
+      </p>
+      <p
+        className="row-item meal-title"
+        key="1"
+      >
+        Meal
+      </p>
+      <p
+        className="row-item"
+        key="2"
+      >
+        Unit Cost
+      </p>
+      <p
+        className="row-item"
+        key="3"
+      >
+        Portion
+      </p>
+      <p
+        className="row-item"
+        key="4"
+      >
+        Cost
+      </p>
+    </div>
+    <CustomerOrderTableRow
+      content={
+        Object {
+          "Meals": Array [
+            Object {
+              "OrderMeal": Object {
+                "cost": 400,
+                "portion": 1,
+              },
+              "id": 1,
+              "title": "Eba and Egusi",
+            },
+            Object {
+              "OrderMeal": Object {
+                "cost": 800,
+                "portion": 2,
+              },
+              "id": 2,
+              "title": "Ewa",
+            },
+          ],
+          "createdAt": "2018-09-01",
+          "deliveryAddress": "isuti rd",
+          "orderId": 6,
+        }
+      }
+      getOrderMeals={[Function]}
+      id={1}
+      isEdit={false}
+      item={
+        Object {
+          "Meal": "Eba and Egusi",
+          "cost": 400,
+          "portion": 1,
+          "sn": NaN,
+          "unitCost": 400,
+        }
+      }
+      key="1"
+      orderCreatedAt={"2018-09-05T01:49:07.618Z"}
+      orderedMealsLength={1}
+      orderedMealsPagination={
+        Object {
+          "count": 13,
+          "limit": 12,
+          "numOfPages": 2,
+        }
+      }
+      title="Order Details"
+    />
+    <CustomerOrderTableRow
+      content={
+        Object {
+          "Meals": Array [
+            Object {
+              "OrderMeal": Object {
+                "cost": 400,
+                "portion": 1,
+              },
+              "id": 1,
+              "title": "Eba and Egusi",
+            },
+            Object {
+              "OrderMeal": Object {
+                "cost": 800,
+                "portion": 2,
+              },
+              "id": 2,
+              "title": "Ewa",
+            },
+          ],
+          "createdAt": "2018-09-01",
+          "deliveryAddress": "isuti rd",
+          "orderId": 6,
+        }
+      }
+      getOrderMeals={[Function]}
+      id={2}
+      isEdit={false}
+      item={
+        Object {
+          "Meal": "Ewa",
+          "cost": 1600,
+          "portion": 2,
+          "sn": NaN,
+          "unitCost": 800,
+        }
+      }
+      key="2"
+      orderCreatedAt={"2018-09-05T01:49:07.618Z"}
+      orderedMealsLength={1}
+      orderedMealsPagination={
+        Object {
+          "count": 13,
+          "limit": 12,
+          "numOfPages": 2,
+        }
+      }
+      title="Order Details"
+    />
+  </div>
+  <div
+    className="modal-pagination"
+  >
+    <PaginationBoxView
+      activeClassName="active"
+      breakClassName="break-me"
+      breakLabel={
+        <a
+          href=""
+        >
+          ...
+        </a>
+      }
+      containerClassName="pagination"
+      disableInitialCallback={false}
+      disabledClassName="disabled"
+      marginPagesDisplayed={2}
+      nextClassName="next"
+      nextLabel=">>"
+      onPageChange={[Function]}
+      pageCount={2}
+      pageRangeDisplayed={5}
+      previousClassName="previous"
+      previousLabel="<<"
+      subContainerClassName="pages pagination"
+    />
+  </div>
+</div>
+`;

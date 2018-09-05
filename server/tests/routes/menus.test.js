@@ -51,7 +51,7 @@ describe('Menus API routes', () => {
 
   before(async () => {
     await db.User.truncate();
-    await db.Meal.truncate();
+    await db.Meal.destroy({ force: true, truncate: { cascade: true }});
     await db.Menu.truncate();
     await db.MenuMeal.truncate();
 
@@ -622,7 +622,7 @@ describe('Menus API routes', () => {
     await db.Menu.truncate();
     await db.MenuMeal.truncate();
     await db.User.truncate();
-    await db.Meal.truncate();
+    await db.Meal.destroy({ force: true, truncate: { cascade: true }});
   })
 });
 

@@ -1,0 +1,259 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomerDashboard component test should map state to props 1`] = `
+Object {
+  "cart": Array [],
+  "cartTotalPrice": 0,
+}
+`;
+
+exports[`CustomerDashboard component test should render \`Cart\` correctly 1`] = `
+<section
+  className="cartpage"
+>
+  <div
+    className="title merienda"
+    id="cart-title"
+  >
+    <div>
+      <FontAwesome
+        id="mobile-menu"
+        name="cart-arrow-down"
+      />
+    </div>
+    <h1>
+      Your Cart
+    </h1>
+  </div>
+  <hr />
+  <form
+    onSubmit={[Function]}
+  >
+    <div
+      className="address"
+    >
+      <label
+        htmlFor="address"
+      >
+        Address:
+      </label>
+      <div
+        className="input-div"
+      >
+        <input
+          id="cart-address"
+          name="deliveryAddress"
+          onChange={[Function]}
+          placeholder="Enter delivery address"
+          required={true}
+          type="text"
+          value=""
+        />
+      </div>
+    </div>
+    <div
+      className="container-test"
+    >
+      <div
+        className="row head"
+      >
+        <p
+          className="row-item"
+          key="0"
+        >
+          S/N
+        </p>
+        <p
+          className="row-item"
+          key="1"
+        >
+          Meal
+        </p>
+        <p
+          className="row-item"
+          key="2"
+        >
+          Unit Price
+        </p>
+        <p
+          className="row-item"
+          key="3"
+        >
+          Portion
+        </p>
+        <p
+          className="row-item"
+          key="4"
+        >
+          Price
+        </p>
+        <p
+          className="row-item"
+          key="5"
+        >
+          Actions
+        </p>
+      </div>
+      <CartTableRow
+        actions={
+          Object {
+            "delete": true,
+            "edit": false,
+            "info": false,
+          }
+        }
+        cart={
+          Array [
+            Object {
+              "Meals": "api/v1/orders/1",
+              "createdAt": "2018-08-23",
+              "id": 1,
+            },
+            Object {
+              "Meals": "api/v1/orders/2",
+              "createdAt": "2018-08-24",
+              "id": 2,
+            },
+            Object {
+              "Meals": "api/v1/orders/3",
+              "createdAt": "2018-08-25",
+              "id": 3,
+            },
+          ]
+        }
+        cartTotalPrice={1100}
+        deleteMealInCart={[Function]}
+        deleteRow={[Function]}
+        emptyCart={[Function]}
+        history={Object {}}
+        item={
+          Object {
+            "Meals": "api/v1/orders/1",
+            "createdAt": "2018-08-23",
+            "id": 1,
+          }
+        }
+        key="0"
+        postOrder={[Function]}
+        showId={false}
+        sn={1}
+        updatePortion={[Function]}
+      />
+      <CartTableRow
+        actions={
+          Object {
+            "delete": true,
+            "edit": false,
+            "info": false,
+          }
+        }
+        cart={
+          Array [
+            Object {
+              "Meals": "api/v1/orders/1",
+              "createdAt": "2018-08-23",
+              "id": 1,
+            },
+            Object {
+              "Meals": "api/v1/orders/2",
+              "createdAt": "2018-08-24",
+              "id": 2,
+            },
+            Object {
+              "Meals": "api/v1/orders/3",
+              "createdAt": "2018-08-25",
+              "id": 3,
+            },
+          ]
+        }
+        cartTotalPrice={1100}
+        deleteMealInCart={[Function]}
+        deleteRow={[Function]}
+        emptyCart={[Function]}
+        history={Object {}}
+        item={
+          Object {
+            "Meals": "api/v1/orders/2",
+            "createdAt": "2018-08-24",
+            "id": 2,
+          }
+        }
+        key="1"
+        postOrder={[Function]}
+        showId={false}
+        sn={2}
+        updatePortion={[Function]}
+      />
+      <CartTableRow
+        actions={
+          Object {
+            "delete": true,
+            "edit": false,
+            "info": false,
+          }
+        }
+        cart={
+          Array [
+            Object {
+              "Meals": "api/v1/orders/1",
+              "createdAt": "2018-08-23",
+              "id": 1,
+            },
+            Object {
+              "Meals": "api/v1/orders/2",
+              "createdAt": "2018-08-24",
+              "id": 2,
+            },
+            Object {
+              "Meals": "api/v1/orders/3",
+              "createdAt": "2018-08-25",
+              "id": 3,
+            },
+          ]
+        }
+        cartTotalPrice={1100}
+        deleteMealInCart={[Function]}
+        deleteRow={[Function]}
+        emptyCart={[Function]}
+        history={Object {}}
+        item={
+          Object {
+            "Meals": "api/v1/orders/3",
+            "createdAt": "2018-08-25",
+            "id": 3,
+          }
+        }
+        key="2"
+        postOrder={[Function]}
+        showId={false}
+        sn={3}
+        updatePortion={[Function]}
+      />
+    </div>
+    <div
+      className="order"
+    >
+      <span
+        id="order-total-price"
+      >
+        Total Price: ₦
+        1100
+      </span>
+      <button
+        className="btn-2"
+        disabled={false}
+        id="order-btn"
+        name="orderbtn"
+        type="submit"
+      >
+        Place order
+      </button>
+    </div>
+  </form>
+  <div
+    className="empty not-found empty-cart hide"
+  >
+    Cart is Empty!
+  </div>
+</section>
+`;

@@ -74,7 +74,7 @@ export const updateMealOnEdit = update => (dispatch, getState) => {
  * @return {Function} - function that dispatches meals and serverRes action to the redux store
  */
 export const getMeals = ({ limit = 12, offset = 0 }) => (dispatch) => {
-  serverReq('get', `/api/v1/meals?limit=${limit}&offset=${offset}`)
+  return serverReq('get', `/api/v1/meals?limit=${limit}&offset=${offset}`)
     .then((response) => {
       if (response.data) {
         const { success, meals, pagination } = response.data;
@@ -101,8 +101,6 @@ export const deleteMeal = mealId => (dispatch, getState) => {
     .then((response) => {
       if (response.status === 204) {
         const { meals: oldMeals, pagination } = getState().meal;
-        // dispatch(getMeals({}));
-
         const newMeals = oldMeals.filter(meal => meal.id !== mealId);
         pagination.count -= 1;
 
@@ -128,11 +126,15 @@ export const deleteMeal = mealId => (dispatch, getState) => {
         return response.data.message;
       }
     })
-    .catch((error) => {
-      dispatch({
-        type: MEAL_ERROR,
-        error
-      });
+    .catch((err) => {
+      if (err.response.data) {
+        const { message } = err.response.data;
+        dispatch({
+          type: MEAL_ERROR,
+          error: err
+        });
+        notify(message, 'toast-danger');
+      }
     });
 };
 
@@ -170,11 +172,14 @@ export const postMeal = data => (dispatch, getState) => {
           notify(message, 'toast-success');
           return success;
         }
-
-        notify(message, 'toast-danger');
       }
     })
-    .catch(err => notify(err));
+    .catch((err) => {
+      if (err.response.data) {
+        const { message } = err.response.data;
+        notify(message, 'toast-danger');
+      }
+    });
 };
 
 /**
@@ -210,12 +215,15 @@ export const updateMeal = ({ mealId, data }) => (dispatch, getState) => (
           });
 
           notify(message, 'toast-success');
-        } else {
-          notify(message, 'toast-danger');
         }
 
         return response.data;
       }
     })
-    .catch(err => notify(err))
+    .catch((err) => {
+      if (err.response.data) {
+        const { message } = err.response.data;
+        notify(message, 'toast-danger');
+      }
+    })
 );

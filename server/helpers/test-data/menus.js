@@ -37,43 +37,43 @@ export const admin3Meals = [
     title: 'PLANTAIN',
     description: 'So delicious',
     price: 500,
-    image: 'https://img.com'
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg'
   },
   {
     title: 'SHARWAMA AND CHICKEN',
     description: 'So delicious',
     price: 900,
-    image: 'https://img.com'
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg'
   },
   {
     title: 'YAM',
     description: 'So delicious',
     price: 650,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'RICE',
     description: 'So delicious',
     price: 400,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'POTATO AND SALAD',
     description: 'so delicious',
     price: 600,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'CAKE',
     description: 'so delicious',
     price: 900,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'SPAGHETTI AND SALAD',
     description: 'so delicious',
     price: 800,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   }
 ];
 
@@ -82,43 +82,43 @@ export const admin4Meals = [
     title: 'PANCAKES AND EGG',
     description: 'so delicious',
     price: 1400,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'COCONUT RICE AND CHICKEN',
     description: 'so delicious',
     price: 800,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'APPLE',
     description: 'so delicious',
     price: 600,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'FRIED RICE AND CHICKEN',
     description: 'so delicious',
     price: 800,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'SALAD AND CREAM',
     description: 'so delicious',
     price: 500,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'YAM AND GARDEN EGG',
     description: 'so delicious',
     price: 650,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   },
   {
     title: 'PANCAKES AND SYRUP',
     description: 'so delicious',
     price: 800,
-    image: 'https://img.com',
+    image: 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg',
   }
 ];
 

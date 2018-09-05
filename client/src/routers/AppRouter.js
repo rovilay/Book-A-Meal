@@ -1,4 +1,5 @@
 /* eslint no-unused-vars:0 */
+/* eslint import/no-named-as-default:0 */
 import { ConnectedRouter } from 'connected-react-router';
 import React from 'react';
 import { BrowserRouter as Router, Route, Switch } from 'react-router-dom';
@@ -13,7 +14,7 @@ import chooseDashboard from '../components/HOCs/ChooseDashboard';
 import adminOnly from '../components/HOCs/AdminOnly';
 import customerOnly from '../components/HOCs/CustomerOnly';
 import CustomerDashboard from '../components/customerpages/Dashboard';
-import CustomerOrder from '../components/customerpages/orders/Index';
+import CustomerOrderPage from '../components/customerpages/orderPage/Index';
 import Cart from '../components/customerpages/cart/Index';
 import CheckLogin from '../components/HOCs/CheckLogin';
 import AdminDashboard from '../components/adminpages/dashboard/Index';
@@ -31,7 +32,7 @@ const AppRouter = () => (
         <Route exact path="/login" component={LogInPage} />
         <Route exact path="/dashboard" component={chooseDashboard(AdminDashboard, CustomerDashboard)} />
         <Route exact path="/cart" component={customerOnly(Cart)} className="main" />
-        <Route exact path="/orders" component={customerOnly(CustomerOrder)} />
+        <Route exact path="/orders" component={customerOnly(CustomerOrderPage)} />
         <Route exact path="/mealpage" component={adminOnly(MealPage)} />
         <Route exact path="/orderHistory" component={adminOnly(OrderPage)} />
         <Route exact path="/*" component={NotFoundPage} />

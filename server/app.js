@@ -28,9 +28,6 @@ app.use(bodyParser.urlencoded({ extended: true }));
 app.use(cors());
 
 app.options('*', cors(corsOption));
-// app.get('/', (req, res) => {
-//   res.status(200).json({ message: 'Welcome to Book-A-Meal!' });
-// });
 
 app.get(express.static(path.join(__dirname, '/client/public')));
 // Swagger docs routes
@@ -39,9 +36,7 @@ app.use('/api/v1/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerDoc));
 if (process.env.NODE_ENV === 'production') {
   app.use(express.static(path.join(__dirname, '../../client/public')));
 }
-//  else {
-//   app.use(express.static(path.join(__dirname, '../client/public')));
-// }
+
 app.use(usersRouter);
 app.use(menuRouter);
 app.use(mealRouter);
@@ -50,13 +45,8 @@ app.use(myErrorHandler);
 
 // Serve client pages
 if (process.env.NODE_ENV === 'production') {
-  console.log('prod >>>>', path.join(__dirname, '../../client/public/index.html'));
   app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../../client/public/index.html')));
 }
-// } else {
-//   console.log('dev >>>>', path.join(__dirname, '../client/public/index.html'));
-//   app.get('*', (req, res) => res.sendFile(path.join(__dirname, '../client/public/index.html')));
-// }
 
 
 app.listen(port, () => {

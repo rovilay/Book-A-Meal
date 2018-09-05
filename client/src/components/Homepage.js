@@ -10,7 +10,7 @@ import { getTodayMenu } from '../actions/menuActions';
 import { addToCart } from '../actions/cartActions';
 import Menu from './common/Menu';
 
-class HomePage extends Component {
+export class HomePage extends Component {
   constructor(props) {
     super(props);
 
@@ -133,13 +133,13 @@ HomePage.propTypes = {
   pagination: PropTypes.object.isRequired
 };
 
-const mapStateToProps = state => ({
+export const mapStateToProps = state => ({
   user: state.login.user,
   todayMenu: state.menu.todayMenu,
   pagination: state.menu.pagination
 });
 
-const mapDispatchToProps = dispatch => bindActionCreators(
+export const mapDispatchToProps = dispatch => bindActionCreators(
   {
     setDefaultNav,
     getTodayMenu,

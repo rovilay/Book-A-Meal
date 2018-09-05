@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import FontAwesome from 'react-fontawesome';
 
-import EditMenuTable from '../dashboard/MenuTable/EditMenu';
-import OrderDetailsTable from '../orderPage/OrderDetails';
+import EditMenuTable from '../dashboard/MenuTable/EditMenuTable';
+import OrderDetailsTable from '../orderPage/OrderDetailsTable';
 
-Modal.setAppElement('#root');
+// Modal.setAppElement('#root');
 class ModalComp extends Component {
   componentDidMount() {
     this.props.emptyEditMenu();
@@ -26,6 +26,7 @@ class ModalComp extends Component {
       <Modal
         isOpen={isOpen}
         contentLabel= {contentLabel}
+        ariaHideApp={false}
         overlayClassName="overlay"
         className="modal"
       >

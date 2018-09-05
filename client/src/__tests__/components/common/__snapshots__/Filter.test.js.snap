@@ -1,0 +1,50 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Filter component test should render FilterComp correctly 1`] = `
+<div
+  className="filter"
+>
+  <form
+    onSubmit={[Function]}
+  >
+    <label
+      className="label"
+      htmlFor="filter"
+    >
+      Filter By:
+    </label>
+    <div
+      className="input-div"
+    >
+      <select
+        id="filter"
+        name="filter"
+        onChange={[Function]}
+      >
+        <option
+          value="all"
+        >
+          All
+        </option>
+        <option
+          value="date"
+        >
+          Date
+        </option>
+        <option
+          value="month"
+        >
+          Month
+        </option>
+      </select>
+    </div>
+    <button
+      className="btn-2 filter-btn"
+      type="submit"
+      value="Search"
+    >
+       Filter 
+    </button>
+  </form>
+</div>
+`;

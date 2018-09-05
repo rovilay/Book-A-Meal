@@ -1,0 +1,47 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`MealCard component test should render MealCard correctly 1`] = `
+<div
+  className="mealCard-container"
+>
+  <img
+    alt="EBA AND EGUSI"
+    className="meal-img"
+  />
+  <div
+    className="overlay1"
+  >
+    <span
+      className="meal-title"
+    >
+      EBA AND EGUSI
+    </span>
+  </div>
+  <div
+    className="overlay"
+  >
+    <div
+      className="meal-desc"
+    >
+      <h4 />
+    </div>
+  </div>
+  <div
+    className="meal-label"
+  >
+    <button
+      className="responsive-btn-2"
+      disabled={true}
+      onClick={[Function]}
+    >
+      Meal In Cart
+    </button>
+    <span
+      className="meal-price"
+    >
+      ₦ 
+      1000
+    </span>
+  </div>
+</div>
+`;

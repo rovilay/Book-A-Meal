@@ -1,120 +1,133 @@
 /* eslint no-nested-ternary: 0 */
-import React from 'react';
+import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
-import swal from 'sweetalert';
+import sweetAlert from 'sweetalert';
 
-const TableRow = ({
-  item,
-  deleteRow,
-  actions,
-  updateCartMealPortion,
-  showId,
-  sn
-}) => (
-  <div className="row">
-    {
-      Object.keys(item).map((key, i) => (
-        (key === 'portion')
-          ?
-          (
-            <p key={i} className="row-item input-div">
-              <input
-                type="number"
-                min="1"
-                id={`portion-${item.id}`}
-                className="portion"
-                name="portion"
-                onChange={() => {
-                  const portion = document.getElementById(`portion-${item.id}`).value;
-                  updateCartMealPortion({ ...item, portion });
-                }}
-                defaultValue = {item[key]}
-                required
-              />
-            </p>
-          )
-          :
-          (
-            // check if id
-            (key === 'id' && !showId)
+class CartTableRow extends Component {
+  constructor(props) {
+    super(props);
+
+    this.removeMeal = this.removeMeal.bind(this);
+  }
+
+  /**
+   * Shows confirmation before deleting row
+   * @memberof CartTableRow
+   */
+  /* istanbul ignore next */
+  removeMeal(event) {
+    event.preventDefault();
+    sweetAlert({
+      text: 'Are you sure you want to remove this meal?',
+      buttons: true,
+      dangerMode: true,
+    })
+      .then((confirmed) => {
+        if (confirmed) {
+          this.props.deleteRow(this.props.item);
+        }
+      })
+      .catch(err => err);
+  }
+
+  render() {
+    const {
+      item,
+      updatePortion,
+      showId,
+      sn,
+      actions
+    } = this.props;
+
+    return (
+      <div className="row">
+        {
+          Object.keys(item).map((key, i) => (
+            (key === 'portion')
               ?
-                <p
-                  key={i}
-                  className="row-item"
-                >
-                  {sn}
-                </p>
-              :
               (
-                <p
-                  key={i}
-                  className="row-item"
-                >
-                  {item[key]}
+                <p key={i} className="row-item input-div">
+                  <input
+                    type="number"
+                    min="1"
+                    id={`portion-${item.id}`}
+                    className="portion"
+                    name="portion"
+                    onChange={updatePortion(item)}
+                    defaultValue = {item[key]}
+                    required
+                  />
                 </p>
               )
-          )
-      ))
-    }
-    {/* Actions  */}
-    {
-      (actions)
-      &&
-      (
-      <p
-        className="row-item actions"
-      >
-
+              :
+              (
+                // check if id
+                (key === 'id' && !showId)
+                  ?
+                    <p
+                      key={i}
+                      className="row-item"
+                    >
+                      {sn}
+                    </p>
+                  :
+                  (
+                    <p
+                      key={i}
+                      className="row-item"
+                    >
+                      {item[key]}
+                    </p>
+                  )
+              )
+          ))
+        }
+        {/* Actions  */}
         {
-          (actions.delete)
+          (actions)
           &&
           (
-            <button
-              className="btn-3 box-shadow"
-              onClick={(e) => {
-                e.preventDefault();
-                swal({
-                  text: 'Are you sure you want to remove this meal?',
-                  buttons: true,
-                  dangerMode: true,
-                })
-                  .then((confirmed) => {
-                    if (confirmed) {
-                      deleteRow(item);
-                    }
-                  })
-                  .catch(err => err);
-              }}
-            >
-              <FontAwesome
-                name="trash"
-                size="2x"
-                className="trash"
-              />
-            </button>
+          <p
+            className="row-item actions"
+          >
+
+            {
+              (actions.delete)
+              &&
+              (
+                <button
+                  className="btn-3 box-shadow"
+                  onClick={this.removeMeal}
+                >
+                  <FontAwesome
+                    name="trash"
+                    size="2x"
+                    className="trash"
+                  />
+                </button>
+              )
+            }
+          </p>
           )
         }
-      </p>
-      )
-    }
-  </div>
-);
+      </div>
+    );
+  }
+}
 
-TableRow.defaultProps = {
-  deleteRow: undefined,
-  updateCartMealPortion: undefined,
+CartTableRow.defaultProps = {
   showId: false,
   sn: undefined
 };
 
-TableRow.propTypes = {
+CartTableRow.propTypes = {
   item: PropTypes.object.isRequired,
-  deleteRow: PropTypes.func,
+  deleteRow: PropTypes.func.isRequired,
   actions: PropTypes.object.isRequired,
-  updateCartMealPortion: PropTypes.func,
+  updatePortion: PropTypes.func.isRequired,
   showId: PropTypes.bool,
   sn: PropTypes.number
 };
 
-export default TableRow;
+export default CartTableRow;

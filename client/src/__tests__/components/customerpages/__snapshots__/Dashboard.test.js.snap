@@ -1,0 +1,114 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`CustomerDashboard component test should render \`CustomerDashboard\` correctly 1`] = `
+<div
+  className="customer-page"
+>
+  <div
+    className="welcome"
+  >
+    <p
+      className="merienda"
+    >
+      Welcome, 
+      john
+       
+      doe
+    </p>
+  </div>
+  <div>
+    <Menu
+      getTodayMenu={[Function]}
+      history={Array []}
+      menu={
+        Array [
+          Object {
+            "id": "1",
+            "title": "EBA AND EGUSI",
+          },
+          Object {
+            "id": "2",
+            "title": "SALAD",
+          },
+          Object {
+            "id": "3",
+            "title": "SPAGHETTI",
+          },
+          Object {
+            "id": "4",
+            "title": "YAM AND EGG",
+          },
+        ]
+      }
+      pagination={
+        Object {
+          "count": 13,
+          "limit": 12,
+          "numOfPages": 2,
+        }
+      }
+      setNav={[Function]}
+      todayMenu={
+        Array [
+          Object {
+            "id": "1",
+            "title": "EBA AND EGUSI",
+          },
+          Object {
+            "id": "2",
+            "title": "SALAD",
+          },
+          Object {
+            "id": "3",
+            "title": "SPAGHETTI",
+          },
+          Object {
+            "id": "4",
+            "title": "YAM AND EGG",
+          },
+        ]
+      }
+      token="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IjczMGU3ZGU5LTlmZjgtNGRjNS1iYzBiLWM3MTRmNTFlYTIyYSIsImFkbWluIjpmYWxzZX0.JLoM-PsdBlsEHm-pMcFiSm00Hc-vjcGsTonWgM3jETA"
+      user={
+        Object {
+          "Phone": "123456789",
+          "address": "123 office",
+          "admin": false,
+          "email": "test@gmail.com",
+          "firstName": "john",
+          "id": "3af04159-9a93-4b15-a749-e79e680a3daa",
+          "lastName": "doe",
+          "password": "1234567",
+        }
+      }
+    />
+  </div>
+  <div
+    className="pagination-container"
+  >
+    <PaginationBoxView
+      activeClassName="active"
+      breakClassName="break-me"
+      breakLabel={
+        <a
+          href=""
+        >
+          ...
+        </a>
+      }
+      containerClassName="pagination"
+      disableInitialCallback={false}
+      disabledClassName="disabled"
+      marginPagesDisplayed={2}
+      nextClassName="next"
+      nextLabel=">>"
+      onPageChange={[Function]}
+      pageCount={2}
+      pageRangeDisplayed={5}
+      previousClassName="previous"
+      previousLabel="<<"
+      subContainerClassName="pages pagination"
+    />
+  </div>
+</div>
+`;

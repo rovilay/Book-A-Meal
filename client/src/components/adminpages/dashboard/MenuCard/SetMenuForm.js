@@ -3,13 +3,13 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import moment from 'moment';
 
-import MealCheckBoxCard from './MealCheckbox';
+import MealCheckBoxCard from './MealCheckboxCard';
 
 const SetMenuForm = props => (
   <form
     className="setmenu-form"
-    onSubmit={(e) => {
-      e.preventDefault();
+    onSubmit={(event) => {
+      event.preventDefault();
       props.submitNewMenu();
     }}
   >

@@ -1,0 +1,37 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`AdminOnly higher order component test should return component only if admin 1`] = `
+<withRouter(AdminOnly)
+  history={Array []}
+  setDefaultNav={[Function]}
+  setNav={[Function]}
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+/>
+`;
+
+exports[`AdminOnly higher order component test should return component only if admin 2`] = `
+<withRouter(AdminOnly)
+  history={Array []}
+  setDefaultNav={[Function]}
+  setNav={[Function]}
+  store={
+    Object {
+      "clearActions": [Function],
+      "dispatch": [Function],
+      "getActions": [Function],
+      "getState": [Function],
+      "replaceReducer": [Function],
+      "subscribe": [Function],
+    }
+  }
+/>
+`;

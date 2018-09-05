@@ -6,7 +6,7 @@ import PropTypes from 'prop-types';
 import jwt from 'jsonwebtoken';
 
 import isExpired from '../../helpers/isExpired';
-import { getFromLs } from '../../helpers/Ls';
+import { getFromLocalStorage } from '../../helpers/localstorage';
 import { setDefaultNav, setNav } from '../../actions/navLinksActions';
 
 /**
@@ -24,25 +24,33 @@ export default function (Comp) {
       };
     }
 
+    /* istanbul ignore next */
     componentWillMount() {
       const { history } = this.props;
-      const token = getFromLs('jwt');
-      const {
-        exp,
-        admin
-      } = jwt.decode(token);
+      const token = getFromLocalStorage('jwt');
+      if (token) {
+        const {
+          exp,
+          admin
+        } = jwt.decode(token);
 
-      if (!token || !admin) {
+        if (!admin) {
+          this.props.setDefaultNav();
+          return history.push('/');
+        }
+
+        if (isExpired(exp)) {
+          this.props.setDefaultNav();
+          return history.push('/login');
+        }
+
+        this.setState({ token, admin });
+      }
+
+      if (!token) {
         this.props.setDefaultNav();
         return history.push('/');
       }
-
-      if (isExpired(exp)) {
-        this.props.setDefaultNav();
-        return history.push('/login');
-      }
-
-      this.setState({ token, admin });
     }
 
     render() {

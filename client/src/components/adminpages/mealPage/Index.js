@@ -7,9 +7,7 @@ import PropTypes from 'prop-types';
 import { connect } from 'react-redux';
 import sweetAlert from 'sweetalert';
 import ReactPaginate from 'react-paginate';
-import {
-  Accordion,
-} from 'react-accessible-accordion';
+import { Accordion } from 'react-accessible-accordion';
 
 import navData from '../../../helpers/navData';
 import MealForm from './MealForm';
@@ -30,7 +28,7 @@ import toggleAccordion from '../../../helpers/toggleAccordion';
 import FilterComp from '../../common/Filter';
 import MealCard from '../../common/MealCard';
 
-class MealPage extends Component {
+export class MealPage extends Component {
   constructor(props) {
     super(props);
     this.state = {
@@ -45,7 +43,7 @@ class MealPage extends Component {
     this.closeEdit = this.closeEdit.bind(this);
     this.fillForm = this.fillForm.bind(this);
     this.clearForm = this.clearForm.bind(this);
-    this.getFormVal = this.getFormVal.bind(this);
+    this.getFormValues = this.getFormValues.bind(this);
     this.onAddMeal = this.onAddMeal.bind(this);
     this.onUpdateMeal = this.onUpdateMeal.bind(this);
     this.showUploadBar = this.showUploadBar.bind(this);
@@ -82,7 +80,7 @@ class MealPage extends Component {
         if (confirmed) {
           this.props.updateMeal({ mealId: mealOnEditId, data })
             .then((res) => {
-              if (res.success) {
+              if (res && res.success) {
                 this.closeEdit();
               }
             });
@@ -98,8 +96,7 @@ class MealPage extends Component {
    * Clears form on success
    */
   onAddMeal() {
-    const data = this.getFormVal();
-    // console.log(data);
+    const data = this.getFormValues();
     sweetAlert({
       text: 'Confirm action!',
       buttons: true,
@@ -112,7 +109,6 @@ class MealPage extends Component {
               if (success) {
                 // close accordion
                 toggleAccordion('.accordion__body', 'accordion__body  accordion__body--hidden', 'true');
-                // this.clearForm();
                 this.closeEdit();
               }
             });
@@ -128,7 +124,7 @@ class MealPage extends Component {
    *
    * @returns {Object} data - Object consist of meal info
    */
-  getFormVal() {
+  getFormValues() {
     const title = document.getElementById('meal-name').value;
     const price = document.getElementById('price').value;
     const description = document.getElementById('dsc').value;
@@ -152,14 +148,15 @@ class MealPage extends Component {
   /**
    * changes meal form value;
    */
-  handleChange(e) {
-    const { name, value } = e.target;
+  handleChange(event) {
+    const { name, value } = event.target;
     this.props.updateMealOnEdit({ [name]: value });
   }
 
   /**
    * Shows upload progress bar if image is present
    */
+  /* istanbul ignore next */
   showUploadBar() {
     if (this.checkFileSize()) {
       const imageFile = document.getElementById('meal-image').files[0];
@@ -172,6 +169,7 @@ class MealPage extends Component {
   /**
    * Uploads image to cloudinary
    */
+  /* istanbul ignore next */
   uploadImage() {
     this.showUploadBar();
     setTimeout(() => {
@@ -270,6 +268,7 @@ class MealPage extends Component {
    * Checks if file size exceeds 1.5mb
    * And disables button if file is proper size
    */
+  /* istanbul ignore next */
   checkFileSize() {
     const file = document.getElementById('meal-image');
     if (file.files[0]) {
@@ -399,7 +398,7 @@ MealPage.propTypes = {
   updateMealOnEdit: PropTypes.func.isRequired
 };
 
-const mapStateToProps = state => (
+export const mapStateToProps = state => (
   {
     meals: filterify(state.meal.meals, state.filter),
     mealOnEdit: state.meal.mealOnEdit,

@@ -5,13 +5,13 @@ import jwt from 'jsonwebtoken';
 import PropTypes from 'prop-types';
 
 import isExpired from '../../helpers/isExpired';
-import { getFromLs } from '../../helpers/Ls';
+import { getFromLocalStorage } from '../../helpers/localstorage';
 
 export default (Comp) => {
   class CheckLogin extends Component {
     componentWillMount() {
       const { history } = this.props;
-      const token = getFromLs('jwt');
+      const token = getFromLocalStorage('jwt');
       if (token) {
         const {
           exp

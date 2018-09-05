@@ -129,22 +129,20 @@ export const emptyEditMenu = () => ({
  *
  * @return {Function} - function that dispatches meals and serverRes action to the redux store
  */
-export const getAllMenus = ({ limit = 10, offset = 0 }) => (dispatch) => {
-  serverReq('get', `/api/v1/menus?limit=${limit}&offset=${offset}`)
-    .then((response) => {
-      if (response.data) {
-        const { success, menus, pagination } = response.data;
-        if (success && menus) {
-          dispatch({
-            type: SET_ALL_MENUS,
-            menus: arraySort(menus, 'postOn', { reverse: true }),
-            pagination
-          });
-        }
+export const getAllMenus = ({ limit = 10, offset = 0 }) => (dispatch) => serverReq('get', `/api/v1/menus?limit=${limit}&offset=${offset}`)
+  .then((response) => {
+    if (response.data) {
+      const { success, menus, pagination } = response.data;
+      if (success && menus) {
+        dispatch({
+          type: SET_ALL_MENUS,
+          menus: arraySort(menus, 'postOn', { reverse: true }),
+          pagination
+        });
       }
-    })
-    .catch(err => err);
-};
+    }
+  })
+  .catch(err => err);
 
 /**
  *  * Sends async server requests to get a menu's meals using the axios api
@@ -153,61 +151,72 @@ export const getAllMenus = ({ limit = 10, offset = 0 }) => (dispatch) => {
  * @param {number} limit pagination limit
  * @param {number} offset pagination offset
  */
-export const getMenuMeals = (mealUrl, { limit = 5, offset = 0 }) => dispatch => (
-  serverReq('get', `${mealUrl}?limit=${limit}&offset=${offset}`)
-    .then((response) => {
-      if (response.data) {
-        const { success, menu, pagination } = response.data;
-        if (success && menu) {
-          dispatch({
-            type: SET_MENU_MEALS,
-            menuMeals: {
-              meals: arraySort(menu[0].Meals, 'title'),
-              pagination
+export const getMenuMeals = (mealUrl, { limit = 5, offset = 0 }) => dispatch => serverReq('get', `${mealUrl}?limit=${limit}&offset=${offset}`)
+  .then((response) => {
+    if (response.data) {
+      const { success, menu, pagination } = response.data;
+      if (success && menu) {
+        dispatch({
+          type: SET_MENU_MEALS,
+          menuMeals: {
+            meals: arraySort(menu[0].Meals, 'title'),
+            pagination
+          }
+        });
+      } else {
+        dispatch({
+          type: SET_MENU_MEALS,
+          menuMeals: {
+            meals: [],
+            pagination: {
+              limit: 5,
+              offset: 0,
+              count: 0,
+              numOfPages: 1
             }
-          });
-        } else {
-          dispatch({
-            type: SET_MENU_MEALS,
-            menuMeals: {
-              meals: [],
-              pagination: {
-                limit: 5,
-                offset: 0,
-                count: 0,
-                numOfPages: 1
-              }
-            }
-          });
-        }
+          }
+        });
       }
-    })
-    .catch(err => err)
-);
+    }
+  })
+  .catch((err) => {
+    if (err.response.data && !err.response.data.success) {
+      dispatch({
+        type: SET_MENU_MEALS,
+        menuMeals: {
+          meals: [],
+          pagination: {
+            limit: 5,
+            offset: 0,
+            count: 0,
+            numOfPages: 1
+          }
+        }
+      });
+    }
+  });
 
 /**
  * Sends async server requests to get today's menu using the axios api
  *
  * @return {Function} - function that dispatches the action to the redux store
  */
-export const getTodayMenu = ({ limit = 12, offset = 0 }) => (dispatch) => {
-  serverReq('get', `/api/v1/menus/today?limit=${limit}&offset=${offset}`)
-    .then((response) => {
-      if (response.data) {
-        const { success, menu, pagination } = response.data;
-        let Meals = [];
-        if (success && menu) {
-          Meals = [...menu[0].Meals];
-          dispatch({
-            type: SET_TODAY_MENU,
-            meals: arraySort(Meals, 'title'),
-            pagination
-          });
-        }
+export const getTodayMenu = ({ limit = 12, offset = 0 }) => (dispatch) => serverReq('get', `/api/v1/menus/today?limit=${limit}&offset=${offset}`)
+  .then((response) => {
+    if (response.data) {
+      const { success, menu, pagination } = response.data;
+      let Meals = [];
+      if (success && menu) {
+        Meals = [...menu[0].Meals];
+        dispatch({
+          type: SET_TODAY_MENU,
+          meals: arraySort(Meals, 'title'),
+          pagination
+        });
       }
-    })
-    .catch(err => err);
-};
+    }
+  })
+  .catch(err => err);
 
 /**
  * Sends async server requests to post  new menu using the axios api
@@ -216,24 +225,24 @@ export const getTodayMenu = ({ limit = 12, offset = 0 }) => (dispatch) => {
  * @param {Array} meals - Array of meal Ids
  * @return {Function} - function that dispatches serverRes action to the redux store
  */
-export const postMenu = ({ postOn, meals }) => (dispatch) => (
-  serverReq('post', '/api/v1/menus', { postOn, meals })
-    .then((response) => {
-      if (response.data) {
-        const { success, message } = response.data;
-        if (success) {
-          // dispatch(emptyNewMenu());
-          dispatch(getAllMenus({}));
-          notify(message, 'toast-success');
-        } else {
-          notify(message, 'toast-danger');
-        }
-
-        return success;
+export const postMenu = ({ postOn, meals }) => (dispatch) => serverReq('post', '/api/v1/menus', { postOn, meals })
+  .then((response) => {
+    if (response.data) {
+      const { success, message } = response.data;
+      if (success) {
+        dispatch(getAllMenus({}));
+        notify(message, 'toast-success');
       }
-    })
-    .catch(err => err)
-);
+
+      return success;
+    }
+  })
+  .catch(err => {
+    if (err.response.data) {
+      const { message } = err.response.data;
+      notify(message, 'toast-danger');
+    }
+  });
 
 /* eslint arrow-parens: 0 */
 /**
@@ -246,24 +255,22 @@ export const postMenu = ({ postOn, meals }) => (dispatch) => (
 export const updateMenu = ({
   menuId,
   meals
-}) => dispatch => (
-  serverReq('post', `/api/v1/menus/${menuId}/meals`, { meals })
-    .then((response) => {
-      if (response.data) {
-        const { success, message } = response.data;
-        if (success) {
-          dispatch(emptyEditMenu());
-          dispatch(getMenuMeals(`/api/v1/menus/${menuId}/meals`, {}));
-          notify(message, 'toast-success');
-        } else {
-          notify(message, 'toast-danger');
-        }
-
-        return response.data;
+}) => dispatch => serverReq('post', `/api/v1/menus/${menuId}/meals`, { meals })
+  .then((response) => {
+    if (response.data) {
+      const { success, message } = response.data;
+      if (success) {
+        dispatch(emptyEditMenu());
+        dispatch(getMenuMeals(`/api/v1/menus/${menuId}/meals`, {}));
+        notify(message, 'toast-success');
+      } else {
+        notify(message, 'toast-danger');
       }
-    })
-    .catch(err => err)
-);
+
+      return response.data;
+    }
+  })
+  .catch(err => err);
 
 /**
  * Sends async server requests to remove meal from menu using the axios api

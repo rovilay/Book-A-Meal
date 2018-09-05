@@ -1,6 +1,8 @@
 import jwt from 'jsonwebtoken';
 
-import { getFromLs } from '../helpers/Ls';
+import {
+  getFromLocalStorage
+} from '../helpers/localstorage';
 import isExpired from '../helpers/isExpired';
 import history from '../helpers/history';
 import notify from '../helpers/notify';
@@ -20,7 +22,10 @@ export const addMealToCart = ({
 }) => (
   (dispatch, getState) => {
     /* eslint prefer-const: 0 */
-    let { meals, totalPrice } = getState().cart;
+    let {
+      meals,
+      totalPrice
+    } = getState().cart;
 
     // check if meal already in cart
     const newMeals = meals.filter(meal => meal.id !== id);
@@ -46,7 +51,6 @@ export const addMealToCart = ({
         cart,
       });
 
-      // storeInLs('bookAMealCart', cart);
       return notify('Meal added to cart', 'toast-success', 'bottom-left');
     }
     if (newMeals.length !== meals.length) {
@@ -55,9 +59,14 @@ export const addMealToCart = ({
   }
 );
 
-export const updateCartMealPortion = ({ id, portion }) => (
+export const updateCartMealPortion = ({
+  id,
+  portion
+}) => (
   (dispatch, getState) => {
-    const { meals } = getState().cart;
+    const {
+      meals
+    } = getState().cart;
     const newMeals = [...meals];
     let totalPrice = 0;
     newMeals.map((meal) => {
@@ -77,15 +86,19 @@ export const updateCartMealPortion = ({ id, portion }) => (
       type: UPDATE_CART_MEAL_PORTION,
       updatedCart
     });
-
-    // storeInLs('bookAMealCart', updatedCart);
   }
 );
 
-export const deleteMealInCart = ({ id, price }) => (
+export const deleteMealInCart = ({
+  id,
+  price
+}) => (
   (dispatch, getState) => {
     /* eslint prefer-const: 0 */
-    let { meals, totalPrice } = getState().cart;
+    let {
+      meals,
+      totalPrice
+    } = getState().cart;
 
     // check if meal already in cart
     const newMeals = meals.filter(meal => meal.id !== id);
@@ -102,16 +115,17 @@ export const deleteMealInCart = ({ id, price }) => (
         type: DELETE_MEAL_IN_CART,
         modifiedCart
       });
-
-      // storeInLs('bookAMealCart', modifiedCart);
     }
   }
 );
 
 export const addToCart = mealData => (dispatch) => {
-  const token = getFromLs('jwt');
+  const token = getFromLocalStorage('jwt');
   if (token) {
-    const { exp, admin } = jwt.decode(token);
+    const {
+      exp,
+      admin
+    } = jwt.decode(token);
     if (!isExpired(exp) && !admin) {
       dispatch(addMealToCart(mealData));
     }
@@ -123,15 +137,3 @@ export const addToCart = mealData => (dispatch) => {
 export const emptyCart = () => ({
   type: EMPTY_CART,
 });
-
-// export const setCartFromLs = () => (dispatch, getState) => {
-//   const { meals } = getState().cart;
-//   if (meals.length < 1) {
-//     // const cart = getFromLs('bookAMealCart');
-//     // console.log(cart);
-//     dispatch({
-//       type: SET_CART_FROM_LS,
-//       cart
-//     });
-//   }
-// };

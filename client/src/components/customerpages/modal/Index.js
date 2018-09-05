@@ -3,10 +3,10 @@ import PropTypes from 'prop-types';
 import Modal from 'react-modal';
 import FontAwesome from 'react-fontawesome';
 
-import OrderDetailsTable from './modalTables/OrderDetails';
-import EditOrderTable from './modalTables/EditOrder';
+import OrderDetailsTable from './modalTables/OrderDetailsTable';
+import EditOrderTable from './modalTables/EditOrderTable';
 
-Modal.setAppElement('#root');
+// Modal.setAppElement('#root');
 const ModalComp = (props) => {
   const {
     isOpen,
@@ -19,6 +19,7 @@ const ModalComp = (props) => {
   return (
     <Modal
       isOpen={isOpen}
+      ariaHideApp={false}
       contentLabel={contentLabel}
       overlayClassName="overlay"
       className="modal"
