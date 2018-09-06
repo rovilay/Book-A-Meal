@@ -1,6 +1,7 @@
 esversion: 6
 exclude:
   - "UI/**"
+  - "**/*.scss"
 
 eslint:
   enabled: true

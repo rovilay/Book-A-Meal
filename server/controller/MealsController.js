@@ -1,4 +1,4 @@
-import db from '../../models/index';
+import db from '../../models';
 import paginate from '../helpers/paginate';
 
 /**
@@ -39,7 +39,7 @@ class MealsController {
           meals
         });
       })
-      .catch(err => next(err));
+      .catch(error => next(error));
   }
 
   /**
@@ -60,9 +60,9 @@ class MealsController {
     })
       .then((meal) => {
         if (meal === null || meal.UserId !== UserId) {
-          const err = new Error('Meal not found!');
-          err.status = 404;
-          return next(err);
+          const error = new Error('Meal not found!');
+          error.status = 404;
+          return next(error);
         }
 
         return res.status(200).send({
@@ -71,10 +71,10 @@ class MealsController {
           meal,
         });
       })
-      .catch((err) => {
-        err = new Error('Error occurred while getting meal!');
-        err.status = 400;
-        return next(err);
+      .catch((error) => {
+        error = new Error('Error occurred while getting meal!');
+        error.status = 500;
+        return next(error);
       });
   }
 
@@ -101,10 +101,10 @@ class MealsController {
           meal,
         });
       })
-      .catch((err) => {
-        err = new Error('Error, Meal already exist!');
-        err.status = 409;
-        return next(err);
+      .catch((error) => {
+        error = new Error('Error, Meal already exist!');
+        error.status = 409;
+        return next(error);
       });
   }
 
@@ -140,15 +140,15 @@ class MealsController {
             updatedMeal,
           });
         } else {
-          const err = new Error('Meal not found!');
-          err.status = 404;
-          return next(err);
+          const error = new Error('Meal not found!');
+          error.status = 404;
+          return next(error);
         }
       })
-      .catch((err) => {
-        err = new Error('Error occurred while updating meal!');
-        err.status = 400;
-        return next(err);
+      .catch((error) => {
+        error = new Error('Error occurred while updating meal!');
+        error.status = 500;
+        return next(error);
       });
   }
 
@@ -176,14 +176,14 @@ class MealsController {
         if (deleted) {
           return res.status(204).send('Delete successful!');
         }
-        const err = new Error('Meal not found!');
-        err.status = 404;
-        return next(err);
+        const error = new Error('Meal not found!');
+        error.status = 404;
+        return next(error);
       })
-      .catch((err) => {
-        err = new Error('Error occurred while deleting meal!');
-        err.status = 400;
-        return next(err);
+      .catch((error) => {
+        error = new Error('Error occurred while deleting meal!');
+        error.status = 500;
+        return next(error);
       });
   }
 }

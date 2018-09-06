@@ -10,9 +10,9 @@
  */
 function adminOnly(req, res, next) {
   if (req.user.admin === false) {
-    const err = new Error('User not allowed!');
-    err.status = 403;
-    return next(err);
+    const error = new Error('User not allowed!');
+    error.status = 403;
+    return next(error);
   }
 
   return next();

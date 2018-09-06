@@ -48,7 +48,7 @@ export class OrderHistory extends Component {
 
   showDetails(mealsUrl) {
     this.props.getOrderMeals(mealsUrl, {})
-      .then((res) => {
+      .then((response) => {
         this.props.setModal({
           isOpen: true,
           isInfo: false,
@@ -56,8 +56,8 @@ export class OrderHistory extends Component {
           isOrderInfo: true,
           close: false,
           contentLabel: 'Order details',
-          content: { ...res.order[0] },
-          pagination: { ...res.pagination }
+          content: { ...response.order[0] },
+          pagination: { ...response.pagination }
         });
       });
   }

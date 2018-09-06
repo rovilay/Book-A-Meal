@@ -7,10 +7,10 @@ dotenv.config();
 /**
  * Restricts user based on time
  *
- * @exports checkTime
- * @class checkTime
+ * @exports CheckTime
+ * @class CheckTime
  */
-class checkTime {
+class CheckTime {
   /**
    * Checks time if update is allowed
    * @static
@@ -19,7 +19,7 @@ class checkTime {
    * @param  {object} next - nex object (for handling errors or moving to next
    * middleware)
    * @return {object} next
-   * @memberof checkTime
+   * @memberof CheckTime
    */
   static canUpdate(req, res, next) {
     db.Order.findOne({
@@ -29,16 +29,16 @@ class checkTime {
       attributes: ['id', 'createdAt'],
     })
       .then((found) => {
-        const err = new Error("You can't modify order anymore");
-        err.status = 403;
+        const error = new Error("You can't modify order anymore");
+        error.status = 403;
         const [createdAt] = [found.dataValues.createdAt]; // Get the time created
         const timeCheck = moment(createdAt).add(15, 'm') > moment(); // compare expiry time with present time
         if (timeCheck) {
           return next();
         }
-        throw err;
+        throw error;
       })
-      .catch(err => next(err));
+      .catch(error => next(error));
   }
 
   /**
@@ -49,18 +49,18 @@ class checkTime {
    * @param  {object} next - nex object (for handling errors or moving to next
    * middleware)
    * @return {object} next
-   * @memberof checkTime
+   * @memberof CheckTime
    */
   static canOrder(req, res, next) {
-    const err = new Error(`it's ${moment().format('HH:mm')}, we are closed for the day, try again tomorrow!`);
-    err.status = 403;
+    const error = new Error(`it's ${moment().format('HH:mm')}, we are closed for the day, try again tomorrow!`);
+    error.status = 403;
     // Can only place order between OPENINGHOUR AND CLOSINGHOUR
     if (moment().hour() >= process.env.OPENINGHOUR && moment().hour() <= process.env.CLOSINGHOUR) {
       return next();
     }
 
-    return next(err);
+    return next(error);
   }
 }
 
-export default checkTime;
+export default CheckTime;

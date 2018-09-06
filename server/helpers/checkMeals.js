@@ -9,7 +9,7 @@ import db from '../../models';
  * @return {boolean} true
  */
 
-async function checkMeal(Meals = [], UserId = undefined, next) { // check if input meals is correct or in db
+async function checkMeals(Meals = [], UserId = undefined, next) { // check if input meals is correct or in db
   const where = (UserId) ? { id: Meals, UserId } : { id: Meals };
 
   const foundMeals = await db.Meal.findAll({
@@ -31,4 +31,4 @@ async function checkMeal(Meals = [], UserId = undefined, next) { // check if inp
   return true;
 }
 
-export default checkMeal;
+export default checkMeals;

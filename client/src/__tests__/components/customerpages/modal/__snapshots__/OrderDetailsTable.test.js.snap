@@ -117,7 +117,7 @@ exports[`EditOrderTable component test should render EditOrderTable correctly 1`
         }
       }
       key="1"
-      orderCreatedAt={"2018-09-05T01:49:07.618Z"}
+      orderCreatedAt={"2018-09-06T08:08:04.575Z"}
       orderedMealsLength={1}
       orderedMealsPagination={
         Object {
@@ -167,7 +167,7 @@ exports[`EditOrderTable component test should render EditOrderTable correctly 1`
         }
       }
       key="2"
-      orderCreatedAt={"2018-09-05T01:49:07.618Z"}
+      orderCreatedAt={"2018-09-06T08:08:04.575Z"}
       orderedMealsLength={1}
       orderedMealsPagination={
         Object {

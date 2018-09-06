@@ -5,9 +5,9 @@
 
   <testsuite name="signuppage"
     errors="0" failures="0" hostname="" id="" package="signuppage" skipped="0"
-    tests="3" time="19.21" timestamp="">
+    tests="3" time="29.40" timestamp="">
   
-    <testcase name="User should be registered in if all input fields are filled correctly`" classname="signuppage" time="9.586" assertions="4">
+    <testcase name="User should be registered in if all input fields are filled correctly`" classname="signuppage" time="14.85" assertions="4">
 
     
 
@@ -18,7 +18,7 @@
     
     </testcase>
   
-    <testcase name="It should not show email error if email input is incorrect" classname="signuppage" time="5.258" assertions="3">
+    <testcase name="It should not show email error if email input is incorrect" classname="signuppage" time="7.268" assertions="3">
 
     
 
@@ -27,7 +27,7 @@
     
     </testcase>
   
-    <testcase name="It should not show password error if password and confirm password are not the same is" classname="signuppage" time="4.371" assertions="4">
+    <testcase name="It should not show password error if password and confirm password are not the same is" classname="signuppage" time="7.284" assertions="4">
 
     
 

@@ -87,7 +87,7 @@ export const getMeals = ({ limit = 12, offset = 0 }) => (dispatch) => {
         }
       }
     })
-    .catch(err => err);
+    .catch(error => error);
 };
 
 /**
@@ -126,12 +126,12 @@ export const deleteMeal = mealId => (dispatch, getState) => {
         return response.data.message;
       }
     })
-    .catch((err) => {
-      if (err.response.data) {
-        const { message } = err.response.data;
+    .catch((error) => {
+      if (error.response.data) {
+        const { message } = error.response.data;
         dispatch({
           type: MEAL_ERROR,
-          error: err
+          error
         });
         notify(message, 'toast-danger');
       }
@@ -174,9 +174,9 @@ export const postMeal = data => (dispatch, getState) => {
         }
       }
     })
-    .catch((err) => {
-      if (err.response.data) {
-        const { message } = err.response.data;
+    .catch((error) => {
+      if (error.response.data) {
+        const { message } = error.response.data;
         notify(message, 'toast-danger');
       }
     });
@@ -220,9 +220,9 @@ export const updateMeal = ({ mealId, data }) => (dispatch, getState) => (
         return response.data;
       }
     })
-    .catch((err) => {
-      if (err.response.data) {
-        const { message } = err.response.data;
+    .catch((error) => {
+      if (error.response.data) {
+        const { message } = error.response.data;
         notify(message, 'toast-danger');
       }
     })

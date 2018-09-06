@@ -1,14 +1,14 @@
 import chai from 'chai';
-import expire from '../../helpers/expire';
+import isExpired from '../../helpers/isExpired';
 
 const expect = chai.expect;
 
 const dateToCompare = '1999-07-08'
 
-describe('expire helper', (done) => {
+describe('isExpired helper', (done) => {
   it('should return true if present date is greater than dateToCompare', (done) => {
-    const isExpired = expire(dateToCompare);
-    expect(isExpired).to.equal(true);
+    const expired = isExpired(dateToCompare);
+    expect(expired).to.equal(true);
 
     done();
   });

@@ -3,7 +3,7 @@ import chaiHttp from 'chai-http';
 import sinon from 'sinon';
 import { mockReq, mockRes } from 'sinon-express-mock';
 import sinonChai from 'sinon-chai';
-import ordersController from '../../controller/orders';
+import OrdersController from '../../controller/OrdersController';
 
 chai.use(chaiHttp);
 chai.use(sinonChai);
@@ -35,7 +35,7 @@ describe('OrdersController', () => {
     const err = new Error('An error occurred, user not created!');
 
     it('should return next on error', () => {
-      ordersController.postOrder(req, res, next);
+      OrdersController.postOrder(req, res, next);
         next(err);
         next.should.have.been.calledWith(err);
     });
@@ -61,7 +61,7 @@ describe('OrdersController', () => {
     });
 
     it('should return next on error', () => {
-      ordersController.updateOrder(req, res, next);
+      OrdersController.updateOrder(req, res, next);
       expect(next).to.have.been.called;
     });
   });
@@ -77,7 +77,7 @@ describe('OrdersController', () => {
     });
 
     it('should return next on error', () => {
-      ordersController.deleteOrder(req, res, next);
+      OrdersController.deleteOrder(req, res, next);
       expect(next).to.have.been.called;
     });
   });

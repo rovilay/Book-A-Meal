@@ -30,7 +30,12 @@
         "marionette": true,
         "javascriptEnabled": true,
         "acceptSslCerts": true,
-        "elementScrollBehavior": 1
+        "elementScrollBehavior": 1,
+        "chromeOptions": {
+          "args": [
+              "window-size=1480,800"
+          ]
+        }
       }
     },
 

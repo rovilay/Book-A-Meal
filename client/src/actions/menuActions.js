@@ -142,7 +142,7 @@ export const getAllMenus = ({ limit = 10, offset = 0 }) => (dispatch) => serverR
       }
     }
   })
-  .catch(err => err);
+  .catch(error => error);
 
 /**
  *  * Sends async server requests to get a menu's meals using the axios api
@@ -179,8 +179,8 @@ export const getMenuMeals = (mealUrl, { limit = 5, offset = 0 }) => dispatch => 
       }
     }
   })
-  .catch((err) => {
-    if (err.response.data && !err.response.data.success) {
+  .catch((error) => {
+    if (error.response.data && !error.response.data.success) {
       dispatch({
         type: SET_MENU_MEALS,
         menuMeals: {
@@ -216,7 +216,7 @@ export const getTodayMenu = ({ limit = 12, offset = 0 }) => (dispatch) => server
       }
     }
   })
-  .catch(err => err);
+  .catch(error => error);
 
 /**
  * Sends async server requests to post  new menu using the axios api
@@ -237,9 +237,9 @@ export const postMenu = ({ postOn, meals }) => (dispatch) => serverReq('post', '
       return success;
     }
   })
-  .catch(err => {
-    if (err.response.data) {
-      const { message } = err.response.data;
+  .catch(error => {
+    if (error.response.data) {
+      const { message } = error.response.data;
       notify(message, 'toast-danger');
     }
   });
@@ -270,7 +270,7 @@ export const updateMenu = ({
       return response.data;
     }
   })
-  .catch(err => err);
+  .catch(error => error);
 
 /**
  * Sends async server requests to remove meal from menu using the axios api
@@ -298,5 +298,5 @@ export const deleteMenuMeal = ({
         return response.data;
       }
     })
-    .catch(err => err)
+    .catch(error => error)
 );

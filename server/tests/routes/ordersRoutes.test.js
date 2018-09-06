@@ -5,61 +5,61 @@ import dotenv from 'dotenv'
 
 import app from '../../app';
 import db from '../../../models';
-import getToken from '../../helpers/gettokens';
-import userData from '../../helpers/test-data/users';
+import getToken from '../../helpers/getToken';
+import users from '../../helpers/test-data/users';
 
 dotenv.config();
 
 import {
-  meals1,
-  meals2,
-  customer1Order,
-  customer2Order,
+  caterermariaMeals,
+  catererdejiMeals,
+  customerRoseOrder,
+  customerRoviOrder,
   menusDatas,
-  admin3MenuMeals,
-  admin4MenuMeals,
+  catererMariaMenuMeals,
+  catererDejiMenuMeals,
   ordersData,
   orderMeals,
-  customer1OrderUpdate
+  customerRoseOrderUpdate
 } from '../../helpers/test-data/orders';
 
 chai.use(chaiHttp);
 
 const {
-  adminUser4,
-  adminUser3,
-  customerUser1,
-  customerUser2
-} = userData;
+  catererDeji,
+  catererMaria,
+  customerRose,
+  customerRovi
+} = users;
 
 describe('Orders API routes', () => {
 
   // token details
-  const admin3 = {
-    id: adminUser3.id,
-    admin: adminUser3.admin
+  const catererMariaTokenDetails = {
+    id: catererMaria.id,
+    admin: catererMaria.admin
   };
 
-  const admin4 = {
-    id: adminUser4.id,
-    admin: adminUser4.admin
+  const catererDejiTokenDetails = {
+    id: catererDeji.id,
+    admin: catererDeji.admin
   };
 
-  const customer1 = {
-    id: customerUser1.id,
-    admin: customerUser1.admin
+  const customerRoseTokenDetails = {
+    id: customerRose.id,
+    admin: customerRose.admin
   };
 
-  const customer2 = {
-    id: customerUser2.id,
-    admin: customerUser2.admin
+  const customerRoviTokenDetails = {
+    id: customerRovi.id,
+    admin: customerRovi.admin
   };
 
   // get tokens
-  const admin3Token = getToken(admin3);
-  const admin4Token = getToken(admin4);
-  const customer1Token = getToken(customer1);
-  const customer2Token = getToken(customer2);
+  const catererMariaToken = getToken(catererMariaTokenDetails);
+  const catererDejiToken = getToken(catererDejiTokenDetails);
+  const customerRoseToken = getToken(customerRoseTokenDetails);
+  const customerRoviToken = getToken(customerRoviTokenDetails);
 
   before(async () => {
     await db.User.truncate();
@@ -69,15 +69,15 @@ describe('Orders API routes', () => {
     await db.Order.truncate();
     await db.OrderMeal.truncate();
 
-    await db.User.create(adminUser3);
-    await db.User.create(adminUser4);
-    await db.User.create(customerUser1);
-    await db.User.create(customerUser2);
-    await meals1.map(meal => db.Meal.create(meal))
-    await meals2.map(meal => db.Meal.create(meal))
+    await db.User.create(catererMaria);
+    await db.User.create(catererDeji);
+    await db.User.create(customerRose);
+    await db.User.create(customerRovi);
+    await caterermariaMeals.map(meal => db.Meal.create(meal))
+    await catererdejiMeals.map(meal => db.Meal.create(meal))
     await db.Menu.bulkCreate(menusDatas);
-    await db.MenuMeal.bulkCreate(admin3MenuMeals);
-    await db.MenuMeal.bulkCreate(admin4MenuMeals);
+    await db.MenuMeal.bulkCreate(catererMariaMenuMeals);
+    await db.MenuMeal.bulkCreate(catererDejiMenuMeals);
   });
 
   beforeEach(async () => {
@@ -89,13 +89,13 @@ describe('Orders API routes', () => {
   })
 
   describe('POST /api/v1/orders', () => {
-    it('should place order if customer', (done) => {
+    it('should allow customer place order', (done) => {
       chai.request(app.listen())
       .post('/api/v1/orders')
-      .set('Authorization', `Bearer ${customer1Token}`)
-      .send(customer1Order)
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${customerRoseToken}`)
+      .send(customerRoseOrder)
+      .end((error, res) => {
+        if(error) return done(error);
         // check if it's opening hours or not
         if(moment().hour() >= process.env.OPENINGHOUR && moment().hour() <= process.env.CLOSINGHOUR) {
           expect(res.status).to.equal(201);
@@ -111,13 +111,13 @@ describe('Orders API routes', () => {
       });
     });
 
-    it('should not allow admin place   orders', (done) => {
+    it('should not allow caterer place orders', (done) => {
       chai.request(app.listen())
       .post('/api/v1/orders')
-      .set('Authorization', `Bearer ${admin4Token}`)
-      .send(customer1Order)
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${catererDejiToken}`)
+      .send(customerRoseOrder)
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(403);
         expect(res.body.message).to.equal('Only customers are allowed to perform this operation!');
 
@@ -125,10 +125,10 @@ describe('Orders API routes', () => {
       });
     });
 
-    it('should not place orders if input incomplete', (done) => {
+    it('should not place orders if meals input is incorrect', (done) => {
       chai.request(app.listen())
       .post('/api/v1/orders')
-      .set('Authorization', `Bearer ${customer1Token}`)
+      .set('Authorization', `Bearer ${customerRoseToken}`)
       .send({
           deliveryAddress: 'maryland Lagos',
           meals: [
@@ -139,8 +139,8 @@ describe('Orders API routes', () => {
             }
           ]
       })
-      .end((err, res) => {
-        if(err) return done(err);
+      .end((error, res) => {
+        if(error) return done(error);
 
         if(moment().hour() >= process.env.OPENINGHOUR && moment().hour() <= process.env.CLOSINGHOUR) {
           expect(res.status).to.equal(400);
@@ -155,16 +155,16 @@ describe('Orders API routes', () => {
       });
     });
 
-    it('should not place orders if input incomplete', (done) => {
+    it('should not place orders if `deliveryAddress` field is empty', (done) => {
       chai.request(app.listen())
       .post('/api/v1/orders')
-      .set('Authorization', `Bearer ${customer1Token}`)
+      .set('Authorization', `Bearer ${customerRoseToken}`)
       .send({
-          ...customer1Order,
+          ...customerRoseOrder,
           deliveryAddress: '',
       })
-      .end((err, res) => {
-        if(err) return done(err);
+      .end((error, res) => {
+        if(error) return done(error);
 
         if(moment().hour() >= process.env.OPENINGHOUR && moment().hour() <= process.env.CLOSINGHOUR) {
           expect(res.status).to.equal(400);
@@ -179,10 +179,10 @@ describe('Orders API routes', () => {
       });
     });
 
-    it('should throw error if meal not found in db', (done) => {
+    it('should throw error if trying to order meal not created', (done) => {
       chai.request(app.listen())
       .post('/api/v1/orders')
-      .set('Authorization', `Bearer ${customer2Token}`)
+      .set('Authorization', `Bearer ${customerRoviToken}`)
       .send({
           deliveryAddress: 'maryland Lagos',
           meals: [
@@ -193,8 +193,8 @@ describe('Orders API routes', () => {
             }
           ]
       })
-      .end((err, res) => {
-        if(err) return done(err);
+      .end((error, res) => {
+        if(error) return done(error);
         if(moment().hour() >= process.env.OPENINGHOUR && moment().hour() <= process.env.CLOSINGHOUR) {
           expect(res.status).to.equal(404);
           expect(res.body.message).to.equal('meals 32947007-da1b-4bc1-ad3a-8cc106dee9fb, not found!');
@@ -215,17 +215,17 @@ describe('Orders API routes', () => {
       await db.MenuMeal.truncate();
 
       await db.Menu.bulkCreate(menusDatas);
-      await db.MenuMeal.bulkCreate(admin3MenuMeals);
-      await db.MenuMeal.bulkCreate(admin4MenuMeals);
+      await db.MenuMeal.bulkCreate(catererMariaMenuMeals);
+      await db.MenuMeal.bulkCreate(catererDejiMenuMeals);
     });
 
-    it('should return error if query is wrong', (done) => {
+    it('should return error if offset is a negative integer', (done) => {
       chai.request(app.listen())
       .get('/api/v1/orders?limit=2&offset=-1')
-      .set('Authorization', `Bearer ${admin3Token}`)
-      .end((err, res) => {
+      .set('Authorization', `Bearer ${catererMariaToken}`)
+      .end((error, res) => {
         const { message, success } = res.body;
-        if(err) return done(err);
+        if(error) return done(error);
         expect(res.status).to.equal(400);
         expect(res.body).to.have.all.keys('success', 'message');
         expect(success).to.equal(false);
@@ -234,13 +234,13 @@ describe('Orders API routes', () => {
       });
     });
 
-    it('should return error if order for the user is not found', (done) => {
+    it('should return error if order is not found', (done) => {
       chai.request(app.listen())
       .get('/api/v1/orders?limit=2&offset=0')
-      .set('Authorization', `Bearer ${admin4Token}`)
-      .end((err, res) => {
+      .set('Authorization', `Bearer ${catererDejiToken}`)
+      .end((error, res) => {
         const { message, success } = res.body;
-        if(err) return done(err);
+        if(error) return done(error);
         expect(res.status).to.equal(404);
         expect(res.body).to.have.all.keys('success', 'message');
         expect(success).to.equal(false);
@@ -249,13 +249,13 @@ describe('Orders API routes', () => {
       });
     });
 
-    it('should return all orders that have the admin meals in them', (done) => {
+    it('should return all orders that have the caterer\'s meals in them', (done) => {
       chai.request(app.listen())
       .get('/api/v1/orders')
-      .set('Authorization', `Bearer ${admin3Token}`)
-      .end((err, res) => {
+      .set('Authorization', `Bearer ${catererMariaToken}`)
+      .end((error, res) => {
         const { pagination, message, success, orders } = res.body;
-        if(err) return done(err);
+        if(error) return done(error);
         expect(res.status).to.equal(200);
         expect(res.body).to.have.all.keys('success', 'message', 'pagination', 'orders', 'grandTotalPrice');
         expect(success).to.equal(true);
@@ -283,10 +283,10 @@ describe('Orders API routes', () => {
     it('should allow customers get all orders', (done) => {
       chai.request(app.listen())
       .get('/api/v1/orders')
-      .set('Authorization', `Bearer ${customer2Token}`)
-      .end((err, res) => {
+      .set('Authorization', `Bearer ${customerRoviToken}`)
+      .end((error, res) => {
         const { pagination, message, success, orders } = res.body;
-        if(err) return done(err);
+        if(error) return done(error);
         expect(res.status).to.equal(200);
         expect(res.body).to.have.all.keys('success', 'message', 'pagination', 'orders', 'grandTotalPrice');
         expect(success).to.equal(true);
@@ -316,10 +316,10 @@ describe('Orders API routes', () => {
     it('should return meals of order', (done) => {
       chai.request(app.listen())
       .get(`/api/v1/orders/${ordersData[0].id}/meals`)
-      .set('Authorization', `Bearer ${customer1Token}`)
-      .end((err, res) => {
+      .set('Authorization', `Bearer ${customerRoseToken}`)
+      .end((error, res) => {
         const { pagination, message, success, order } = res.body;
-        if(err) return done(err);
+        if(error) return done(error);
         expect(res.status).to.equal(200);
         expect(res.body).to.have.all.keys('success', 'message', 'pagination', 'order', 'grandTotalPrice');
         expect(success).to.equal(true);
@@ -336,23 +336,23 @@ describe('Orders API routes', () => {
         expect(pagination.nextOffset).to.equal(10);
         expect(order).to.be.an('array');
         expect(order[0]).to.have.all.keys('id', 'UserId', 'deliveryAddress', 'totalPrice', 'User', 'Meals', 'createdAt', 'updatedAt');
-        expect(order[0].UserId).to.equal(customerUser1.id);
+        expect(order[0].UserId).to.equal(customerRose.id);
         expect(order[0].id).to.equal(ordersData[0].id);
-        expect(order[0].User.firstName).to.equal(customerUser1.firstName);
-        expect(order[0].User.lastName).to.equal(customerUser1.lastName);
+        expect(order[0].User.firstName).to.equal(customerRose.firstName);
+        expect(order[0].User.lastName).to.equal(customerRose.lastName);
         expect(order[0].deliveryAddress).to.equal(ordersData[0].deliveryAddress);
         expect(order[0].Meals.length).to.equal(3);
         done();
       });
     });
 
-    it('should return "not found" if order not found', (done) => {
+    it('should return `not found` if order is not found', (done) => {
       chai.request(app.listen())
       .get('/api/v1/orders/7a5d6838-569b-4fb5-955c-356ad7089645/meals')
-      .set('Authorization', `Bearer ${customer2Token}`)
-      .end((err, res) => {
+      .set('Authorization', `Bearer ${customerRoviToken}`)
+      .end((error, res) => {
         const { success, message } = res.body;
-        if(err) return done(err);
+        if(error) return done(error);
         expect(res.status).to.equal(404);
         expect(res.body).to.have.all.keys('success', 'message');
         expect(success).to.equal(false);
@@ -363,14 +363,14 @@ describe('Orders API routes', () => {
   });
 
   describe('PUT /api/v1/orders/:orderId', () => {
-    it('should update order', (done) => {
+    it('should allow customer update his/her order', (done) => {
       chai.request(app.listen())
       .put(`/api/v1/orders/${ordersData[0].id}`)
-      .set('Authorization', `Bearer ${customer1Token}`)
-      .send(customer1OrderUpdate)
-      .end((err, res) => {
+      .set('Authorization', `Bearer ${customerRoseToken}`)
+      .send(customerRoseOrderUpdate)
+      .end((error, res) => {
         const { success, message } = res.body;
-        if(err) return done(err);
+        if(error) return done(error);
         expect(res.status).to.equal(200);
         expect(res.body).to.have.all.keys('success', 'message', 'updatedOrder');
         expect(success).to.equal(true);
@@ -380,13 +380,13 @@ describe('Orders API routes', () => {
       });
     });
 
-    it('should not allow admin update orders', (done) => {
+    it('should not allow caterer update orders', (done) => {
       chai.request(app.listen())
       .put(`/api/v1/orders/${ordersData[0].id}`)
-      .set('Authorization', `Bearer ${admin3Token}`)
-      .send(customer2Order)
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${catererMariaToken}`)
+      .send(customerRoviOrder)
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(403);
         expect(res.body.message).to.equal('Only customers are allowed to perform this operation!');
 
@@ -394,13 +394,13 @@ describe('Orders API routes', () => {
       });
     });
 
-    it('should not allow user update another user\'s orders', (done) => {
+    it('should not allow customer update another customer\'s orders', (done) => {
       chai.request(app.listen())
       .put(`/api/v1/orders/${ordersData[0].id}`)
-      .set('Authorization', `Bearer ${customer2Token}`)
-      .send(customer1OrderUpdate)
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${customerRoviToken}`)
+      .send(customerRoseOrderUpdate)
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(404);
         expect(res.body.message).to.equal('Order not found!');
 
@@ -408,16 +408,16 @@ describe('Orders API routes', () => {
       });
     });
 
-    it('should not update order if input incomplete', (done) => {
+    it('should not update order if meals field is empty', (done) => {
       chai.request(app.listen())
       .put(`/api/v1/orders/${ordersData[0].id}`)
-      .set('Authorization', `Bearer ${customer2Token}`)
+      .set('Authorization', `Bearer ${customerRoviToken}`)
       .send({
           deliveryAddress: 'maryland Lagos',
           meals: []
       })
-      .end((err, res) => {
-        if(err) return done(err);
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(400);
         expect(res.body.message).to.equal('meals field is empty!');
 
@@ -427,25 +427,25 @@ describe('Orders API routes', () => {
   });
 
   describe('DELETE /api/v1/orders/:id', (done) => {
-    it('should delete order if customer', (done) => {
+    it('should allow customer cancel his/her order', (done) => {
       chai.request(app.listen())
       .delete(`/api/v1/orders/${ordersData[0].id}`)
-      .set('Authorization', `Bearer ${customer1Token}`)
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${customerRoseToken}`)
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(204);
 
         done();
       });
     });
 
-    it('should not allow user delete another user\'s orders', (done) => {
+    it('should not allow customer cancel another customer\'s orders', (done) => {
       chai.request(app.listen())
       .delete(`/api/v1/orders/${ordersData[0].id}`)
-      .set('Authorization', `Bearer ${customer2Token}`)
-      .send(customer2Order)
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${customerRoviToken}`)
+      .send(customerRoviOrder)
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(404);
         expect(res.body.message).to.equal('Order not found!');
 
@@ -453,12 +453,12 @@ describe('Orders API routes', () => {
       });
     });
 
-    it('should not allow admin delete   order', (done) => {
+    it('should not allow caterer delete order', (done) => {
       chai.request(app.listen())
       .delete(`/api/v1/orders/${ordersData[0].id}`)
-      .set('Authorization', `Bearer ${admin4Token}`)
-      .end((err, res) => {
-        if(err) return done(err);
+      .set('Authorization', `Bearer ${catererDejiToken}`)
+      .end((error, res) => {
+        if(error) return done(error);
         expect(res.status).to.equal(403);
         expect(res.body.message).to.equal('Only customers are allowed to perform this operation!');
 

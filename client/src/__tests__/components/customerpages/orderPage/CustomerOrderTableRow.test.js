@@ -19,7 +19,7 @@ const props = {
     info: true,
     edit: true
   },
-  mealId: orderOnEdit.orderId,
+  mealId: `${orderOnEdit.orderId}`,
   updatePortion: jest.fn(),
   orderedMealsLength: 5
 };

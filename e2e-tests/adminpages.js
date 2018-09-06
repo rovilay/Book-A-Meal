@@ -4,10 +4,10 @@ import db from '../models';
 import userData from '../server/helpers/test-data/users';
 import {
   menusDatas,
-  admin3MenuMeals,
-  admin4MenuMeals,
-  meals1,
-  meals2
+  catererMariaMenuMeals,
+  catererDejiMenuMeals,
+  caterermariaMeals,
+  catererdejiMeals
 } from '../server/helpers/test-data/menus';
 import {
   ordersData,
@@ -16,9 +16,9 @@ import {
 } from '../server/helpers/test-data/orders';
 
 const {
-  adminUser3,
-  adminUser4,
-  customerUser1,
+  catererMaria,
+  catererDeji,
+  customerRose,
 } = userData;
 
 const tomorrow = moment().add(1, 'days').format('DD');
@@ -32,16 +32,16 @@ module.exports = {
     await db.Meal.destroy({ force: true, truncate: { cascade: true } });
     await db.User.truncate();
 
-    await db.User.create(adminUser3);
-    await db.User.create(adminUser4);
-    await db.User.create(customerUser1);
+    await db.User.create(catererMaria);
+    await db.User.create(catererDeji);
+    await db.User.create(customerRose);
 
-    await meals1.map(meal => db.Meal.create(meal));
-    await meals2.map(meal => db.Meal.create(meal));
+    await caterermariaMeals.map(meal => db.Meal.create(meal));
+    await catererdejiMeals.map(meal => db.Meal.create(meal));
 
     await db.Menu.bulkCreate(menusDatas);
-    await db.MenuMeal.bulkCreate(admin3MenuMeals);
-    await db.MenuMeal.bulkCreate(admin4MenuMeals);
+    await db.MenuMeal.bulkCreate(catererMariaMenuMeals);
+    await db.MenuMeal.bulkCreate(catererDejiMenuMeals);
 
     await db.Meal.bulkCreate(catererRoseMeals);
     await db.Order.bulkCreate(ordersData);
@@ -64,8 +64,8 @@ module.exports = {
       .waitForElementVisible('body', 1000)
       .click('#nav-menu > a:nth-child(1)')
       .waitForElementVisible('.loginpage', 1000)
-      .setValue('#login-email', `${adminUser3.email}`)
-      .setValue('#login-password', `${adminUser3.password}`)
+      .setValue('#login-email', `${catererMaria.email}`)
+      .setValue('#login-password', `${catererMaria.password}`)
       .waitForElementVisible('.loginbtn', 1000)
       .pause(2000)
       .click('.loginbtn')
@@ -139,7 +139,9 @@ module.exports = {
       .click('#checkbox-7b7ba1e6-9790-4be5-9b7d-334b308da5bc') // select meal 2
       .pause(1000)
       .click('#checkbox-ee2f5319-07d9-43b9-a15e-0e5d9215da1c') // select meal 3
-      .pause(1000)
+      .pause(2000)
+      .execute('window.scrollTo(0, 250)')
+      .pause(2000)
       .submitForm('#accordion__body-0 > div > form');
   },
   'It should navigate to meal page': (browser) => {
@@ -170,7 +172,7 @@ module.exports = {
       .setValue('#meal-form > div.name > p > input[type="text"]', ' AND CHOCOLATE')
       .pause(2000)
       .submitForm('#meal-form')
-      .pause(1000)
+      .pause(2000)
       .click('body > div.swal-overlay.swal-overlay--show-modal > div > div.swal-footer > div:nth-child(2) > button');
   },
   'It should navigate to order page': (browser) => {

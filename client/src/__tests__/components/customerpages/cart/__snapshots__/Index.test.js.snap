@@ -122,9 +122,9 @@ exports[`CustomerDashboard component test should render \`Cart\` correctly 1`] =
           ]
         }
         cartTotalPrice={1100}
-        deleteMealInCart={[Function]}
-        deleteRow={[Function]}
-        emptyCart={[Function]}
+        deleteMealInCart={[MockFunction]}
+        deleteRow={[MockFunction]}
+        emptyCart={[MockFunction]}
         history={Object {}}
         item={
           Object {
@@ -134,9 +134,10 @@ exports[`CustomerDashboard component test should render \`Cart\` correctly 1`] =
           }
         }
         key="0"
-        postOrder={[Function]}
+        postOrder={[MockFunction]}
         showId={false}
         sn={1}
+        updateCartMealPortion={[MockFunction]}
         updatePortion={[Function]}
       />
       <CartTableRow
@@ -167,9 +168,9 @@ exports[`CustomerDashboard component test should render \`Cart\` correctly 1`] =
           ]
         }
         cartTotalPrice={1100}
-        deleteMealInCart={[Function]}
-        deleteRow={[Function]}
-        emptyCart={[Function]}
+        deleteMealInCart={[MockFunction]}
+        deleteRow={[MockFunction]}
+        emptyCart={[MockFunction]}
         history={Object {}}
         item={
           Object {
@@ -179,9 +180,10 @@ exports[`CustomerDashboard component test should render \`Cart\` correctly 1`] =
           }
         }
         key="1"
-        postOrder={[Function]}
+        postOrder={[MockFunction]}
         showId={false}
         sn={2}
+        updateCartMealPortion={[MockFunction]}
         updatePortion={[Function]}
       />
       <CartTableRow
@@ -212,9 +214,9 @@ exports[`CustomerDashboard component test should render \`Cart\` correctly 1`] =
           ]
         }
         cartTotalPrice={1100}
-        deleteMealInCart={[Function]}
-        deleteRow={[Function]}
-        emptyCart={[Function]}
+        deleteMealInCart={[MockFunction]}
+        deleteRow={[MockFunction]}
+        emptyCart={[MockFunction]}
         history={Object {}}
         item={
           Object {
@@ -224,9 +226,10 @@ exports[`CustomerDashboard component test should render \`Cart\` correctly 1`] =
           }
         }
         key="2"
-        postOrder={[Function]}
+        postOrder={[MockFunction]}
         showId={false}
         sn={3}
+        updateCartMealPortion={[MockFunction]}
         updatePortion={[Function]}
       />
     </div>

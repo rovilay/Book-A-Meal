@@ -61,16 +61,22 @@ View on [SWAGGER](https://book-me-a-meal.herokuapp.com/api/v1/api-docs)
 * Run ```sequelize db:migrate``` to migrate database to ```postgres```
 
 #### Development
-* Run ```npm start:dev``` in development
+* Run ```npm run start:dev``` in development
 * * Navigate to ```localhost:9000``` in your browser to view app
 
 #### Production
-* Run ```npm build```
+* Run ```npm run build```
 * Run ```start```
 * Navigate to ```localhost:9000``` in your browser to view app
 
 #### Testing
 * Run ```npm run test```
+  *  For End to End test
+  * * Install `Java JDK` on your Local machine
+  * * `npm run e2e:setup`
+  * *  `npm run e2e:server`
+  * * `npm run client:dev`
+  * * `npm run e2e:start`
 
 
 # Release
@@ -79,7 +85,7 @@ View on [SWAGGER](https://book-me-a-meal.herokuapp.com/api/v1/api-docs)
 
 # Contributing
 This app is open to suggestions and contribution. To contribute follow the steps below:
-* Fork this project and clone locally
+* Fork this project and [clone](https://github.com/rovilay/Book-A-Meal.git) locally
 * Work on the project and create a branch for each separate work
 * Ensure to test your contribution
 * Ensure to write good commit messages
