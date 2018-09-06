@@ -384,6 +384,26 @@ describe('Meals API routes', () => {
         done();
       });
     });
+
+    it('should return error if price input is not greater than 0', (done) => {
+      chai.request(app.listen())
+      .post('/api/v1/meals')
+      .set('Authorization', `Bearer ${catererJohnToken}`)
+      .send({
+        ...unOwnedMeal,
+        price: 0,
+        title: 'Ewa and chicken'
+      })
+      .end((error, res) => {
+        if(error) return done(error);
+        expect(res.status).to.equal(400);
+        expect(res.body).to.have.all.keys('success', 'message');
+        expect(res.body.success).to.equal(false);
+        expect(res.body.message).to.equal('Price must be greater than 0!');
+
+        done();
+      });
+    });
   });
 
   describe('PUT /api/v1/meals/:mealId', () => {

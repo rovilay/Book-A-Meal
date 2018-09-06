@@ -21,9 +21,9 @@ function validateMeal(req, res, next) {
     }
   });
 
-  // check if meal price is less than 1
-  if (req.body.price && req.body.price < 1) {
-    const error = new Error('Price must be at least 1');
+  // check if meal price is greater than 0
+  if (req.body.price <= 0) {
+    const error = new Error('Price must be greater than 0!');
     error.status = 400;
     return next(error);
   }
