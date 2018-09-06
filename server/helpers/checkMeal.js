@@ -3,14 +3,14 @@ import db from '../../models';
 /**
  * Checks if meal is in db
  *
- * @param  {Array} Meals - List of meals to check db against
+ * @param  {Array} MealIds - List of meals to check db against
  * @param  {string} UserId - id of user making the request
  * @param  {object} next - next object to handle error
  * @return {boolean} true
  */
 
-async function checkMeal(Meals = [], UserId = undefined, next) { // check if input meals is correct or in db
-  const where = (UserId) ? { id: Meals, UserId } : { id: Meals };
+async function checkMeal(MealIds = [], UserId = undefined, next) { // check if input meals is correct or in db
+  const where = (UserId) ? { id: MealIds, UserId } : { id: MealIds };
 
   const foundMeals = await db.Meal.findAll({
     where,
@@ -20,7 +20,7 @@ async function checkMeal(Meals = [], UserId = undefined, next) { // check if inp
   const foundMealsId = foundMeals.map(meal => meal.id);
 
   //  check to get id of meals not found
-  const notFoundMeals = (Meals.length > 0) && Meals.filter(mealId => (foundMealsId.indexOf(mealId) > -1) ? false : mealId);
+  const notFoundMeals = (MealIds.length > 0) && MealIds.filter(mealId => (foundMealsId.indexOf(mealId) > -1) ? false : mealId);
 
   if (notFoundMeals.length > 0) {
     const error = new Error(`meals ${notFoundMeals}, not found!`);
