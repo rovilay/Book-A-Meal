@@ -23,7 +23,7 @@ describe('EditMenuTable component test', () => {
   };
 
 
-  it('should render EditMenuTable correctly', (done) => {
+  it('should render EditMenuTable component correctly', (done) => {
     const wrapper = setup();
 
     expect(wrapper).toMatchSnapshot();
@@ -31,7 +31,7 @@ describe('EditMenuTable component test', () => {
     done();
   });
 
-  it('should call `toggleMealCheckbox`', (done) => {
+  it('should call `toggleMealCheckbox` function if meal checkbox is clicked', (done) => {
     const wrapper = setup();
 
     document.body.innerHTML =
@@ -46,7 +46,7 @@ describe('EditMenuTable component test', () => {
     done();
   });
 
-  it('should call `toggleMealCheckbox` on button click', (done) => {
+  it('should call `toggleMealCheckbox` on meal checkbox click', (done) => {
     const wrapper = setup();
 
     document.body.innerHTML =
@@ -63,7 +63,7 @@ describe('EditMenuTable component test', () => {
   });
 
 
-  it('should call `updateMenu`', (done) => {
+  it('should call `updateMenu` if update menu button is clicked', (done) => {
     const wrapper = setup();
 
     const event = {

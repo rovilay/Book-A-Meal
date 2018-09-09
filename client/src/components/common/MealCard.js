@@ -11,6 +11,7 @@ class MealCard extends Component {
     super(props);
 
     this.handleDeleteMeal = this.handleDeleteMeal.bind(this);
+    this.handleEditMeal = this.handleEditMeal.bind(this);
   }
 
   /**
@@ -19,6 +20,7 @@ class MealCard extends Component {
    */
   handleDeleteMeal(event) {
     event.preventDefault();
+    const user = getFromLocalStorage('user');
     sweetAlert({
       text: 'Are you sure you want to delete this meal?',
       buttons: true,
@@ -27,17 +29,26 @@ class MealCard extends Component {
       .then((confirmed) => {
         if (confirmed) {
           this.props.deleteMeal(this.props.mealData.id);
+          this.props.getMeals({});
+          (!user) && this.props.history.push('/');
         }
       })
       .catch(err => err);
   }
 
+  /**
+   * handles meal edit
+   */
+  handleEditMeal() {
+    this.props.editMeal(this.props.mealData.id);
+  }
+
   render() {
     const {
       mealData,
-      addToCart,
-      editMeal,
-      cart
+      addMealToCart,
+      cart,
+      history
     } = this.props;
 
     const mealsInCart = (cart) && cart.map(meal => meal.id);
@@ -56,21 +67,24 @@ class MealCard extends Component {
           {
             (user && user.admin)
             &&
-            <div className="meal-desc">{moment(mealData.createdAt).format('LL')}</div>
+            <div className="meal-desc">
+              { moment(mealData.createdAt).format('LL') }
+            </div>
           }
         </div>
 
         <div className="meal-label">
           {
-            // show for customers and visitor only
-            (user === null || (user && !user.admin))
+            // show for customers and visitors only
+            (!user || (user && !user.admin))
             &&
             <button
               className="responsive-btn-2"
               disabled={(mealsInCart) && mealsInCart.includes(mealData.id)}
               onClick={
                 () => {
-                  addToCart(mealData);
+                  (user && !user.admin) && addMealToCart(mealData);
+                  (!user) && history.push('/login');
                 }
               }
             >
@@ -90,9 +104,7 @@ class MealCard extends Component {
             (
               <button
                 className="btn-3 box-shadow"
-                onClick={() => {
-                  editMeal(mealData.id);
-                }}
+                onClick={this.handleEditMeal}
               >
                 <FontAwesome
                   name="pencil"
@@ -129,18 +141,21 @@ class MealCard extends Component {
 
 
 MealCard.defaultProps = {
-  addToCart: undefined,
+  addMealToCart: undefined,
   deleteMeal: undefined,
   editMeal: undefined,
-  cart: undefined
+  cart: undefined,
+  getMeals: undefined
 };
 
 MealCard.propTypes = {
   mealData: PropTypes.object.isRequired,
-  addToCart: PropTypes.func,
+  addMealToCart: PropTypes.func,
   deleteMeal: PropTypes.func,
+  getMeals: PropTypes.func,
   editMeal: PropTypes.func,
   cart: PropTypes.array,
+  history: PropTypes.object.isRequired
 };
 
 export default MealCard;

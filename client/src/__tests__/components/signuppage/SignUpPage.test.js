@@ -21,7 +21,7 @@ describe('SignUpPage component test', () => {
   });
 
 
-  it('should call onChange', (done) => {
+  it('should call `onChange` if signup form input is changed', (done) => {
     document.body.innerHTML =
     `<div>
       <input id="signup-fname" value="john" />
@@ -39,7 +39,7 @@ describe('SignUpPage component test', () => {
     const wrapper = setup();
 
     const event = {
-      preventDefault: () => jest.fn(),
+      preventDefault: jest.fn(),
       target: {
         name: 'email',
         value: 'test@test.com'
@@ -47,14 +47,13 @@ describe('SignUpPage component test', () => {
     };
     const onChangeSpy = jest.spyOn(wrapper.instance(), 'onChange');
     wrapper.instance().onChange(event)
-
     expect(onChangeSpy).toHaveBeenCalled();
 
     done();
   });
 
 
-  it('should call onSubmit', (done) => {
+  it('should call `onSubmit` if signup button is clicked', (done) => {
     const wrapper = setup();
 
     const event = {

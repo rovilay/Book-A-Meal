@@ -36,14 +36,17 @@ describe('MenuTable component test', () => {
   });
 
 
-  it('should call `handlePaginationClick`', (done) => {
+  it('should call `handlePaginationClick` if menu pagination button is clicked',
+  (done) => {
     const wrapper = setup();
 
     const data = {
       selected: 1
     };
 
-    const handlePaginationClickSpy= jest.spyOn(wrapper.instance(), 'handlePaginationClick');
+    const handlePaginationClickSpy= jest.spyOn(
+      wrapper.instance(), 'handlePaginationClick'
+    );
     wrapper.instance().handlePaginationClick(data)
     expect(handlePaginationClickSpy).toHaveBeenCalled();
 

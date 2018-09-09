@@ -72,7 +72,7 @@ describe('CustomerDashboard component test', () => {
   });
 
 
-  it('should call `onChange`', (done) => {
+  it('should call `onChange` when delivery address input is changed', (done) => {
     const wrapper = setup();
 
     const event = {
@@ -90,7 +90,7 @@ describe('CustomerDashboard component test', () => {
     done();
   });
 
-  it('should call `deleteRow`', (done) => {
+  it('should call `deleteRow` when a meal is being removed from the cart', (done) => {
     const wrapper = setup();
 
     const deleteRowSpy= jest.spyOn(wrapper.instance(), 'deleteRow');
@@ -101,7 +101,7 @@ describe('CustomerDashboard component test', () => {
   });
 
 
-  it('should call `updatePortion`', (done) => {
+  it('should call `updatePortion` if meal portion is being changed', (done) => {
     const wrapper = setup();
 
     const updatePortionSpy= jest.spyOn(wrapper.instance(), 'updatePortion');

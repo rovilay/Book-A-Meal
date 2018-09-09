@@ -178,7 +178,7 @@ exports[`AdminDashboard component test should render \`CustomerDashboard\` corre
               Object {
                 "id": "1",
                 "meals": Array [],
-                "postOn": "2018-09-06",
+                "postOn": "2018-09-11",
               },
               Object {
                 "id": "2",
@@ -437,7 +437,7 @@ exports[`AdminDashboard component test should render \`CustomerDashboard\` corre
             Object {
               "id": "1",
               "meals": Array [],
-              "postOn": "2018-09-06",
+              "postOn": "2018-09-11",
             },
             Object {
               "id": "2",
@@ -687,7 +687,7 @@ exports[`AdminDashboard component test should render \`CustomerDashboard\` corre
               Object {
                 "id": "1",
                 "meals": Array [],
-                "postOn": "2018-09-06",
+                "postOn": "2018-09-11",
               },
               Object {
                 "id": "2",
@@ -935,7 +935,7 @@ exports[`AdminDashboard component test should render \`CustomerDashboard\` corre
         Object {
           "id": "1",
           "meals": Array [],
-          "postOn": "2018-09-06",
+          "postOn": "2018-09-11",
         },
         Object {
           "id": "2",

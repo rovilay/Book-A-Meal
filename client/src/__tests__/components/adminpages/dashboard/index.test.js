@@ -98,7 +98,7 @@ describe('AdminDashboard component test', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('should call `onSubmitUpdate`', (done) => {
+  it('should call `onSubmitUpdate` if menu is being updated', (done) => {
     const wrapper = setup();
 
 
@@ -109,7 +109,7 @@ describe('AdminDashboard component test', () => {
     done();
   });
 
-  it('should call `setNewMenuMeal`', (done) => {
+  it('should call `setNewMenuMeal` if meals are being added to new menu', (done) => {
     const wrapper = setup();
 
     document.body.innerHTML =
@@ -126,7 +126,7 @@ describe('AdminDashboard component test', () => {
     done();
   });
 
-  it('should call `getMenus`', (done) => {
+  it('should call `getMenus` when dashboard component mounts', (done) => {
     const wrapper = setup();
 
     const getMenusSpy= jest.spyOn(wrapper.instance(), 'getMenus');
@@ -137,7 +137,7 @@ describe('AdminDashboard component test', () => {
   });
 
 
-  it('should call `hideModal`', (done) => {
+  it('should call `hideModal` if modal close button is clicked', (done) => {
     const wrapper = setup();
 
     const hideModalSpy= jest.spyOn(wrapper.instance(), 'hideModal');
@@ -148,7 +148,7 @@ describe('AdminDashboard component test', () => {
   });
 
 
-  it('should call `showMenuDetails`', (done) => {
+  it('should call `showMenuDetails` if menu accordion is clicked', (done) => {
     const wrapper = setup();
 
     const showMenuDetailsSpy= jest.spyOn(wrapper.instance(), 'showMenuDetails');
@@ -158,7 +158,7 @@ describe('AdminDashboard component test', () => {
     done();
   });
 
-  it('should call `editMenu`', (done) => {
+  it('should call `editMenu` if add meal button is clicked', (done) => {
     const wrapper = setup();
 
     const editMenuSpy= jest.spyOn(wrapper.instance(), 'editMenu');
@@ -168,7 +168,7 @@ describe('AdminDashboard component test', () => {
     done();
   });
 
-  it('should call `unCheckAll`', (done) => {
+  it('should call `unCheckAll` if meal checkbox are checked', (done) => {
     const wrapper = setup();
 
     document.body.innerHTML =
@@ -184,26 +184,9 @@ describe('AdminDashboard component test', () => {
     done();
   });
 
-  // it('should call `submitNewMenu`', (done) => {
-  //   const wrapper = setup();
 
-  //   document.body.innerHTML =
-  //   '<div>' +
-  //   `  <input type="date" id="postOn" value="02/09/2018" />` +
-  //   '</div>';
-
-  //   const data = {
-  //     selected: 1
-  //   };
-
-  //   const submitNewMenuSpy= jest.spyOn(wrapper.instance(), 'submitNewMenu');
-  //   wrapper.instance().submitNewMenu(data)
-  //   expect(submitNewMenuSpy).toHaveBeenCalled();
-
-  //   done();
-  // });
-
-  it('should call `handlePaginationClick`', (done) => {
+  it('should call `handlePaginationClick` if menu pagination button is clicked',
+  (done) => {
     const wrapper = setup();
 
     const data = {

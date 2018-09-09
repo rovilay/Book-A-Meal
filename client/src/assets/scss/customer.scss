@@ -1,7 +1,10 @@
 .welcome {
   height: 35vh;
   width: 100%;
-  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.75)), url('https://res.cloudinary.com/dcqnswemi/image/upload/v1532299580/customer-bg.jpg') center #333 no-repeat;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.45),
+    rgba(0, 0, 0, 0.75)),
+    url('https://res.cloudinary.com/dcqnswemi/image/upload/v1532299580/customer-bg.jpg') center #333 no-repeat;
   background-attachment: scroll;
   background-size: cover;
   display: flex;

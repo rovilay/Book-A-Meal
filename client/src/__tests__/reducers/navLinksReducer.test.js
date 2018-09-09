@@ -1,10 +1,15 @@
 import { navLinksDefaultState, navLinksReducer } from '../../reducers/navLinksReducer';
-import { setNav, setDefaultNav } from '../../actions/navLinksActions';
+import { SET_NAV_BAR } from '../../actions/actiontypes';
+import { setDefaultNav } from '../../actions/navLinksActions';
 import navData from '../../helpers/navData';
 
 describe('Navigation Links reducers', () => {
-  it('should update navigation links state if navigation data is set', (done) => {
-    const action = setNav(navData.customerNav);
+  it('should update navigation links state if navigation data is set',
+  (done) => {
+    const action = {
+      type: SET_NAV_BAR,
+      navData: navData.customerNav
+    };
     const newState = navLinksReducer(navLinksDefaultState, action);
     expect(newState).toEqual(navData.customerNav);
 

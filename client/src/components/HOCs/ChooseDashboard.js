@@ -6,9 +6,12 @@ import PropTypes from 'prop-types';
 import jwt from 'jsonwebtoken';
 
 import isExpired from '../../helpers/isExpired';
-import { getFromLocalStorage } from '../../helpers/localstorage';
+import {
+  getFromLocalStorage,
+  deleteInLocalStorage
+} from '../../helpers/localstorage';
 import { getTodayMenu } from '../../actions/menuActions';
-import { addToCart } from '../../actions/cartActions';
+import { addMealToCart } from '../../actions/cartActions';
 import { setDefaultNav, setNav } from '../../actions/navLinksActions';
 
 /**
@@ -33,19 +36,34 @@ export default function (ComponentA, ComponentB) {
       const { history } = this.props;
       const token = getFromLocalStorage('jwt');
       const user = getFromLocalStorage('user');
+
       if (token) {
+        const decodedToken = jwt.decode(token);
+        if (!decodedToken) {
+          deleteInLocalStorage('jwt');
+          this.props.setDefaultNav();
+          return history.push('/login');
+        }
+
         const {
           exp,
-          admin
-        } = jwt.decode(token);
+          admin = undefined
+        } = decodedToken;
 
-        if (isExpired(exp)) {
+        if (!exp || admin === undefined) {
+          deleteInLocalStorage('jwt');
+          this.props.setDefaultNav();
+          return history.push('/login');
+        }
+
+        if (exp && isExpired(exp)) {
           this.props.setDefaultNav();
           return history.push('/login');
         }
 
         this.setState({ token, user, admin });
       } else {
+        this.props.setDefaultNav();
         history.push('/login');
       }
     }
@@ -60,7 +78,7 @@ export default function (ComponentA, ComponentB) {
           }
 
           {
-            (admin !== '' && !admin)
+            (admin !== '' && admin !== undefined && !admin)
             &&
 
             <ComponentB {...this.props} token={token} user={user} />
@@ -90,10 +108,12 @@ export default function (ComponentA, ComponentB) {
       setDefaultNav,
       getTodayMenu,
       setNav,
-      addToCart,
+      addMealToCart
     },
     dispatch
   );
 
-  return connect(mapStateToProps, mapDispatchToProps)(withRouter(ChooseDashboard));
+  return connect(
+    mapStateToProps, mapDispatchToProps
+  )(withRouter(ChooseDashboard));
 }

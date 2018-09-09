@@ -8,30 +8,30 @@ import {
   SET_MEALS,
   UPDATE_MEAL_ON_EDIT,
   SET_DEFAULT_MEAL_STATE,
-  MEAL_ERROR
+  MEAL_ERROR,
+  DELETE_MEAL,
+  ADD_MEAL,
+  UPDATE_MEAL
 } from './actiontypes';
 
 /**
  * Sets a meal for edit
  *
  * @param  {String}  mealId - Id of meal to edit
- * @return {Object} - returns an object that consist of properties type 'SET_MENU' and menus
+ * @return {Object} - returns an object that consist of
+  properties type 'SET_MENU' and menus
  */
-export const setMealForEdit = mealId => (
-  (dispatch, getState) => {
-    const { meals } = getState().meal;
-    const tempMeals = [...meals];
-    return dispatch({
-      type: SET_MEAL_FOR_EDIT,
-      mealForEdit: { ...tempMeals.filter(meal => meal.id === mealId)[0] }
-    });
-  }
-);
+export const setMealForEdit = mealId => dispatch => dispatch({
+  type: SET_MEAL_FOR_EDIT,
+  mealId
+});
+
 
 /**
  * Removes a meal from edit
  *
- * @return {Object} - returns an object that consist of properties type 'REMOVE_MEAL_FROM_EDIT'
+ * @return {Object} - returns an object that consist of
+  properties type 'REMOVE_MEAL_FROM_EDIT'
  */
 export const removeMealFromEdit = () => (
   {
@@ -42,7 +42,8 @@ export const removeMealFromEdit = () => (
 /**
  * Removes a meal from edit
  *
- * @return {Object} - returns an object that consist of properties type 'REMOVE_MEAL_FROM_EDIT'
+ * @return {Object} - returns an object that consist of
+  properties type 'REMOVE_MEAL_FROM_EDIT'
  */
 export const setDefaultMealState = () => (
   {
@@ -52,29 +53,23 @@ export const setDefaultMealState = () => (
 
 /**
  * Updates a meal on edit
- * @param {Object} update - the updated property and it's value
- * @return {Object} - returns an object that consist of properties type 'UPDATE_MEAL_ON_EDIT'
+ * @param {Object} mealUpdate - the updated property and it's value
+ * @return {Object} - returns an object that consist of
+  properties type 'UPDATE_MEAL_ON_EDIT'
  */
-export const updateMealOnEdit = update => (dispatch, getState) => {
-  const { mealOnEdit } = getState().meal;
-  const tempMeal = { ...mealOnEdit };
-
-  return dispatch({
-    type: UPDATE_MEAL_ON_EDIT,
-    updatedMeal: {
-      ...tempMeal,
-      ...update
-    }
-  });
-};
+export const updateMealOnEdit = mealUpdate => dispatch => dispatch({
+  type: UPDATE_MEAL_ON_EDIT,
+  mealUpdate
+});
 
 /**
  * Sends async server requests to get all meals using the axios api
  *
- * @return {Function} - function that dispatches meals and serverRes action to the redux store
+ * @return {Function} - function that dispatches meals and
+  serverRes action to the redux store
  */
-export const getMeals = ({ limit = 12, offset = 0 }) => (dispatch) => {
-  return serverReq('get', `/api/v1/meals?limit=${limit}&offset=${offset}`)
+export const getMeals = ({ limit = 12, offset = 0 }) => dispatch => (
+  serverReq('get', `/api/v1/meals?limit=${limit}&offset=${offset}`)
     .then((response) => {
       if (response.data) {
         const { success, meals, pagination } = response.data;
@@ -87,43 +82,25 @@ export const getMeals = ({ limit = 12, offset = 0 }) => (dispatch) => {
         }
       }
     })
-    .catch(error => error);
-};
+    .catch(error => error)
+);
 
 /**
  * Sends async server requests to delete meal using the axios api
  *
  * @param {String} mealId - Id of neal to delete
- * @return {Function} - function that dispatches meals and serverRes action to the redux store
+ * @return {Function} - function that dispatches meals and
+  serverRes action to the redux store
  */
-export const deleteMeal = mealId => (dispatch, getState) => {
-  return serverReq('delete', `/api/v1/meals/${mealId}`)
+export const deleteMeal = mealId => dispatch => (
+  serverReq('delete', `/api/v1/meals/${mealId}`)
     .then((response) => {
       if (response.status === 204) {
-        const { meals: oldMeals, pagination } = getState().meal;
-        const newMeals = oldMeals.filter(meal => meal.id !== mealId);
-        pagination.count -= 1;
-
-        // get meals if current meal state is empty
-        if (newMeals.length === 0) {
-          return dispatch(getMeals({}));
-        }
-
         dispatch({
-          type: SET_MEALS,
-          meals: arraySort(newMeals, 'title'),
-          pagination
+          type: DELETE_MEAL,
+          mealId
         });
         notify('Meal was successfully Deleted!', 'toast-success');
-      } else if (response.data.message) {
-        dispatch({
-          type: MEAL_ERROR,
-          error: response.data.message
-        });
-
-        notify(response.data.message, 'toast-danger');
-
-        return response.data.message;
       }
     })
     .catch((error) => {
@@ -134,39 +111,30 @@ export const deleteMeal = mealId => (dispatch, getState) => {
           error
         });
         notify(message, 'toast-danger');
+        return message;
       }
-    });
-};
+    })
+);
 
 /**
  * Sends async server requests to post new meal using the axios api
  *
- * @param {Object} data - data object with property title, price, description and image(optional)
- * @return {Function} - function that dispatches serverRes action to the redux store
+ * @param {Object} data - data object with property title,
+  price, description and image(optional)
+ * @return {Function} - function that dispatches
+  serverRes action to the redux store
  */
 /* eslint arrow-body-style:0 */
-export const postMeal = data => (dispatch, getState) => {
-  return serverReq('post', '/api/v1/meals', data)
+export const postMeal = data => dispatch => (
+  serverReq('post', '/api/v1/meals', data)
     .then((response) => {
       if (response.data) {
         const { success, message, meal } = response.data;
 
         if (success) {
-          const { meals, pagination } = getState().meal;
-          const tempMeals = [...meals];
-
-          if (tempMeals.length >= 12) {
-            // remove last meal
-            tempMeals.pop();
-          }
-
-          // add new meal
-          tempMeals.unshift(meal);
-
           dispatch({
-            type: SET_MEALS,
-            meals: arraySort(tempMeals, 'title'),
-            pagination
+            type: ADD_MEAL,
+            meal
           });
 
           notify(message, 'toast-success');
@@ -179,39 +147,29 @@ export const postMeal = data => (dispatch, getState) => {
         const { message } = error.response.data;
         notify(message, 'toast-danger');
       }
-    });
-};
+    })
+);
 
 /**
  * Sends async server requests to update meal using the axios api
  *
  * @param {String} mealId - Id of meal to update
  * @param {Object} data - data of meal to update
- * @return {Function} - function that dispatches serverRes action to the redux store
+ * @return {Function} - function that dispatches
+  serverRes action to the redux store
  */
-export const updateMeal = ({ mealId, data }) => (dispatch, getState) => (
+export const updateMeal = ({ mealId, data }) => dispatch => (
   serverReq('put', `/api/v1/meals/${mealId}`, data)
     .then((response) => {
       if (response.data) {
         const { success, message } = response.data;
         if (success) {
-          const { meals, pagination } = getState().meal;
-          let tempMeals = [...meals];
-
-          tempMeals = tempMeals.map((meal) => {
-            if (meal.id === mealId) {
-              return {
-                ...meal,
-                ...data
-              };
-            }
-            return meal;
-          });
-
           dispatch({
-            type: SET_MEALS,
-            meals: arraySort(tempMeals, 'title'),
-            pagination
+            type: UPDATE_MEAL,
+            meal: {
+              id: mealId,
+              ...data
+            }
           });
 
           notify(message, 'toast-success');

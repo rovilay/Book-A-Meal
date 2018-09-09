@@ -4,6 +4,7 @@ import {
   DELETE_MEAL_IN_CART,
   EMPTY_CART,
 } from '../actions/actiontypes';
+import * as helpers from '../helpers/reducers-helpers/cart-helpers';
 
 export const cartDefaultState = {
   meals: [],
@@ -13,23 +14,14 @@ export const cartDefaultState = {
 export const cartReducer = (state = cartDefaultState, action) => {
   switch (action.type) {
     case ADD_MEAL_TO_CART:
-      return {
-        ...state,
-        ...action.cart
-      };
+      return helpers.addMeal(state, action.meal);
     case DELETE_MEAL_IN_CART:
-      return {
-        ...state,
-        ...action.modifiedCart
-      };
+      return helpers.deleteMeal(state, action.meal);
+    case UPDATE_CART_MEAL_PORTION:
+      return helpers.updateMealPortion(state, action.meal);
     case EMPTY_CART:
       return {
         ...cartDefaultState
-      };
-    case UPDATE_CART_MEAL_PORTION:
-      return {
-        ...state,
-        ...action.updatedCart
       };
     default:
       return state;

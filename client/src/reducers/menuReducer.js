@@ -46,12 +46,12 @@ export const menuReducer = (state = menuDefaultState, action) => {
     case ADD_MEAL_TO_NEW_MENU:
       return {
         ...state,
-        newMenu: action.newMenu
+        newMenu: [...new Set([...state.newMenu, action.mealId])]
       };
     case REMOVE_MEAL_FROM_NEW_MENU:
       return {
         ...state,
-        newMenu: action.newMenu
+        newMenu: state.newMenu.filter(mealId => mealId !== action.mealId)
       };
     case EMPTY_NEW_MENU:
       return {
@@ -73,7 +73,15 @@ export const menuReducer = (state = menuDefaultState, action) => {
     case DELETE_MEAL_IN_MENU:
       return {
         ...state,
-        menuMeals: action.menuMeals
+        menuMeals: {
+          meals: [...state.menuMeals.meals].filter(
+            meal => meal.id !== action.mealId
+          ),
+          pagination: {
+            ...state.menuMeals.pagination,
+            count: state.menuMeals.pagination.count - 1
+          }
+        }
       };
     case SET_MENU_FOR_EDIT:
       return {
@@ -83,12 +91,14 @@ export const menuReducer = (state = menuDefaultState, action) => {
     case ADD_MEAL_IN_EDIT_MENU:
       return {
         ...state,
-        editMenu: action.editMenu
+        editMenu: [...new Set([...state.editMenu, action.mealId])]
       };
     case DELETE_MEAL_IN_EDIT_MENU:
       return {
         ...state,
-        editMenu: action.editMenu
+        editMenu: [
+          ...state.editMenu.filter(mealId => mealId !== action.mealId)
+        ]
       };
     case EMPTY_EDIT_MENU:
       return {

@@ -82,7 +82,13 @@ class FilterComp extends Component {
             </div>
           }
 
-          <button type="submit" value="Search" className="btn-2 filter-btn"> Filter </button>
+          <button
+            type="submit"
+            value="Search"
+            className="btn-2 filter-btn"
+          >
+            Filter
+          </button>
         </form>
       </div>
     );

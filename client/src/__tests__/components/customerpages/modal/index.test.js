@@ -3,7 +3,7 @@ import { shallow } from 'enzyme';
 import { orderDetails } from '../../../__mockData__/orderMock';
 import ModalComp from '../../../../components/customerpages/modal/Index';
 
-describe('ModalComp component test', () => {
+describe('customer Modal component test', () => {
   const setup = () => {
     const props = {
       modal: {

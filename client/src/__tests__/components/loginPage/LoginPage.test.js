@@ -19,6 +19,7 @@ describe('LoginPage component test', () => {
       },
       history: {},
       loginUser: jest.fn(),
+      logUserIn: jest.fn(),
       onChange: jest.fn()
     };
 
@@ -49,7 +50,7 @@ describe('LoginPage component test', () => {
   });
 
 
-  it('should call onChange', (done) => {
+  it('should call onChange if email input is changed', (done) => {
     const wrapper = setup();
 
     const event = {
@@ -68,7 +69,7 @@ describe('LoginPage component test', () => {
   });
 
 
-  it('should call `logUserIn` function', (done) => {
+  it('should call `logUserIn` function when login button is clicked', (done) => {
     const wrapper = setup();
 
     const event = {
@@ -88,10 +89,13 @@ describe('LoginPage component test', () => {
   });
 
 
-  it('should call `componentDidMount` function', (done) => {
+  it('should call `componentDidMount` if component successfully mounts',
+  (done) => {
     const wrapper = setup();
 
-    const componentDidMountSpy = jest.spyOn(wrapper.instance(), 'componentDidMount');
+    const componentDidMountSpy = jest.spyOn(
+      wrapper.instance(), 'componentDidMount'
+    );
     wrapper.instance().componentDidMount();
 
     expect(componentDidMountSpy).toHaveBeenCalled();
