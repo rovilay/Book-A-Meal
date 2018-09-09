@@ -13,7 +13,7 @@ exports[`MenuTable component test should render MenuTable correctly 1`] = `
         "Meals": undefined,
         "createdBy": "ogooluwa akinola",
         "menuId": "1",
-        "postOn": "2018-09-06",
+        "postOn": "2018-09-10",
         "sn": NaN,
       }
     }
@@ -27,7 +27,7 @@ exports[`MenuTable component test should render MenuTable correctly 1`] = `
           },
           "id": "1",
           "meals": Array [],
-          "postOn": "2018-09-06",
+          "postOn": "2018-09-10",
         },
       ]
     }

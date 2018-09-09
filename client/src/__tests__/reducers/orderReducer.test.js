@@ -52,7 +52,7 @@ describe('Orders reducer', () => {
 
     const action = {
       type: DELETE_ORDER_SUCCESS,
-      modifiedOrder: orders.slice(0, 2)
+      orderId: 3
     };
 
     const newState = ordersReducer(currentState, action);
@@ -66,31 +66,29 @@ describe('Orders reducer', () => {
     const currentState = {
       ...ordersDefaultState,
       editOrder: {
-        orderedMeals: orderMeals[0],
+        orderedMeals: [orderMeals[0]],
         totalPrice: 300
       }
     }
 
     const action = {
       type: UPDATE_ORDERED_MEAL_PORTION,
-      updatedOrder: {
-        totalPrice: 600,
-        orderedMeals: {
-          ...orderMeals[0],
-          portion: 2,
-          price: 600
-        }
+      meal: {
+        portion: 2,
+        mealId: '1'
       }
     };
 
     const newState = ordersReducer(currentState, action);
     expect(newState.editOrder).toEqual({
       totalPrice: 600,
-      orderedMeals: {
+      orderedMeals: [
+        {
         ...orderMeals[0],
         portion: 2,
         price: 600
-      }
+        }
+      ]
     })
 
     done();
@@ -107,23 +105,19 @@ describe('Orders reducer', () => {
   });
 
 
-  it('should remove meal from order on edit', (done) => {
+  it('should delete meal from order on edit', (done) => {
     const currentState = {
       ...ordersDefaultState,
       editOrder: orderOnEdit
     }
     const action = {
       type: DELETE_MEAL_IN_EDIT_ORDER,
-      modifiedOrder: {
-        ...orderOnEdit,
-        orderedMeals: orderMeals.slice(0, 2),
-        totalPrice: 500
-      }
+      mealId: '4'
     }
 
     const newState = ordersReducer(currentState, action);
-    expect(newState.editOrder.orderedMeals).toEqual(orderMeals.slice(0, 2));
-    expect(newState.editOrder.totalPrice).toEqual(500);
+    expect(newState.editOrder.orderedMeals).toEqual(orderMeals.slice(0, 3));
+    expect(newState.editOrder.totalPrice).toEqual(700);
 
     done();
   });

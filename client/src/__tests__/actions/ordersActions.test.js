@@ -80,29 +80,30 @@ describe('Menu Actions test', () => {
   });
 
 
-  it('should dispatch `DELETE_ORDER_SUCCESS` on deleting order', async (done) => {
-    const store = mockStore({orders: {
-      history: orders
-    }}); // mock store
+  it('should dispatch `DELETE_ORDER_SUCCESS` on deleting order',
+    async (done) => {
+      const store = mockStore({orders: {
+        history: orders
+      }}); // mock store
 
-    mock.onDelete('/api/v1/orders/1')
-      .reply(204, {
-        success: true,
-        message: 'order deleted successfully',
-      });
+      mock.onDelete('/api/v1/orders/1')
+        .reply(204, {
+          success: true,
+          message: 'order deleted successfully',
+        });
 
-    const expectedAction = {
-        type: DELETE_ORDER_SUCCESS,
-        modifiedOrder: orders.reverse().slice(1, 3),
-      };
+      const expectedAction = {
+          type: DELETE_ORDER_SUCCESS,
+          orderId: 1
+        };
 
 
-    await store.dispatch(deleteOrder(1))
-    const actions = store.getActions();
-    expect(actions[0]).toEqual(expectedAction);
-    expect(actions[0].modifiedOrder).toHaveLength(2)
+      await store.dispatch(deleteOrder(1))
+      const actions = store.getActions();
+      expect(actions[0]).toEqual(expectedAction);
+      expect(actions[0].orderId).toEqual(1)
 
-    done();
+      done();
   });
 
 
@@ -152,37 +153,35 @@ describe('Menu Actions test', () => {
   });
 
 
-  it('should dispatch `DELETE_MEAL_IN_EDIT_ORDER` when editing order', (done) => {
+  it('should dispatch `DELETE_MEAL_IN_EDIT_ORDER` when editing order',
+    (done) => {
 
-    const store = mockStore({
-      orders: {
-        editOrder: {
-          orderedMeals: [...orderMeals],
-          totalPrice: 1100
+      const store = mockStore({
+        orders: {
+          editOrder: {
+            orderedMeals: [...orderMeals],
+            totalPrice: 1100
+          }
         }
-      }
-    });
+      });
 
 
-    const expectedAction = {
-        type: DELETE_MEAL_IN_EDIT_ORDER,
-        modifiedOrder: {
-          orderedMeals: [
-            ...orderMeals.slice(0, 3),
-          ],
-          totalPrice: 700
-        }
-      };
+      const expectedAction = {
+          type: DELETE_MEAL_IN_EDIT_ORDER,
+          mealId: '4'
+        };
 
-    store.dispatch(deleteMealInEditOrder('4'));
-    const actions = store.getActions();
-    expect(actions[0]).toEqual(expectedAction);
+      store.dispatch(deleteMealInEditOrder('4'));
+      const actions = store.getActions();
+      expect(actions[0]).toEqual(expectedAction);
 
-    done();
+      done();
   });
 
 
-  it('should dispatch `UPDATE_ORDERED_MEAL_PORTION` when order is to be edited', (done) => {
+  it(
+    'should dispatch `UPDATE_ORDERED_MEAL_PORTION` when order is to be edited',
+    (done) => {
     const store = mockStore({
       orders: {
         editOrder: {
@@ -194,18 +193,9 @@ describe('Menu Actions test', () => {
 
     const expectedAction = {
         type: UPDATE_ORDERED_MEAL_PORTION,
-        updatedOrder: {
-          orderedMeals: [
-            ...orderMeals.slice(0, 3),
-            {
-              id: '4',
-              title: 'YAM AND EGG',
-              cost: 400,
-              portion: 2,
-              price: 800
-            }
-          ],
-          totalPrice: 1500
+        meal: {
+          mealId: '4',
+          portion: 2
         }
       };
 
@@ -217,50 +207,53 @@ describe('Menu Actions test', () => {
   });
 
 
-  it('should dispatch `SET_ORDER_MEALS` on getting order meals', async (done) => {
-    const store = mockStore({
-      orders: {
-        editOrder: {
-          orderedMeals: orderMeals
-        }
-      }
-    });
-
-    mock.onGet('/api/v1/orders/1/meals?limit=5&offset=0')
-      .reply(200, {
-        success: true,
-        order: [
-          {
-            Meals: orderMeals
+  it('should dispatch `SET_ORDER_MEALS` on getting order meals',
+    async (done) => {
+      const store = mockStore({
+        orders: {
+          editOrder: {
+            orderedMeals: orderMeals
           }
-        ],
-        pagination: {
-          count: 5,
-          numOfPages: 1,
-          limit: 5,
-          offset: 0
         }
-      })
+      });
 
-
-    const expectedAction = {
-        type: SET_ORDER_MEALS,
-        order: {
-          orderedMeals: orderMeals,
-          orderedMealsPagination: {
+      mock.onGet('/api/v1/orders/1/meals?limit=5&offset=0')
+        .reply(200, {
+          success: true,
+          order: [
+            {
+              Meals: orderMeals
+            }
+          ],
+          pagination: {
             count: 5,
             numOfPages: 1,
             limit: 5,
             offset: 0
           }
-        }
-      };
+        })
 
-    await store.dispatch(getOrderMeals('/api/v1/orders/1/meals', {limit: 5, offset: 0 }));
-    const actions = store.getActions();
-    expect(actions[0]).toEqual(expectedAction);
 
-    done();
+      const expectedAction = {
+          type: SET_ORDER_MEALS,
+          order: {
+            orderedMeals: orderMeals,
+            orderedMealsPagination: {
+              count: 5,
+              numOfPages: 1,
+              limit: 5,
+              offset: 0
+            }
+          }
+        };
+
+      await store.dispatch(
+        getOrderMeals('/api/v1/orders/1/meals', {limit: 5, offset: 0 })
+      );
+      const actions = store.getActions();
+      expect(actions[0]).toEqual(expectedAction);
+
+      done();
   });
 
   it('should dispatch `SET_ORDERS` on getting all orders', async (done) => {

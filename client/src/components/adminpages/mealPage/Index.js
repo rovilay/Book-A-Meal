@@ -108,7 +108,11 @@ export class MealPage extends Component {
             .then((success) => {
               if (success) {
                 // close accordion
-                toggleAccordion('.accordion__body', 'accordion__body  accordion__body--hidden', 'true');
+                toggleAccordion(
+                  '.accordion__body',
+                  'accordion__body  accordion__body--hidden',
+                  'true'
+                );
                 this.closeEdit();
               }
             });
@@ -133,6 +137,7 @@ export class MealPage extends Component {
     if (!image && this.state.isEdit) {
       image = this.props.mealOnEdit.image;
     } else if (!image && !this.state.isEdit) {
+      /* eslint max-len:0, */
       image = 'https://res.cloudinary.com/dcqnswemi/image/upload/v1529300780/default_meal_img.jpg';
     }
 
@@ -179,7 +184,8 @@ export class MealPage extends Component {
           url
             .then((response) => {
               if (typeof (response) === 'string') {
-                (this.state.isEdit) && this.props.updateMealOnEdit({ image: response });
+                (this.state.isEdit)
+                  && this.props.updateMealOnEdit({ image: response });
                 return this.setState({
                   uploadedImageLink: response,
                   disableBtn: false
@@ -231,7 +237,11 @@ export class MealPage extends Component {
 
 
     // close accordion
-    toggleAccordion('.accordion__body', 'accordion__body accordion__body--hidden', 'true');
+    toggleAccordion(
+      '.accordion__body',
+      'accordion__body accordion__body--hidden',
+      'true'
+    );
   }
 
 
@@ -333,11 +343,19 @@ export class MealPage extends Component {
           </Accordion>
         </section>
         <div className="">
-          <div className="title">Meals</div>
-          <FilterComp
-            {...this.props}
-            tableContent="caterer_meals"
-          />
+          {
+            (this.props.meals.length !== 0)
+            &&
+            <div className="title">Meals</div>
+          }
+          {
+            (this.props.meals.length !== 0)
+            &&
+            <FilterComp
+              {...this.props}
+              tableContent="caterer_meals"
+            />
+          }
           {
             (this.props.meals.length === 0)
               ?

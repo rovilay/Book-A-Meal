@@ -21,7 +21,8 @@ class MenuAccordion extends Component {
 
     this.handlePaginationClick = this.handlePaginationClick.bind(this);
     this.handleAccordionBodyClose = this.handleAccordionBodyClose.bind(this);
-    this.handleAccordionItemTitleFocus = this.handleAccordionItemTitleFocus.bind(this);
+    this.handleAccordionItemTitleFocus = this
+      .handleAccordionItemTitleFocus.bind(this);
     this.showMenuMeals = this.showMenuMeals.bind(this);
     this.hideMenuMeals = this.hideMenuMeals.bind(this);
     this.handleAddMealsToMenu = this.handleAddMealsToMenu.bind(this);
@@ -60,7 +61,9 @@ class MenuAccordion extends Component {
    * closes accordion on focus
    */
   handleAccordionItemTitleFocus() {
-    return this.handleAccordionBodyClose(`.myaccordiontitle-${this.props.item.menuId}`);
+    return this.handleAccordionBodyClose(
+      `.myaccordiontitle-${this.props.item.menuId}`
+    );
   }
 
   /**
@@ -117,7 +120,9 @@ class MenuAccordion extends Component {
         .then((confirmed) => {
           if (confirmed) {
             const MenuMealsToDelete = meals.filter(n => n.id === meal.id);
-            const MenuMealsToDeleteIds = MenuMealsToDelete.map(menuMeal => menuMeal.id);
+            const MenuMealsToDeleteIds = MenuMealsToDelete.map(
+              menuMeal => menuMeal.id
+            );
             this.props.deleteMenuMeal({ mealUrl, meals: MenuMealsToDeleteIds });
           }
         })
@@ -276,7 +281,10 @@ class MenuAccordion extends Component {
 
                           {
                             // hide if menu date has passed
-                            (moment(today, 'YYYY-MM-DD').isSameOrBefore(item.postOn))
+                            (
+                              moment(today, 'YYYY-MM-DD')
+                                .isSameOrBefore(item.postOn)
+                            )
                             &&
                             <button
                               className="btn-3 box-shadow deleteMeal"

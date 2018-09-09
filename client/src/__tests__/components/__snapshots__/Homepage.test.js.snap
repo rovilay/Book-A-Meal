@@ -34,7 +34,7 @@ exports[`Homepage component test should render Homepage correctly 1`] = `
       <p
         className="merienda"
       >
-         Meals that perfectly fits your lifestyle
+        Meals that perfectly fits your lifestyle
       </p>
       <a
         className="view-menu-btn btn-2"
@@ -80,7 +80,21 @@ exports[`Homepage component test should render Homepage correctly 1`] = `
     </div>
   </section>
   <Menu
-    getTodayMenu={[Function]}
+    getTodayMenu={
+      [MockFunction] {
+        "calls": Array [
+          Array [
+            Object {},
+          ],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
     history={Array []}
     menu={
       Array [
@@ -109,7 +123,19 @@ exports[`Homepage component test should render Homepage correctly 1`] = `
         "numOfPages": 2,
       }
     }
-    setDefaultNav={[Function]}
+    setDefaultNav={
+      [MockFunction] {
+        "calls": Array [
+          Array [],
+        ],
+        "results": Array [
+          Object {
+            "isThrow": false,
+            "value": undefined,
+          },
+        ],
+      }
+    }
     todayMenu={
       Array [
         Object {

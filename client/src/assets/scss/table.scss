@@ -4,7 +4,10 @@
   .title {
     height: 30vh;
     width: 100%;
-    background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.75)), url('https://res.cloudinary.com/dcqnswemi/image/upload/v1532336227/cart.jpg') center #333 no-repeat;
+    background:
+      linear-gradient(rgba(0, 0, 0, 0.45),
+      rgba(0, 0, 0, 0.75)),
+      url('https://res.cloudinary.com/dcqnswemi/image/upload/v1532336227/cart.jpg') center #333 no-repeat;
     background-attachment: scroll;
     background-size: cover;
     color: #ffffff;
@@ -19,7 +22,10 @@
 }
 
 .orderpage .title {
-  background: linear-gradient(rgba(0, 0, 0, 0.45), rgba(0, 0, 0, 0.75)), url('https://res.cloudinary.com/dcqnswemi/image/upload/v1532299618/cust.jpg') center #333 no-repeat;
+  background:
+    linear-gradient(rgba(0, 0, 0, 0.45),
+    rgba(0, 0, 0, 0.75)),
+    url('https://res.cloudinary.com/dcqnswemi/image/upload/v1532299618/cust.jpg') center #333 no-repeat;
   background-attachment: scroll;
   background-size: cover;
 }

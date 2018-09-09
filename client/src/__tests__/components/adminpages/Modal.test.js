@@ -30,7 +30,7 @@ describe('ModalComp component test', () => {
   const setup = () => shallow(<ModalComp {...props} />);
 
 
-  it('should render ModalComp correctly', (done) => {
+  it('should render `Modal Component` correctly', (done) => {
     const wrapper = setup();
 
     expect(wrapper).toMatchSnapshot();

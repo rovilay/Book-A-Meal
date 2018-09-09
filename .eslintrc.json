@@ -19,7 +19,7 @@
         }],
         "linebreak-style": 0,
         "semi": 2,
-        "max-len": 0,
+        "max-len": [2, 80, 4],
         "import/no-unresolved": "off",
         "import/extensions": "off",
         "class-methods-use-this": "error",

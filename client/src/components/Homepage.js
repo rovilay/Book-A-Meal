@@ -1,3 +1,4 @@
+/* eslint max-len: 0 */
 import { bindActionCreators } from 'redux';
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
@@ -7,7 +8,6 @@ import ReactPaginate from 'react-paginate';
 
 import { setDefaultNav } from '../actions/navLinksActions';
 import { getTodayMenu } from '../actions/menuActions';
-import { addToCart } from '../actions/cartActions';
 import Menu from './common/Menu';
 
 export class HomePage extends Component {
@@ -47,7 +47,9 @@ export class HomePage extends Component {
       <main className="homepage">
         <section className="first-section">
           <div className="showcase">
-            <p className="merienda"> Meals that perfectly fits your lifestyle</p>
+            <p className="merienda">
+              Meals that perfectly fits your lifestyle
+            </p>
             {
               (todayMenu.length > 0)
               &&
@@ -66,7 +68,8 @@ export class HomePage extends Component {
           <div className="intro-container">
             <h1 className="color-1">Are you busy and hungry?</h1>
             <p>
-              Would you want to eat your favourite food from your favourite resturant?<br />
+              Would you want to eat your favourite food from your favourite resturant?
+              <br />
               Use this app to keep track of our menu and place orders at your convinience.
             </p>
             <p className="buttons">
@@ -95,7 +98,6 @@ export class HomePage extends Component {
         &&
         <Menu
           menu={todayMenu}
-          addMealToCart={this.addMealToCart}
           notify={this.notify}
           {...this.props}
         />
@@ -142,10 +144,11 @@ export const mapStateToProps = state => ({
 export const mapDispatchToProps = dispatch => bindActionCreators(
   {
     setDefaultNav,
-    getTodayMenu,
-    addToCart,
+    getTodayMenu
   },
   dispatch
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(HomePage));
+export default connect(
+  mapStateToProps, mapDispatchToProps
+)(withRouter(HomePage));

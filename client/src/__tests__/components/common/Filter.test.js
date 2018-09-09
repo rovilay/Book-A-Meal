@@ -12,7 +12,7 @@ describe('Filter component test', () => {
     return shallow(<FilterComp {...props} />)
   };
 
-  it('should render FilterComp correctly', (done) => {
+  it('should render Filter Component correctly', (done) => {
     const wrapper = setup();
 
     expect(wrapper).toMatchSnapshot();
@@ -20,7 +20,7 @@ describe('Filter component test', () => {
     done();
   });
 
-  it('should call `setFilter` on submitting form', (done) => {
+  it('should call `setFilter` on submitting filter form', (done) => {
     const wrapper = setup();
 
     const event = {

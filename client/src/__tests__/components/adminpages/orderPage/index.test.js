@@ -42,7 +42,7 @@ describe('OrderHistory component test', () => {
   });
 
 
-  it('should call `handlePaginationClick`', (done) => {
+  it('should call `handlePaginationClick` if pagination button is clicked', (done) => {
     const wrapper = setup();
 
     const data = {
@@ -57,7 +57,7 @@ describe('OrderHistory component test', () => {
   });
 
 
-  it('should call `showDetails`', (done) => {
+  it('should call `showDetails` if order info button is clicked', (done) => {
     const wrapper = setup();
 
 

@@ -5,7 +5,7 @@ import MealCard from '../../../components/common/MealCard';
 
 
 const props = {
-  addToCart: jest.fn(),
+  addMealToCart: jest.fn(),
   editMeal: jest.fn(),
   deleteMeal: jest.fn(),
   cart: meals,
@@ -28,7 +28,7 @@ describe('MealCard component test', () => {
   });
 
 
-  it('should call `addToCart` on button click', (done) => {
+  it('should call `addMealToCart` if add button is clicked', (done) => {
     localStorage.setItem('user', {
       admin: false
     });
@@ -37,13 +37,13 @@ describe('MealCard component test', () => {
     const wrapper = setup();
 
     wrapper.find('.responsive-btn-2').first().simulate('click')
-    expect(props.addToCart).toHaveBeenCalled();
+    expect(props.addMealToCart).toHaveBeenCalled();
 
     done();
   });
 
 
-  it('should call `handleDeleteMeal`', (done) => {
+  it('should call `handleDeleteMeal` if delete button is clicked', (done) => {
     const wrapper = setup();
 
     const event = {
@@ -53,6 +53,18 @@ describe('MealCard component test', () => {
     const handleDeleteMealSpy= jest.spyOn(wrapper.instance(), 'handleDeleteMeal');
     wrapper.instance().handleDeleteMeal(event);
     expect(handleDeleteMealSpy).toHaveBeenCalled();
+
+    done();
+  });
+
+
+  it('should call `handleEditMeal` if edit button is clicked', (done) => {
+    const wrapper = setup();
+
+
+    const handleEditMealSpy= jest.spyOn(wrapper.instance(), 'handleEditMeal');
+    wrapper.instance().handleEditMeal();
+    expect(handleEditMealSpy).toHaveBeenCalled();
 
     done();
   });

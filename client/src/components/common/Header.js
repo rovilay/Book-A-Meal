@@ -32,17 +32,11 @@ export class Header extends Component {
 
   toggleHam() {
     const nav = document.getElementById('nav-menu');
-    (nav && nav.className === 'nav-menu')
-      &&
-      (
-        nav.className += ' responsive'
-      );
-
-    (nav && nav.className !== 'nav-menu')
-      &&
-      (
-        nav.className = 'nav-menu'
-      );
+    if (nav && nav.className === 'nav-menu') {
+      nav.className = 'nav-menu responsive';
+    } else if (nav && nav.className === 'nav-menu responsive') {
+      nav.className = 'nav-menu';
+    }
   }
 
   render() {
@@ -76,7 +70,13 @@ export class Header extends Component {
                     <FontAwesome
                       name="cart-plus"
                     />
-                    <span className={classname('', { 'cart-count': cart.length > 0 })}>({cart.length})</span>
+                    <span
+                      className={
+                        classname('', { 'cart-count': cart.length > 0 })
+                      }
+                    >
+                      ({cart.length})
+                    </span>
                   </NavLink>
                 );
               }
@@ -135,4 +135,6 @@ const mapDispatchToProps = dispatch => bindActionCreators(
   dispatch
 );
 
-export default connect(mapStateToProps, mapDispatchToProps)(withRouter(Header));
+export default connect(
+  mapStateToProps, mapDispatchToProps
+)(withRouter(Header));

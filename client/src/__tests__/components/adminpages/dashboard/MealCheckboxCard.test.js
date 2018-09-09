@@ -29,21 +29,23 @@ describe('MealCheckboxCard component test', () => {
   });
 
 
-  it('should call `handlePaginationClick`', (done) => {
+  it('should call `handlePaginationClick` meal pagination button is clicked', (done) => {
     const wrapper = setup();
 
     const data = {
       selected: 1
     };
 
-    const handlePaginationClickSpy= jest.spyOn(wrapper.instance(), 'handlePaginationClick');
+    const handlePaginationClickSpy= jest.spyOn(
+      wrapper.instance(), 'handlePaginationClick'
+    );
     wrapper.instance().handlePaginationClick(data)
     expect(handlePaginationClickSpy).toHaveBeenCalled();
 
     done();
   });
 
-  it('should call `setNewMenuMeal` on button click', (done) => {
+  it('should call `setNewMenuMeal` if meals checked box is checked', (done) => {
     const wrapper = setup();
 
     wrapper.find(`.meal-check`).first().simulate('click');

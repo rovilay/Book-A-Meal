@@ -1,6 +1,5 @@
 import jest from 'jest';
 import mockStore from '../__mockData__/mockStore';
-import isExpired from '../../helpers/isExpired';
 import { meals, cartWithMeals } from '../__mockData__/mealMock';
 import {
   ADD_MEAL_TO_CART,
@@ -10,7 +9,7 @@ import {
 } from '../../actions/actiontypes';
 import {
   emptyCart,
-  addToCart,
+  addMealToCart,
   deleteMealInCart,
   updateCartMealPortion
 } from '../../actions/cartActions';
@@ -28,44 +27,36 @@ describe('Cart Actions test', () => {
     done()
   })
 
-  it('should dispatch `ADD_MEAL_TO_CART` to store if meal not in store', (done) => {
-    const store = mockStore({cart: cartDefaultState});
+  it('should dispatch `ADD_MEAL_TO_CART` to store if meal not in store',
+    (done) => {
+      const store = mockStore({cart: cartDefaultState});
 
-    const expectedAction = {
-      type: ADD_MEAL_TO_CART,
-      cart: {
-        meals: [
-          {
-            ...meals[0],
-            unitPrice: meals[0].price,
-            price: meals[0].price * meals[0].portion
-          }
-        ],
-        totalPrice: meals[0].price * meals[0].portion
-      }
-    };
+      const expectedAction = {
+        type: ADD_MEAL_TO_CART,
+        meal:meals[0]
+      };
 
-    localStorage.setItem('jwt', customerToken)
-    localStorage.getItem('jwt')
-    store.dispatch(addToCart(meals[0]))
-    const actions = store.getActions();
-    expect(actions[0]).toEqual(expectedAction);
+      localStorage.setItem('jwt', customerToken)
+      localStorage.getItem('jwt')
+      store.dispatch(addMealToCart(meals[0]))
+      const actions = store.getActions();
+      expect(actions[0]).toEqual(expectedAction);
 
-    done();
+      done();
   });
 
 
-  it('should notify if meal already in store', (done) => {
-    const store = mockStore({cart: cartWithMeals});
-    localStorage.setItem('jwt', customerToken)
-    localStorage.getItem('jwt')
+  // it('should notify if meal already in store', (done) => {
+  //   const store = mockStore({cart: cartWithMeals});
+  //   localStorage.setItem('jwt', customerToken)
+  //   localStorage.getItem('jwt')
 
-    store.dispatch(addToCart(meals[0]))
+  //   store.dispatch(addToCart(meals[0]))
 
-    expect(notify()).toEqual('toast called');
+  //   expect(notify()).toEqual('toast called');
 
-    done();
-  });
+  //   done();
+  // });
 
 
   it('should dispatch `DELETE_MEAL_IN_CART` to store', (done) => {
@@ -73,16 +64,13 @@ describe('Cart Actions test', () => {
 
     const expectedAction = {
       type: DELETE_MEAL_IN_CART,
-      modifiedCart: {
-        meals: [],
-        totalPrice: 0
-      }
+      meal: meals[0]
     };
 
     localStorage.setItem('jwt', customerToken)
     localStorage.getItem('jwt')
 
-    store.dispatch(deleteMealInCart({ id: meals[0].id, price: 2000 }))
+    store.dispatch(deleteMealInCart(meals[0]))
 
     const actions = store.getActions();
     expect(actions[0]).toEqual(expectedAction);
@@ -95,23 +83,16 @@ describe('Cart Actions test', () => {
 
     const expectedAction = {
       type: UPDATE_CART_MEAL_PORTION,
-      updatedCart: {
-        totalPrice: 1000,
-        meals: [
-          {
-            ...cartWithMeals.meals[0],
-            portion: 1,
-            unitPrice: 1000,
-            price: 1000
-          }
-        ]
+      meal: {
+        id: meals[0].id,
+        portion: 2
       }
     };
 
     localStorage.setItem('jwt', customerToken)
     localStorage.getItem('jwt')
 
-    store.dispatch(updateCartMealPortion({ id: meals[0].id, portion: 1 }))
+    store.dispatch(updateCartMealPortion({ id: meals[0].id, portion: 2 }))
 
     const actions = store.getActions();
     expect(actions[0]).toEqual(expectedAction);

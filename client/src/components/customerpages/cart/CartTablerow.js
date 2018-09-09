@@ -55,7 +55,7 @@ class CartTableRow extends Component {
                     className="portion"
                     name="portion"
                     onChange={updatePortion(item)}
-                    defaultValue = {item[key]}
+                    value={item[key]}
                     required
                   />
                 </p>

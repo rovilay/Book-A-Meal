@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`Filter component test should render FilterComp correctly 1`] = `
+exports[`Filter component test should render Filter Component correctly 1`] = `
 <div
   className="filter"
 >
@@ -43,7 +43,7 @@ exports[`Filter component test should render FilterComp correctly 1`] = `
       type="submit"
       value="Search"
     >
-       Filter 
+      Filter
     </button>
   </form>
 </div>

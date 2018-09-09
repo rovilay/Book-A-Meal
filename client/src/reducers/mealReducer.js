@@ -4,8 +4,13 @@ import {
   SET_MEALS,
   UPDATE_MEAL_ON_EDIT,
   SET_DEFAULT_MEAL_STATE,
-  MEAL_ERROR
+  MEAL_ERROR,
+  DELETE_MEAL,
+  ADD_MEAL,
+  UPDATE_MEAL
 } from '../actions/actiontypes';
+import * as helpers from '../helpers/reducers-helpers/meals-helpers';
+
 
 export const mealDefaultState = {
   meals: [],
@@ -27,6 +32,19 @@ export const mealReducer = (state = mealDefaultState, action) => {
         meals: action.meals,
         pagination: action.pagination
       };
+    case DELETE_MEAL:
+      return {
+        ...state,
+        meals: state.meals.filter(meal => meal.id !== action.mealId),
+        pagination: {
+          ...state.pagination,
+          count: state.pagination.count - 1
+        }
+      };
+    case ADD_MEAL:
+      return helpers.addMeal(state, action.meal);
+    case UPDATE_MEAL:
+      return helpers.updateMeal(state, action.meal);
     case SET_DEFAULT_MEAL_STATE:
       return {
         ...mealDefaultState
@@ -34,7 +52,9 @@ export const mealReducer = (state = mealDefaultState, action) => {
     case SET_MEAL_FOR_EDIT:
       return {
         ...state,
-        mealOnEdit: action.mealForEdit
+        mealOnEdit: {
+          ...state.meals.filter(meal => meal.id === action.mealId)[0]
+        }
       };
     case MEAL_ERROR:
       return {
@@ -44,7 +64,10 @@ export const mealReducer = (state = mealDefaultState, action) => {
     case UPDATE_MEAL_ON_EDIT:
       return {
         ...state,
-        mealOnEdit: action.updatedMeal
+        mealOnEdit: {
+          ...state.mealOnEdit,
+          ...action.mealUpdate
+        }
       };
     case REMOVE_MEAL_FROM_EDIT:
       return {

@@ -33,7 +33,8 @@ describe('CustomerDashboard component test', () => {
   });
 
 
-  it('should call `handlePaginationClick`', (done) => {
+  it('should call `handlePaginationClick` if pagination button is clicked',
+  (done) => {
     const wrapper = setup();
 
     const data = {

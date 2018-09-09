@@ -8,7 +8,7 @@ import jwt from 'jsonwebtoken';
 import isExpired from '../../helpers/isExpired';
 import { getFromLocalStorage } from '../../helpers/localstorage';
 import { getTodayMenu } from '../../actions/menuActions';
-import { addToCart } from '../../actions/cartActions';
+import { addMealToCart } from '../../actions/cartActions';
 import { setDefaultNav, setNav } from '../../actions/navLinksActions';
 
 /**
@@ -90,10 +90,12 @@ export default function (ComponentA, ComponentB) {
       setDefaultNav,
       getTodayMenu,
       setNav,
-      addToCart,
+      addMealToCart
     },
     dispatch
   );
 
-  return connect(mapStateToProps, mapDispatchToProps)(withRouter(ChooseDashboard));
+  return connect(
+    mapStateToProps, mapDispatchToProps
+  )(withRouter(ChooseDashboard));
 }

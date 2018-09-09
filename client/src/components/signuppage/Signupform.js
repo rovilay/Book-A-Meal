@@ -9,12 +9,18 @@ import classname from 'classnames';
 const SignUpForm = props => (
   <div className="signup-card">
     {
-      (props.formValues.message && !props.formValues.message.includes('password'))
+      (props.formValues.message
+        && !props.formValues.message.includes('password')
+      )
       && (
         <p
           id="alert"
           role="alert"
-          className={classname('alert-danger', { 'alert-success': props.formValues.success })}
+          className={
+            classname(
+              'alert-danger', { 'alert-success': props.formValues.success }
+            )
+          }
         >
           {props.formValues.message}
         </p>
@@ -42,7 +48,9 @@ const SignUpForm = props => (
           required
         />
         {
-          (props.formValues.firstName && !validator.isAlpha(props.formValues.firstName))
+          (props.formValues.firstName
+            && !validator.isAlpha(props.formValues.firstName)
+          )
           && (
             <span
               id="alert"
@@ -72,7 +80,9 @@ const SignUpForm = props => (
           required
         />
         {
-          (props.formValues.lastName && !validator.isAlpha(props.formValues.lastName))
+          (props.formValues.lastName
+            && !validator.isAlpha(props.formValues.lastName)
+          )
           && (
             <span
               id="alert"
@@ -102,7 +112,9 @@ const SignUpForm = props => (
           required
         />
         {
-          (props.formValues.email && !validator.isEmail(props.formValues.email))
+          (props.formValues.email
+            && !validator.isEmail(props.formValues.email)
+          )
           &&
           <span
             id="alert"
@@ -132,7 +144,9 @@ const SignUpForm = props => (
           </option>
         </select>
         {
-          (props.formValues.message && !props.formValues.message.includes('role'))
+          (props.formValues.message
+            && !props.formValues.message.includes('role')
+          )
           &&
           <span
             id="alert"
@@ -196,7 +210,9 @@ const SignUpForm = props => (
           required
         />
         {
-          (props.formValues.city && !validator.isAlpha(props.formValues.city))
+          (props.formValues.city
+            && !validator.isAlpha(props.formValues.city)
+          )
           &&
           <span
             id="alert"
@@ -225,7 +241,9 @@ const SignUpForm = props => (
           required
         />
         {
-          (props.formValues.state && !validator.isAlpha(props.formValues.state))
+          (props.formValues.state
+            && !validator.isAlpha(props.formValues.state)
+          )
           &&
           <span
             id="alert"
@@ -320,12 +338,16 @@ const SignUpForm = props => (
       </Link>
     </p>
     {
-    (props.formValues.message && !props.formValues.message.includes('password'))
+    (props.formValues.message
+      && !props.formValues.message.includes('password')
+    )
     &&
     <p
       id="alert"
       role="alert"
-      className={classname('alert-danger', { 'alert-success': props.formValues.success })}
+      className={
+        classname('alert-danger', { 'alert-success': props.formValues.success })
+      }
     >
       {props.formValues.message}
     </p>
