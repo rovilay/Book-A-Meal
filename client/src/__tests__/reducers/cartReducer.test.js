@@ -12,63 +12,84 @@ describe('Cart reducer', () => {
   it('should add meals to cart state', (done) => {
     const action = {
       type:  ADD_MEAL_TO_CART,
-      cart: {
-        meals,
-        totalPrice: 4200
-      }
+      meal: meals[0]
     };
     const newState = cartReducer(cartDefaultState, action);
     expect(newState).toEqual({
-      meals,
-      totalPrice: 4200
+      meals: [
+        {
+          ...meals[0],
+          price: 2000,
+          unitPrice: 1000
+        }
+      ],
+      totalPrice: 2000
     });
 
     done();
   });
 
-  it('should remove meals from cart state', (done) => {
+  it('should notify if meal is already in cart to cart state', (done) => {
+    const currentState = {
+      ...cartDefaultState,
+      meals: [meals[0]],
+      totalPrice: 2000
+    }
+    const action = {
+      type:  ADD_MEAL_TO_CART,
+      meal: meals[0]
+    };
+    const newState = cartReducer(currentState, action);
+    expect(newState).toEqual(currentState);
+
+    done();
+  });
+
+  it('should delete meal from cart state', (done) => {
     const currentState = {
       meals,
-      totalPrice: 4200
+      totalPrice: 4800
     };
 
     const action = {
       type: DELETE_MEAL_IN_CART,
-      modifiedCart: {
-        meals: meals.slice(0, 2),
-        totalPrice: 3200
+      meal: {
+        ...meals[3],
+        price: 1000
       }
     };
 
     const newState = cartReducer(currentState, action);
-    expect(newState.meals).toEqual(meals.slice(0, 2));
-    expect(newState.totalPrice).toEqual(3200);
+    expect(newState.meals).toEqual(meals.slice(0, 3));
+    expect(newState.totalPrice).toEqual(3800);
 
     done();
   });
 
   it('should update cart meals portion', (done) => {
     const currentState = {
-      meals: [meals[0]],
+      meals: [
+        {
+          ...meals[0],
+          price: 2000,
+          unitPrice: 1000
+        }
+      ],
       totalPrice: 2000
     }
 
     const action = {
       type: UPDATE_CART_MEAL_PORTION,
-      updatedCart: {
-        totalPrice: 1000,
-        meals: [
-          {
-          ...meals[0],
-          portion: 1,
-          price: 1000
-        }
-      ]}
+      meal: {
+        id: meals[0].id,
+        portion: 1
+      }
     };
 
     const newState = cartReducer(currentState, action);
     expect(newState.meals[0]).toEqual({
       ...meals[0],
+      unitPrice: 1000,
       portion: 1,
       price: 1000
     })

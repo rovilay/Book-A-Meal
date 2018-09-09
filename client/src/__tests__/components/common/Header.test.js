@@ -28,7 +28,7 @@ describe('Header component test', () => {
     done();
   });
 
-  it('should call onLogOut', (done) => {
+  it('should call `onLogOut` if logout button is clicked', (done) => {
     const wrapper = setup();
 
     const onLogOutSpy = jest.spyOn(wrapper.instance(), 'onLogOut');
@@ -41,7 +41,8 @@ describe('Header component test', () => {
   });
 
 
-  it('should call toggleHam', (done) => {
+  it('should call `toggleHam` if hamburger menu is clicked on mobile',
+  (done) => {
     const wrapper = setup();
 
     const ontoggleHamSpy = jest.spyOn(wrapper.instance(), 'toggleHam');

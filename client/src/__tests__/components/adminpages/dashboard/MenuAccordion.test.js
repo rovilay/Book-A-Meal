@@ -33,7 +33,8 @@ describe('MenuAccordion component test', () => {
   });
 
 
-  it('should call `handlePaginationClick`', (done) => {
+  it('should call `handlePaginationClick` menu meals pagination button is clicked',
+  (done) => {
     const wrapper = setup();
 
     const data = {
@@ -48,7 +49,8 @@ describe('MenuAccordion component test', () => {
   });
 
 
-  it('should call `handleAccordionBodyClose`', (done) => {
+  it('should call `handleAccordionBodyClose` when menu accordion is clicked',
+  (done) => {
     const wrapper = setup();
 
     document.body.innerHTML =
@@ -56,7 +58,9 @@ describe('MenuAccordion component test', () => {
       <div type="checkbox" class="accordion" aria-selected="true" checked="true" />
     </div>`;
 
-    const handleAccordionBodyCloseSpy= jest.spyOn(wrapper.instance(), 'handleAccordionBodyClose');
+    const handleAccordionBodyCloseSpy= jest.spyOn(
+      wrapper.instance(), 'handleAccordionBodyClose'
+    );
     wrapper.instance().handleAccordionBodyClose('.accordion')
     expect(handleAccordionBodyCloseSpy).toHaveBeenCalled();
 
@@ -64,10 +68,13 @@ describe('MenuAccordion component test', () => {
   });
 
 
-  it('should call `handleAccordionItemTitleFocus`', (done) => {
+  it('should call `handleAccordionItemTitleFocus` when menu accordion is on focus',
+  (done) => {
     const wrapper = setup();
 
-    const handleAccordionItemTitleFocusSpy= jest.spyOn(wrapper.instance(), 'handleAccordionItemTitleFocus');
+    const handleAccordionItemTitleFocusSpy= jest.spyOn(
+      wrapper.instance(), 'handleAccordionItemTitleFocus'
+    );
     wrapper.instance().handleAccordionItemTitleFocus()
     expect(handleAccordionItemTitleFocusSpy).toHaveBeenCalled();
 
@@ -75,7 +82,7 @@ describe('MenuAccordion component test', () => {
   });
 
 
-  it('should call `showMenuMeals`', (done) => {
+  it('should call `showMenuMeals` if show meals button is clicked', (done) => {
     const wrapper = setup();
 
     const event = {
@@ -90,7 +97,7 @@ describe('MenuAccordion component test', () => {
   });
 
 
-  it('should call `hideMenuMeals`', (done) => {
+  it('should call `hideMenuMeals` if hide meals button is clicked', (done) => {
     const wrapper = setup();
 
     const event = {
@@ -105,7 +112,8 @@ describe('MenuAccordion component test', () => {
   });
 
 
-  it('should call `handleAddMealsToMenu`', (done) => {
+  it('should call `handleAddMealsToMenu` if add meal button is clicked',
+  (done) => {
     const wrapper = setup();
 
     const event = {
@@ -120,7 +128,7 @@ describe('MenuAccordion component test', () => {
   });
 
 
-  it('should call `deleteMealInMenu`', (done) => {
+  it('should call `deleteMealInMenu` if delete meal button is clicked', (done) => {
     const wrapper = setup();
 
     const deleteMealInMenuSpy= jest.spyOn(wrapper.instance(), 'deleteMealInMenu');
@@ -130,7 +138,7 @@ describe('MenuAccordion component test', () => {
     done();
   });
 
-  it('should `deleteMealInMenu` on button click', (done) => {
+  it('should `deleteMealInMenu` if delete button is clicked', (done) => {
     const wrapper = setup();
     wrapper.setState({
       isInfo: true

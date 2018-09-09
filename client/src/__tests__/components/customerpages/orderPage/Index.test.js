@@ -5,7 +5,7 @@ import { userDataDefaultState } from '../../../../reducers/loginReducer';
 import { filterDefaultState } from '../../../../reducers/filterReducer';
 import { ordersDefaultState } from '../../../../reducers/ordersReducer';
 import { modalDefaultState } from '../../../../reducers/modalReducer';
-import { orders } from '../../../__mockData__/orderMock';
+import { orders, orderMeals, orderDetails } from '../../../__mockData__/orderMock';
 
 
 const props = {
@@ -26,7 +26,13 @@ const props = {
   updateOrderedMealPortion: jest.fn(),
   grandTotalPrice: 1100,
   getOrders: () => Promise.resolve(),
-  getOrderMeals: () => Promise.resolve(),
+  getOrderMeals: () => Promise.resolve({
+    order: [{
+      ...orderDetails,
+      id: 6,
+      UserId: 2
+    }]
+  }),
   editOrder: jest.fn(),
   setEditOrder: jest.fn(),
   setFilter: jest.fn(),
@@ -49,7 +55,7 @@ describe('CustomerDashboard component test', () => {
     done();
   });
 
-  it('should call `onEditOrder`', (done) => {
+  it('should call `onEditOrder` if `edit order` button is clicked', (done) => {
     const wrapper = setup();
 
     const onEditOrderSpy= jest.spyOn(wrapper.instance(), 'onEditOrder');
@@ -60,7 +66,7 @@ describe('CustomerDashboard component test', () => {
   });
 
 
-  it('should call `showDetails`', (done) => {
+  it('should call `showDetails` if order-info button is clicked', (done) => {
     const wrapper = setup();
 
     const showDetailsSpy= jest.spyOn(wrapper.instance(), 'showDetails');
@@ -71,7 +77,7 @@ describe('CustomerDashboard component test', () => {
   });
 
 
-  it('should call `deleteRow`', (done) => {
+  it('should call `deleteRow` if delete-order button is clicked', (done) => {
     const wrapper = setup();
 
 
@@ -83,7 +89,8 @@ describe('CustomerDashboard component test', () => {
   });
 
 
-  it('should call `updatePortion`', (done) => {
+  it('should call `updatePortion` if ordered-meals portion is changed',
+  (done) => {
     const wrapper = setup();
 
 
@@ -95,7 +102,7 @@ describe('CustomerDashboard component test', () => {
   });
 
 
-  it('should call `getCustomerOrders`', (done) => {
+  it('should call `getCustomerOrders` when component mounts', (done) => {
     const wrapper = setup();
     localStorage.setItem('jwt', customerToken);
 
@@ -107,7 +114,7 @@ describe('CustomerDashboard component test', () => {
   });
 
 
-  it('should call `hideModal`', (done) => {
+  it('should call `hideModal` if modal-close button is clicked', (done) => {
     const wrapper = setup();
 
     const hideModalSpy= jest.spyOn(wrapper.instance(), 'hideModal');
@@ -117,7 +124,7 @@ describe('CustomerDashboard component test', () => {
     done();
   });
 
-  it('should call `handlePaginationClick`', (done) => {
+  it('should call `handlePaginationClick` if pagination button is clicked', (done) => {
     const wrapper = setup();
 
     const data = {

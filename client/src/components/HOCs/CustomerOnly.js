@@ -52,7 +52,8 @@ export default function (Comp) {
       return (
         <div className="hoc">
           {
-            (admin !== undefined && !admin) && <Comp {...this.props} token={token} />
+            (admin !== undefined && !admin)
+              && <Comp {...this.props} token={token} />
           }
         </div>
       );
@@ -81,5 +82,7 @@ export default function (Comp) {
     dispatch
   );
 
-  return connect(mapStateToProps, mapDispatchToProps)(withRouter(CustomerOnly));
+  return connect(
+    mapStateToProps, mapDispatchToProps
+  )(withRouter(CustomerOnly));
 }

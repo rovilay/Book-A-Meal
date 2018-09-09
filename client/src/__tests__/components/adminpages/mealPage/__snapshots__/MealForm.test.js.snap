@@ -88,7 +88,7 @@ exports[`MealForm component test should call \`addMeal\` on form submit if not i
               <input
                 id="price"
                 max="1000000"
-                min=""
+                min="1"
                 name="price"
                 onChange={[Function]}
                 placeholder="Enter price"
@@ -270,7 +270,7 @@ exports[`MealForm component test should call \`handleChange\` on form input chan
               <input
                 id="price"
                 max="1000000"
-                min=""
+                min="1"
                 name="price"
                 onChange={[Function]}
                 placeholder="Enter price"
@@ -452,7 +452,7 @@ exports[`MealForm component test should render MealForm correctly 1`] = `
               <input
                 id="price"
                 max="1000000"
-                min=""
+                min="1"
                 name="price"
                 onChange={[Function]}
                 placeholder="Enter price"

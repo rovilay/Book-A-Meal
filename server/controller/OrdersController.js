@@ -37,7 +37,7 @@ class OrdersController {
         model: db.Meal,
         attributes: ['UserId'],
         where: (admin) && { UserId },
-        paranoid: true,
+        paranoid: false,
         through: {
           attributes: ['portion', 'cost'],
         },
@@ -116,9 +116,13 @@ class OrdersController {
         model: db.Meal,
         attributes: ['id', 'title'],
         where: (admin) && { UserId },
-        paranoid: true,
+        paranoid: false,
         through: {
-          attributes: ['portion', 'cost', [db.sequelize.literal('SUM(portion * cost)', 'result')]],
+          attributes: [
+            'portion',
+            'cost',
+            [db.sequelize.literal('SUM(portion * cost)', 'result')]
+          ],
         },
       }],
       where: { id: orderId },
@@ -145,7 +149,9 @@ class OrdersController {
           .catch(error => next(error));
       })
       .catch((error) => {
-        error = error || new Error('Error occurred while getting meals for this orders!');
+        error = error || new Error(
+          'Error occurred while gettingmeals for this orders!'
+        );
         error.status = 500;
         return next(error);
       });
@@ -164,9 +170,12 @@ class OrdersController {
   static postOrder(req, res, next) {
     const newOrder = req.body;
     const { id: UserId } = req.user;
-    const orderMeals = newOrder.meals.map(meal => meal.id); // Get all meal id
-    const orderPortion = newOrder.meals.map(meal => meal.portion); // Get all meal portion
-    const orderMealsCost = newOrder.meals.map(meal => meal.unitPrice); // Get all meal cost
+    // Get all meal id
+    const orderMeals = newOrder.meals.map(meal => meal.id);
+    // Get all meal portion
+    const orderPortion = newOrder.meals.map(meal => meal.portion);
+    // Get all meal cost
+    const orderMealsCost = newOrder.meals.map(meal => meal.unitPrice);
     checkMeal(orderMeals, undefined, next)
       .then((checked) => {
         if (checked) {
@@ -236,9 +245,12 @@ class OrdersController {
     const { orderId } = req.params;
     const updatedOrder = req.body;
     const { id: UserId } = req.user;
-    const updatedMealsId = updatedOrder.meals.map(meal => meal.id); // Get all meal id
-    const updatedMealsPortion = updatedOrder.meals.map(meal => meal.portion); // Get all meal portion
-    const updatedMealsCost = updatedOrder.meals.map(meal => meal.cost); // Get all meal cost
+    // Get all meal id
+    const updatedMealsId = updatedOrder.meals.map(meal => meal.id);
+    // Get all meal portion
+    const updatedMealsPortion = updatedOrder.meals.map(meal => meal.portion);
+    // Get all meal cost
+    const updatedMealsCost = updatedOrder.meals.map(meal => meal.cost);
 
     checkMeal(updatedMealsId, undefined, next)
       .then((checked) => {

@@ -6,6 +6,7 @@ import {
   UPDATE_ORDERED_MEAL_PORTION,
   SET_ORDER_MEALS
 } from '../actions/actiontypes';
+import * as helpers from '../helpers/reducers-helpers/order-helpers';
 
 export const ordersDefaultState = {
   grandTotalPrice: 0,
@@ -47,25 +48,13 @@ export const ordersReducer = (state = ordersDefaultState, action) => {
         }
       };
     case UPDATE_ORDERED_MEAL_PORTION:
-      return {
-        ...state,
-        editOrder: {
-          ...state.editOrder,
-          ...action.updatedOrder
-        }
-      };
+      return helpers.updateMealPortion(state, action.meal);
     case DELETE_MEAL_IN_EDIT_ORDER:
-      return {
-        ...state,
-        editOrder: {
-          ...state.editOrder,
-          ...action.modifiedOrder
-        }
-      };
+      return helpers.deleteMeal(state, action.mealId);
     case DELETE_ORDER_SUCCESS:
       return {
         ...state,
-        history: action.modifiedOrder
+        history: state.history.filter(order => order.id !== action.orderId)
       };
     default:
       return state;

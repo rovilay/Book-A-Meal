@@ -1,4 +1,5 @@
-/* eslint no-nested-ternary: 0 */
+/* eslint no-nested-ternary: 0
+max-len: 0 */
 import React, { Component } from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';

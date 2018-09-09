@@ -25,7 +25,7 @@ describe('SetMenuForm component test', () => {
     done();
   });
 
-  it('should call `submitNewMenu` on button click', (done) => {
+  it('should call `submitNewMenu` on create menu form submition', (done) => {
     const wrapper = setup();
 
     const event = {

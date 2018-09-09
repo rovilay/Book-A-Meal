@@ -16,9 +16,9 @@ describe('Homepage component test', () => {
         numOfPages: 2
       },
       todayMenu: menuMeals,
-      getTodayMenu: () => jest.fn(),
+      getTodayMenu: jest.fn(),
       history: [],
-      setDefaultNav: () => jest.fn()
+      setDefaultNav: jest.fn()
     };
 
     return shallow(<HomePage {...props} />)
@@ -52,16 +52,17 @@ describe('Homepage component test', () => {
   });
 
 
-  it('should push to history if either login or sign up button is clicked', (done) => {
-    const wrapper = setup();
+  it('should push to history if either login or sign up button is clicked',
+    (done) => {
+      const wrapper = setup();
 
-    wrapper.find('button').first().simulate('click');
-    wrapper.find('button').last().simulate('click');
-    expect(wrapper.instance().props.history.length).toEqual(2);
-    expect(wrapper.instance().props.history[0]).toEqual('/login');
-    expect(wrapper.instance().props.history[1]).toEqual('/signup');
+      wrapper.find('button').first().simulate('click');
+      wrapper.find('button').last().simulate('click');
+      expect(wrapper.instance().props.history.length).toEqual(2);
+      expect(wrapper.instance().props.history[0]).toEqual('/login');
+      expect(wrapper.instance().props.history[1]).toEqual('/signup');
 
-    done();
+      done();
   });
 
   it('should map state to props', () => {
@@ -89,14 +90,16 @@ describe('Homepage component test', () => {
     expect(tree).toMatchSnapshot();
   })
 
-  it('should call `handlePaginationClick`', (done) => {
+  it('should call `handlePaginationClick` if pagination button is clicked', (done) => {
     const wrapper = setup();
 
     const data = {
       selected: 1
     };
 
-    const handlePaginationClickSpy= jest.spyOn(wrapper.instance(), 'handlePaginationClick');
+    const handlePaginationClickSpy= jest.spyOn(
+      wrapper.instance(), 'handlePaginationClick'
+    );
     wrapper.instance().handlePaginationClick(data)
     expect(handlePaginationClickSpy).toHaveBeenCalled();
 

@@ -2,7 +2,6 @@ import mockStore from '../__mockData__/mockStore';
 import {
   meals,
   pagination,
-  mealDeleteResponse,
   mealUpdate,
   updatedMeals,
   newMeal
@@ -13,6 +12,9 @@ import {
   SET_MEALS,
   UPDATE_MEAL_ON_EDIT,
   SET_DEFAULT_MEAL_STATE,
+  DELETE_MEAL,
+  ADD_MEAL,
+  UPDATE_MEAL
  } from '../../actions/actiontypes';
 import {
   setMealForEdit,
@@ -61,7 +63,7 @@ describe('Meal Actions test', () => {
   });
 
 
-  it('should dispatch `SET_MEALS` on deleting meal', (done) => {
+  it('should dispatch `DELETE_MEAL` on deleting meal', (done) => {
     const store = mockStore({
       meal: {
       meals,
@@ -72,15 +74,15 @@ describe('Meal Actions test', () => {
       .reply(204);
 
     const expectedAction = {
-      type: SET_MEALS,
-      ...mealDeleteResponse,
+      type: DELETE_MEAL,
+      mealId: '959f0675-0ad3-47b7-8401-ec9e10bc1863',
     };
 
     localStorage.setItem('jwt', adminToken);
     store.dispatch(deleteMeal('959f0675-0ad3-47b7-8401-ec9e10bc1863'))
       .then(() => {
         const actions = store.getActions();
-        expect(actions[0].meals).toEqual(expectedAction.meals);
+        expect(actions[0].mealId).toEqual(expectedAction.mealId);
         expect(actions[0].type).toEqual(expectedAction.type);
       })
       .catch(err => done(err))
@@ -89,7 +91,7 @@ describe('Meal Actions test', () => {
   });
 
 
-  it('should dispatch `SET_MEALS` on posting new meal', (done) => {
+  it('should dispatch `ADD_MEAL` on posting new meal', (done) => {
     const store = mockStore({
       meal: {
       meals,
@@ -104,12 +106,8 @@ describe('Meal Actions test', () => {
       });
 
     const expectedAction = {
-      type: SET_MEALS,
-      meals: [
-        ...meals,
-        newMeal
-      ],
-      pagination
+      type: ADD_MEAL,
+      meal: newMeal
     };
 
     localStorage.setItem('jwt', customerToken);
@@ -118,7 +116,7 @@ describe('Meal Actions test', () => {
         const actions = store.getActions();
 
         expect(actions[0]).toEqual(expectedAction);
-        expect(actions[0].meals.length).toBe(5);
+        expect(actions[0].meal).toEqual(newMeal);
       })
       .catch(err => done(err))
 
@@ -175,7 +173,7 @@ describe('Meal Actions test', () => {
   });
 
 
-  it('should dispatch `SET_MEALS` on updating meal', (done) => {
+  it('should dispatch `UPDATE_MEAL` on updating meal', (done) => {
     const store = mockStore({
       meal: {
       meals,
@@ -189,9 +187,11 @@ describe('Meal Actions test', () => {
       });
 
     const expectedAction = {
-      type: SET_MEALS,
-      meals: updatedMeals,
-      pagination
+      type: UPDATE_MEAL,
+      meal: {
+        id: '959f0675-0ad3-47b7-8401-ec9e10bc1863',
+        ...mealUpdate
+      }
     };
 
     localStorage.setItem('jwt', customerToken);
@@ -227,15 +227,12 @@ describe('Meal Actions test', () => {
 
     const expectedAction = {
       type: SET_MEAL_FOR_EDIT,
-      mealForEdit: {
-        ...meals[3]
-      }
+      mealId: '959f0675-0ad3-47b7-8401-ec9e10bc1863'
     };
 
     store.dispatch(setMealForEdit('959f0675-0ad3-47b7-8401-ec9e10bc1863'));
     const actions = store.getActions();
-    expect(actions[0].mealForEdit).toEqual(expectedAction.mealForEdit);
-    expect(actions[0].type).toEqual(expectedAction.type);
+    expect(actions[0]).toEqual(expectedAction);
 
     done();
   });
@@ -253,12 +250,7 @@ describe('Meal Actions test', () => {
 
     const expectedAction = {
       type: UPDATE_MEAL_ON_EDIT,
-      updatedMeal: {
-        id: '22',
-        title: 'RICE AND BEANS',
-        description: 'so delicious',
-        price: 800
-      }
+      mealUpdate
     };
 
     store.dispatch(updateMealOnEdit(mealUpdate));

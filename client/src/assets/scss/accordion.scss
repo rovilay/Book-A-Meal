@@ -118,7 +118,8 @@
   }
 }
 
-[aria-expanded='true'] .accordion__arrow::before, [aria-selected='true'] .accordion__arrow::before {
+[aria-expanded='true'] .accordion__arrow::before,
+[aria-selected='true'] .accordion__arrow::before {
   transform: rotate(-45deg);
 }
 
@@ -127,7 +128,8 @@
   transform: rotate(-45deg);
 }
 
-[aria-expanded='true'] .accordion__arrow::after, [aria-selected='true'] .accordion__arrow::after {
+[aria-expanded='true'] .accordion__arrow::after,
+[aria-selected='true'] .accordion__arrow::after {
   transform: rotate(45deg);
 }
 

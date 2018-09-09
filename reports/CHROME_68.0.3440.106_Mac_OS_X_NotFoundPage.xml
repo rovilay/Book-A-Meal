@@ -5,9 +5,9 @@
 
   <testsuite name="NotFoundPage"
     errors="0" failures="0" hostname="" id="" package="NotFoundPage" skipped="0"
-    tests="2" time="12.97" timestamp="">
+    tests="2" time="15.55" timestamp="">
   
-    <testcase name="It should redirect to `not found page` if route do not exist" classname="NotFoundPage" time="7.750" assertions="3">
+    <testcase name="It should redirect to `not found page` if route do not exist" classname="NotFoundPage" time="10.36" assertions="3">
 
     
 
@@ -16,7 +16,7 @@
     
     </testcase>
   
-    <testcase name="It should redirect back home if `here` is clicked" classname="NotFoundPage" time="5.217" assertions="2">
+    <testcase name="It should redirect back home if `here` is clicked" classname="NotFoundPage" time="5.194" assertions="2">
 
     
 

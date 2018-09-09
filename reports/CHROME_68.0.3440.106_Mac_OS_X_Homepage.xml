@@ -5,21 +5,21 @@
 
   <testsuite name="Homepage"
     errors="0" failures="0" hostname="" id="" package="Homepage" skipped="0"
-    tests="3" time="12.74" timestamp="">
+    tests="3" time="16.08" timestamp="">
   
-    <testcase name="It should scroll to menu if `view menu` button is clicked" classname="Homepage" time="5.393" assertions="2">
+    <testcase name="It should scroll to menu if `view menu` button is clicked" classname="Homepage" time="8.768" assertions="2">
 
     
 
     
     </testcase>
   
-    <testcase name="It should navigate to login page if meal is added to cart" classname="Homepage" time="3.136" assertions="1">
+    <testcase name="It should navigate to login page if meal is added to cart" classname="Homepage" time="3.111" assertions="1">
 
     
     </testcase>
   
-    <testcase name="It should navigate back to homepage if logo is clicked" classname="Homepage" time="4.216" assertions="2">
+    <testcase name="It should navigate back to homepage if logo is clicked" classname="Homepage" time="4.205" assertions="2">
 
     
 

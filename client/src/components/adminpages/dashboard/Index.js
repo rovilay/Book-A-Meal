@@ -136,7 +136,12 @@ export class AdminDashboard extends Component {
     this.props.postMenu({ postOn, meals })
       .then((success) => {
         if (success) {
-          toggleAccordion('.accordion__body', 'accordion__body  accordion__body--hidden', 'true'); // close accordion
+          // close accordion
+          toggleAccordion(
+            '.accordion__body',
+            'accordion__body  accordion__body--hidden',
+            'true'
+          );
           this.unCheckAll([...this.props.newMenuMeals]);
           this.props.emptyNewMenu();
         }

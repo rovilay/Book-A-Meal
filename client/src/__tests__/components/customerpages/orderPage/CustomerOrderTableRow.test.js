@@ -36,7 +36,8 @@ describe('CustomerOrderTableRow component test', () => {
     done();
   });
 
-  it('should call `cancelOrder`', (done) => {
+  it('should call `cancelOrder` button when order delete button is clicked',
+  (done) => {
     const wrapper = setup();
 
     const event = {
@@ -50,7 +51,8 @@ describe('CustomerOrderTableRow component test', () => {
   });
 
 
-  it('should call `updateOrderPortion`', (done) => {
+  it('should call `updateOrderPortion` if order portion input is being updated',
+  (done) => {
     const wrapper = setup();
 
     document.body.innerHTML =
@@ -58,7 +60,9 @@ describe('CustomerOrderTableRow component test', () => {
     `<input type="number" id="portion-${orderOnEdit.orderId}" value="2" />`
     '</div>';
 
-    const updateOrderPortionSpy= jest.spyOn(wrapper.instance(), 'updateOrderPortion');
+    const updateOrderPortionSpy= jest.spyOn(
+      wrapper.instance(), 'updateOrderPortion'
+    );
     wrapper.instance().updateOrderPortion();
     expect(updateOrderPortionSpy).toHaveBeenCalled();
     expect()
@@ -67,7 +71,9 @@ describe('CustomerOrderTableRow component test', () => {
   });
 
 
-  it('should call `deleteOrderRow`', (done) => {
+  it(
+    'should call `deleteOrderRow` when delete button is clicked on edit order modal',
+   (done) => {
     const wrapper = setup();
 
     const event = {
@@ -82,21 +88,24 @@ describe('CustomerOrderTableRow component test', () => {
   });
 
 
-  it('should call `showOrderDetails`', (done) => {
+  it('should call `showOrderDetails` when order-info button is clicked',
+  (done) => {
     const wrapper = setup();
 
     const event = {
       preventDefault: () => jest.fn()
     };
 
-    const showOrderDetailsSpy= jest.spyOn(wrapper.instance(), 'showOrderDetails');
+    const showOrderDetailsSpy= jest.spyOn(
+      wrapper.instance(), 'showOrderDetails'
+    );
     wrapper.instance().showOrderDetails(event);
     expect(showOrderDetailsSpy).toHaveBeenCalled();
     done();
   });
 
 
-  it('should call `editOrders`', (done) => {
+  it('should call `editOrders` when edit-order button is clicked', (done) => {
     const wrapper = setup();
 
     const event = {

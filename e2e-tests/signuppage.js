@@ -38,7 +38,7 @@ module.exports = {
       .pause(2000)
       .execute('window.scrollTo(0,document.body.scrollHeight)')
       .pause(5000)
-      .submitForm('#root > div > div:nth-child(1) > section > div > div > form')
+      .submitForm('#root > div > div:nth-child(1) > div > section > div > div > form')
       .pause(2000)
       .assert.containsText('.login-form-title', 'USER LOGIN')
       .pause(2000)
