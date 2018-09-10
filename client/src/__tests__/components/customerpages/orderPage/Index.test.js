@@ -66,7 +66,7 @@ describe('CustomerDashboard component test', () => {
   });
 
 
-  it('should call `showDetails` if order info button is clicked', (done) => {
+  it('should call `showDetails` if order-info button is clicked', (done) => {
     const wrapper = setup();
 
     const showDetailsSpy= jest.spyOn(wrapper.instance(), 'showDetails');
@@ -77,7 +77,7 @@ describe('CustomerDashboard component test', () => {
   });
 
 
-  it('should call `deleteRow` if order delete button is clicked', (done) => {
+  it('should call `deleteRow` if delete-order button is clicked', (done) => {
     const wrapper = setup();
 
 
@@ -89,7 +89,7 @@ describe('CustomerDashboard component test', () => {
   });
 
 
-  it('should call `updatePortion` if ordered meals portion is changed',
+  it('should call `updatePortion` if ordered-meals portion is changed',
   (done) => {
     const wrapper = setup();
 
@@ -113,8 +113,7 @@ describe('CustomerDashboard component test', () => {
     done();
   });
 
-
-  it('should call `hideModal` if modal close button is clicked', (done) => {
+  it('should call `hideModal` if modal-close button is clicked', (done) => {
     const wrapper = setup();
 
     const hideModalSpy= jest.spyOn(wrapper.instance(), 'hideModal');

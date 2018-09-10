@@ -128,7 +128,7 @@ describe('MenuAccordion component test', () => {
   });
 
 
-  it('should call `deleteMealInMenu` if delete meal button si clicked', (done) => {
+  it('should call `deleteMealInMenu` if delete meal button is clicked', (done) => {
     const wrapper = setup();
 
     const deleteMealInMenuSpy= jest.spyOn(wrapper.instance(), 'deleteMealInMenu');
@@ -138,7 +138,7 @@ describe('MenuAccordion component test', () => {
     done();
   });
 
-  it('should `deleteMealInMenu` on button click', (done) => {
+  it('should `deleteMealInMenu` if delete button is clicked', (done) => {
     const wrapper = setup();
     wrapper.setState({
       isInfo: true

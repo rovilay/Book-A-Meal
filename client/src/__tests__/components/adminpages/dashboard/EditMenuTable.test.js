@@ -23,7 +23,7 @@ describe('EditMenuTable component test', () => {
   };
 
 
-  it('should render EditMenuTable correctly', (done) => {
+  it('should render EditMenuTable component correctly', (done) => {
     const wrapper = setup();
 
     expect(wrapper).toMatchSnapshot();
@@ -31,7 +31,7 @@ describe('EditMenuTable component test', () => {
     done();
   });
 
-  it('should call `toggleMealCheckbox`', (done) => {
+  it('should call `toggleMealCheckbox` function if meal checkbox is clicked', (done) => {
     const wrapper = setup();
 
     document.body.innerHTML =

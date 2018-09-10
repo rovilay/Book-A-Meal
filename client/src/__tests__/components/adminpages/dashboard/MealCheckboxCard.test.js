@@ -28,8 +28,9 @@ describe('MealCheckboxCard component test', () => {
     done();
   });
 
-
-  it('should call `handlePaginationClick` meal pagination button is clicked', (done) => {
+ 
+  it('should call `handlePaginationClick` meal pagination button is clicked',
+  (done) => {
     const wrapper = setup();
 
     const data = {

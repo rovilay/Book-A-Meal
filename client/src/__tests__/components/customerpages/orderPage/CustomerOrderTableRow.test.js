@@ -88,7 +88,8 @@ describe('CustomerOrderTableRow component test', () => {
   });
 
 
-  it('should call `showOrderDetails` when order info button is clicked',
+
+  it('should call `showOrderDetails` when order-info button is clicked',
   (done) => {
     const wrapper = setup();
 
@@ -105,7 +106,7 @@ describe('CustomerOrderTableRow component test', () => {
   });
 
 
-  it('should call `editOrders` when edit order button is clicked', (done) => {
+  it('should call `editOrders` when edit-order button is clicked', (done) => {
     const wrapper = setup();
 
     const event = {

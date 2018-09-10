@@ -40,7 +40,7 @@ describe('MealForm component test', () => {
   });
 
 
-  it('should call `addMeal` on form submit if not in edit state', (done) => {
+  it('should call `addMeal` on meal form submit if not in edit state', (done) => {
     props.isEdit = false;
     const wrapper = setup();
 
@@ -56,7 +56,7 @@ describe('MealForm component test', () => {
   });
 
 
-  it('should call `handleChange` on form input change', (done) => {
+  it('should call `handleChange` on meal form input change', (done) => {
     props.isEdit = false;
     const wrapper = setup();
 

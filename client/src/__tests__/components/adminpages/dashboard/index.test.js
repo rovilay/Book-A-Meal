@@ -98,7 +98,8 @@ describe('AdminDashboard component test', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  it('should call `onSubmitUpdate` ifmenu is being updated', (done) => {
+  
+  it('should call `onSubmitUpdate` if menu is being updated', (done) => {
     const wrapper = setup();
 
 
@@ -168,7 +169,7 @@ describe('AdminDashboard component test', () => {
     done();
   });
 
-  it('should call `unCheckAll` if new menu form is submitted', (done) => {
+  it('should call `unCheckAll` if meal checkbox are checked', (done) => {
     const wrapper = setup();
 
     document.body.innerHTML =
