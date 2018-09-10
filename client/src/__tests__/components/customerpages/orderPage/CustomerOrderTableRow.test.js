@@ -88,6 +88,7 @@ describe('CustomerOrderTableRow component test', () => {
   });
 
 
+
   it('should call `showOrderDetails` when order-info button is clicked',
   (done) => {
     const wrapper = setup();

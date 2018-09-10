@@ -113,7 +113,6 @@ describe('CustomerDashboard component test', () => {
     done();
   });
 
-
   it('should call `hideModal` if modal-close button is clicked', (done) => {
     const wrapper = setup();
 
