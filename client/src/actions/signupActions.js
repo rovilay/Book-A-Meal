@@ -14,7 +14,9 @@ export const setSuccessfulSignUpMsg = message => ({
 /*
 * Signs up user
 */
-export const signUp = signUpDetails => dispatch => serverReq('post', '/api/v1/auth/signup', signUpDetails)
+export const signUp = signUpDetails => dispatch => serverReq(
+  'post', '/api/v1/auth/signup', signUpDetails
+)
   .then((response) => {
     const { success, message } = response.data;
     if (success) {

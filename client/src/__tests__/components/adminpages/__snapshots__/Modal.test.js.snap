@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`ModalComp component test should render ModalComp correctly 1`] = `
+exports[`ModalComp component test should render \`Modal Component\` correctly 1`] = `
 <Modal
   ariaHideApp={false}
   bodyOpenClassName="ReactModal__Body--open"

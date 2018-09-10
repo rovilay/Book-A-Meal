@@ -10,9 +10,9 @@ import Footer from '../components/common/Footer';
 import HomePage from '../components/Homepage';
 import LogInPage from '../components/loginpage/Index';
 import SignUpPage from '../components/signuppage/Index';
-import chooseDashboard from '../components/HOCs/ChooseDashboard';
-import adminOnly from '../components/HOCs/AdminOnly';
-import customerOnly from '../components/HOCs/CustomerOnly';
+import ChooseDashboard from '../components/HOCs/ChooseDashboard';
+import AdminOnly from '../components/HOCs/AdminOnly';
+import CustomerOnly from '../components/HOCs/CustomerOnly';
 import CustomerDashboard from '../components/customerpages/Dashboard';
 import CustomerOrderPage from '../components/customerpages/orderPage/Index';
 import Cart from '../components/customerpages/cart/Index';
@@ -27,15 +27,52 @@ const AppRouter = () => (
     <div>
       <Header />
       <Switch>
-        <Route exact path="/" component={CheckLogin(HomePage)} />
-        <Route exact path="/signUp" component={SignUpPage} />
-        <Route exact path="/login" component={LogInPage} />
-        <Route exact path="/dashboard" component={chooseDashboard(AdminDashboard, CustomerDashboard)} />
-        <Route exact path="/cart" component={customerOnly(Cart)} className="main" />
-        <Route exact path="/orders" component={customerOnly(CustomerOrderPage)} />
-        <Route exact path="/mealpage" component={adminOnly(MealPage)} />
-        <Route exact path="/orderHistory" component={adminOnly(OrderPage)} />
-        <Route exact path="/*" component={NotFoundPage} />
+        <Route
+          exact
+          path="/"
+          component={CheckLogin(HomePage)}
+        />
+        <Route
+          exact
+          path="/signUp"
+          component={CheckLogin(SignUpPage)}
+        />
+        <Route
+          exact
+          path="/login"
+          component={CheckLogin(LogInPage)}
+        />
+        <Route
+          exact
+          path="/dashboard"
+          component={ChooseDashboard(AdminDashboard, CustomerDashboard)}
+        />
+        <Route
+          exact
+          path="/cart"
+          component={CustomerOnly(Cart)}
+          className="main"
+        />
+        <Route
+          exact
+          path="/orders"
+          component={CustomerOnly(CustomerOrderPage)}
+        />
+        <Route
+          exact
+          path="/mealpage"
+          component={AdminOnly(MealPage)}
+        />
+        <Route
+          exact
+          path="/orderHistory"
+          component={AdminOnly(OrderPage)}
+        />
+        <Route
+          exact
+          path="/*"
+          component={NotFoundPage}
+        />
       </Switch>
       <Footer />
     </div>

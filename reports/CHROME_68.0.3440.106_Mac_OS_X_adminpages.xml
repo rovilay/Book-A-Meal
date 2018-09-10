@@ -5,9 +5,9 @@
 
   <testsuite name="adminpages"
     errors="0" failures="0" hostname="" id="" package="adminpages" skipped="0"
-    tests="12" time="80.46" timestamp="">
+    tests="12" time="86.98" timestamp="">
   
-    <testcase name="It should login admin`" classname="adminpages" time="7.117" assertions="3">
+    <testcase name="It should login admin`" classname="adminpages" time="14.10" assertions="3">
 
     
 
@@ -16,7 +16,7 @@
     
     </testcase>
   
-    <testcase name="It should show menus list on admin dashboard" classname="adminpages" time="2.097" assertions="3">
+    <testcase name="It should show menus list on admin dashboard" classname="adminpages" time="2.091" assertions="3">
 
     
 
@@ -25,44 +25,44 @@
     
     </testcase>
   
-    <testcase name="It should show menu details when menu item is clicked" classname="adminpages" time="6.207" assertions="1">
+    <testcase name="It should show menu details when menu item is clicked" classname="adminpages" time="6.174" assertions="1">
 
     
     </testcase>
   
-    <testcase name="It should show `Add meals` modal  if `Add meals` button is clicked" classname="adminpages" time="4.138" assertions="1">
+    <testcase name="It should show `Add meals` modal  if `Add meals` button is clicked" classname="adminpages" time="4.117" assertions="1">
 
     
     </testcase>
   
-    <testcase name="It should add selected meal to menu if confirmed" classname="adminpages" time="8.343" assertions="1">
+    <testcase name="It should add selected meal to menu if confirmed" classname="adminpages" time="8.289" assertions="1">
 
     
     </testcase>
   
-    <testcase name="It should delete meal from menu if `delete` button is clicked" classname="adminpages" time="12.44" assertions="0">
+    <testcase name="It should delete meal from menu if `delete` button is clicked" classname="adminpages" time="12.42" assertions="0">
     </testcase>
   
-    <testcase name="It should create new menu" classname="adminpages" time="11.51" assertions="0">
+    <testcase name="It should create new menu" classname="adminpages" time="11.43" assertions="0">
     </testcase>
   
-    <testcase name="It should navigate to meal page" classname="adminpages" time="4.185" assertions="1">
+    <testcase name="It should navigate to meal page" classname="adminpages" time="4.137" assertions="1">
 
     
     </testcase>
   
-    <testcase name="It should not add meal if meal already exist" classname="adminpages" time="8.608" assertions="0">
+    <testcase name="It should not add meal if meal already exist" classname="adminpages" time="8.499" assertions="0">
     </testcase>
   
-    <testcase name="It should add new meal if meal" classname="adminpages" time="5.366" assertions="0">
+    <testcase name="It should add new meal if meal" classname="adminpages" time="5.299" assertions="0">
     </testcase>
   
-    <testcase name="It should navigate to order page" classname="adminpages" time="4.147" assertions="1">
+    <testcase name="It should navigate to order page" classname="adminpages" time="4.132" assertions="1">
 
     
     </testcase>
   
-    <testcase name="It should order info when info button is clicked" classname="adminpages" time="6.300" assertions="2">
+    <testcase name="It should order info when info button is clicked" classname="adminpages" time="6.287" assertions="2">
 
     
 

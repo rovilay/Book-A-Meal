@@ -60,11 +60,11 @@ describe('Menus reducers', () => {
   });
 
 
-  it('should remove meal from `menuMeals` state', (done) => {
+  it('should remove meal from `menu`', (done) => {
     const currentState = {
       ...menuDefaultState,
       menuMeals: {
-        meals: [...menuMeals.map(meal => meal.id)],
+        meals: menuMeals,
         pagination: {
           count: 4,
           numOfPages: 1,
@@ -76,20 +76,12 @@ describe('Menus reducers', () => {
 
     const action = {
       type: DELETE_MEAL_IN_MENU,
-      menuMeals: {
-        meals: ['1', '3', '4'],
-        pagination: {
-          count: 3,
-          numOfPages: 1,
-          limit: 5,
-          offset: 0
-        }
-      }
+      mealId: '4'
     };
 
     const newState = menuReducer(currentState, action);
     expect(newState.menuMeals).toEqual({
-      meals: ['1', '3', '4'],
+      meals: menuMeals.slice(0, 3),
       pagination: {
         count: 3,
         numOfPages: 1,
@@ -105,7 +97,7 @@ describe('Menus reducers', () => {
   it('should add meal to `newMenu` state', (done) => {
     const action = {
       type: ADD_MEAL_TO_NEW_MENU,
-      newMenu: ['1']
+      mealId: '1'
     };
     const newState = menuReducer(menuDefaultState, action);
     expect(newState.newMenu).toEqual(['1']);
@@ -119,9 +111,10 @@ describe('Menus reducers', () => {
       ...menuDefaultState,
       newMenu: ['1', '2', '3']
     };
+
     const action = {
       type: REMOVE_MEAL_FROM_NEW_MENU,
-      newMenu: ['1', '3']
+      mealId: '2'
     };
     const newState = menuReducer(currentState, action);
     expect(newState.newMenu).toEqual(['1', '3']);
@@ -156,7 +149,7 @@ describe('Menus reducers', () => {
   it('should add meal to `editMenu` state', (done) => {
     const action = {
       type: ADD_MEAL_IN_EDIT_MENU,
-      editMenu: ['1']
+      mealId: '1'
     };
     const newState = menuReducer(menuDefaultState, action);
     expect(newState.editMenu).toEqual(['1']);
@@ -173,7 +166,7 @@ describe('Menus reducers', () => {
 
     const action = {
       type: DELETE_MEAL_IN_EDIT_MENU,
-      editMenu: ['1', '2']
+      mealId: '3'
     };
     const newState = menuReducer(currentState, action);
     expect(newState.editMenu).toEqual(['1', '2']);

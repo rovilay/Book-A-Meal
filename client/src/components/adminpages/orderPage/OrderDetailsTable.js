@@ -60,7 +60,9 @@ class OrderDetailsTable extends Component {
           </h2>
           <hr />
           <p>
-            <span className="bold">Customer:</span> {`${User.firstName} ${User.lastName}`}
+            <span className="bold">Customer:</span> {
+              `${User.firstName} ${User.lastName}`
+            }
           </p>
           <p>
             <span className="bold">Date:</span> {moment(date).format('LL')}
@@ -79,7 +81,9 @@ class OrderDetailsTable extends Component {
               orderDetailHead.map((head, i) => (
                 <p
                   key={i}
-                  className={classname('row-item', { 'meal-title': head === 'Meal' || head === 'orderId' })}
+                  className={classname('row-item', {
+                    'meal-title': head === 'Meal' || head === 'orderId'
+                  })}
                 >
                   {head}
                 </p>

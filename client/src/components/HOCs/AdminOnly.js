@@ -10,7 +10,8 @@ import { getFromLocalStorage } from '../../helpers/localstorage';
 import { setDefaultNav, setNav } from '../../actions/navLinksActions';
 
 /**
- * @export {function} HOC function that returns a component if user is admin/caterer
+ * @export {function} HOC function that returns
+  a component if user is admin/caterer
  * @param  {Component} Comp Component
  * @return {Component} only if user is a caterer/admin
  */

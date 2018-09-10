@@ -1,3 +1,4 @@
+/* eslint max-len:0 */
 module.exports = (sequelize, DataTypes) => {
   const Meal = sequelize.define('Meal', {
     id: {

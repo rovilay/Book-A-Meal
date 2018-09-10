@@ -41,7 +41,7 @@ describe('MealPage component test', () => {
   });
 
 
-  it('should call `onUpdateMeal`', (done) => {
+  it('should call `onUpdateMeal` if update meal button is clicked', (done) => {
     const wrapper = setup();
 
     const onUpdateMealSpy= jest.spyOn(wrapper.instance(), 'onUpdateMeal');
@@ -52,7 +52,7 @@ describe('MealPage component test', () => {
   });
 
 
-  it('should call `getFormValues`', (done) => {
+  it('should call `getFormValues` when submitting meal form', (done) => {
     const wrapper = setup();
     wrapper.setState({
       isEdit: false
@@ -73,7 +73,7 @@ describe('MealPage component test', () => {
   });
 
 
-  it('should call `handleChange`', (done) => {
+  it('should call `handleChange` if meal form input is being changed', (done) => {
     const wrapper = setup();
 
     const event = {
@@ -91,7 +91,8 @@ describe('MealPage component test', () => {
   });
 
 
-  it('should call `checkFileSize`', (done) => {
+  it('should call `checkFileSize` if meal image is being uploaded on meal form',
+  (done) => {
     const wrapper = setup();
 
     const event = {
@@ -111,7 +112,7 @@ describe('MealPage component test', () => {
   });
 
 
-  it('should call `fillForm` on button click', (done) => {
+  it('should call `fillForm` on edit button click', (done) => {
     const wrapper = setup();
 
     document.body.innerHTML =
@@ -129,7 +130,7 @@ describe('MealPage component test', () => {
   });
 
 
-  it('should call `clearForm` on button click', (done) => {
+  it('should call `clearForm` on on back button click', (done) => {
     const wrapper = setup();
 
     document.body.innerHTML =
@@ -148,7 +149,8 @@ describe('MealPage component test', () => {
   });
 
 
-  it('should call `handlePaginationClick`', (done) => {
+  it('should call `handlePaginationClick` if pagination button is clicked',
+  (done) => {
     const wrapper = setup();
 
     const data = {
@@ -163,7 +165,7 @@ describe('MealPage component test', () => {
   });
 
 
-  it('should call `closeEdit` on button click', (done) => {
+  it('should call `closeEdit` on update button click', (done) => {
     const wrapper = setup();
 
     const closeEditSpy= jest.spyOn(wrapper.instance(), 'closeEdit');
@@ -173,7 +175,7 @@ describe('MealPage component test', () => {
     done();
   });
 
-  it('should call `editMeal` on button click', (done) => {
+  it('should call `editMeal` on edit button click', (done) => {
     const wrapper = setup();
 
     const editMealSpy= jest.spyOn(wrapper.instance(), 'editMeal');
@@ -184,7 +186,7 @@ describe('MealPage component test', () => {
   });
 
 
-  it('should call `onAddMeal`', (done) => {
+  it('should call `onAddMeal` if add meal form is submitted', (done) => {
     const wrapper = setup();
     wrapper.setState({
       isEdit: false

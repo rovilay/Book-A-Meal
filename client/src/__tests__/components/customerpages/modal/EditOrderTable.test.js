@@ -33,14 +33,17 @@ describe('EditOrderTable component test', () => {
   });
 
 
-  it('should call `handlePaginationClick`', (done) => {
+  it('should call `handlePaginationClick` if pagination button is clicked',
+  (done) => {
     const wrapper = setup();
 
     const data = {
       selected: 1
     };
 
-    const handlePaginationClickSpy= jest.spyOn(wrapper.instance(), 'handlePaginationClick');
+    const handlePaginationClickSpy= jest.spyOn(
+      wrapper.instance(), 'handlePaginationClick'
+    );
     wrapper.instance().handlePaginationClick(data)
     expect(handlePaginationClickSpy).toHaveBeenCalled();
 
@@ -48,7 +51,8 @@ describe('EditOrderTable component test', () => {
   });
 
 
-  it('should call `submitEdit`', (done) => {
+  it('should call `submitEdit` if update order button is clicked',
+  (done) => {
     const wrapper = setup();
 
     const event = {

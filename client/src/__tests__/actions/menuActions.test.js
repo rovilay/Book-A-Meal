@@ -19,7 +19,7 @@ import {
   ADD_MEAL_IN_EDIT_MENU,
   EMPTY_EDIT_MENU,
   SET_MENU_FOR_EDIT
- } from '../../actions/actiontypes';
+} from '../../actions/actiontypes';
 import {
   setMenuForEdit,
   addMealToNewMenu,
@@ -64,11 +64,11 @@ describe('Menu Actions test', () => {
       .then(() => {
         const actions = store.getActions();
         expect(actions[0]).toEqual(expectedAction);
-        expect(actions[0].menus).toHaveLength(4)
+        expect(actions[0].menus).toHaveLength(4);
       })
-      .catch(err => done(err))
+      .catch(err => done(err));
 
-      done();
+    done();
   });
 
 
@@ -98,11 +98,11 @@ describe('Menu Actions test', () => {
       .then(() => {
         const actions = store.getActions();
         expect(actions[0]).toEqual(expectedAction);
-        expect(actions[0].meals).toHaveLength(4)
+        expect(actions[0].meals).toHaveLength(4);
       })
-      .catch(err => done(err))
+      .catch(err => done(err));
 
-      done();
+    done();
   });
 
   it('should dispatch `SET_ALL_MENUS` on posting new menu', async (done) => {
@@ -114,16 +114,16 @@ describe('Menu Actions test', () => {
         message: 'menu posted successfully '
       });
 
-      mock.reset()
+    mock.reset();
 
     localStorage.setItem('jwt', adminToken);
 
-    await store.dispatch(postMenu({ postOn: '27-08-09', meals: menuMeals }))
+    await store.dispatch(postMenu({ postOn: '27-08-09', meals: menuMeals }));
 
-      const actions = store.getActions();
-      expect(notify()).toEqual('toast called');
+    const actions = store.getActions();
+    expect(notify()).toEqual('toast called');
 
-      done();
+    done();
   });
 
   it('should dispatch `SET_MENU_MEALS` getting menu meals', async (done) => {
@@ -142,30 +142,32 @@ describe('Menu Actions test', () => {
           offset: 0,
           count: 4,
           numOfPages: 1
-      }
+        }
       });
 
-      const expectedAction = {
-        type: SET_MENU_MEALS,
-        menuMeals: {
-          meals: menuMeals,
-          pagination: {
-            limit: 5,
-            offset: 0,
-            count: 4,
-            numOfPages: 1
+    const expectedAction = {
+      type: SET_MENU_MEALS,
+      menuMeals: {
+        meals: menuMeals,
+        pagination: {
+          limit: 5,
+          offset: 0,
+          count: 4,
+          numOfPages: 1
         }
-        }
-      };
+      }
+    };
 
-      localStorage.setItem('jwt', adminToken);
+    localStorage.setItem('jwt', adminToken);
 
-      await store.dispatch(getMenuMeals('/api/v1/menus/2/meals', { limit: 5, offset: 0 }))
+    await store.dispatch(
+      getMenuMeals('/api/v1/menus/2/meals', { limit: 5, offset: 0 })
+    );
 
-        const actions = store.getActions();
-        expect(actions[0]).toEqual(expectedAction);
+    const actions = store.getActions();
+    expect(actions[0]).toEqual(expectedAction);
 
-        done()
+    done();
   });
 
 
@@ -190,7 +192,7 @@ describe('Menu Actions test', () => {
           offset: 0,
           count: 4,
           numOfPages: 1
-      }
+        }
       });
 
     const expectedAction = {
@@ -199,52 +201,56 @@ describe('Menu Actions test', () => {
 
     localStorage.setItem('jwt', adminToken);
 
-    await store.dispatch(updateMenu({ menuId: 1, meals: menuMeals }))
+    await store.dispatch(updateMenu({ menuId: 1, meals: menuMeals }));
 
     const actions = store.getActions();
     expect(actions[0]).toEqual(expectedAction);
     expect(notify()).toEqual('toast called');
 
-    done()
+    done();
   });
 
-  it('should dispatch ` EMPTY_EDIT_MENU` on deleting meals to menu', async (done) => {
-    const store = mockStore(menuDefaultState);
-    mock.onDelete('/api/v1/menus/1/meals')
-      .reply(200, {
-        success: true,
-        message: 'meals deleted successfully'
-      });
+  it('should dispatch ` EMPTY_EDIT_MENU` on deleting meals to menu',
+    async (done) => {
+      const store = mockStore(menuDefaultState);
+      mock.onDelete('/api/v1/menus/1/meals')
+        .reply(200, {
+          success: true,
+          message: 'meals deleted successfully'
+        });
 
-    const expectedAction = {
-      type: EMPTY_EDIT_MENU,
-    };
+      const expectedAction = {
+        type: EMPTY_EDIT_MENU,
+      };
 
-    localStorage.setItem('jwt', adminToken);
+      localStorage.setItem('jwt', adminToken);
 
-    await store.dispatch(deleteMenuMeal({ mealUrl: '/api/v1/menus/1/meals', meals: menuMeals }))
+      await store.dispatch(deleteMenuMeal({
+        mealUrl: '/api/v1/menus/1/meals',
+        meals: menuMeals
+      }));
 
-    const actions = store.getActions();
-    expect(actions[0]).toEqual(expectedAction);
-    expect(notify()).toEqual('toast called');
+      const actions = store.getActions();
+      expect(actions[0]).toEqual(expectedAction);
+      expect(notify()).toEqual('toast called');
 
-    done()
-  });
+      done();
+    });
 
   it('should dispatch `SET_MENU_FOR_EDIT`', (done) => {
     const store = mockStore(menuDefaultState);
     const expectedAction = {
       type: SET_MENU_FOR_EDIT,
-      editMenu: ["1", "2", "3", "4"]
+      editMenu: ['1', '2', '3', '4']
     };
 
 
-    store.dispatch(setMenuForEdit(menuMeals))
+    store.dispatch(setMenuForEdit(menuMeals));
 
     const actions = store.getActions();
     expect(actions[0]).toEqual(expectedAction);
 
-    done()
+    done();
   });
 
 
@@ -252,16 +258,16 @@ describe('Menu Actions test', () => {
     const store = mockStore({ menu: menuDefaultState });
     const expectedAction = {
       type: ADD_MEAL_TO_NEW_MENU,
-      newMenu: ["1"]
+      mealId: '1'
     };
 
 
-    store.dispatch(addMealToNewMenu("1"))
+    store.dispatch(addMealToNewMenu('1'));
 
     const actions = store.getActions();
     expect(actions[0]).toEqual(expectedAction);
 
-    done()
+    done();
   });
 
 
@@ -269,100 +275,98 @@ describe('Menu Actions test', () => {
     const store = mockStore({ menu: menuDefaultState });
     const expectedAction = {
       type: ADD_MEAL_IN_EDIT_MENU,
-      editMenu: ["1"]
+      mealId: '1'
     };
 
 
-    store.dispatch(addMealInEditMenu("1"))
+    store.dispatch(addMealInEditMenu('1'));
 
     const actions = store.getActions();
     expect(actions[0]).toEqual(expectedAction);
 
-    done()
+    done();
   });
 
   it('should dispatch `DELETE_MEAL_IN_EDIT_MENU`', (done) => {
-    const store = mockStore({ menu: {
-      editMenu: ["1", "2"]
-    } });
+    const store = mockStore({
+      menu: {
+        editMenu: ['1', '2']
+      }
+    });
     const expectedAction = {
       type: DELETE_MEAL_IN_EDIT_MENU,
-      editMenu: ["1"]
+      mealId: '2'
     };
 
 
-    store.dispatch(deleteMealInEditMenu("2"))
+    store.dispatch(deleteMealInEditMenu('2'));
 
     const actions = store.getActions();
     expect(actions[0]).toEqual(expectedAction);
 
-    done()
+    done();
   });
 
 
   it('should dispatch `REMOVE_MEAL_FROM_NEW_MENU`', (done) => {
-    const store = mockStore({ menu: {
-      newMenu: ["1", "2"]
-    } });
+    const store = mockStore({
+      menu: {
+        newMenu: ['1', '2']
+      }
+    });
     const expectedAction = {
       type: REMOVE_MEAL_FROM_NEW_MENU,
-      newMenu: ["1"]
+      mealId: '2'
     };
 
 
-    store.dispatch(removeMealFromNewMenu("2"))
+    store.dispatch(removeMealFromNewMenu('2'));
 
     const actions = store.getActions();
     expect(actions[0]).toEqual(expectedAction);
 
-    done()
+    done();
   });
 
 
   it('should dispatch ` EMPTY_NEW_MENU`', (done) => {
     const expectedAction = {
-      type:  EMPTY_NEW_MENU,
+      type: EMPTY_NEW_MENU,
     };
 
     const action = emptyNewMenu();
     expect(action).toEqual(expectedAction);
 
-    done()
+    done();
   });
 
 
   it('should dispatch `DELETE_MEAL_IN_MENU`', (done) => {
-    const store = mockStore({ menu: {
-      menuMeals: {
-        meals: menuMeals,
-        pagination: {
-          limit: 5,
-          offset: 0,
-          count: 4,
-          numOfPages: 1
+    const store = mockStore({
+      menu: {
+        menuMeals: {
+          meals: menuMeals,
+          pagination: {
+            limit: 5,
+            offset: 0,
+            count: 4,
+            numOfPages: 1
+          }
         }
       }
-    }});
+    });
 
     const expectedAction = {
       type: DELETE_MEAL_IN_MENU,
-      menuMeals: {
-        meals: menuMeals.slice(1, 4),
-        pagination: {
-          limit: 5,
-          offset: 0,
-          count: 3,
-          numOfPages: 1
-        }
-      }
+      mealId: '1'
     };
 
 
-    store.dispatch(deleteMealInMenu("1"))
+    store.dispatch(deleteMealInMenu('1'));
 
     const actions = store.getActions();
     expect(actions[0]).toEqual(expectedAction);
 
-    done()
+    done();
   });
 });

@@ -5,9 +5,9 @@
 
   <testsuite name="loginpage"
     errors="0" failures="0" hostname="" id="" package="loginpage" skipped="0"
-    tests="3" time="24.44" timestamp="">
+    tests="3" time="24.54" timestamp="">
   
-    <testcase name="User should be logged in if already registered`" classname="loginpage" time="9.110" assertions="4">
+    <testcase name="User should be logged in if already registered`" classname="loginpage" time="9.228" assertions="4">
 
     
 
@@ -18,7 +18,7 @@
     
     </testcase>
   
-    <testcase name="It should return error if email does not exist`" classname="loginpage" time="7.885" assertions="4">
+    <testcase name="It should return error if email does not exist`" classname="loginpage" time="7.745" assertions="4">
 
     
 
@@ -29,7 +29,7 @@
     
     </testcase>
   
-    <testcase name="It should return error if password is wrong`" classname="loginpage" time="7.447" assertions="4">
+    <testcase name="It should return error if password is wrong`" classname="loginpage" time="7.562" assertions="4">
 
     
 
