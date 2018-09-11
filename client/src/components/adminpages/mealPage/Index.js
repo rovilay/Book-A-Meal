@@ -25,6 +25,7 @@ import imageUploader from '../../../helpers/imageUploader';
 import notify from '../../../helpers/notify';
 import filterify from '../../../helpers/filterify';
 import toggleAccordion from '../../../helpers/toggleAccordion';
+import { getFromLocalStorage } from '../../../helpers/localstorage';
 import FilterComp from '../../common/Filter';
 import MealCard from '../../common/MealCard';
 
@@ -83,6 +84,8 @@ export class MealPage extends Component {
               if (response && response.success) {
                 this.closeEdit();
               }
+              const user = getFromLocalStorage('user');
+              (!user) && this.props.history.push('/');
             });
         }
       })
@@ -106,6 +109,9 @@ export class MealPage extends Component {
         if (confirmed) {
           this.props.postMeal(data)
             .then((success) => {
+              const user = getFromLocalStorage('user');
+              (!user) && this.props.history.push('/');
+
               if (success) {
                 // close accordion
                 toggleAccordion(
@@ -413,7 +419,8 @@ MealPage.propTypes = {
   setFilter: PropTypes.func.isRequired,
   meals: PropTypes.array.isRequired,
   pagination: PropTypes.object.isRequired,
-  updateMealOnEdit: PropTypes.func.isRequired
+  updateMealOnEdit: PropTypes.func.isRequired,
+  history: PropTypes.object.isRequired
 };
 
 export const mapStateToProps = state => (

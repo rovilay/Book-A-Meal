@@ -6,7 +6,10 @@ import PropTypes from 'prop-types';
 import jwt from 'jsonwebtoken';
 
 import isExpired from '../../helpers/isExpired';
-import { getFromLocalStorage } from '../../helpers/localstorage';
+import {
+  getFromLocalStorage,
+  deleteInLocalStorage
+} from '../../helpers/localstorage';
 import { addMealToCart } from '../../actions/cartActions';
 import { setDefaultNav, setNav } from '../../actions/navLinksActions';
 
@@ -29,10 +32,21 @@ export default function (Comp) {
       const { history } = this.props;
       const token = getFromLocalStorage('jwt');
       if (token) {
+        const decodedToken = jwt.decode(token);
+        if (!decodedToken) {
+          deleteInLocalStorage('jwt');
+          return history.push('/login');
+        }
+
         const {
           exp,
-          admin
-        } = jwt.decode(token);
+          admin = undefined
+        } = decodedToken;
+
+        if (!exp || admin !== false) {
+          deleteInLocalStorage('jwt');
+          return history.push('/login');
+        }
 
         if (isExpired(exp)) {
           this.props.setDefaultNav();
@@ -52,7 +66,7 @@ export default function (Comp) {
       return (
         <div className="hoc">
           {
-            (admin !== undefined && !admin)
+            (admin !== undefined && admin === false)
               && <Comp {...this.props} token={token} />
           }
         </div>

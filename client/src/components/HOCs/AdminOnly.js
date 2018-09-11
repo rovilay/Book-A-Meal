@@ -6,7 +6,10 @@ import PropTypes from 'prop-types';
 import jwt from 'jsonwebtoken';
 
 import isExpired from '../../helpers/isExpired';
-import { getFromLocalStorage } from '../../helpers/localstorage';
+import {
+  getFromLocalStorage,
+  deleteInLocalStorage
+} from '../../helpers/localstorage';
 import { setDefaultNav, setNav } from '../../actions/navLinksActions';
 
 /**
@@ -30,17 +33,29 @@ export default function (Comp) {
       const { history } = this.props;
       const token = getFromLocalStorage('jwt');
       if (token) {
+        const decodedToken = jwt.decode(token);
+        if (!decodedToken) {
+          deleteInLocalStorage('jwt');
+          return history.push('/login');
+        }
+
         const {
           exp,
           admin
-        } = jwt.decode(token);
+        } = decodedToken;
+
+        if (!exp || !admin) {
+          deleteInLocalStorage('jwt');
+          this.props.setDefaultNav();
+          return history.push('/login');
+        }
 
         if (!admin) {
           this.props.setDefaultNav();
           return history.push('/');
         }
 
-        if (isExpired(exp)) {
+        if (exp && isExpired(exp)) {
           this.props.setDefaultNav();
           return history.push('/login');
         }

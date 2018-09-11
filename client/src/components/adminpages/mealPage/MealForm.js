@@ -9,7 +9,6 @@ import React from 'react';
 import PropTypes from 'prop-types';
 import FontAwesome from 'react-fontawesome';
 
-
 const MealForm = ({
   closeEdit,
   updateMeal,
@@ -46,10 +45,7 @@ const MealForm = ({
             className="meal-form"
             onSubmit={(event) => {
               event.preventDefault();
-              if (isEdit) {
-                return updateMeal(mealOnEdit.id);
-              }
-              return addMeal(event);
+              (isEdit) ? updateMeal(mealOnEdit.id) : addMeal(event);
             }}
           >
             <div className="name">

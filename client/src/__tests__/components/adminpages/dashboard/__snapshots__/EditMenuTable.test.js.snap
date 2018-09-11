@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`EditMenuTable component test should render EditMenuTable correctly 1`] = `
+exports[`EditMenuTable component test should render EditMenuTable component correctly 1`] = `
 <div
   className="table-container"
 >

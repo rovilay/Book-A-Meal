@@ -20,6 +20,7 @@ class MealCard extends Component {
    */
   handleDeleteMeal(event) {
     event.preventDefault();
+    const user = getFromLocalStorage('user');
     sweetAlert({
       text: 'Are you sure you want to delete this meal?',
       buttons: true,
@@ -29,6 +30,7 @@ class MealCard extends Component {
         if (confirmed) {
           this.props.deleteMeal(this.props.mealData.id);
           this.props.getMeals({});
+          (!user) && this.props.history.push('/');
         }
       })
       .catch(err => err);
@@ -74,7 +76,7 @@ class MealCard extends Component {
         <div className="meal-label">
           {
             // show for customers and visitors only
-            (user === null || (user && !user.admin))
+            (!user || (user && !user.admin))
             &&
             <button
               className="responsive-btn-2"

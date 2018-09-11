@@ -111,6 +111,7 @@ export const deleteMeal = mealId => dispatch => (
           error
         });
         notify(message, 'toast-danger');
+        return message;
       }
     })
 );

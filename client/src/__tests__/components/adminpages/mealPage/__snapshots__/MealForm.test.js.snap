@@ -1,6 +1,6 @@
 // Jest Snapshot v1, https://goo.gl/fbAQLP
 
-exports[`MealForm component test should call \`addMeal\` on form submit if not in edit state 1`] = `
+exports[`MealForm component test should call \`addMeal\` on meal form submit if not in edit state 1`] = `
 <AccordionItemWrapper
   accordionStore={
     AccordionContainer {
@@ -182,7 +182,7 @@ exports[`MealForm component test should call \`addMeal\` on form submit if not i
 </AccordionItemWrapper>
 `;
 
-exports[`MealForm component test should call \`handleChange\` on form input change 1`] = `
+exports[`MealForm component test should call \`handleChange\` on meal form input change 1`] = `
 <AccordionItemWrapper
   accordionStore={
     AccordionContainer {

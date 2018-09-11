@@ -98,7 +98,6 @@ describe('AdminDashboard component test', () => {
     expect(tree).toMatchSnapshot();
   });
 
-  
   it('should call `onSubmitUpdate` if menu is being updated', (done) => {
     const wrapper = setup();
 
