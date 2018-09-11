@@ -41,7 +41,7 @@ describe('Header component test', () => {
   });
 
 
-  it('should call `toggleHam` if hamburger menu is clicked on mobile',
+  it('should call `toggleHam` if hamburger menu is clicked on mobile screens',
   (done) => {
     const wrapper = setup();
 
